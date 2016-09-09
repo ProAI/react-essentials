@@ -1,5 +1,5 @@
 {
-  "name": "react-redux-essentials",
+  "name": "react-essentials",
   "version": "0.2.0",
   "main": "./lib/index.js",
   "description": "React Redux UI collection with file upload/dropzone, form elements/validation and a lot more components",
@@ -17,10 +17,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ProAI/react-redux-essentials.git"
+    "url": "https://github.com/ProAI/react-essentials.git"
   },
   "bugs": {
-    "url": "https://github.com/ProAI/react-redux-essentials/issues"
+    "url": "https://github.com/ProAI/react-essentials/issues"
   },
   "scripts": {
     "build": "webpack"
