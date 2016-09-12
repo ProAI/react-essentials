@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -8,10 +9,10 @@ const propTypes = {
 };
 
 function RadioButtonGroup({ legend, input, meta, children }) {
-  const fieldsetClasses = classNames([
+  const fieldsetClasses = cx(
     'form-group',
     { 'has-danger': meta.error },
-  ]);
+  );
 
   const childrenWithProps = React.Children.map(children,
     child => React.cloneElement(child, {

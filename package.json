@@ -23,11 +23,12 @@
     "url": "https://github.com/ProAI/react-essentials/issues"
   },
   "scripts": {
-    "build": "webpack"
+    "build": "babel -d lib/ src/"
   },
   "dependencies": {
     "babel-polyfill": "^6.13.0",
     "bootstrap": "4.0.0-alpha.4",
+    "classnames": "2.2.5",
     "gemini-scrollbar": "1.4.3",
     "moment": "2.14.1",
     "react-dropzone": "3.6.0",
@@ -36,7 +37,6 @@
   "devDependencies": {
     "babel-cli": "6.14.0",
     "babel-core": "6.14.0",
-    "babel-plugin-add-module-exports": "0.2.1",
     "babel-preset-es2015": "6.14.0",
     "babel-preset-react": "6.11.1",
     "babel-preset-stage-0": "6.5.0",

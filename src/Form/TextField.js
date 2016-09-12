@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 
 const propTypes = {
   label: PropTypes.string,
@@ -34,20 +35,20 @@ const defaultProps = {
 };
 
 function TextField({ label, placeholder, inputType, info, input, meta, multiline }, { form }) {
-  const fieldsetClasses = classNames([
+  const fieldsetClasses = cx(
     'form-group',
     { 'has-danger': meta.error },
-  ]);
+  );
 
-  const labelClasses = classNames([
+  const labelClasses = cx(
     'form-control-label',
     { active: meta.active },
-  ]);
+  );
 
-  const inputClasses = classNames([
+  const inputClasses = cx(
     'form-control',
     { 'form-control-danger': meta.error },
-  ]);
+  );
 
   return (
     <fieldset className={fieldsetClasses}>

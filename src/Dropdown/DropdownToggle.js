@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import cx from 'classnames';
 
 const propTypes = {
   children: PropTypes.node,
@@ -31,11 +32,11 @@ class DropdownToggle extends Component {
   render() {
     const { className, tag: Tag, ...attributes } = this.props;
 
-    const classes = classNames([
+    const classes = cx(
       { active: this.context.isOpen },
       'dropdown-universal-toggle',
       className,
-    ]);
+    );
 
     if (Tag === 'a') {
       attributes.href = '';

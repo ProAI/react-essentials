@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import cx from 'classnames';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -21,10 +22,10 @@ class Form extends Component {
   render() {
     const { children, onSubmit, className, ...attributes } = this.props;
 
-    const classes = classNames([
+    const classes = cx(
       'form',
       className,
-    ]);
+    );
 
     return (
       <form {...attributes} onSubmit={onSubmit} className={classes}>

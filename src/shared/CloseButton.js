@@ -6,9 +6,11 @@ const propTypes = {
 };
 
 function CloseButton({ onClick }) {
+  const closeImage = '';
+
   return (
     <button type="button" onClick={onClick} className="close">
-      <img src="/close.png" role="presentation" />
+      <img src={closeImage} role="presentation" />
     </button>
   );
 }

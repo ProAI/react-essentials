@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 import CloseButton from '../shared/CloseButton';
 
 const propTypes = {
@@ -15,10 +16,10 @@ const contextTypes = {
 function ModalHeader({ className, children, ...props }, { dismissible, toggle }) {
   let closeButton;
 
-  const classes = classNames([
+  const classes = cx(
     className,
     'modal-header',
-  ]);
+  );
 
   if (dismissible) {
     closeButton = (

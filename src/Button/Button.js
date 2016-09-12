@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import cx from 'classnames';
 
 const propTypes = {
   className: PropTypes.string,
@@ -56,17 +57,17 @@ class Button extends Component {
     delete attributes.preventFocus;
 
     const classes = (variant === 'option')
-      ? classNames([
+      ? cx(
         'btn-option',
         className,
-      ])
-      : classNames([
+      )
+      : cx(
         'btn',
         `btn-${variant}`,
         { 'btn-sm': (size === 'sm') },
         { 'btn-lg': (size === 'lg') },
         className,
-      ]);
+      );
 
     return (
       <button

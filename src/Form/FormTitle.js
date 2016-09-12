@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -6,10 +7,10 @@ const propTypes = {
 };
 
 function FormTitle({ children, className, ...attributes }) {
-  const classes = classNames([
+  const classes = cx(
     'form-title',
     className,
-  ]);
+  );
 
   return (
     <div {...attributes} className={classes}>

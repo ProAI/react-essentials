@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
@@ -13,10 +14,10 @@ const contextTypes = {
 };
 
 function RadioButton({ label, value, info, input, meta }, { form }) {
-  const labelClasses = classNames([
+  const labelClasses = cx(
     'custom-control-description',
     { active: meta.active },
-  ]);
+  );
 
   return (
     <div className="radio">

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import cx from 'classnames';
 import TetherContent from '../shared/TetherContent';
 import { getTetherAttachments, tetherAttachements, triggerCombinations } from '../shared/helpers';
 import { defaultTetherConfig } from './constants';
@@ -164,10 +165,10 @@ class Popover extends Component {
 
     const tetherConfig = this.getTetherConfig();
 
-    const classes = classNames([
+    const classes = cx(
       className,
       'popover-content',
-    ]);
+    );
 
     return (
       <TetherContent

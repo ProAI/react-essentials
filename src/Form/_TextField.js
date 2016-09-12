@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import cx from 'classnames';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
@@ -50,20 +51,20 @@ class TextField extends Component {
   render() {
     const { className, label, id, error, info, multiLine, ...attributes } = this.props;
 
-    const fieldsetClasses = classNames([
+    const fieldsetClasses = cx(
       'form-group',
       { 'has-danger': this.state.hasError },
-    ]);
+    );
 
-    const labelClasses = classNames([
+    const labelClasses = cx(
       { active: this.state.active },
-    ]);
+    );
 
-    const inputClasses = classNames([
+    const inputClasses = cx(
       className,
       'form-control',
       { 'form-control-danger': this.state.hasError },
-    ]);
+    );
 
     const Tag = (multiLine) ? 'textarea' : 'input';
 

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import cx from 'classnames';
 import { chooseTransitionEvent, Timer } from './helpers';
 import Link from '../Link/Link';
 import CloseButton from '../shared/CloseButton';
@@ -154,43 +155,43 @@ class AlertItem extends Component {
     let content = null;
 
     if (this.state.visible) {
-      classes = classNames([
+      classes = cx(
         classes,
         'alert-visible',
-      ]);
+      );
     } else {
-      classes = classNames([
+      classes = cx(
         classes,
         'alert-hidden',
-      ]);
+      );
     }
 
     if (alert.icon) {
-      classes = classNames([
+      classes = cx(
         classes,
         'alert-with-icon',
-      ]);
+      );
     }
 
     if (alert.small) {
-      classes = classNames([
+      classes = cx(
         classes,
         'alert-sm',
-      ]);
+      );
     }
 
     if (!alert.dismissible) {
-      classes = classNames([
+      classes = cx(
         classes,
         'alert-not-dismissible',
-      ]);
+      );
     }
 
     if (this.state.removed) {
-      classes = classNames([
+      classes = cx(
         classes,
         'alert-removed',
-      ]);
+      );
     }
 
     if (alert.icon) {

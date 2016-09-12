@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 import getUnicodeChars from './getUnicodeChars';
 import emojioneList from './emojioneList';
 
@@ -28,12 +29,12 @@ function Emoji({ className, name, sprites, textSize, imagePath, cacheBustParam }
     ? `${imagePath}/emojione.sprites.svg${cacheBustParam}#emoji-${unicode}`
     : `${imagePath}/${unicode}.svg${cacheBustParam}`;
 
-  const classes = classNames([
+  const classes = cx(
     'emoji',
     { 'emoji-sm': (textSize === 'sm') },
     { 'emoji-lg': (textSize === 'lg') },
     className,
-  ]);
+  );
 
   const unicodeChars = getUnicodeChars(emoji[0]);
 

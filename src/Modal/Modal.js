@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import cx from 'classnames';
 
 const propTypes = {
   children: PropTypes.node,
@@ -94,7 +95,7 @@ class Modal extends Component {
       this.element = null;
     }
 
-    document.body.className = classNames(classes).trim();
+    document.body.className = cx(classes).trim();
   }
 
   removeEvents() {
@@ -124,10 +125,10 @@ class Modal extends Component {
     document.addEventListener('click', this.onBackdropClick, false);
     document.addEventListener('keyup', this.onEscape, false);
 
-    document.body.className = classNames([
+    document.body.className = cx(
       classes,
       'modal-open',
-    ]);
+    );
 
     this.renderIntoSubtree();
 
@@ -229,10 +230,10 @@ class Modal extends Component {
       sizeClass = ` modal-${this.props.size}`;
     }
 
-    const classes = classNames([
+    const classes = cx(
       sizeClass,
       'modal-dialog',
-    ]);
+    );
 
     return (
       <div>

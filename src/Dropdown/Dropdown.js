@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
+import cx from 'classnames';
 
 const propTypes = {
   children: PropTypes.node,
@@ -71,11 +72,11 @@ class Dropdown extends Component {
     delete attributes.isOpen;
 
     // create component classes
-    const classes = classNames([
+    const classes = cx(
       'dropdown',
       { active: this.isOpen() },
       className,
-    ]);
+    );
 
     return (
       <div {...attributes} className={classes} />
