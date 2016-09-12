@@ -5,7 +5,6 @@ import CloseButton from '../shared/CloseButton';
 const propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  toggle: PropTypes.func,
 };
 
 const contextTypes = {

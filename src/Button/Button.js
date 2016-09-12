@@ -52,7 +52,7 @@ class Button extends Component {
   }
 
   render() {
-    const { variant, size, className, ...attributes } = this.props;
+    const { variant, size, type, className, ...attributes } = this.props;
     delete attributes.preventToggle;
     delete attributes.preventFocus;
 
@@ -72,6 +72,7 @@ class Button extends Component {
     return (
       <button
         {...attributes}
+        type={type}
         className={classes}
         onClick={this.onClick}
         ref={c => { this.button = c; }}

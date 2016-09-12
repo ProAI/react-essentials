@@ -2,10 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import cx from 'classnames';
 
 const propTypes = {
-  children: PropTypes.node,
   className: PropTypes.string,
   onClick: PropTypes.func,
-  style: PropTypes.string,
   tag: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 };
 

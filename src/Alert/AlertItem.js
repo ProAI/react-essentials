@@ -76,7 +76,7 @@ class AlertItem extends Component {
   onTransitionEnd = () => {
     if (this.removeCount > 0) return;
     if (this.state.removed) {
-      this.removeCount++;
+      this.removeCount += 1;
       this.removeAlert();
     }
   }
@@ -139,11 +139,6 @@ class AlertItem extends Component {
     if (this.preventAnimation) {
       this.removeAlert();
     }
-  }
-
-  allowHTML(string) {
-    const html = { __html: string };
-    return html;
   }
 
   render() {
@@ -229,7 +224,7 @@ class AlertItem extends Component {
         content = (
           <div
             className="alert-content"
-            dangerouslySetInnerHTML={this.allowHTML(alert.content)}
+            dangerouslySetInnerHTML={{ __html: alert.content }}
           />
         );
       } else {

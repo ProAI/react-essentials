@@ -3,11 +3,9 @@ import { findDOMNode } from 'react-dom';
 import cx from 'classnames';
 
 const propTypes = {
-  children: PropTypes.node,
   toggle: PropTypes.func,
   isOpen: PropTypes.bool,
   className: PropTypes.string,
-  style: PropTypes.string,
 };
 
 const childContextTypes = {

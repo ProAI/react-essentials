@@ -95,7 +95,7 @@ class AlertSystem extends Component {
     this.uid += 1;
 
     // do not add if the alert already exists based on supplied uid
-    for (id = 0; id < alerts.length; id++) {
+    for (id = 0; id < alerts.length; id + 1) {
       if (alerts[id].uid === alert.uid) {
         return false;
       }

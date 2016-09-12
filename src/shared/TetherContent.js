@@ -113,6 +113,7 @@ class TetherContent extends Component {
     );
   }
 
+  // eslint-disable-next-line class-methods-use-this
   render() {
     return null;
   }

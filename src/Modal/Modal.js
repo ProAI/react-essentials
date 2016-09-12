@@ -22,6 +22,15 @@ const defaultProps = {
   dismissible: true,
 };
 
+const computeScrollbarWidth = () => { // thx d.walsh
+  const scrollDiv = document.createElement('div');
+  scrollDiv.className = 'modal-scrollbar-measure';
+  document.body.appendChild(scrollDiv);
+  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  document.body.removeChild(scrollDiv);
+  return scrollbarWidth;
+};
+
 class Modal extends Component {
   getChildContext() {
     return {
@@ -177,7 +186,7 @@ class Modal extends Component {
       fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
     }
     this.isBodyOverflowing = document.body.clientWidth < fullWindowWidth;
-    this.scrollbarWidth = this.computeScrollbarWidth();
+    this.scrollbarWidth = computeScrollbarWidth();
   }
 
   handleScrollbar() {
@@ -198,15 +207,6 @@ class Modal extends Component {
      = this.originalBodyPadding;
     document.getElementsByClassName('navbar-fixed-top')[0].style.paddingRight
      = this.originalBodyPadding;
-  }
-
-  computeScrollbarWidth() { // thx d.walsh
-    const scrollDiv = document.createElement('div');
-    scrollDiv.className = 'modal-scrollbar-measure';
-    document.body.appendChild(scrollDiv);
-    const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
-    document.body.removeChild(scrollDiv);
-    return scrollbarWidth;
   }
 
 
@@ -253,6 +253,7 @@ class Modal extends Component {
     );
   }
 
+  // eslint-disable-next-line class-methods-use-this
   render() {
     return null;
   }

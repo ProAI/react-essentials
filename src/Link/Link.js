@@ -34,19 +34,23 @@ class Link extends Component {
   }
 
   render() {
-    const { to, ...attributes } = this.props;
+    const { to, children, ...attributes } = this.props;
     delete attributes.preventToggle;
     delete attributes.preventFocus;
 
     // external link
     if (to.substring(0, 7) === 'http://' || to.substring(0, 8) === 'https://') {
       return (
-        <a {...attributes} href={to} target="_blank" rel="noopener noreferrer" />
+        <a {...attributes} href={to} target="_blank" rel="noopener noreferrer">
+          {children}
+        </a>
       );
     }
 
     return (
-      <RouterLink {...attributes} to={to} onClick={this.onClick} ref={c => { this.link = c; }} />
+      <RouterLink {...attributes} to={to} onClick={this.onClick} ref={c => { this.link = c; }}>
+        {children}
+      </RouterLink>
     );
   }
 }
