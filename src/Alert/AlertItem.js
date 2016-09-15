@@ -8,7 +8,6 @@ import Icon from '../Icon/Icon';
 const propTypes = {
   alert: PropTypes.object,
   onRemove: PropTypes.func,
-  allowHTML: PropTypes.bool,
   preventAnimation: PropTypes.bool,
 };
 
@@ -19,7 +18,6 @@ const childContextTypes = {
 const defaultProps = {
   preventAnimation: false,
   onRemove: () => {},
-  allowHTML: false,
 };
 
 class AlertItem extends Component {
@@ -220,18 +218,9 @@ class AlertItem extends Component {
     }
 
     if (alert.content) {
-      if (this.props.allowHTML) {
-        content = (
-          <div
-            className="alert-content"
-            dangerouslySetInnerHTML={{ __html: alert.content }}
-          />
-        );
-      } else {
-        content = (
-          <div className="alert-content">{alert.content}</div>
-        );
-      }
+      content = (
+        <div className="alert-content">{alert.content}</div>
+      );
     }
 
     if (alert.dismissible) {

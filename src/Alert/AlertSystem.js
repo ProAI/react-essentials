@@ -9,13 +9,11 @@ const propTypes = {
     PropTypes.object,
   ]),
   preventAnimation: PropTypes.bool,
-  allowHTML: PropTypes.bool,
 };
 
 const defaultProps = {
   style: {},
   preventAnimation: false,
-  allowHTML: false,
 };
 
 class AlertSystem extends Component {
@@ -95,7 +93,7 @@ class AlertSystem extends Component {
     this.uid += 1;
 
     // do not add if the alert already exists based on supplied uid
-    for (id = 0; id < alerts.length; id + 1) {
+    for (id = 0; id < alerts.length; id += 1) {
       if (alerts[id].uid === alert.uid) {
         return false;
       }
@@ -145,7 +143,6 @@ class AlertSystem extends Component {
               alerts={alerts}
               onRemove={self.didAlertRemoved}
               preventAnimation={self.props.preventAnimation}
-              allowHTML={self.props.allowHTML}
             />
           );
         }

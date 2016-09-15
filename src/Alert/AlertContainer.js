@@ -22,7 +22,6 @@ class AlertContainer extends Component {
         alert={alert}
         onRemove={self.props.onRemove}
         preventAnimation={self.props.preventAnimation}
-        allowHTML={self.props.allowHTML}
       />
     ));
 
