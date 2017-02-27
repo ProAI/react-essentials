@@ -5,8 +5,8 @@ const propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   info: PropTypes.string,
-  input: PropTypes.object.isRequired,
-  meta: PropTypes.object.isRequired,
+  input: PropTypes.object,
+  meta: PropTypes.object,
 };
 
 const contextTypes = {
@@ -16,7 +16,7 @@ const contextTypes = {
 function RadioButton({ label, value, info, input, meta }, { form }) {
   const labelClasses = cx(
     'custom-control-description',
-    { active: meta.active },
+    { active: meta.active && input.value === value },
   );
 
   return (

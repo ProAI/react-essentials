@@ -151,12 +151,10 @@ class AlertSystem extends Component {
       });
     }
 
-
     return (
       <div className="alert-wrapper">
           {containers}
       </div>
-
     );
   }
 }

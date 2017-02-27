@@ -2,9 +2,7 @@
   "parser": "babel-eslint",
   "extends": "airbnb",
   "env": {
-    "browser": true, // We write for browser
-    "node": true, // using CommonJS imports
-    "es6": true // And we use ES6 features
+    "browser": true
   },
   "rules": {
     "linebreak-style": "off",

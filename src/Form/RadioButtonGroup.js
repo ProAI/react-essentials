@@ -14,14 +14,13 @@ function RadioButtonGroup({ legend, input, meta, children }) {
     { 'has-danger': meta.error },
   );
 
-  const childrenWithProps = React.Children.map(children,
+  const childrenWithProps = React.Children.map(
+    children,
     child => React.cloneElement(child, {
       input,
       meta,
     })
   );
-
-  console.log(childrenWithProps);
 
   return (
     <fieldset className={fieldsetClasses}>

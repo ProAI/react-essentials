@@ -44,6 +44,7 @@ function Emoji({ className, name, sprites, textSize, imagePath, cacheBustParam }
     return (
       <svg
         className={classes}
+        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: useTag }}
       />
     );
