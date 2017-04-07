@@ -12,6 +12,10 @@ const contextTypes = {
   dismissible: PropTypes.bool.isRequired,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 function ModalHeader({ className, children, ...props }, { dismissible, toggle }) {
   let closeButton;
 
@@ -38,5 +42,6 @@ function ModalHeader({ className, children, ...props }, { dismissible, toggle })
 
 ModalHeader.propTypes = propTypes;
 ModalHeader.contextTypes = contextTypes;
+ModalHeader.defaultProps = defaultProps;
 
 export default ModalHeader;

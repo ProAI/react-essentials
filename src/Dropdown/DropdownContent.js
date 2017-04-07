@@ -5,6 +5,10 @@ const propTypes = {
   className: PropTypes.string,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 function DropdownContent({ className, ...attributes }) {
   const classes = cx(
     'dropdown-content',
@@ -17,5 +21,6 @@ function DropdownContent({ className, ...attributes }) {
 }
 
 DropdownContent.propTypes = propTypes;
+DropdownContent.defaultProps = defaultProps;
 
 export default DropdownContent;

@@ -6,7 +6,7 @@ import { defaultTetherConfig } from './constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
   className: PropTypes.string,
   placement: React.PropTypes.oneOf(tetherAttachements),
   toggle: PropTypes.func,
@@ -17,9 +17,12 @@ const propTypes = {
 };
 
 const defaultProps = {
+  className: null,
   isOpen: false,
   placement: 'bottom',
+  toggle: null,
   trigger: 'click',
+  disabled: false,
 };
 
 class Popover extends Component {

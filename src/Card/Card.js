@@ -6,6 +6,10 @@ const propTypes = {
   className: PropTypes.string,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 function Card({ children, className, ...attributes }) {
   const classes = cx(
     'card',
@@ -20,5 +24,6 @@ function Card({ children, className, ...attributes }) {
 }
 
 Card.propTypes = propTypes;
+Card.defaultProps = defaultProps;
 
 export default Card;

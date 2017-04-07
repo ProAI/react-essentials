@@ -6,6 +6,10 @@ const propTypes = {
   className: PropTypes.string,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 function FormBlock({ children, className, ...attributes }) {
   const classes = cx(
     'form-block',
@@ -20,5 +24,6 @@ function FormBlock({ children, className, ...attributes }) {
 }
 
 FormBlock.propTypes = propTypes;
+FormBlock.defaultProps = defaultProps;
 
 export default FormBlock;

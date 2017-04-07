@@ -16,6 +16,8 @@ const propTypes = {
 };
 
 const defaultProps = {
+  className: null,
+  textSize: null,
   sprites: false,
   imagePath: '/emojis',
   cacheBustParam: '?v=2.2.6',

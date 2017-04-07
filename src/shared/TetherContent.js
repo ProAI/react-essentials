@@ -12,14 +12,17 @@ const propTypes = {
   ]).isRequired,
   toggle: PropTypes.func.isRequired,
   tether: PropTypes.object.isRequired,
-  style: PropTypes.node,
+  style: PropTypes.object,
+};
+
+const defaultProps = {
+  arrow: null,
+  disabled: false,
+  isOpen: false,
+  style: null,
 };
 
 class TetherContent extends Component {
-  defaultProps = {
-    isOpen: false,
-  };
-
   componentDidMount() {
     this.handleProps();
   }
@@ -77,7 +80,7 @@ class TetherContent extends Component {
     ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
       this.renderChildren(),
-      this.element
+      this.element,
     );
 
     if (this.props.arrow) {
@@ -109,7 +112,7 @@ class TetherContent extends Component {
           position: 'relative',
           ...style,
         },
-      }
+      },
     );
   }
 
@@ -120,5 +123,6 @@ class TetherContent extends Component {
 }
 
 TetherContent.propTypes = propTypes;
+TetherContent.defaultProps = defaultProps;
 
 export default TetherContent;

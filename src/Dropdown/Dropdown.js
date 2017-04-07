@@ -14,7 +14,9 @@ const childContextTypes = {
 };
 
 const defaultProps = {
+  toggle: null,
   isOpen: false,
+  className: null,
 };
 
 class Dropdown extends Component {

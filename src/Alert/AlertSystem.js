@@ -130,14 +130,14 @@ class AlertSystem extends Component {
 
     if (this.state.alerts.length) {
       containers = constants.positions.map((position) => {
-        const alerts = this.state.alerts.filter((alert) => position === alert.placement);
+        const alerts = this.state.alerts.filter(alert => position === alert.placement);
 
         const positionAttributes = getPositionAttributes(position);
 
         if (alerts.length) {
           return (
             <AlertContainer
-              ref={c => { this.containers[positionAttributes.className] = c; }}
+              ref={(c) => { this.containers[positionAttributes.className] = c; }}
               key={positionAttributes.className}
               position={position}
               alerts={alerts}

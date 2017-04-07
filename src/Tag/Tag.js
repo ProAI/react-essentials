@@ -14,6 +14,7 @@ const propTypes = {
 };
 
 const defaultProps = {
+  className: null,
   variant: 'default',
 };
 

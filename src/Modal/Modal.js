@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
 const propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   isOpen: PropTypes.bool,
   size: PropTypes.string,
   toggle: PropTypes.func,
@@ -19,10 +19,14 @@ const childContextTypes = {
 
 const defaultProps = {
   isOpen: false,
+  size: null,
+  toggle: null,
+  onEnter: null,
+  onExit: null,
   dismissible: true,
 };
 
-const computeScrollbarWidth = () => { // thx d.walsh
+const computeScrollbarWidth = () => {
   const scrollDiv = document.createElement('div');
   scrollDiv.className = 'modal-scrollbar-measure';
   document.body.appendChild(scrollDiv);
@@ -218,7 +222,7 @@ class Modal extends Component {
     ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
       this.renderChildren(),
-      this.element
+      this.element,
     );
   }
 
@@ -239,7 +243,7 @@ class Modal extends Component {
       <div>
         {isOpen && (
           <div key="modal-dialog" className="modal" style={{ display: 'block' }} tabIndex="-1">
-            <div className={classes} role="document" ref={c => { this.dialog = c; }}>
+            <div className={classes} role="document" ref={(c) => { this.dialog = c; }}>
               <div className="modal-content">
                 {children}
               </div>

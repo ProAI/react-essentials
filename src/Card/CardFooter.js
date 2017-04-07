@@ -6,6 +6,10 @@ const propTypes = {
   className: PropTypes.string,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 function CardFooter({ children, className, ...attributes }) {
   const classes = cx(
     'card-footer',
@@ -20,5 +24,6 @@ function CardFooter({ children, className, ...attributes }) {
 }
 
 CardFooter.propTypes = propTypes;
+CardFooter.defaultProps = defaultProps;
 
 export default CardFooter;

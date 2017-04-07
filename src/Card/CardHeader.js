@@ -6,6 +6,10 @@ const propTypes = {
   className: PropTypes.string,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 function CardHeader({ children, className, ...attributes }) {
   const classes = cx(
     'card-header',
@@ -20,5 +24,6 @@ function CardHeader({ children, className, ...attributes }) {
 }
 
 CardHeader.propTypes = propTypes;
+CardHeader.defaultProps = defaultProps;
 
 export default CardHeader;

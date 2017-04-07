@@ -13,7 +13,7 @@ const propTypes = {
     'radio',
     'checkbox',
     'file',
-  ]),
+  ]).isRequired,
 };
 
 function FormField({ type, ...attributes }) {

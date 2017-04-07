@@ -14,6 +14,7 @@ const contextTypes = {
 };
 
 const defaultProps = {
+  onClick: null,
   preventToggle: false,
   preventFocus: false,
 };
@@ -48,7 +49,7 @@ class Link extends Component {
     }
 
     return (
-      <RouterLink {...attributes} to={to} onClick={this.onClick} ref={c => { this.link = c; }}>
+      <RouterLink {...attributes} to={to} onClick={this.onClick} ref={(c) => { this.link = c; }}>
         {children}
       </RouterLink>
     );

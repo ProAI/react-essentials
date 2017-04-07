@@ -4,7 +4,7 @@ import { getTetherAttachments, tetherAttachements, triggerCombinations } from '.
 import { defaultTetherConfig } from './constants';
 
 const propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   placement: React.PropTypes.oneOf(tetherAttachements),
   toggle: PropTypes.func,
   target: PropTypes.string.isRequired,
@@ -14,9 +14,11 @@ const propTypes = {
 };
 
 const defaultProps = {
+  toggle: null,
   isOpen: false,
   placement: 'bottom',
   trigger: 'hover focus',
+  disabled: false,
 };
 
 class Tooltip extends Component {

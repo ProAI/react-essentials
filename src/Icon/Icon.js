@@ -6,6 +6,10 @@ const propTypes = {
   className: PropTypes.string,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 function Icon({ name, className, ...attributes }) {
   const classes = cx(
     'icon',
@@ -19,5 +23,6 @@ function Icon({ name, className, ...attributes }) {
 }
 
 Icon.propTypes = propTypes;
+Icon.defaultProps = defaultProps;
 
 export default Icon;

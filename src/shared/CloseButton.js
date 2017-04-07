@@ -10,7 +10,7 @@ function CloseButton({ onClick }) {
 
   return (
     <button type="button" onClick={onClick} className="close">
-      <img src={closeImage} role="presentation" />
+      <img src={closeImage} alt="Close Button" />
     </button>
   );
 }

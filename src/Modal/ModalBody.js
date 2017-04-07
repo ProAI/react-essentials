@@ -6,6 +6,10 @@ const propTypes = {
   className: PropTypes.string,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 function ModalBody({ className, children, ...props }) {
   const classes = cx(
     className,
@@ -20,5 +24,6 @@ function ModalBody({ className, children, ...props }) {
 }
 
 ModalBody.propTypes = propTypes;
+ModalBody.defaultProps = defaultProps;
 
 export default ModalBody;

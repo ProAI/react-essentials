@@ -6,6 +6,10 @@ const propTypes = {
   className: PropTypes.string,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 function FormFooter({ children, className, ...attributes }) {
   const classes = cx(
     'form-footer',
@@ -20,5 +24,6 @@ function FormFooter({ children, className, ...attributes }) {
 }
 
 FormFooter.propTypes = propTypes;
+FormFooter.defaultProps = defaultProps;
 
 export default FormFooter;

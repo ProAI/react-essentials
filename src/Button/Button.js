@@ -28,8 +28,11 @@ const contextTypes = {
 };
 
 const defaultProps = {
+  className: null,
   type: 'button',
   variant: 'primary',
+  size: null,
+  onClick: null,
   preventToggle: false,
   preventFocus: false,
 };
@@ -75,7 +78,7 @@ class Button extends Component {
         type={type}
         className={classes}
         onClick={this.onClick}
-        ref={c => { this.button = c; }}
+        ref={(c) => { this.button = c; }}
       />
     );
   }

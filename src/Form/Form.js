@@ -12,6 +12,10 @@ const childContextTypes = {
   form: PropTypes.string.isRequired,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 class Form extends Component {
   getChildContext() {
     return {
@@ -37,5 +41,6 @@ class Form extends Component {
 
 Form.propTypes = propTypes;
 Form.childContextTypes = childContextTypes;
+Form.defaultProps = defaultProps;
 
 export default Form;

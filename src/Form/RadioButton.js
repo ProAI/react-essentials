@@ -13,6 +13,12 @@ const contextTypes = {
   form: PropTypes.string.isRequired,
 };
 
+const defaultProps = {
+  info: null,
+  input: null,
+  meta: null,
+};
+
 function RadioButton({ label, value, info, input, meta }, { form }) {
   const labelClasses = cx(
     'custom-control-description',
@@ -47,5 +53,6 @@ function RadioButton({ label, value, info, input, meta }, { form }) {
 
 RadioButton.propTypes = propTypes;
 RadioButton.contextTypes = contextTypes;
+RadioButton.defaultProps = defaultProps;
 
 export default RadioButton;

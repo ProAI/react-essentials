@@ -6,6 +6,10 @@ const propTypes = {
   className: PropTypes.string,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 function ModalFooter({ className, children, ...props }) {
   const classes = cx(
     className,
@@ -20,5 +24,6 @@ function ModalFooter({ className, children, ...props }) {
 }
 
 ModalFooter.propTypes = propTypes;
+ModalFooter.defaultProps = defaultProps;
 
 export default ModalFooter;

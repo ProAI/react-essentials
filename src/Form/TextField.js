@@ -30,7 +30,10 @@ const contextTypes = {
 };
 
 const defaultProps = {
+  label: null,
+  placeholder: null,
   inputType: 'text',
+  info: null,
   multiline: false,
 };
 

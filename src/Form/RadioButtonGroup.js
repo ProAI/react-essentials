@@ -8,6 +8,10 @@ const propTypes = {
   meta: PropTypes.object.isRequired,
 };
 
+const defaultProps = {
+  legend: null,
+};
+
 function RadioButtonGroup({ legend, input, meta, children }) {
   const fieldsetClasses = cx(
     'form-group',
@@ -19,7 +23,7 @@ function RadioButtonGroup({ legend, input, meta, children }) {
     child => React.cloneElement(child, {
       input,
       meta,
-    })
+    }),
   );
 
   return (
@@ -38,5 +42,6 @@ function RadioButtonGroup({ legend, input, meta, children }) {
 }
 
 RadioButtonGroup.propTypes = propTypes;
+RadioButtonGroup.defaultProps = defaultProps;
 
 export default RadioButtonGroup;

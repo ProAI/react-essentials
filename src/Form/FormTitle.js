@@ -6,6 +6,10 @@ const propTypes = {
   className: PropTypes.string,
 };
 
+const defaultProps = {
+  className: null,
+};
+
 function FormTitle({ children, className, ...attributes }) {
   const classes = cx(
     'form-title',
@@ -20,5 +24,6 @@ function FormTitle({ children, className, ...attributes }) {
 }
 
 FormTitle.propTypes = propTypes;
+FormTitle.defaultProps = defaultProps;
 
 export default FormTitle;

@@ -6,7 +6,7 @@ import CloseButton from '../shared/CloseButton';
 import Icon from '../Icon/Icon';
 
 const propTypes = {
-  alert: PropTypes.object,
+  alert: PropTypes.object.isRequired,
   onRemove: PropTypes.func,
   preventAnimation: PropTypes.bool,
 };
@@ -248,7 +248,7 @@ class AlertItem extends Component {
         className={classes}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
-        ref={c => { this.item = c; }}
+        ref={(c) => { this.item = c; }}
       >
         {dismiss}
         {body}

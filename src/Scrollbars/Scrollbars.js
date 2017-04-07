@@ -2,11 +2,18 @@ import React, { Component, PropTypes } from 'react';
 import GeminiScrollbar from 'gemini-scrollbar';
 
 const propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
   style: PropTypes.string,
   autoShow: PropTypes.bool,
   forceCustom: PropTypes.bool,
+};
+
+const defaultProps = {
+  className: null,
+  style: null,
+  autoShow: false,
+  forceCustom: false,
 };
 
 class Scrollbars extends Component {
@@ -40,7 +47,7 @@ class Scrollbars extends Component {
     const { className, children, style } = this.props;
 
     return (
-      <div className={className} style={style} ref={c => { this.container = c; }}>
+      <div className={className} style={style} ref={(c) => { this.container = c; }}>
         <div className="gm-scrollbar -vertical">
           <div className="thumb" />
         </div>
@@ -56,5 +63,6 @@ class Scrollbars extends Component {
 }
 
 Scrollbars.propTypes = propTypes;
+Scrollbars.defaultProps = defaultProps;
 
 export default Scrollbars;

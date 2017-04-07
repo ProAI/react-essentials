@@ -13,6 +13,8 @@ const contextTypes = {
 };
 
 const defaultProps = {
+  className: null,
+  onClick: null,
   tag: 'button',
 };
 
