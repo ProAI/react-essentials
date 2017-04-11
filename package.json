@@ -15,10 +15,7 @@
     "dropzone",
     "file upload"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ProAI/react-essentials.git"
-  },
+  "repository": "https://github.com/ProAI/react-essentials.git",
   "bugs": {
     "url": "https://github.com/ProAI/react-essentials/issues"
   },
