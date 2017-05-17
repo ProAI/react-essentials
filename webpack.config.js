@@ -7,28 +7,26 @@ module.exports = {
   entry: './src/index.js',
   devtool: 'source-map',
   output: {
-    path: __dirname + '/dist/',
+    path: `${__dirname}/dist/`,
     filename: 'index.js',
     libraryTarget: 'umd',
-    library: 'Dropzone'
+    library: 'Dropzone',
   },
   module: {
     loaders: [
       {
-        include: [
-          path.resolve(__dirname, 'src')
-        ],
+        include: [path.resolve(__dirname, 'src')],
         test: /\.js$/,
-        loader: 'babel-loader'
-      }
-    ]
+        loader: 'babel-loader',
+      },
+    ],
   },
   resolve: {
     // Can require('file') instead of require('file.js') etc.
-    extensions: ['', '.js', '.json']
+    extensions: ['', '.js', '.json'],
   },
   externals: {
-    react: 'react'
+    react: 'react',
   },
-  plugins: []
+  plugins: [],
 };
