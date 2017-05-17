@@ -10,12 +10,7 @@ export const constants = {
   ],
 
   // Levels
-  variants: [
-    'success',
-    'danger',
-    'warning',
-    'info',
-  ],
+  variants: ['success', 'danger', 'warning', 'info'],
 };
 
 export const defaultAlert = {

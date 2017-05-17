@@ -1,44 +1,45 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  value: PropTypes.string,
-  error: PropTypes.string,
-  info: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
+  info: PropTypes.string.isRequired,
   className: PropTypes.string,
   multiLine: PropTypes.bool,
 };
 
 const defaultProps = {
+  className: null,
   multiLine: false,
 };
 
-class TextField extends Component {
+class TextField extends React.Component {
   state = {
-    active: (this.props.value),
-    hasError: (this.props.error),
+    active: this.props.value,
+    hasError: this.props.error,
     value: this.props.value,
-  }
+  };
 
   onChange = (e) => {
     this.setState({
       value: e.target.value,
     });
 
-    const value = (this.props.value === undefined && !e.target.value)
-      ? undefined
-      : e.target.value;
+    const value = this.props.value === undefined && !e.target.value ? undefined : e.target.value;
 
-    if ((!this.state.hasError && this.props.error && value === this.props.value)
-      || (this.state.hasError && value !== this.props.value)
+    if (
+      (!this.state.hasError && this.props.error && value === this.props.value) ||
+      (this.state.hasError && value !== this.props.value)
     ) {
       this.setState({
         hasError: !this.state.hasError,
       });
     }
-  }
+  };
 
   toggle = (e) => {
     if (!e.target.value) {
@@ -46,27 +47,20 @@ class TextField extends Component {
         active: !this.state.active,
       });
     }
-  }
+  };
 
   render() {
     const { className, label, id, error, info, multiLine, ...attributes } = this.props;
 
-    const fieldsetClasses = cx(
-      'form-group',
-      { 'has-danger': this.state.hasError },
-    );
+    const fieldsetClasses = cx('form-group', { 'has-danger': this.state.hasError });
 
-    const labelClasses = cx(
-      { active: this.state.active },
-    );
+    const labelClasses = cx({ active: this.state.active });
 
-    const inputClasses = cx(
-      className,
-      'form-control',
-      { 'form-control-danger': this.state.hasError },
-    );
+    const inputClasses = cx(className, 'form-control', {
+      'form-control-danger': this.state.hasError,
+    });
 
-    const Tag = (multiLine) ? 'textarea' : 'input';
+    const Tag = multiLine ? 'textarea' : 'input';
 
     return (
       <fieldset className={fieldsetClasses}>
@@ -80,16 +74,14 @@ class TextField extends Component {
           onBlur={this.toggle}
           onChange={this.onChange}
         />
-        {this.state.hasError && (
+        {this.state.hasError &&
           <small className="text-danger">
             {error}
-          </small>
-        )}
-        {info && (
+          </small>}
+        {info &&
           <small className="text-muted">
             {info}
-          </small>
-        )}
+          </small>}
       </fieldset>
     );
   }

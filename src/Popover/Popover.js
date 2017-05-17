@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import TetherContent from '../shared/TetherContent';
 import { getTetherAttachments, tetherAttachements, triggerCombinations } from '../shared/helpers';
@@ -25,12 +26,12 @@ const defaultProps = {
   disabled: false,
 };
 
-class Popover extends Component {
+class Popover extends React.Component {
   state = {
     isOpen: this.props.isOpen,
     isClicked: false,
     isFocused: false,
-  }
+  };
 
   componentDidMount() {
     this.target = document.getElementById(this.props.target);
@@ -82,7 +83,7 @@ class Popover extends Component {
         }
       }
     }
-  }
+  };
 
   onTargetFocus = () => {
     // handle focus trigger
@@ -94,38 +95,36 @@ class Popover extends Component {
         this.toggle();
       }
     }
-  }
+  };
 
   onTargetBlur = () => {
     // handle focus trigger
-    if (this.trigger.indexOf('focus') !== -1
-      && this.isOpen()
-      && !this.state.isClicked
-    ) {
+    if (this.trigger.indexOf('focus') !== -1 && this.isOpen() && !this.state.isClicked) {
       this.setState({
         isFocused: !this.state.isFocused,
       });
       this.toggle();
     }
-  }
+  };
 
   onTargetMouseOver = () => {
     // handle hover trigger
     if (this.trigger.indexOf('hover') !== -1 && !this.isOpen()) {
       this.toggle();
     }
-  }
+  };
 
   onTargetMouseLeave = () => {
     // handle hover trigger
-    if (this.trigger.indexOf('hover') !== -1
-      && this.isOpen()
-      && !this.state.isClicked
-      && !this.state.isFocused
+    if (
+      this.trigger.indexOf('hover') !== -1 &&
+      this.isOpen() &&
+      !this.state.isClicked &&
+      !this.state.isFocused
     ) {
       this.toggle();
     }
-  }
+  };
 
   getTetherConfig() {
     const attachments = getTetherAttachments(this.props.placement);
@@ -149,7 +148,7 @@ class Popover extends Component {
         isOpen: !this.state.isOpen,
       });
     }
-  }
+  };
 
   isOpen = () => {
     if (this.props.toggle) {
@@ -157,7 +156,7 @@ class Popover extends Component {
     }
 
     return this.state.isOpen;
-  }
+  };
 
   render() {
     const { children, title, className } = this.props;
@@ -168,10 +167,7 @@ class Popover extends Component {
 
     const tetherConfig = this.getTetherConfig();
 
-    const classes = cx(
-      className,
-      'popover-content',
-    );
+    const classes = cx(className, 'popover-content');
 
     return (
       <TetherContent
@@ -183,9 +179,7 @@ class Popover extends Component {
         toggle={this.toggle}
       >
         <div className="popover-inner">
-          {title && (
-            <h3 className="popover-title">{title}</h3>
-          )}
+          {title && <h3 className="popover-title">{title}</h3>}
           <div className={classes}>
             {children}
           </div>

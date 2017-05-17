@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
@@ -13,14 +14,10 @@ const defaultProps = {
 };
 
 function RadioButtonGroup({ legend, input, meta, children }) {
-  const fieldsetClasses = cx(
-    'form-group',
-    { 'has-danger': meta.error },
-  );
+  const fieldsetClasses = cx('form-group', { 'has-danger': meta.error });
 
-  const childrenWithProps = React.Children.map(
-    children,
-    child => React.cloneElement(child, {
+  const childrenWithProps = React.Children.map(children, child =>
+    React.cloneElement(child, {
       input,
       meta,
     }),
@@ -28,15 +25,13 @@ function RadioButtonGroup({ legend, input, meta, children }) {
 
   return (
     <fieldset className={fieldsetClasses}>
-      {legend && (
-        <legend className="form-group-legend">{legend}</legend>
-      )}
+      {legend && <legend className="form-group-legend">{legend}</legend>}
       {childrenWithProps}
-      {meta.touched && meta.error && (
+      {meta.touched &&
+        meta.error &&
         <small className="text-danger">
           {meta.error}
-        </small>
-      )}
+        </small>}
     </fieldset>
   );
 }

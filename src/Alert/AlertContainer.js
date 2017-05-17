@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import AlertItem from './AlertItem';
 import { getPositionAttributes } from './helpers';
 
@@ -7,7 +8,7 @@ const propTypes = {
   alerts: PropTypes.array.isRequired,
 };
 
-class AlertContainer extends Component {
+class AlertContainer extends React.Component {
   render() {
     const self = this;
 

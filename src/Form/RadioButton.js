@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
@@ -20,10 +21,9 @@ const defaultProps = {
 };
 
 function RadioButton({ label, value, info, input, meta }, { form }) {
-  const labelClasses = cx(
-    'custom-control-description',
-    { active: meta.active && input.value === value },
-  );
+  const labelClasses = cx('custom-control-description', {
+    active: meta.active && input.value === value,
+  });
 
   return (
     <div className="radio">
@@ -38,13 +38,12 @@ function RadioButton({ label, value, info, input, meta }, { form }) {
         <div className="custom-control-indicator" />
         <div className={labelClasses}>
           {label}
-          {info && (
+          {info &&
             <div>
               <small className="text-muted">
                 {info}
               </small>
-            </div>
-          )}
+            </div>}
         </div>
       </label>
     </div>

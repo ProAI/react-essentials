@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import TextField from './TextField';
 // import SelectField from './SelectField';
@@ -7,13 +8,7 @@ import RadioButtonGroup from './RadioButtonGroup';
 // import CheckboxField from './CheckboxField';
 
 const propTypes = {
-  type: PropTypes.oneOf([
-    'text',
-    'select',
-    'radio',
-    'checkbox',
-    'file',
-  ]).isRequired,
+  type: PropTypes.oneOf(['text', 'select', 'radio', 'checkbox', 'file']).isRequired,
 };
 
 function FormField({ type, ...attributes }) {
@@ -21,7 +16,7 @@ function FormField({ type, ...attributes }) {
 
   if (type === 'text') {
     component = TextField;
-  /* } else if (type === 'select') {
+    /* } else if (type === 'select') {
     component = SelectField;
   } else if (type === 'file') {
     component = FileUploadField;*/
@@ -31,9 +26,7 @@ function FormField({ type, ...attributes }) {
     component = CheckboxField;
   }*/
 
-  return (
-    <Field {...attributes} component={component} />
-  );
+  return <Field {...attributes} component={component} />;
 }
 
 FormField.propTypes = propTypes;

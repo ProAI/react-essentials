@@ -1,16 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
   className: PropTypes.string,
-  variant: PropTypes.oneOf([
-    'default',
-    'primary',
-    'success',
-    'info',
-    'warning',
-    'danger',
-  ]),
+  variant: PropTypes.oneOf(['default', 'primary', 'success', 'info', 'warning', 'danger']),
 };
 
 const defaultProps = {
@@ -19,15 +13,9 @@ const defaultProps = {
 };
 
 function Tag({ variant, className, ...attributes }) {
-  const classes = cx(
-    'tag',
-    `tag-${variant}`,
-    className,
-  );
+  const classes = cx('tag', `tag-${variant}`, className);
 
-  return (
-    <span {...attributes} className={classes} />
-  );
+  return <span {...attributes} className={classes} />;
 }
 
 Tag.propTypes = propTypes;

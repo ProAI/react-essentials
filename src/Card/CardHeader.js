@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
@@ -11,10 +12,7 @@ const defaultProps = {
 };
 
 function CardHeader({ children, className, ...attributes }) {
-  const classes = cx(
-    'card-header',
-    className,
-  );
+  const classes = cx('card-header', className);
 
   return (
     <div {...attributes} className={classes}>

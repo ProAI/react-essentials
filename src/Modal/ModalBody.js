@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
@@ -11,10 +12,7 @@ const defaultProps = {
 };
 
 function ModalBody({ className, children, ...props }) {
-  const classes = cx(
-    className,
-    'modal-body',
-  );
+  const classes = cx(className, 'modal-body');
 
   return (
     <div {...props} className={classes}>

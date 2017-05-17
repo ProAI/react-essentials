@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import cx from 'classnames';
 
@@ -19,10 +20,10 @@ const defaultProps = {
   className: null,
 };
 
-class Dropdown extends Component {
+class Dropdown extends React.Component {
   state = {
     isOpen: this.props.isOpen,
-  }
+  };
 
   getChildContext() {
     return {
@@ -46,7 +47,7 @@ class Dropdown extends Component {
         this.toggle();
       }
     }
-  }
+  };
 
   toggle = () => {
     if (this.props.toggle) {
@@ -56,7 +57,7 @@ class Dropdown extends Component {
         isOpen: !this.state.isOpen,
       });
     }
-  }
+  };
 
   isOpen = () => {
     if (this.props.toggle) {
@@ -64,7 +65,7 @@ class Dropdown extends Component {
     }
 
     return this.state.isOpen;
-  }
+  };
 
   render() {
     const { className, ...attributes } = this.props;
@@ -72,15 +73,9 @@ class Dropdown extends Component {
     delete attributes.isOpen;
 
     // create component classes
-    const classes = cx(
-      'dropdown',
-      { active: this.isOpen() },
-      className,
-    );
+    const classes = cx('dropdown', { active: this.isOpen() }, className);
 
-    return (
-      <div {...attributes} className={classes} />
-    );
+    return <div {...attributes} className={classes} />;
   }
 }
 

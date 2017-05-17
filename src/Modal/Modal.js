@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 
@@ -35,7 +36,7 @@ const computeScrollbarWidth = () => {
   return scrollbarWidth;
 };
 
-class Modal extends Component {
+class Modal extends React.Component {
   getChildContext() {
     return {
       toggle: this.props.toggle,
@@ -67,20 +68,20 @@ class Modal extends Component {
     if (this.props.onEnter) {
       this.props.onEnter();
     }
-  }
+  };
 
   onExit = () => {
     this.destroy();
     if (this.props.onExit) {
       this.props.onExit();
     }
-  }
+  };
 
   onEscape = (ev) => {
     if (ev.keyCode === 27) {
       this.props.toggle();
     }
-  }
+  };
 
   onBackdropClick = (ev) => {
     const container = this.dialog;
@@ -88,7 +89,7 @@ class Modal extends Component {
     if (ev.target && !container.contains(ev.target)) {
       this.props.toggle();
     }
-  }
+  };
 
   handleProps = () => {
     if (this.props.isOpen) {
@@ -96,7 +97,7 @@ class Modal extends Component {
     } else {
       this.hide();
     }
-  }
+  };
 
   destroy = () => {
     const classes = document.body.className.replace('modal-open', '');
@@ -109,7 +110,7 @@ class Modal extends Component {
     }
 
     document.body.className = cx(classes).trim();
-  }
+  };
 
   removeEvents() {
     document.removeEventListener('click', this.onBackdropClick, false);
@@ -138,10 +139,7 @@ class Modal extends Component {
     document.addEventListener('click', this.onBackdropClick, false);
     document.addEventListener('keyup', this.onEscape, false);
 
-    document.body.className = cx(
-      classes,
-      'modal-open',
-    );
+    document.body.className = cx(classes, 'modal-open');
 
     this.renderIntoSubtree();
 
@@ -152,7 +150,6 @@ class Modal extends Component {
 
     this.handleUpdate();
   }
-
 
   // ----------------------------------------------------------------------
   // the following methods are used to handle overflowing modals
@@ -185,7 +182,8 @@ class Modal extends Component {
 
   checkScrollbar() {
     let fullWindowWidth = window.innerWidth;
-    if (!fullWindowWidth) { // workaround for missing window.innerWidth in IE8
+    if (!fullWindowWidth) {
+      // workaround for missing window.innerWidth in IE8
       const documentElementRect = document.documentElement.getBoundingClientRect();
       fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
     }
@@ -199,31 +197,28 @@ class Modal extends Component {
     this.originalBodyPadding = document.body.style.paddingRight || '';
 
     if (this.isBodyOverflowing) {
-      document.getElementById('content-body').style.paddingRight
-       = `${bodyPadding + this.scrollbarWidth}px`;
-      document.getElementsByClassName('navbar-fixed-top')[0].style.paddingRight
-       = `${bodyPadding + this.scrollbarWidth}px`;
+      document.getElementById(
+        'content-body',
+      ).style.paddingRight = `${bodyPadding + this.scrollbarWidth}px`;
+      document.getElementsByClassName('navbar-fixed-top')[
+        0
+      ].style.paddingRight = `${bodyPadding + this.scrollbarWidth}px`;
     }
   }
 
   resetScrollbar() {
-    document.getElementById('content-body').style.paddingRight
-     = this.originalBodyPadding;
-    document.getElementsByClassName('navbar-fixed-top')[0].style.paddingRight
-     = this.originalBodyPadding;
+    document.getElementById('content-body').style.paddingRight = this.originalBodyPadding;
+    document.getElementsByClassName('navbar-fixed-top')[
+      0
+    ].style.paddingRight = this.originalBodyPadding;
   }
-
 
   // ----------------------------------------------------------------------
   // Rendering
   // ----------------------------------------------------------------------
 
   renderIntoSubtree() {
-    ReactDOM.unstable_renderSubtreeIntoContainer(
-      this,
-      this.renderChildren(),
-      this.element,
-    );
+    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderChildren(), this.element);
   }
 
   renderChildren() {
@@ -234,25 +229,25 @@ class Modal extends Component {
       sizeClass = ` modal-${this.props.size}`;
     }
 
-    const classes = cx(
-      sizeClass,
-      'modal-dialog',
-    );
+    const classes = cx(sizeClass, 'modal-dialog');
 
     return (
       <div>
-        {isOpen && (
+        {isOpen &&
           <div key="modal-dialog" className="modal" style={{ display: 'block' }} tabIndex="-1">
-            <div className={classes} role="document" ref={(c) => { this.dialog = c; }}>
+            <div
+              className={classes}
+              role="document"
+              ref={(c) => {
+                this.dialog = c;
+              }}
+            >
               <div className="modal-content">
                 {children}
               </div>
             </div>
-          </div>
-        )}
-        {isOpen && (
-          <div key="modal-backdrop" className="modal-backdrop in" />
-        )}
+          </div>}
+        {isOpen && <div key="modal-backdrop" className="modal-backdrop in" />}
       </div>
     );
   }

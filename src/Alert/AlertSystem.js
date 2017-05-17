@@ -1,13 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import AlertContainer from './AlertContainer';
 import { defaultAlert, constants } from './constants';
 import { getPositionAttributes } from './helpers';
 
 const propTypes = {
-  style: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.object,
-  ]),
+  style: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   preventAnimation: PropTypes.bool,
 };
 
@@ -16,10 +14,10 @@ const defaultProps = {
   preventAnimation: false,
 };
 
-class AlertSystem extends Component {
+class AlertSystem extends React.Component {
   state = {
     alerts: [],
-  }
+  };
 
   containers = [];
 
@@ -42,11 +40,13 @@ class AlertSystem extends Component {
   };
 
   add = (customAlert) => {
-    if (customAlert.placement === undefined
-      || customAlert.placement === 'top center'
-      || customAlert.placement === 'top'
-      || customAlert.placement === 'bottom center'
-      || customAlert.placement === 'bottom') {
+    if (
+      customAlert.placement === undefined ||
+      customAlert.placement === 'top center' ||
+      customAlert.placement === 'top' ||
+      customAlert.placement === 'bottom center' ||
+      customAlert.placement === 'bottom'
+    ) {
       defaultAlert.icon = true;
       defaultAlert.small = false;
     } else {
@@ -56,7 +56,7 @@ class AlertSystem extends Component {
 
     const alert = {};
     Object.keys(defaultAlert).forEach((value) => {
-      alert[value] = (customAlert[value] === undefined) ? defaultAlert[value] : customAlert[value];
+      alert[value] = customAlert[value] === undefined ? defaultAlert[value] : customAlert[value];
     });
 
     if (alert.placement === 'top') {
@@ -137,7 +137,9 @@ class AlertSystem extends Component {
         if (alerts.length) {
           return (
             <AlertContainer
-              ref={(c) => { this.containers[positionAttributes.className] = c; }}
+              ref={(c) => {
+                this.containers[positionAttributes.className] = c;
+              }}
               key={positionAttributes.className}
               position={position}
               alerts={alerts}

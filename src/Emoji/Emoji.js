@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import getUnicodeChars from './getUnicodeChars';
 import emojioneList from './emojioneList';
@@ -6,10 +7,7 @@ import emojioneList from './emojioneList';
 const propTypes = {
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
-  textSize: PropTypes.oneOf([
-    'sm',
-    'lg',
-  ]),
+  textSize: PropTypes.oneOf(['sm', 'lg']),
   sprites: PropTypes.bool,
   imagePath: PropTypes.string,
   cacheBustParam: PropTypes.string,
@@ -27,14 +25,14 @@ function Emoji({ className, name, sprites, textSize, imagePath, cacheBustParam }
   const emoji = emojioneList[`:${name}:`];
 
   const unicode = emoji[emoji.length - 1];
-  const backgroundImage = (sprites)
+  const backgroundImage = sprites
     ? `${imagePath}/emojione.sprites.svg${cacheBustParam}#emoji-${unicode}`
     : `${imagePath}/${unicode}.svg${cacheBustParam}`;
 
   const classes = cx(
     'emoji',
-    { 'emoji-sm': (textSize === 'sm') },
-    { 'emoji-lg': (textSize === 'lg') },
+    { 'emoji-sm': textSize === 'sm' },
+    { 'emoji-lg': textSize === 'lg' },
     className,
   );
 
@@ -52,13 +50,7 @@ function Emoji({ className, name, sprites, textSize, imagePath, cacheBustParam }
     );
   }
 
-  return (
-    <img
-      src={backgroundImage}
-      alt={unicodeChars}
-      className={classes}
-    />
-  );
+  return <img src={backgroundImage} alt={unicodeChars} className={classes} />;
 }
 
 Emoji.propTypes = propTypes;

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import GeminiScrollbar from 'gemini-scrollbar';
 
 const propTypes = {
@@ -16,7 +17,7 @@ const defaultProps = {
   forceCustom: false,
 };
 
-class Scrollbars extends Component {
+class Scrollbars extends React.Component {
   componentDidMount() {
     this.scrollbar = new GeminiScrollbar({
       element: this.container,
@@ -47,7 +48,13 @@ class Scrollbars extends Component {
     const { className, children, style } = this.props;
 
     return (
-      <div className={className} style={style} ref={(c) => { this.container = c; }}>
+      <div
+        className={className}
+        style={style}
+        ref={(c) => {
+          this.container = c;
+        }}
+      >
         <div className="gm-scrollbar -vertical">
           <div className="thumb" />
         </div>

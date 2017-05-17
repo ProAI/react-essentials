@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
@@ -38,53 +39,39 @@ const defaultProps = {
 };
 
 function TextField({ label, placeholder, inputType, info, input, meta, multiline }, { form }) {
-  const fieldsetClasses = cx(
-    'form-group',
-    { 'has-danger': meta.error },
-  );
+  const fieldsetClasses = cx('form-group', { 'has-danger': meta.error });
 
-  const labelClasses = cx(
-    'form-control-label',
-    { active: meta.active },
-  );
+  const labelClasses = cx('form-control-label', { active: meta.active });
 
-  const inputClasses = cx(
-    'form-control',
-    { 'form-control-danger': meta.error },
-  );
+  const inputClasses = cx('form-control', { 'form-control-danger': meta.error });
 
   return (
     <fieldset className={fieldsetClasses}>
-      {label && (
-        <label htmlFor={`${form}-${input.name}`} className={labelClasses}>{label}</label>
-      )}
-      {!multiline && (
+      {label && <label htmlFor={`${form}-${input.name}`} className={labelClasses}>{label}</label>}
+      {!multiline &&
         <input
           {...input}
           id={`${form}-${input.name}`}
           placeholder={placeholder}
           type={inputType}
           className={inputClasses}
-        />
-      )}
-      {multiline && (
+        />}
+      {multiline &&
         <textarea
           {...input}
           id={`${form}-${input.name}`}
           placeholder={placeholder}
           className={inputClasses}
-        />
-      )}
-      {meta.touched && meta.error && (
+        />}
+      {meta.touched &&
+        meta.error &&
         <small className="text-danger">
           {meta.error}
-        </small>
-      )}
-      {info && (
+        </small>}
+      {info &&
         <small className="text-muted">
           {info}
-        </small>
-      )}
+        </small>}
     </fieldset>
   );
 }

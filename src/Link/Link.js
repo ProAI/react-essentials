@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router';
 
 const propTypes = {
@@ -19,7 +20,7 @@ const defaultProps = {
   preventFocus: false,
 };
 
-class Link extends Component {
+class Link extends React.Component {
   onClick = (event) => {
     if (this.props.onClick) {
       this.props.onClick(event);
@@ -32,7 +33,7 @@ class Link extends Component {
     if (this.props.preventFocus) {
       this.link.blur();
     }
-  }
+  };
 
   render() {
     const { to, children, ...attributes } = this.props;
@@ -49,7 +50,14 @@ class Link extends Component {
     }
 
     return (
-      <RouterLink {...attributes} to={to} onClick={this.onClick} ref={(c) => { this.link = c; }}>
+      <RouterLink
+        {...attributes}
+        to={to}
+        onClick={this.onClick}
+        ref={(c) => {
+          this.link = c;
+        }}
+      >
         {children}
       </RouterLink>
     );

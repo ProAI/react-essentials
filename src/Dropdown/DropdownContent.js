@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
@@ -10,14 +11,9 @@ const defaultProps = {
 };
 
 function DropdownContent({ className, ...attributes }) {
-  const classes = cx(
-    'dropdown-content',
-    className,
-  );
+  const classes = cx('dropdown-content', className);
 
-  return (
-    <div {...attributes} className={classes} />
-  );
+  return <div {...attributes} className={classes} />;
 }
 
 DropdownContent.propTypes = propTypes;

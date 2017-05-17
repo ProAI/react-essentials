@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import TetherContent from '../shared/TetherContent';
 import { getTetherAttachments, tetherAttachements, triggerCombinations } from '../shared/helpers';
 import { defaultTetherConfig } from './constants';
@@ -21,12 +22,12 @@ const defaultProps = {
   disabled: false,
 };
 
-class Tooltip extends Component {
+class Tooltip extends React.Component {
   state = {
     isOpen: this.props.isOpen,
     isClicked: false,
     isFocused: false,
-  }
+  };
 
   componentDidMount() {
     this.target = document.getElementById(this.props.target);
@@ -78,7 +79,7 @@ class Tooltip extends Component {
         }
       }
     }
-  }
+  };
 
   onTargetFocus = () => {
     // handle focus trigger
@@ -90,38 +91,36 @@ class Tooltip extends Component {
         this.toggle();
       }
     }
-  }
+  };
 
   onTargetBlur = () => {
     // handle focus trigger
-    if (this.trigger.indexOf('focus') !== -1
-      && this.isOpen()
-      && !this.state.isClicked
-    ) {
+    if (this.trigger.indexOf('focus') !== -1 && this.isOpen() && !this.state.isClicked) {
       this.setState({
         isFocused: !this.state.isFocused,
       });
       this.toggle();
     }
-  }
+  };
 
   onTargetMouseOver = () => {
     // handle hover trigger
     if (this.trigger.indexOf('hover') !== -1 && !this.isOpen()) {
       this.toggle();
     }
-  }
+  };
 
   onTargetMouseLeave = () => {
     // handle hover trigger
-    if (this.trigger.indexOf('hover') !== -1
-      && this.isOpen()
-      && !this.state.isClicked
-      && !this.state.isFocused
+    if (
+      this.trigger.indexOf('hover') !== -1 &&
+      this.isOpen() &&
+      !this.state.isClicked &&
+      !this.state.isFocused
     ) {
       this.toggle();
     }
-  }
+  };
 
   getTetherConfig() {
     const attachments = getTetherAttachments(this.props.placement);
@@ -145,7 +144,7 @@ class Tooltip extends Component {
         isOpen: !this.state.isOpen,
       });
     }
-  }
+  };
 
   isOpen = () => {
     if (this.props.toggle) {
@@ -153,7 +152,7 @@ class Tooltip extends Component {
     }
 
     return this.state.isOpen;
-  }
+  };
 
   render() {
     if (!this.isOpen()) {

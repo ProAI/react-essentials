@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
@@ -11,10 +12,7 @@ const defaultProps = {
 };
 
 function FormTitle({ children, className, ...attributes }) {
-  const classes = cx(
-    'form-title',
-    className,
-  );
+  const classes = cx('form-title', className);
 
   return (
     <div {...attributes} className={classes}>

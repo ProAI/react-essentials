@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import CloseButton from '../shared/CloseButton';
 
@@ -19,15 +20,10 @@ const defaultProps = {
 function ModalHeader({ className, children, ...props }, { dismissible, toggle }) {
   let closeButton;
 
-  const classes = cx(
-    className,
-    'modal-header',
-  );
+  const classes = cx(className, 'modal-header');
 
   if (dismissible) {
-    closeButton = (
-      <CloseButton onClick={toggle} />
-    );
+    closeButton = <CloseButton onClick={toggle} />;
   }
 
   return (

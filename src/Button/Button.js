@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
@@ -14,10 +15,7 @@ const propTypes = {
     'link',
     'option',
   ]),
-  size: PropTypes.oneOf([
-    'sm',
-    'lg',
-  ]),
+  size: PropTypes.oneOf(['sm', 'lg']),
   onClick: PropTypes.func,
   preventToggle: PropTypes.bool,
   preventFocus: PropTypes.bool,
@@ -37,7 +35,7 @@ const defaultProps = {
   preventFocus: false,
 };
 
-class Button extends Component {
+class Button extends React.Component {
   onClick = (event) => {
     event.preventDefault();
 
@@ -52,25 +50,22 @@ class Button extends Component {
     if (this.props.preventFocus) {
       this.button.blur();
     }
-  }
+  };
 
   render() {
     const { variant, size, type, className, ...attributes } = this.props;
     delete attributes.preventToggle;
     delete attributes.preventFocus;
 
-    const classes = (variant === 'option')
-      ? cx(
-        'btn-option',
-        className,
-      )
+    const classes = variant === 'option'
+      ? cx('btn-option', className)
       : cx(
-        'btn',
-        `btn-${variant}`,
-        { 'btn-sm': (size === 'sm') },
-        { 'btn-lg': (size === 'lg') },
-        className,
-      );
+          'btn',
+          `btn-${variant}`,
+          { 'btn-sm': size === 'sm' },
+          { 'btn-lg': size === 'lg' },
+          className,
+        );
 
     return (
       <button
@@ -78,7 +73,9 @@ class Button extends Component {
         type={type}
         className={classes}
         onClick={this.onClick}
-        ref={(c) => { this.button = c; }}
+        ref={(c) => {
+          this.button = c;
+        }}
       />
     );
   }

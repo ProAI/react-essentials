@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
@@ -16,7 +17,7 @@ const defaultProps = {
   className: null,
 };
 
-class Form extends Component {
+class Form extends React.Component {
   getChildContext() {
     return {
       form: this.props.name,
@@ -26,10 +27,7 @@ class Form extends Component {
   render() {
     const { children, onSubmit, className, ...attributes } = this.props;
 
-    const classes = cx(
-      'form',
-      className,
-    );
+    const classes = cx('form', className);
 
     return (
       <form {...attributes} onSubmit={onSubmit} className={classes}>

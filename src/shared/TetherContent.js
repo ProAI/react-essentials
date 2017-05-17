@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Tether from 'tether';
 
@@ -6,10 +7,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   arrow: PropTypes.string,
   disabled: PropTypes.bool,
-  isOpen: PropTypes.oneOfType([
-    React.PropTypes.func,
-    React.PropTypes.bool,
-  ]).isRequired,
+  isOpen: PropTypes.oneOfType([React.PropTypes.func, React.PropTypes.bool]).isRequired,
   toggle: PropTypes.func.isRequired,
   tether: PropTypes.object.isRequired,
   style: PropTypes.object,
@@ -22,7 +20,7 @@ const defaultProps = {
   style: null,
 };
 
-class TetherContent extends Component {
+class TetherContent extends React.Component {
   componentDidMount() {
     this.handleProps();
   }
@@ -77,11 +75,7 @@ class TetherContent extends Component {
   show() {
     this.element = document.createElement('div');
     document.body.appendChild(this.element);
-    ReactDOM.unstable_renderSubtreeIntoContainer(
-      this,
-      this.renderChildren(),
-      this.element,
-    );
+    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderChildren(), this.element);
 
     if (this.props.arrow) {
       const arrow = document.createElement('div');
@@ -105,15 +99,12 @@ class TetherContent extends Component {
 
   renderChildren() {
     const { children, style } = this.props;
-    return React.cloneElement(
-      children,
-      {
-        style: {
-          position: 'relative',
-          ...style,
-        },
+    return React.cloneElement(children, {
+      style: {
+        position: 'relative',
+        ...style,
       },
-    );
+    });
   }
 
   // eslint-disable-next-line class-methods-use-this

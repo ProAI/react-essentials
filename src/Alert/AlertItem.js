@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { chooseTransitionEvent, Timer } from './helpers';
 import Link from '../Link/Link';
@@ -20,11 +21,11 @@ const defaultProps = {
   onRemove: () => {},
 };
 
-class AlertItem extends Component {
+class AlertItem extends React.Component {
   state = {
     visible: false,
     removed: false,
-  }
+  };
 
   getChildContext() {
     return {
@@ -54,7 +55,6 @@ class AlertItem extends Component {
       }
     }
 
-
     if (alert.autoDismiss) {
       this.alertTimer = new Timer(() => {
         self.hideAlert();
@@ -77,31 +77,31 @@ class AlertItem extends Component {
       this.removeCount += 1;
       this.removeAlert();
     }
-  }
+  };
 
   onMouseEnter = () => {
     const alert = this.props.alert;
     if (alert.autoDismiss) {
       this.alertTimer.pause();
     }
-  }
+  };
 
   onMouseLeave = () => {
     const alert = this.props.alert;
     if (alert.autoDismiss) {
       this.alertTimer.resume();
     }
-  }
+  };
 
   toggle = () => {
     if (this.state.visible) {
       this.hideAlert();
     }
-  }
+  };
 
   removeAlert = () => {
     this.props.onRemove(this.props.alert.uid);
-  }
+  };
 
   dismiss = () => {
     if (!this.props.alert.dismissible) {
@@ -109,7 +109,7 @@ class AlertItem extends Component {
     }
 
     this.hideAlert();
-  }
+  };
 
   showAlert = () => {
     const self = this;
@@ -120,7 +120,7 @@ class AlertItem extends Component {
         });
       }
     }, 50);
-  }
+  };
 
   hideAlert = () => {
     if (this.alertTimer) {
@@ -137,7 +137,7 @@ class AlertItem extends Component {
     if (this.preventAnimation) {
       this.removeAlert();
     }
-  }
+  };
 
   render() {
     const alert = this.props.alert;
@@ -148,43 +148,25 @@ class AlertItem extends Component {
     let content = null;
 
     if (this.state.visible) {
-      classes = cx(
-        classes,
-        'alert-visible',
-      );
+      classes = cx(classes, 'alert-visible');
     } else {
-      classes = cx(
-        classes,
-        'alert-hidden',
-      );
+      classes = cx(classes, 'alert-hidden');
     }
 
     if (alert.icon) {
-      classes = cx(
-        classes,
-        'alert-with-icon',
-      );
+      classes = cx(classes, 'alert-with-icon');
     }
 
     if (alert.small) {
-      classes = cx(
-        classes,
-        'alert-sm',
-      );
+      classes = cx(classes, 'alert-sm');
     }
 
     if (!alert.dismissible) {
-      classes = cx(
-        classes,
-        'alert-not-dismissible',
-      );
+      classes = cx(classes, 'alert-not-dismissible');
     }
 
     if (this.state.removed) {
-      classes = cx(
-        classes,
-        'alert-removed',
-      );
+      classes = cx(classes, 'alert-removed');
     }
 
     if (alert.icon) {
@@ -218,15 +200,11 @@ class AlertItem extends Component {
     }
 
     if (alert.content) {
-      content = (
-        <div className="alert-content">{alert.content}</div>
-      );
+      content = <div className="alert-content">{alert.content}</div>;
     }
 
     if (alert.dismissible) {
-      dismiss = (
-        <CloseButton onClick={this.dismiss} />
-      );
+      dismiss = <CloseButton onClick={this.dismiss} />;
     }
 
     let body = (
@@ -238,9 +216,7 @@ class AlertItem extends Component {
     );
 
     if (alert.link) {
-      body = (
-        <Link to={alert.link} className="alert-link">{content}</Link>
-      );
+      body = <Link to={alert.link} className="alert-link">{content}</Link>;
     }
 
     return (
@@ -248,14 +224,15 @@ class AlertItem extends Component {
         className={classes}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
-        ref={(c) => { this.item = c; }}
+        ref={(c) => {
+          this.item = c;
+        }}
       >
         {dismiss}
         {body}
       </div>
     );
   }
-
 }
 
 AlertItem.propTypes = propTypes;
