@@ -197,20 +197,26 @@ class Modal extends React.Component {
     this.originalBodyPadding = document.body.style.paddingRight || '';
 
     if (this.isBodyOverflowing) {
-      document.getElementById(
-        'content-body',
-      ).style.paddingRight = `${bodyPadding + this.scrollbarWidth}px`;
-      document.getElementsByClassName('navbar-fixed-top')[
-        0
-      ].style.paddingRight = `${bodyPadding + this.scrollbarWidth}px`;
+      if (document.getElementById('content')) {
+        document.getElementById(
+          'content',
+        ).style.paddingRight = `${bodyPadding + this.scrollbarWidth}px`;
+      }
+      if (document.getElementById('navbar')) {
+        document.getElementById(
+          'navbar',
+        ).style.paddingRight = `${bodyPadding + this.scrollbarWidth}px`;
+      }
     }
   }
 
   resetScrollbar() {
-    document.getElementById('content-body').style.paddingRight = this.originalBodyPadding;
-    document.getElementsByClassName('navbar-fixed-top')[
-      0
-    ].style.paddingRight = this.originalBodyPadding;
+    if (document.getElementById('content')) {
+      document.getElementById('content').style.paddingRight = this.originalBodyPadding;
+    }
+    if (document.getElementById('navbar')) {
+      document.getElementById('navbar').style.paddingRight = this.originalBodyPadding;
+    }
   }
 
   // ----------------------------------------------------------------------
@@ -252,7 +258,6 @@ class Modal extends React.Component {
     );
   }
 
-  // eslint-disable-next-line class-methods-use-this
   render() {
     return null;
   }
