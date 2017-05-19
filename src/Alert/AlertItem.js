@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import InfoIcon from 'react-icons/lib/fa/info';
+import ExclamationIcon from 'react-icons/lib/fa/exclamation';
+import CloseIcon from 'react-icons/lib/fa/close';
+import CheckIcon from 'react-icons/lib/fa/check';
 import { chooseTransitionEvent, Timer } from './helpers';
 import Link from '../Link/Link';
 import CloseButton from '../shared/CloseButton';
-import Icon from '../Icon/Icon';
 
 const propTypes = {
   alert: PropTypes.object.isRequired,
@@ -170,29 +173,22 @@ class AlertItem extends React.Component {
     }
 
     if (alert.icon) {
-      let iconType;
       switch (alert.variant) {
         case 'info':
-          iconType = 'info';
+          icon = <InfoIcon className="alert-icon" />;
           break;
         case 'warning':
-          iconType = 'attention-alt';
+          icon = <ExclamationIcon className="alert-icon" />;
           break;
         case 'danger':
-          iconType = 'cancel';
+          icon = <CloseIcon className="alert-icon" />;
           break;
         case 'success':
-          iconType = 'ok';
+          icon = <CheckIcon className="alert-icon" />;
           break;
         default:
-          iconType = 'info';
+          icon = <InfoIcon className="alert-icon" />;
       }
-
-      icon = (
-        <div className="alert-icon">
-          <Icon name={iconType} />
-        </div>
-      );
     }
 
     if (alert.title) {

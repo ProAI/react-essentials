@@ -8,7 +8,7 @@ import CardBlock from './Card/CardBlock';
 import CardFooter from './Card/CardFooter';
 
 /* alert components */
-import AlertSystem from './Alert/AlertSystem';
+import Alert from './Alert/Alert';
 
 /* dropdown components */
 import Dropdown from './Dropdown/Dropdown';
@@ -25,9 +25,6 @@ import FormTitle from './Form/FormTitle';
 import FormField from './Form/FormField';
 import FormFooter from './Form/FormFooter';
 import RadioButton from './Form/RadioButton';
-
-/* icon components */
-import Icon from './Icon/Icon';
 
 /* link components */
 import Link from './Link/Link';
@@ -56,7 +53,7 @@ export {
   CardHeader,
   CardBlock,
   CardFooter,
-  AlertSystem,
+  Alert,
   Dropdown,
   DropdownContent,
   DropdownToggle,
@@ -67,7 +64,6 @@ export {
   FormField,
   FormFooter,
   RadioButton,
-  Icon,
   Link,
   Modal,
   ModalBody,
