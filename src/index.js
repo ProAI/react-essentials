@@ -27,6 +27,7 @@ import FormFooter from './Form/FormFooter';
 import RadioButton from './Form/RadioButton';
 
 /* link components */
+import ActionLink from './Link/ActionLink';
 import Link from './Link/Link';
 
 /* modal components */
@@ -64,6 +65,7 @@ export {
   FormField,
   FormFooter,
   RadioButton,
+  ActionLink,
   Link,
   Modal,
   ModalBody,
