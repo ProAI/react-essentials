@@ -36,9 +36,7 @@ class Link extends React.Component {
   };
 
   render() {
-    const { to, children, ...attributes } = this.props;
-    delete attributes.preventToggle;
-    delete attributes.preventFocus;
+    const { to, children, preventToggle, preventFocus, ...attributes } = this.props;
 
     // external link
     if (to.substring(0, 7) === 'http://' || to.substring(0, 8) === 'https://') {

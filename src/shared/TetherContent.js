@@ -7,7 +7,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   arrow: PropTypes.string,
   disabled: PropTypes.bool,
-  isOpen: PropTypes.oneOfType([React.PropTypes.func, React.PropTypes.bool]).isRequired,
+  isOpen: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]).isRequired,
   toggle: PropTypes.func.isRequired,
   tether: PropTypes.object.isRequired,
   style: PropTypes.object,

@@ -25,12 +25,12 @@ class Form extends React.Component {
   }
 
   render() {
-    const { children, onSubmit, className, ...attributes } = this.props;
+    const { children, className, ...attributes } = this.props;
 
     const classes = cx('form', className);
 
     return (
-      <form {...attributes} onSubmit={onSubmit} className={classes}>
+      <form {...attributes} className={classes}>
         {children}
       </form>
     );

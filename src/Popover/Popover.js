@@ -9,7 +9,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   className: PropTypes.string,
-  placement: React.PropTypes.oneOf(tetherAttachements),
+  placement: PropTypes.oneOf(tetherAttachements),
   toggle: PropTypes.func,
   target: PropTypes.string.isRequired,
   isOpen: PropTypes.bool,

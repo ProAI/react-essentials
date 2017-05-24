@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AlertsItem from './AlertsItem';
+import AlertItem from './AlertItem';
 import { getPositionAttributes } from './helpers';
 
 const propTypes = {
@@ -17,7 +17,7 @@ class AlertStack extends React.Component {
     }
 
     const alerts = this.props.alerts.map(alert => (
-      <AlertsItem
+      <AlertItem
         ref={`alert-${alert.uid}`}
         key={alert.uid}
         alert={alert}

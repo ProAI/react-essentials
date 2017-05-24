@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import TextField from './TextField';
-// import SelectField from './SelectField';
+import SelectField from './SelectField';
 // import FileUploadField from './FileUploadField';
 import RadioButtonGroup from './RadioButtonGroup';
 // import CheckboxField from './CheckboxField';
@@ -16,9 +16,9 @@ function FormField({ type, ...attributes }) {
 
   if (type === 'text') {
     component = TextField;
-    /* } else if (type === 'select') {
+  } else if (type === 'select') {
     component = SelectField;
-  } else if (type === 'file') {
+    /* } else if (type === 'file') {
     component = FileUploadField;*/
   } else if (type === 'radio') {
     component = RadioButtonGroup;

@@ -6,7 +6,7 @@ import { defaultTetherConfig } from './constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  placement: React.PropTypes.oneOf(tetherAttachements),
+  placement: PropTypes.oneOf(tetherAttachements),
   toggle: PropTypes.func,
   target: PropTypes.string.isRequired,
   isOpen: PropTypes.bool,

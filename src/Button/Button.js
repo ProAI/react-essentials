@@ -37,8 +37,6 @@ const defaultProps = {
 
 class Button extends React.Component {
   onClick = (event) => {
-    event.preventDefault();
-
     if (this.props.onClick) {
       this.props.onClick(event);
     }
@@ -53,9 +51,15 @@ class Button extends React.Component {
   };
 
   render() {
-    const { variant, size, type, className, ...attributes } = this.props;
-    delete attributes.preventToggle;
-    delete attributes.preventFocus;
+    const {
+      variant,
+      size,
+      type,
+      className,
+      preventToggle,
+      preventFocus,
+      ...attributes
+    } = this.props;
 
     const classes = variant === 'option'
       ? cx('btn-option', className)

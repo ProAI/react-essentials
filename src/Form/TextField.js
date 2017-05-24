@@ -20,6 +20,7 @@ const propTypes = {
     'url',
     'week',
   ]),
+  size: PropTypes.oneOf(['sm']),
   info: PropTypes.string,
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
@@ -34,16 +35,23 @@ const defaultProps = {
   label: null,
   placeholder: null,
   inputType: 'text',
+  size: null,
   info: null,
   multiline: false,
 };
 
-function TextField({ label, placeholder, inputType, info, input, meta, multiline }, { form }) {
+function TextField(
+  { label, placeholder, inputType, size, info, input, meta, multiline },
+  { form },
+) {
   const fieldsetClasses = cx('form-group', { 'has-danger': meta.error });
 
   const labelClasses = cx('form-control-label', { active: meta.active });
 
-  const inputClasses = cx('form-control', { 'form-control-danger': meta.error });
+  const inputClasses = cx('form-control', {
+    'form-control-danger': meta.error,
+    'form-control-sm': size === 'sm',
+  });
 
   return (
     <fieldset className={fieldsetClasses}>
@@ -61,17 +69,18 @@ function TextField({ label, placeholder, inputType, info, input, meta, multiline
           {...input}
           id={`${form}-${input.name}`}
           placeholder={placeholder}
+          rows="7"
           className={inputClasses}
         />}
       {meta.touched &&
         meta.error &&
-        <small className="text-danger">
+        <div className="text-danger">
           {meta.error}
-        </small>}
+        </div>}
       {info &&
-        <small className="text-muted">
+        <div className="text-muted">
           {info}
-        </small>}
+        </div>}
     </fieldset>
   );
 }
