@@ -6,17 +6,13 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
-  preventToggle: PropTypes.bool,
+  external: PropTypes.bool,
   preventFocus: PropTypes.bool,
-};
-
-const contextTypes = {
-  toggle: PropTypes.func,
 };
 
 const defaultProps = {
   onClick: null,
-  preventToggle: false,
+  external: false,
   preventFocus: false,
 };
 
@@ -26,20 +22,16 @@ class Link extends React.Component {
       this.props.onClick(event);
     }
 
-    if (this.context.toggle !== undefined && !this.props.preventToggle) {
-      this.context.toggle();
-    }
-
     if (this.props.preventFocus) {
       this.link.blur();
     }
   };
 
   render() {
-    const { to, children, preventToggle, preventFocus, ...attributes } = this.props;
+    const { to, external, children, preventFocus, ...attributes } = this.props;
 
     // external link
-    if (to.substring(0, 7) === 'http://' || to.substring(0, 8) === 'https://') {
+    if (external) {
       return (
         <a {...attributes} href={to} target="_blank" rel="noopener noreferrer">
           {children}
@@ -63,7 +55,6 @@ class Link extends React.Component {
 }
 
 Link.propTypes = propTypes;
-Link.contextTypes = contextTypes;
 Link.defaultProps = defaultProps;
 
 export default Link;

@@ -7,16 +7,16 @@ import { defaultTetherConfig } from './constants';
 const propTypes = {
   children: PropTypes.node.isRequired,
   placement: PropTypes.oneOf(tetherAttachements),
-  toggle: PropTypes.func,
+  onToggle: PropTypes.func,
   target: PropTypes.string.isRequired,
-  isOpen: PropTypes.bool,
+  visible: PropTypes.bool,
   trigger: PropTypes.oneOf(triggerCombinations),
   disabled: PropTypes.bool,
 };
 
 const defaultProps = {
-  toggle: null,
-  isOpen: false,
+  onToggle: null,
+  visible: false,
   placement: 'bottom',
   trigger: 'hover focus',
   disabled: false,
@@ -24,7 +24,7 @@ const defaultProps = {
 
 class Tooltip extends React.Component {
   state = {
-    isOpen: this.props.isOpen,
+    visible: this.props.visible,
     isClicked: false,
     isFocused: false,
   };
@@ -67,15 +67,15 @@ class Tooltip extends React.Component {
         this.setState({
           isClicked: !this.state.isClicked,
         });
-        if (!this.isOpen()) {
-          this.toggle();
+        if (!this.visible()) {
+          this.onToggle();
         }
       } else {
         this.setState({
           isClicked: !this.state.isClicked,
         });
         if (this.trigger.indexOf('hover') === -1 && !this.state.isFocused) {
-          this.toggle();
+          this.onToggle();
         }
       }
     }
@@ -87,26 +87,26 @@ class Tooltip extends React.Component {
       this.setState({
         isFocused: !this.state.isFocused,
       });
-      if (!this.isOpen()) {
-        this.toggle();
+      if (!this.visible()) {
+        this.onToggle();
       }
     }
   };
 
   onTargetBlur = () => {
     // handle focus trigger
-    if (this.trigger.indexOf('focus') !== -1 && this.isOpen() && !this.state.isClicked) {
+    if (this.trigger.indexOf('focus') !== -1 && this.visible() && !this.state.isClicked) {
       this.setState({
         isFocused: !this.state.isFocused,
       });
-      this.toggle();
+      this.onToggle();
     }
   };
 
   onTargetMouseOver = () => {
     // handle hover trigger
-    if (this.trigger.indexOf('hover') !== -1 && !this.isOpen()) {
-      this.toggle();
+    if (this.trigger.indexOf('hover') !== -1 && !this.visible()) {
+      this.onToggle();
     }
   };
 
@@ -114,11 +114,26 @@ class Tooltip extends React.Component {
     // handle hover trigger
     if (
       this.trigger.indexOf('hover') !== -1 &&
-      this.isOpen() &&
+      this.visible() &&
       !this.state.isClicked &&
       !this.state.isFocused
     ) {
-      this.toggle();
+      this.onToggle();
+    }
+  };
+
+  onToggle = (e) => {
+    if (this.props.disabled) {
+      e.preventDefault();
+      return;
+    }
+
+    if (this.props.onToggle) {
+      this.props.onToggle();
+    } else {
+      this.setState({
+        visible: !this.state.visible,
+      });
     }
   };
 
@@ -131,31 +146,16 @@ class Tooltip extends React.Component {
     };
   }
 
-  toggle = (e) => {
-    if (this.props.disabled) {
-      e.preventDefault();
-      return;
+  visible = () => {
+    if (this.props.onToggle) {
+      return this.props.visible;
     }
 
-    if (this.props.toggle) {
-      this.props.toggle();
-    } else {
-      this.setState({
-        isOpen: !this.state.isOpen,
-      });
-    }
-  };
-
-  isOpen = () => {
-    if (this.props.toggle) {
-      return this.props.isOpen;
-    }
-
-    return this.state.isOpen;
+    return this.state.visible;
   };
 
   render() {
-    if (!this.isOpen()) {
+    if (!this.visible()) {
       return null;
     }
 
@@ -167,8 +167,8 @@ class Tooltip extends React.Component {
         onMouseLeave={this.onMouseLeave}
         arrow="tooltip"
         tether={tetherConfig}
-        isOpen={this.isOpen()}
-        toggle={this.toggle}
+        visible={this.visible()}
+        onToggle={this.onToggle}
       >
         <div className="tooltip-inner">
           {this.props.children}

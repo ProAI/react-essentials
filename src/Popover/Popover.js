@@ -10,25 +10,25 @@ const propTypes = {
   title: PropTypes.string.isRequired,
   className: PropTypes.string,
   placement: PropTypes.oneOf(tetherAttachements),
-  toggle: PropTypes.func,
+  onToggle: PropTypes.func,
   target: PropTypes.string.isRequired,
-  isOpen: PropTypes.bool,
+  visible: PropTypes.bool,
   trigger: PropTypes.oneOf(triggerCombinations),
   disabled: PropTypes.bool,
 };
 
 const defaultProps = {
   className: null,
-  isOpen: false,
+  visible: false,
   placement: 'bottom',
-  toggle: null,
+  onToggle: null,
   trigger: 'click',
   disabled: false,
 };
 
 class Popover extends React.Component {
   state = {
-    isOpen: this.props.isOpen,
+    visible: this.props.visible,
     isClicked: false,
     isFocused: false,
   };
@@ -71,15 +71,15 @@ class Popover extends React.Component {
         this.setState({
           isClicked: !this.state.isClicked,
         });
-        if (!this.isOpen()) {
-          this.toggle();
+        if (!this.visible()) {
+          this.onToggle();
         }
       } else {
         this.setState({
           isClicked: !this.state.isClicked,
         });
         if (this.trigger.indexOf('hover') === -1 && !this.state.isFocused) {
-          this.toggle();
+          this.onToggle();
         }
       }
     }
@@ -91,26 +91,26 @@ class Popover extends React.Component {
       this.setState({
         isFocused: !this.state.isFocused,
       });
-      if (!this.isOpen()) {
-        this.toggle();
+      if (!this.visible()) {
+        this.onToggle();
       }
     }
   };
 
   onTargetBlur = () => {
     // handle focus trigger
-    if (this.trigger.indexOf('focus') !== -1 && this.isOpen() && !this.state.isClicked) {
+    if (this.trigger.indexOf('focus') !== -1 && this.visible() && !this.state.isClicked) {
       this.setState({
         isFocused: !this.state.isFocused,
       });
-      this.toggle();
+      this.onToggle();
     }
   };
 
   onTargetMouseOver = () => {
     // handle hover trigger
-    if (this.trigger.indexOf('hover') !== -1 && !this.isOpen()) {
-      this.toggle();
+    if (this.trigger.indexOf('hover') !== -1 && !this.visible()) {
+      this.onToggle();
     }
   };
 
@@ -118,11 +118,26 @@ class Popover extends React.Component {
     // handle hover trigger
     if (
       this.trigger.indexOf('hover') !== -1 &&
-      this.isOpen() &&
+      this.visible() &&
       !this.state.isClicked &&
       !this.state.isFocused
     ) {
-      this.toggle();
+      this.onToggle();
+    }
+  };
+
+  onToggle = (e) => {
+    if (this.props.disabled) {
+      e.preventDefault();
+      return;
+    }
+
+    if (this.props.onToggle) {
+      this.props.onToggle();
+    } else {
+      this.setState({
+        visible: !this.state.visible,
+      });
     }
   };
 
@@ -135,33 +150,18 @@ class Popover extends React.Component {
     };
   }
 
-  toggle = (e) => {
-    if (this.props.disabled) {
-      e.preventDefault();
-      return;
+  visible = () => {
+    if (this.props.onToggle) {
+      return this.props.visible;
     }
 
-    if (this.props.toggle) {
-      this.props.toggle();
-    } else {
-      this.setState({
-        isOpen: !this.state.isOpen,
-      });
-    }
-  };
-
-  isOpen = () => {
-    if (this.props.toggle) {
-      return this.props.isOpen;
-    }
-
-    return this.state.isOpen;
+    return this.state.visible;
   };
 
   render() {
     const { children, title, className } = this.props;
 
-    if (!this.isOpen()) {
+    if (!this.visible()) {
       return null;
     }
 
@@ -175,8 +175,8 @@ class Popover extends React.Component {
         onMouseLeave={this.onMouseLeave}
         arrow="popover"
         tether={tetherConfig}
-        isOpen={this.isOpen()}
-        toggle={this.toggle}
+        visible={this.visible()}
+        onToggle={this.onToggle}
       >
         <div className="popover-inner">
           {title && <h3 className="popover-title">{title}</h3>}

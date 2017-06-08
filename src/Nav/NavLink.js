@@ -6,7 +6,7 @@ const propTypes = {
 };
 const defaultProps = {};
 
-function NavItem({ children }) {
+function NavLink({ children }) {
   return (
     <li className="nav-item">
       {children}
@@ -14,7 +14,7 @@ function NavItem({ children }) {
   );
 }
 
-NavItem.propTypes = propTypes;
-NavItem.defaultProps = defaultProps;
+NavLink.propTypes = propTypes;
+NavLink.defaultProps = defaultProps;
 
-export default NavItem;
+export default NavLink;

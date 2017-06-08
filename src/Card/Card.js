@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import CardBlock from './CardBlock';
+import CardFooter from './CardFooter';
+import CardHeader from './CardHeader';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -11,14 +14,21 @@ const defaultProps = {
   className: null,
 };
 
-function Card({ children, className, ...attributes }) {
-  const classes = cx('card', className);
+class Card extends React.Component {
+  static Block = CardBlock;
+  static Footer = CardFooter;
+  static Header = CardHeader;
 
-  return (
-    <div {...attributes} className={classes}>
-      {children}
-    </div>
-  );
+  render() {
+    const { children, className, ...attributes } = this.props;
+    const classes = cx('card', className);
+
+    return (
+      <div {...attributes} className={classes}>
+        {children}
+      </div>
+    );
+  }
 }
 
 Card.propTypes = propTypes;

@@ -2,26 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
+import ModalBody from './ModalBody';
+import ModalFooter from './ModalFooter';
+import ModalHeader from './ModalHeader';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  isOpen: PropTypes.bool,
+  visible: PropTypes.bool,
   size: PropTypes.string,
-  toggle: PropTypes.func,
+  onChange: PropTypes.func,
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
   dismissible: PropTypes.bool,
 };
 
 const childContextTypes = {
-  toggle: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   dismissible: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {
-  isOpen: false,
+  visible: false,
   size: null,
-  toggle: null,
+  onChange: null,
   onEnter: null,
   onExit: null,
   dismissible: true,
@@ -37,9 +40,13 @@ const computeScrollbarWidth = () => {
 };
 
 class Modal extends React.Component {
+  static Body = ModalBody;
+  static Footer = ModalFooter;
+  static Header = ModalHeader;
+
   getChildContext() {
     return {
-      toggle: this.props.toggle,
+      onChange: this.props.onChange,
       dismissible: this.props.dismissible,
     };
   }
@@ -49,13 +56,13 @@ class Modal extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.isOpen) {
+    if (this.props.visible) {
       this.show();
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.isOpen !== prevProps.isOpen) {
+    if (this.props.visible !== prevProps.visible) {
       this.handleProps();
     }
   }
@@ -79,7 +86,7 @@ class Modal extends React.Component {
 
   onEscape = (ev) => {
     if (ev.keyCode === 27) {
-      this.props.toggle();
+      this.props.onChange();
     }
   };
 
@@ -87,12 +94,12 @@ class Modal extends React.Component {
     const container = this.dialog;
 
     if (ev.target && !container.contains(ev.target)) {
-      this.props.toggle();
+      this.props.onChange();
     }
   };
 
   handleProps = () => {
-    if (this.props.isOpen) {
+    if (this.props.visible) {
       this.show();
     } else {
       this.hide();
@@ -228,7 +235,7 @@ class Modal extends React.Component {
   }
 
   renderChildren() {
-    const { children, isOpen } = this.props;
+    const { children, visible } = this.props;
 
     let sizeClass = '';
     if (this.props.size) {
@@ -239,8 +246,16 @@ class Modal extends React.Component {
 
     return (
       <div>
-        {isOpen &&
-          <div key="modal-dialog" className="modal" style={{ display: 'block' }} tabIndex="-1">
+        {visible &&
+          <div
+            key="modal-dialog"
+            className="modal"
+            style={{ display: 'block' }}
+            tabIndex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden={visible}
+          >
             <div
               className={classes}
               role="document"
@@ -253,7 +268,7 @@ class Modal extends React.Component {
               </div>
             </div>
           </div>}
-        {isOpen && <div key="modal-backdrop" className="modal-backdrop in" />}
+        {visible && <div key="modal-backdrop" className="modal-backdrop in" />}
       </div>
     );
   }

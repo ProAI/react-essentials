@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import NavLink from './NavLink';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
 };
 const defaultProps = {};
 
-function Nav({ children }) {
-  return (
-    <ul className="nav">
-      {children}
-    </ul>
-  );
+class Nav extends React.Component {
+  static Link = NavLink;
+
+  render() {
+    const { children } = this.props;
+    return (
+      <ul className="nav">
+        {children}
+      </ul>
+    );
+  }
 }
 
 Nav.propTypes = propTypes;
