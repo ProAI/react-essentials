@@ -22,7 +22,7 @@ const propTypes = {
 };
 
 const contextTypes = {
-  toggle: PropTypes.func,
+  onToggle: PropTypes.func,
 };
 
 const defaultProps = {
@@ -41,8 +41,8 @@ class Button extends React.Component {
       this.props.onClick(event);
     }
 
-    if (this.context.toggle !== undefined && !this.props.preventToggle) {
-      this.context.toggle();
+    if (this.context.onToggle !== undefined && !this.props.preventToggle) {
+      this.context.onToggle();
     }
 
     if (this.props.preventFocus) {

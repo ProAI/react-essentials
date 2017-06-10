@@ -5,7 +5,7 @@ import cx from 'classnames';
 const propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
-  component: PropTypes.func.isRequired,
+  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   onToggle: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
 };

@@ -5,26 +5,24 @@ import cx from 'classnames';
 import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
+import IdentifierGenerator from '../shared/IdentifierGenerator';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  visible: PropTypes.bool,
-  size: PropTypes.string,
-  onChange: PropTypes.func,
+  visible: PropTypes.bool.isRequired,
+  size: PropTypes.oneOf(['sm', 'lg']),
+  onToggle: PropTypes.func.isRequired,
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
   dismissible: PropTypes.bool,
 };
 
 const childContextTypes = {
-  onChange: PropTypes.func.isRequired,
-  dismissible: PropTypes.bool.isRequired,
+  onToggle: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
-  visible: false,
   size: null,
-  onChange: null,
   onEnter: null,
   onExit: null,
   dismissible: true,
@@ -42,12 +40,11 @@ const computeScrollbarWidth = () => {
 class Modal extends React.Component {
   static Body = ModalBody;
   static Footer = ModalFooter;
-  static Header = ModalHeader;
+  static Header = props => <ModalHeader {...props} />;
 
   getChildContext() {
     return {
-      onChange: this.props.onChange,
-      dismissible: this.props.dismissible,
+      onToggle: this.props.onToggle,
     };
   }
 
@@ -86,7 +83,7 @@ class Modal extends React.Component {
 
   onEscape = (ev) => {
     if (ev.keyCode === 27) {
-      this.props.onChange();
+      this.props.onToggle();
     }
   };
 
@@ -94,9 +91,11 @@ class Modal extends React.Component {
     const container = this.dialog;
 
     if (ev.target && !container.contains(ev.target)) {
-      this.props.onChange();
+      this.props.onToggle();
     }
   };
+
+  genIdentifier = IdentifierGenerator.generate('gen-modal-title-');
 
   handleProps = () => {
     if (this.props.visible) {
@@ -205,14 +204,12 @@ class Modal extends React.Component {
 
     if (this.isBodyOverflowing) {
       if (document.getElementById('content')) {
-        document.getElementById(
-          'content',
-        ).style.paddingRight = `${bodyPadding + this.scrollbarWidth}px`;
+        document.getElementById('content').style.paddingRight = `${bodyPadding +
+          this.scrollbarWidth}px`;
       }
       if (document.getElementById('navbar')) {
-        document.getElementById(
-          'navbar',
-        ).style.paddingRight = `${bodyPadding + this.scrollbarWidth}px`;
+        document.getElementById('navbar').style.paddingRight = `${bodyPadding +
+          this.scrollbarWidth}px`;
       }
     }
   }
@@ -244,17 +241,29 @@ class Modal extends React.Component {
 
     const classes = cx(sizeClass, 'modal-dialog');
 
+    const manipulatedChildren = React.Children.map(children, (child, i) => {
+      // inject dismissible and onToggle props in ModalHeader
+      if (i === 0) {
+        return React.cloneElement(child, {
+          dismissible: this.props.dismissible,
+          onToggle: this.props.onToggle,
+          titleId: this.genIdentifier,
+        });
+      }
+
+      return child;
+    });
+
     return (
       <div>
         {visible &&
           <div
-            key="modal-dialog"
             className="modal"
             style={{ display: 'block' }}
             tabIndex="-1"
             role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden={visible}
+            aria-labelledby={this.genIdentifier}
+            aria-hidden={!visible}
           >
             <div
               className={classes}
@@ -264,7 +273,7 @@ class Modal extends React.Component {
               }}
             >
               <div className="modal-content">
-                {children}
+                {manipulatedChildren}
               </div>
             </div>
           </div>}

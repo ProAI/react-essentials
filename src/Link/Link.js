@@ -7,12 +7,18 @@ const propTypes = {
   onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
   external: PropTypes.bool,
+  preventToggle: PropTypes.bool,
   preventFocus: PropTypes.bool,
+};
+
+const contextTypes = {
+  onToggle: PropTypes.func,
 };
 
 const defaultProps = {
   onClick: null,
   external: false,
+  preventToggle: false,
   preventFocus: false,
 };
 
@@ -22,13 +28,17 @@ class Link extends React.Component {
       this.props.onClick(event);
     }
 
+    if (this.context.onToggle !== undefined && !this.props.preventToggle) {
+      this.context.onToggle();
+    }
+
     if (this.props.preventFocus) {
       this.link.blur();
     }
   };
 
   render() {
-    const { to, external, children, preventFocus, ...attributes } = this.props;
+    const { to, external, children, preventToggle, preventFocus, ...attributes } = this.props;
 
     // external link
     if (external) {
@@ -56,5 +66,6 @@ class Link extends React.Component {
 
 Link.propTypes = propTypes;
 Link.defaultProps = defaultProps;
+Link.contextTypes = contextTypes;
 
 export default Link;

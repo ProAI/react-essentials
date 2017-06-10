@@ -1,6 +1,7 @@
 import React from 'react';
-import PopoverWrapper from './PopoverWrapper';
+import Popover from './Popover';
 
 export default function injectPopover(Component) {
-  return props => <PopoverWrapper component={Component} {...props} />;
+  // eslint-disable-next-line react/prop-types
+  return ({ popover, ...props }) => <Popover target={<Component {...props} />} {...popover} />;
 }

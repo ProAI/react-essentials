@@ -4,12 +4,10 @@ import cx from 'classnames';
 import CloseButton from '../shared/CloseButton';
 
 const propTypes = {
+  titleId: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-};
-
-const contextTypes = {
-  toggle: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired,
   dismissible: PropTypes.bool.isRequired,
 };
 
@@ -17,19 +15,19 @@ const defaultProps = {
   className: null,
 };
 
-function ModalHeader({ className, children, ...props }, { dismissible, toggle }) {
+function ModalHeader({ titleId, className, children, dismissible, onToggle, ...props }) {
   let closeButton;
 
   const classes = cx(className, 'modal-header');
 
   if (dismissible) {
-    closeButton = <CloseButton onClick={toggle} />;
+    closeButton = <CloseButton onClick={onToggle} />;
   }
 
   return (
     <div {...props} className={classes}>
       {closeButton}
-      <h4 className="modal-title">
+      <h4 className="modal-title" id={titleId}>
         {children}
       </h4>
     </div>
@@ -37,7 +35,6 @@ function ModalHeader({ className, children, ...props }, { dismissible, toggle })
 }
 
 ModalHeader.propTypes = propTypes;
-ModalHeader.contextTypes = contextTypes;
 ModalHeader.defaultProps = defaultProps;
 
 export default ModalHeader;

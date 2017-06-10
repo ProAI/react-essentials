@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TetherContent from '../shared/TetherContent';
-import { getTetherAttachments, tetherAttachements, triggerCombinations } from '../shared/helpers';
-import { defaultTetherConfig } from './constants';
+import Overlay from '../shared/Overlay';
+import { tetherAttachements, triggerCombinations } from '../shared/helpers';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
   placement: PropTypes.oneOf(tetherAttachements),
   onToggle: PropTypes.func,
-  target: PropTypes.string.isRequired,
   visible: PropTypes.bool,
   trigger: PropTypes.oneOf(triggerCombinations),
   disabled: PropTypes.bool,
+  target: PropTypes.node.isRequired,
 };
 
 const defaultProps = {
@@ -30,34 +29,8 @@ class Tooltip extends React.Component {
   };
 
   componentDidMount() {
-    this.target = document.getElementById(this.props.target);
+    // this.target = document.querySelector(`[aria-describedby="${this.genIdentifier}"]`);
     this.trigger = this.props.trigger.split(' ');
-
-    if (this.trigger.indexOf('click') !== -1) {
-      this.target.addEventListener('click', this.onTargetClick);
-    }
-    if (this.trigger.indexOf('focus') !== -1) {
-      this.target.addEventListener('focus', this.onTargetFocus);
-      this.target.addEventListener('blur', this.onTargetBlur);
-    }
-    if (this.trigger.indexOf('hover') !== -1) {
-      this.target.addEventListener('mouseover', this.onTargetMouseOver);
-      this.target.addEventListener('mouseout', this.onTargetMouseLeave);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.trigger.indexOf('click') !== -1) {
-      this.target.removeEventListener('click', this.onTargetClick);
-    }
-    if (this.trigger.indexOf('focus') !== -1) {
-      this.target.removeEventListener('focus', this.onTargetFocus);
-      this.target.removeEventListener('blur', this.onTargetBlur);
-    }
-    if (this.trigger.indexOf('hover') !== -1) {
-      this.target.removeEventListener('mouseover', this.onTargetMouseOver);
-      this.target.removeEventListener('mouseout', this.onTargetMouseLeave);
-    }
   }
 
   onTargetClick = () => {
@@ -137,15 +110,6 @@ class Tooltip extends React.Component {
     }
   };
 
-  getTetherConfig() {
-    const attachments = getTetherAttachments(this.props.placement);
-    return {
-      ...defaultTetherConfig,
-      ...attachments,
-      target: `#${this.props.target}`,
-    };
-  }
-
   visible = () => {
     if (this.props.onToggle) {
       return this.props.visible;
@@ -155,25 +119,28 @@ class Tooltip extends React.Component {
   };
 
   render() {
-    if (!this.visible()) {
-      return null;
-    }
-
-    const tetherConfig = this.getTetherConfig();
+    const target = React.cloneElement(this.props.target, {
+      onClick: this.onTargetClick,
+      onFocus: this.onTargetFocus,
+      onBlur: this.onTargetBlur,
+      onMouseOver: this.onTargetMouseOver,
+      onMouseLeave: this.onTargetMouseLeave,
+    });
 
     return (
-      <TetherContent
-        onMouseOver={this.onMouseOver}
-        onMouseLeave={this.onMouseLeave}
-        arrow="tooltip"
-        tether={tetherConfig}
+      <Overlay
+        target={target}
+        className="tooltip in"
+        arrowClassName="tooltip-arrow"
+        placement={this.props.placement}
         visible={this.visible()}
         onToggle={this.onToggle}
+        role="tooltip"
       >
         <div className="tooltip-inner">
-          {this.props.children}
+          {this.props.title}
         </div>
-      </TetherContent>
+      </Overlay>
     );
   }
 }

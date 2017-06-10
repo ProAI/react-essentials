@@ -16,7 +16,7 @@ const propTypes = {
 };
 
 const childContextTypes = {
-  toggle: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -32,7 +32,7 @@ class AlertItem extends React.Component {
 
   getChildContext() {
     return {
-      toggle: this.toggle,
+      onToggle: this.onToggle,
     };
   }
 
@@ -96,7 +96,7 @@ class AlertItem extends React.Component {
     }
   };
 
-  toggle = () => {
+  onToggle = () => {
     if (this.state.visible) {
       this.hideAlert();
     }
@@ -223,6 +223,7 @@ class AlertItem extends React.Component {
         ref={(c) => {
           this.item = c;
         }}
+        role="alert"
       >
         {dismiss}
         {body}

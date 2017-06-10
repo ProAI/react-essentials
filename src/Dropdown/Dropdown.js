@@ -13,6 +13,10 @@ const propTypes = {
   className: PropTypes.string,
 };
 
+const childContextTypes = {
+  onToggle: PropTypes.func.isRequired,
+};
+
 const defaultProps = {
   onToggle: null,
   visible: false,
@@ -21,11 +25,18 @@ const defaultProps = {
 
 class Dropdown extends React.Component {
   static Button = DropdownButton;
-  static Menu = DropdownMenu;
+  // wrap <DropdownMenu> so that we can inject triggerId later
+  static Menu = props => <DropdownMenu {...props} />;
 
   state = {
     visible: this.props.visible,
   };
+
+  getChildContext() {
+    return {
+      onToggle: this.onToggle,
+    };
+  }
 
   componentDidMount() {
     document.addEventListener('click', this.onDocumentClick);
@@ -108,6 +119,7 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.propTypes = propTypes;
+Dropdown.childContextTypes = childContextTypes;
 Dropdown.defaultProps = defaultProps;
 
 export default Dropdown;

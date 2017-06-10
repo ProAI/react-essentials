@@ -1,6 +1,7 @@
 import React from 'react';
-import TooltipWrapper from './TooltipWrapper';
+import Tooltip from './Tooltip';
 
 export default function injectTooltip(Component) {
-  return props => <TooltipWrapper component={Component} {...props} />;
+  // eslint-disable-next-line react/prop-types
+  return ({ tooltip, ...props }) => <Tooltip target={<Component {...props} />} {...tooltip} />;
 }

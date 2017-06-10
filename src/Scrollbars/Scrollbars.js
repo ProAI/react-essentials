@@ -5,7 +5,7 @@ import GeminiScrollbar from 'gemini-scrollbar';
 const propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  style: PropTypes.string,
+  style: PropTypes.object,
   autoShow: PropTypes.bool,
   forceCustom: PropTypes.bool,
 };
