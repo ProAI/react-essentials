@@ -9,7 +9,7 @@ import Card from './Card/Card';
 
 /* dropdown components */
 import Dropdown from './Dropdown/Dropdown';
-import injectDropdownTrigger from './Dropdown/injectDropdownTrigger';
+import injectDropdownToggle from './Dropdown/injectDropdownToggle';
 
 /* emoji components */
 import Emoji from './Emoji/Emoji';
@@ -56,7 +56,7 @@ export {
   Button,
   Card,
   Dropdown,
-  injectDropdownTrigger,
+  injectDropdownToggle,
   Emoji,
   Form,
   Row,

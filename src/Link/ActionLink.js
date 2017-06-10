@@ -26,7 +26,7 @@ class ActionLink extends React.Component {
     const { children, preventFocus, ...attributes } = this.props;
 
     // action link
-    return <a {...attributes} role="button" aria-expanded="true">{children}</a>;
+    return <a {...attributes} role="button">{children}</a>;
   }
 }
 

@@ -4,8 +4,8 @@ import Overlay from '../shared/Overlay';
 import { tetherAttachements, triggerCombinations } from '../shared/helpers';
 
 const propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
+  content: PropTypes.node.isRequired,
   placement: PropTypes.oneOf(tetherAttachements),
   onToggle: PropTypes.func,
   visible: PropTypes.bool,

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import cx from 'classnames';
-import DropdownButton from './DropdownButton';
+import DropdownToggleButton from './DropdownToggleButton';
 import DropdownMenu from './DropdownMenu';
 import IdentifierGenerator from '../shared/IdentifierGenerator';
 
@@ -24,7 +24,7 @@ const defaultProps = {
 };
 
 class Dropdown extends React.Component {
-  static Button = DropdownButton;
+  static ToggleButton = DropdownToggleButton;
   // wrap <DropdownMenu> so that we can inject triggerId later
   static Menu = props => <DropdownMenu {...props} />;
 

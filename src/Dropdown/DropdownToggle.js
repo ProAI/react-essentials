@@ -15,7 +15,7 @@ const defaultProps = {
   onClick: null,
 };
 
-class DropdownTrigger extends React.Component {
+class DropdownToggle extends React.Component {
   onClick = (e) => {
     e.preventDefault();
 
@@ -43,7 +43,7 @@ class DropdownTrigger extends React.Component {
   }
 }
 
-DropdownTrigger.propTypes = propTypes;
-DropdownTrigger.defaultProps = defaultProps;
+DropdownToggle.propTypes = propTypes;
+DropdownToggle.defaultProps = defaultProps;
 
-export default DropdownTrigger;
+export default DropdownToggle;
