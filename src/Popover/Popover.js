@@ -131,7 +131,6 @@ class Popover extends React.Component {
       <Overlay
         target={target}
         className="popover"
-        arrowClassName="popover-arrow"
         placement={this.props.placement}
         visible={this.visible()}
         onToggle={this.onToggle}

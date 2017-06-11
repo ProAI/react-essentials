@@ -130,8 +130,7 @@ class Tooltip extends React.Component {
     return (
       <Overlay
         target={target}
-        className="tooltip in"
-        arrowClassName="tooltip-arrow"
+        className="tooltip"
         placement={this.props.placement}
         visible={this.visible()}
         onToggle={this.onToggle}

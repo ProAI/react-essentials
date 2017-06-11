@@ -14,7 +14,6 @@ const propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]).isRequired,
   onToggle: PropTypes.func.isRequired,
-  style: PropTypes.object,
   role: PropTypes.string.isRequired,
 };
 
@@ -108,14 +107,7 @@ class Overlay extends React.Component {
   }
 
   renderChildren() {
-    const { children, style } = this.props;
-
-    return React.cloneElement(children, {
-      style: {
-        position: 'relative',
-        ...style,
-      },
-    });
+    return this.props.children;
   }
 
   render() {

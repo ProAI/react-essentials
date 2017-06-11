@@ -12,13 +12,13 @@ const defaultProps = {
   variant: 'default',
 };
 
-function Tag({ variant, className, ...attributes }) {
-  const classes = cx('tag', `tag-${variant}`, className);
+function Badge({ variant, className, ...attributes }) {
+  const classes = cx('badge', `badge-${variant}`, className);
 
   return <span {...attributes} className={classes} />;
 }
 
-Tag.propTypes = propTypes;
-Tag.defaultProps = defaultProps;
+Badge.propTypes = propTypes;
+Badge.defaultProps = defaultProps;
 
-export default Tag;
+export default Badge;

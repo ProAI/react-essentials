@@ -139,7 +139,6 @@ class Modal extends React.Component {
 
     const classes = document.body.className;
     this.element = document.createElement('div');
-    this.element.setAttribute('tabindex', '-1');
 
     document.body.appendChild(this.element);
     document.addEventListener('click', this.onBackdropClick, false);

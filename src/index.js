@@ -1,6 +1,9 @@
 /* alert components */
 import Alert from './Alert/Alert';
 
+/* badge components */
+import Badge from './Badge/Badge';
+
 /* button components */
 import Button from './Button/Button';
 
@@ -44,15 +47,13 @@ import Tabs from './Tabs/Tabs';
 import TabsNav from './Tabs/TabsNav';
 import TabsContent from './Tabs/TabsContent';
 
-/* tag components */
-import Tag from './Tag/Tag';
-
 /* overlay components */
 import injectTooltip from './Tooltip/injectTooltip';
 import TooltipButton from './Tooltip/TooltipButton';
 
 export {
   Alert,
+  Badge,
   Button,
   Card,
   Dropdown,
@@ -72,7 +73,6 @@ export {
   Tabs,
   TabsNav,
   TabsContent,
-  Tag,
   injectTooltip,
   TooltipButton,
 };

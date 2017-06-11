@@ -25,7 +25,7 @@ function Col({ size, push, pull, offset, children }) {
   }
 
   if (pull) {
-    classes = cx(classes, `pull-md-${pull}`);
+    classes = cx(classes, `float-md-${pull}`);
   }
 
   if (offset) {

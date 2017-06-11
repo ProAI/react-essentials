@@ -26,10 +26,10 @@ function ModalHeader({ titleId, className, children, dismissible, onToggle, ...p
 
   return (
     <div {...props} className={classes}>
-      {closeButton}
       <h4 className="modal-title" id={titleId}>
         {children}
       </h4>
+      {closeButton}
     </div>
   );
 }
