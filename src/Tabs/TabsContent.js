@@ -1,16 +1,38 @@
 import React from 'react';
-import TabsContentPane from './TabsContentPane';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
+import TabsPane from './TabsPane';
 
-const propTypes = {};
+const propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  activeKey: PropTypes.string.isRequired,
+};
 
-class TabsPane extends React.Component {
-  static Pane = TabsContentPane;
+const defaultProps = {
+  className: null,
+};
+
+class TabsContent extends React.Component {
+  static Pane = props => <TabsPane {...props} />;
 
   render() {
-    return null;
+    const { children, className, activeKey, ...attributes } = this.props;
+
+    // create component classes
+    const classes = cx('tab-content', className);
+
+    const manipulatedChildren = React.Children.map(children, child =>
+      React.cloneElement(child, {
+        active: activeKey === child.props.id,
+      }),
+    );
+
+    return <div className={classes} {...attributes}>{manipulatedChildren}</div>;
   }
 }
 
-TabsPane.propTypes = propTypes;
+TabsContent.propTypes = propTypes;
+TabsContent.defaultProps = defaultProps;
 
-export default TabsPane;
+export default TabsContent;

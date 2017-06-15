@@ -23,10 +23,22 @@ class ActionLink extends React.Component {
   };
 
   render() {
-    const { children, preventFocus, ...attributes } = this.props;
+    const { children, onClick, preventFocus, ...attributes } = this.props;
 
     // action link
-    return <a {...attributes} role="button">{children}</a>;
+    return (
+      <a
+        role="button"
+        tabIndex="0"
+        ref={(c) => {
+          this.link = c;
+        }}
+        onClick={this.onClick}
+        {...attributes}
+      >
+        {children}
+      </a>
+    );
   }
 }
 
