@@ -68,7 +68,7 @@ class Dropdown extends React.Component {
   genIdentifier = IdentifierGenerator.generate('gen-dropdown-');
 
   visible = () => {
-    if (this.props.onToggle) {
+    if (this.props.visible) {
       return this.props.visible;
     }
 

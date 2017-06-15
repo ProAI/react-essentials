@@ -8,12 +8,16 @@ import IdentifierGenerator from '../shared/IdentifierGenerator';
 const propTypes = {
   children: PropTypes.node.isRequired,
   defaultActiveKey: PropTypes.string,
+  activeKey: PropTypes.string,
+  onChange: PropTypes.func,
   variant: PropTypes.oneOf(['basic', 'tabs', 'pills']),
 };
 
 const defaultProps = {
   className: null,
   defaultActiveKey: null,
+  activeKey: null,
+  onChange: null,
   variant: 'tabs',
 };
 
@@ -24,20 +28,34 @@ class Tabs extends React.Component {
     super(props);
 
     this.genIdentifier = IdentifierGenerator.generate('gen-tabs-');
-    this.state = {
-      activeKey:
-        this.props.defaultActiveKey || this.props.children[0].props.id || `${this.genIdentifier}-0`,
-    };
+    if (!props.activeKey) {
+      this.state = {
+        activeKey:
+          props.defaultActiveKey || props.children[0].props.id || `${this.genIdentifier}-0`,
+      };
+    }
   }
 
   onChange = (event, key) => {
-    this.setState({
-      activeKey: key,
-    });
+    if (this.props.onChange) {
+      this.props.onChange();
+    } else {
+      this.setState({
+        activeKey: key,
+      });
+    }
+  };
+
+  activeKey = () => {
+    if (this.props.activeKey) {
+      return this.props.activeKey;
+    }
+
+    return this.state.activeKey;
   };
 
   render() {
-    const { children, defaultActiveKey, variant, ...attributes } = this.props;
+    const { children, defaultActiveKey, activeKey, onChange, variant, ...attributes } = this.props;
 
     const tabsNavLinkChildren = React.Children.map(children, (child, i) => {
       const linkedPaneId = child.props.id || `${this.genIdentifier}-${i}`;
@@ -55,10 +73,10 @@ class Tabs extends React.Component {
 
     return (
       <div {...attributes}>
-        <TabsNav activeKey={this.state.activeKey} onChange={this.onChange}>
+        <TabsNav activeKey={this.activeKey()} onChange={this.onChange}>
           {tabsNavLinkChildren}
         </TabsNav>
-        <TabsContent activeKey={this.state.activeKey}>
+        <TabsContent activeKey={this.activeKey()}>
           {tabsContentPaneChildren}
         </TabsContent>
       </div>
