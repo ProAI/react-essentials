@@ -9,24 +9,35 @@ const propTypes = {
   activeKey: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(['basic', 'tabs', 'pills']),
+  stacked: PropTypes.bool,
 };
 
 const defaultProps = {
   className: null,
   variant: 'tabs',
+  stacked: false,
 };
 
 class TabsNav extends React.Component {
   static Link = props => <TabsLink {...props} />;
 
   render() {
-    const { children, className, variant, activeKey, onChange, ...attributes } = this.props;
+    const {
+      children,
+      className,
+      activeKey,
+      onChange,
+      variant,
+      stacked,
+      ...attributes
+    } = this.props;
 
     // create component classes
     const classes = cx(
       'nav',
       { 'nav-tabs': variant === 'tabs' },
       { 'nav-pills': variant === 'pills' },
+      { 'flex-column': stacked },
       className,
     );
 

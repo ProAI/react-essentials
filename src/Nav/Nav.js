@@ -29,9 +29,9 @@ class Nav extends React.Component {
     );
 
     return (
-      <ul className={classes}>
+      <nav className={classes}>
         {children}
-      </ul>
+      </nav>
     );
   }
 }

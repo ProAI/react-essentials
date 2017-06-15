@@ -11,6 +11,7 @@ const propTypes = {
   activeKey: PropTypes.string,
   onChange: PropTypes.func,
   variant: PropTypes.oneOf(['basic', 'tabs', 'pills']),
+  stacked: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -19,6 +20,7 @@ const defaultProps = {
   activeKey: null,
   onChange: null,
   variant: 'tabs',
+  stacked: false,
 };
 
 class Tabs extends React.Component {
@@ -55,7 +57,15 @@ class Tabs extends React.Component {
   };
 
   render() {
-    const { children, defaultActiveKey, activeKey, onChange, variant, ...attributes } = this.props;
+    const {
+      children,
+      defaultActiveKey,
+      activeKey,
+      onChange,
+      variant,
+      stacked,
+      ...attributes
+    } = this.props;
 
     const tabsNavLinkChildren = React.Children.map(children, (child, i) => {
       const linkedPaneId = child.props.id || `${this.genIdentifier}-${i}`;
@@ -73,7 +83,12 @@ class Tabs extends React.Component {
 
     return (
       <div {...attributes}>
-        <TabsNav activeKey={this.activeKey()} onChange={this.onChange}>
+        <TabsNav
+          activeKey={this.activeKey()}
+          onChange={this.onChange}
+          variant={variant}
+          stacked={stacked}
+        >
           {tabsNavLinkChildren}
         </TabsNav>
         <TabsContent activeKey={this.activeKey()}>
