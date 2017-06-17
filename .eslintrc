@@ -5,6 +5,7 @@
     "browser": true
   },
   "rules": {
+    "no-unused-vars": "warn",
     "linebreak-style": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }]
   },
