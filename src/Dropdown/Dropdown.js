@@ -27,6 +27,7 @@ class Dropdown extends React.Component {
   static ToggleButton = DropdownToggleButton;
   // wrap <DropdownMenu> so that we can inject triggerId later
   static Menu = props => <DropdownMenu {...props} />;
+  static Item = DropdownMenu.Item;
 
   state = {
     visible: this.props.visible,

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import DropdownMenuItem from './DropdownMenuItem';
 
 const propTypes = {
   className: PropTypes.string,
@@ -11,10 +12,15 @@ const defaultProps = {
   className: null,
 };
 
-function DropdownMenu({ className, triggerId, ...attributes }) {
-  const classes = cx('dropdown-menu', className);
+class DropdownMenu extends React.Component {
+  static Item = DropdownMenuItem;
 
-  return <div {...attributes} className={classes} aria-labelledby={triggerId} />;
+  render() {
+    const { className, triggerId, ...attributes } = this.props;
+    const classes = cx('dropdown-menu', className);
+
+    return <div {...attributes} className={classes} aria-labelledby={triggerId} />;
+  }
 }
 
 DropdownMenu.propTypes = propTypes;

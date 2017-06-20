@@ -6,6 +6,8 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   legend: PropTypes.string,
   size: PropTypes.oneOf(['sm']),
+  info: PropTypes.string,
+  // redux form props
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
 };
@@ -13,9 +15,10 @@ const propTypes = {
 const defaultProps = {
   legend: null,
   size: null,
+  info: null,
 };
 
-function SelectField({ legend, size, input, meta, children }) {
+function FormPicker({ legend, size, info, input, meta, children }) {
   const fieldsetClasses = cx('form-group', { 'has-danger': meta.error });
 
   const selectClasses = cx('form-control custom-select', {
@@ -31,14 +34,18 @@ function SelectField({ legend, size, input, meta, children }) {
       </select>
       {meta.touched &&
         meta.error &&
-        <small className="text-danger">
+        <div className="text-danger">
           {meta.error}
-        </small>}
+        </div>}
+      {info &&
+        <div className="text-muted">
+          {info}
+        </div>}
     </fieldset>
   );
 }
 
-SelectField.propTypes = propTypes;
-SelectField.defaultProps = defaultProps;
+FormPicker.propTypes = propTypes;
+FormPicker.defaultProps = defaultProps;
 
-export default SelectField;
+export default FormPicker;

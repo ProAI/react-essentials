@@ -27,6 +27,7 @@
   "dependencies": {
     "babel-polyfill": "^6.13.0",
     "classnames": "^2.2.5",
+    "date-fns": "^1.28.5",
     "gemini-scrollbar": "^1.5.1",
     "prop-types": "^15.5.10",
     "react-custom-scrollbars": "^4.1.2",

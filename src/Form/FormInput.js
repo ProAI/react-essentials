@@ -7,24 +7,20 @@ const propTypes = {
   placeholder: PropTypes.string,
   inputType: PropTypes.oneOf([
     'color',
-    'date',
-    'datetime-local',
     'email',
-    'month',
     'number',
     'password',
     'range',
     'tel',
     'text',
-    'time',
     'url',
-    'week',
   ]),
   size: PropTypes.oneOf(['sm']),
   info: PropTypes.string,
+  multiline: PropTypes.bool,
+  // redux form props
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
-  multiline: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -40,7 +36,7 @@ const defaultProps = {
   multiline: false,
 };
 
-function TextField(
+function FormInput(
   { label, placeholder, inputType, size, info, input, meta, multiline },
   { form },
 ) {
@@ -85,8 +81,8 @@ function TextField(
   );
 }
 
-TextField.propTypes = propTypes;
-TextField.contextTypes = contextTypes;
-TextField.defaultProps = defaultProps;
+FormInput.propTypes = propTypes;
+FormInput.contextTypes = contextTypes;
+FormInput.defaultProps = defaultProps;
 
-export default TextField;
+export default FormInput;
