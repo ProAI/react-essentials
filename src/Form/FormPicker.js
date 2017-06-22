@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Select from 'react-select';
+import Field from './Field';
 
 const propTypes = {
   label: PropTypes.string,
@@ -16,10 +17,6 @@ const propTypes = {
   meta: PropTypes.object.isRequired,
 };
 
-const contextTypes = {
-  form: PropTypes.string.isRequired,
-};
-
 const defaultProps = {
   label: null,
   size: null,
@@ -29,12 +26,7 @@ const defaultProps = {
   multiple: false,
 };
 
-function FormPicker(
-  { label, size, options, info, input, meta, multiple, clearable, searchable },
-  { form },
-) {
-  const fieldsetClasses = cx('form-group', { 'has-danger': meta.error });
-
+function FormPicker({ label, size, options, info, input, meta, multiple, clearable, searchable }) {
   const labelClasses = cx('form-control-label', { active: meta.active });
 
   const classes = cx({
@@ -43,11 +35,12 @@ function FormPicker(
   });
 
   return (
-    <fieldset className={fieldsetClasses}>
-      {label && <label htmlFor={`${form}-${input.name}`} className={labelClasses}>{label}</label>}
+    <Field meta={meta} info={info}>
+      {label &&
+        <label htmlFor={`${meta.form}-${input.name}`} className={labelClasses}>{label}</label>}
       <Select
-        inputProps={{ id: `${form}-${input.name}` }}
-        instanceId={`${form}-${input.name}`}
+        inputProps={{ id: `${meta.form}-${input.name}` }}
+        instanceId={`${meta.form}-${input.name}`}
         className={classes}
         options={options}
         value={input.value}
@@ -58,21 +51,11 @@ function FormPicker(
         searchable={searchable}
         simpleValue
       />
-      {meta.touched &&
-        meta.error &&
-        <div className="text-danger">
-          {meta.error}
-        </div>}
-      {info &&
-        <div className="text-muted">
-          {info}
-        </div>}
-    </fieldset>
+    </Field>
   );
 }
 
 FormPicker.propTypes = propTypes;
-FormPicker.contextTypes = contextTypes;
 FormPicker.defaultProps = defaultProps;
 
 export default FormPicker;

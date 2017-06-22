@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import Field from './Field';
 
 const propTypes = {
   label: PropTypes.string,
@@ -23,10 +24,6 @@ const propTypes = {
   meta: PropTypes.object.isRequired,
 };
 
-const contextTypes = {
-  form: PropTypes.string.isRequired,
-};
-
 const defaultProps = {
   label: null,
   placeholder: null,
@@ -36,12 +33,7 @@ const defaultProps = {
   multiline: false,
 };
 
-function FormInput(
-  { label, placeholder, inputType, size, info, input, meta, multiline },
-  { form },
-) {
-  const fieldsetClasses = cx('form-group', { 'has-danger': meta.error });
-
+function FormInput({ label, placeholder, inputType, size, info, input, meta, multiline }) {
   const labelClasses = cx('form-control-label', { active: meta.active });
 
   const inputClasses = cx('form-control', {
@@ -50,12 +42,13 @@ function FormInput(
   });
 
   return (
-    <fieldset className={fieldsetClasses}>
-      {label && <label htmlFor={`${form}-${input.name}`} className={labelClasses}>{label}</label>}
+    <Field meta={meta} info={info}>
+      {label &&
+        <label htmlFor={`${meta.form}-${input.name}`} className={labelClasses}>{label}</label>}
       {!multiline &&
         <input
           {...input}
-          id={`${form}-${input.name}`}
+          id={`${meta.form}-${input.name}`}
           placeholder={placeholder}
           type={inputType}
           className={inputClasses}
@@ -63,26 +56,16 @@ function FormInput(
       {multiline &&
         <textarea
           {...input}
-          id={`${form}-${input.name}`}
+          id={`${meta.form}-${input.name}`}
           placeholder={placeholder}
           rows="7"
           className={inputClasses}
         />}
-      {meta.touched &&
-        meta.error &&
-        <div className="text-danger">
-          {meta.error}
-        </div>}
-      {info &&
-        <div className="text-muted">
-          {info}
-        </div>}
-    </fieldset>
+    </Field>
   );
 }
 
 FormInput.propTypes = propTypes;
-FormInput.contextTypes = contextTypes;
 FormInput.defaultProps = defaultProps;
 
 export default FormInput;

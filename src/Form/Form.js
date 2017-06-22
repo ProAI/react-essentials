@@ -6,8 +6,8 @@ import FormInput from './FormInput';
 // import FormFileInput from './FormFileInput';
 import FormPicker from './FormPicker';
 import FormDatePicker from './FormDatePicker';
-// import FormChoice from './FormChoice';
-// import FormCheckbox from './FormCheckbox';
+import FormChoice from './FormChoice';
+import FormCheckbox from './FormCheckbox';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -29,8 +29,8 @@ class Form extends React.Component {
   // static FileInput = props => <Field component={FormFileInput} {...props} />;
   static Picker = props => <Field component={FormPicker} {...props} />;
   static DatePicker = props => <Field component={FormDatePicker} {...props} />;
-  // static Choice = props => <Field component={FormChoice} {...props} />;
-  // static Checkbox = props => <Field component={FormCheckbox} {...props} />;
+  static Choice = props => <Field component={FormChoice} {...props} />;
+  static Checkbox = props => <Field component={FormCheckbox} {...props} />;
 
   getChildContext() {
     return {

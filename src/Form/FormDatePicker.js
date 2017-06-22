@@ -2,25 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DayPicker from 'react-day-picker/DayPicker';
+import Field from './Field';
 import Dropdown from '../Dropdown/Dropdown';
 import injectDropdownToggle from '../Dropdown/injectDropdownToggle';
 
 const propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
+  info: PropTypes.string,
   size: PropTypes.oneOf(['sm']),
   // redux form props
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
 };
 
-const contextTypes = {
-  form: PropTypes.string.isRequired,
-};
-
 const defaultProps = {
   label: null,
   placeholder: null,
+  info: null,
   size: null,
 };
 
@@ -42,9 +41,7 @@ class FormDatePicker extends React.Component {
   };
 
   render() {
-    const { label, placeholder, size, input, meta } = this.props;
-    const form = this.context.form;
-    const fieldsetClasses = cx('form-group', { 'has-danger': meta.error });
+    const { label, placeholder, info, size, input, meta } = this.props;
 
     const labelClasses = cx('form-control-label', { active: meta.active });
 
@@ -58,12 +55,13 @@ class FormDatePicker extends React.Component {
     const InputToggleDropdown = injectDropdownToggle('input');
 
     return (
-      <fieldset className={fieldsetClasses}>
-        {label && <label htmlFor={`${form}-${input.name}`} className={labelClasses}>{label}</label>}
+      <Field meta={meta} info={info}>
+        {label &&
+          <label htmlFor={`${meta.form}-${input.name}`} className={labelClasses}>{label}</label>}
         <Dropdown>
           <InputToggleDropdown
             {...input}
-            id={`${form}-${input.name}`}
+            id={`${meta.form}-${input.name}`}
             placeholder={placeholder}
             type="text"
             className={classes}
@@ -72,18 +70,12 @@ class FormDatePicker extends React.Component {
             <DayPicker onDayClick={day => console.log(day)} />
           </Dropdown.Menu>
         </Dropdown>
-        {meta.touched &&
-          meta.error &&
-          <small className="text-danger">
-            {meta.error}
-          </small>}
-      </fieldset>
+      </Field>
     );
   }
 }
 
 FormDatePicker.propTypes = propTypes;
-FormDatePicker.contextTypes = contextTypes;
 FormDatePicker.defaultProps = defaultProps;
 
 export default FormDatePicker;
