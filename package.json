@@ -1,6 +1,6 @@
 {
   "name": "react-essentials",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "main": "./lib/index.js",
   "description": "React Redux UI collection with file upload/dropzone, form elements/validation and a lot more components",
   "author": "Markus Wetzel <markuswetzel@gmx.net>",
@@ -28,7 +28,6 @@
     "babel-polyfill": "^6.13.0",
     "classnames": "^2.2.5",
     "date-fns": "^1.28.5",
-    "gemini-scrollbar": "^1.5.1",
     "prop-types": "^15.5.10",
     "react-custom-scrollbars": "^4.1.2",
     "react-day-picker": "^6.0.0",
