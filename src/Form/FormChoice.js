@@ -50,7 +50,7 @@ function FormChoice({ legend, options, info, multiple, input, meta }) {
                 id={`${meta.form}-${input.name}-${getIndex()}`}
                 name={input.name}
                 value={option.value}
-                checked={false}
+                checked={input.value === option.value}
                 onChange={(event) => {
                   console.log(event.target.checked);
                   console.log(option.value);
