@@ -6,16 +6,7 @@ import Field from './Field';
 const propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
-  inputType: PropTypes.oneOf([
-    'color',
-    'email',
-    'number',
-    'password',
-    'range',
-    'tel',
-    'text',
-    'url',
-  ]),
+  type: PropTypes.oneOf(['color', 'email', 'number', 'password', 'range', 'tel', 'text', 'url']),
   size: PropTypes.oneOf(['sm']),
   info: PropTypes.string,
   multiline: PropTypes.bool,
@@ -27,13 +18,13 @@ const propTypes = {
 const defaultProps = {
   label: null,
   placeholder: null,
-  inputType: 'text',
+  type: 'text',
   size: null,
   info: null,
   multiline: false,
 };
 
-function FormInput({ label, placeholder, inputType, size, info, input, meta, multiline }) {
+function FormInput({ label, placeholder, type, size, info, input, meta, multiline }) {
   const labelClasses = cx('form-control-label', { active: meta.active });
 
   const inputClasses = cx('form-control', {
@@ -50,7 +41,7 @@ function FormInput({ label, placeholder, inputType, size, info, input, meta, mul
           {...input}
           id={`${meta.form}-${input.name}`}
           placeholder={placeholder}
-          type={inputType}
+          type={type}
           className={inputClasses}
         />}
       {multiline &&

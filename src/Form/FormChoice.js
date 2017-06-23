@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import Field from './Field';
 
 const propTypes = {
@@ -20,10 +19,6 @@ const defaultProps = {
 };
 
 function FormChoice({ legend, options, info, multiple, input, meta }) {
-  const descriptionClasses = cx('custom-control-description', {
-    active: meta.active,
-  });
-
   let index = 0;
 
   const getIndex = () => index;
@@ -38,7 +33,7 @@ function FormChoice({ legend, options, info, multiple, input, meta }) {
     <Field meta={meta} info={info}>
       {legend && <legend className="form-group-legend">{legend}</legend>}
       {options.map(option =>
-        <div className={check} key={getIndex()}>
+        (<div className={check} key={getIndex()}>
           <label
             className={`custom-control custom-${check}`}
             htmlFor={`${meta.form}-${input.name}-${getIndex()}`}
@@ -52,9 +47,6 @@ function FormChoice({ legend, options, info, multiple, input, meta }) {
                 value={option.value}
                 checked={input.value === option.value}
                 onChange={(event) => {
-                  console.log(event.target.checked);
-                  console.log(option.value);
-                  console.log(input.value);
                   const value = event.target.checked ? option.value : input.value;
                   return input.onChange(value);
                 }}
@@ -80,10 +72,10 @@ function FormChoice({ legend, options, info, multiple, input, meta }) {
                 className="custom-control-input"
               />}
             <div className="custom-control-indicator" />
-            <div className={descriptionClasses}>{option.label}</div>
+            <div className="custom-control-description">{option.label}</div>
           </label>
           {increaseIndex()}
-        </div>,
+        </div>),
       )}
     </Field>
   );

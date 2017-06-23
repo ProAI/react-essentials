@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import Field from './Field';
 
 const propTypes = {
@@ -20,10 +19,6 @@ const defaultProps = {
 };
 
 function FormCheckbox({ legend, label, info, input, meta }) {
-  const descriptionClasses = cx('custom-control-description', {
-    active: meta.active,
-  });
-
   return (
     <Field meta={meta} info={info}>
       {legend && <legend className="form-group-legend">{legend}</legend>}
@@ -36,7 +31,7 @@ function FormCheckbox({ legend, label, info, input, meta }) {
             className="custom-control-input"
           />
           <div className="custom-control-indicator" />
-          <div className={descriptionClasses}>{label}</div>
+          <div className="custom-control-description">{label}</div>
         </label>
       </div>
     </Field>
