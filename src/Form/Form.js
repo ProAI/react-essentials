@@ -16,10 +16,6 @@ const propTypes = {
   className: PropTypes.string,
 };
 
-const childContextTypes = {
-  form: PropTypes.string.isRequired,
-};
-
 const defaultProps = {
   className: null,
 };
@@ -31,12 +27,6 @@ class Form extends React.Component {
   static DatePicker = props => <Field component={FormDatePicker} {...props} />;
   static Choice = props => <Field component={FormChoice} {...props} />;
   static Checkbox = props => <Field component={FormCheckbox} {...props} />;
-
-  getChildContext() {
-    return {
-      form: this.props.name,
-    };
-  }
 
   render() {
     const { children, className, ...attributes } = this.props;
@@ -52,7 +42,6 @@ class Form extends React.Component {
 }
 
 Form.propTypes = propTypes;
-Form.childContextTypes = childContextTypes;
 Form.defaultProps = defaultProps;
 
 export default Form;
