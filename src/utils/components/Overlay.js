@@ -2,15 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import Tether from 'tether';
-import { getTetherAttachments, tetherAttachements } from '../shared/helpers';
-import IdentifierGenerator from '../shared/IdentifierGenerator';
+import generateKey from '../generateKey';
+import getTetherPlacement from '../getTetherPlacement';
+import getPlacements from '../getPlacements';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   target: PropTypes.node.isRequired,
   className: PropTypes.string.isRequired,
   arrowClassName: PropTypes.string,
-  placement: PropTypes.oneOf(tetherAttachements),
+  placement: PropTypes.oneOf(getPlacements()),
   disabled: PropTypes.bool,
   visible: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]).isRequired,
   onToggle: PropTypes.func.isRequired,
@@ -50,12 +51,12 @@ class Overlay extends React.Component {
   };
 
   getTetherConfig() {
-    const attachments = getTetherAttachments(this.props.placement);
+    const attachments = getTetherPlacement(this.props.placement);
 
     return {
       element: this.element,
       ...attachments,
-      target: `[aria-describedby="${this.genIdentifier}"]`,
+      target: `[aria-describedby="${this.identifier}"]`,
       classPrefix: 'bs-tether',
       classes: { element: this.props.className, enabled: 'show' },
       constraints: [
@@ -65,7 +66,7 @@ class Overlay extends React.Component {
     };
   }
 
-  genIdentifier = IdentifierGenerator.generate('gen-overlay-');
+  identifier = generateKey('re-overlay-');
 
   handleProps() {
     if (this.props.visible) {
@@ -91,7 +92,7 @@ class Overlay extends React.Component {
   show() {
     this.element = document.createElement('div');
     this.element.setAttribute('role', this.props.role);
-    this.element.setAttribute('id', this.genIdentifier);
+    this.element.setAttribute('id', this.identifier);
     document.body.appendChild(this.element);
     ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderChildren(), this.element);
 
@@ -112,7 +113,7 @@ class Overlay extends React.Component {
 
   render() {
     return React.cloneElement(this.props.target, {
-      'aria-describedby': this.props.visible ? this.genIdentifier : null,
+      'aria-describedby': this.props.visible ? this.identifier : null,
     });
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import CloseButton from '../shared/CloseButton';
+import { CloseButton } from '../utils';
 
 const propTypes = {
   titleId: PropTypes.string.isRequired,

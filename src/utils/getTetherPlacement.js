@@ -1,120 +1,73 @@
-export function getTetherAttachments(placement) {
-  let attachments = {};
+export default function getTetherPlacement(placement) {
   switch (placement) {
     case 'top':
     case 'top center':
-      attachments = {
+      return {
         attachment: 'bottom center',
         targetAttachment: 'top center',
       };
-      break;
     case 'bottom':
     case 'bottom center':
-      attachments = {
+      return {
         attachment: 'top center',
         targetAttachment: 'bottom center',
       };
-      break;
     case 'left':
     case 'left center':
-      attachments = {
+      return {
         attachment: 'middle right',
         targetAttachment: 'middle left',
       };
-      break;
     case 'right':
     case 'right center':
-      attachments = {
+      return {
         attachment: 'middle left',
         targetAttachment: 'middle right',
       };
-      break;
     case 'top left':
-      attachments = {
+      return {
         attachment: 'bottom left',
         targetAttachment: 'top left',
       };
-      break;
     case 'top right':
-      attachments = {
+      return {
         attachment: 'bottom right',
         targetAttachment: 'top right',
       };
-      break;
     case 'bottom left':
-      attachments = {
+      return {
         attachment: 'top left',
         targetAttachment: 'bottom left',
       };
-      break;
     case 'bottom right':
-      attachments = {
+      return {
         attachment: 'top right',
         targetAttachment: 'bottom right',
       };
-      break;
     case 'right top':
-      attachments = {
+      return {
         attachment: 'top left',
         targetAttachment: 'top right',
       };
-      break;
     case 'right bottom':
-      attachments = {
+      return {
         attachment: 'bottom left',
         targetAttachment: 'bottom right',
       };
-      break;
     case 'left top':
-      attachments = {
+      return {
         attachment: 'top right',
         targetAttachment: 'top left',
       };
-      break;
     case 'left bottom':
-      attachments = {
+      return {
         attachment: 'bottom right',
         targetAttachment: 'bottom left',
       };
-      break;
     default:
-      attachments = {
+      return {
         attachment: 'top center',
         targetAttachment: 'bottom center',
       };
   }
-
-  return attachments;
 }
-
-export const tetherAttachements = [
-  'top',
-  'bottom',
-  'left',
-  'right',
-  'top left',
-  'top center',
-  'top right',
-  'right top',
-  'right middle',
-  'right bottom',
-  'bottom right',
-  'bottom center',
-  'bottom left',
-  'left top',
-  'left middle',
-  'left bottom',
-];
-
-export const triggerCombinations = [
-  'click',
-  'hover',
-  'focus',
-  'manual',
-  'click hover',
-  'hover click',
-  'hover focus',
-  'focus hover',
-  'click focus',
-  'focus click',
-];

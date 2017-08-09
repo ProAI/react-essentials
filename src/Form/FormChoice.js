@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import Field from './Field';
 
 const propTypes = {
@@ -7,6 +8,7 @@ const propTypes = {
   options: PropTypes.array.isRequired,
   info: PropTypes.string,
   multiple: PropTypes.bool,
+  size: PropTypes.oneOf(['sm']),
   // redux form props
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
@@ -16,9 +18,10 @@ const defaultProps = {
   legend: null,
   info: null,
   multiple: false,
+  size: null,
 };
 
-function FormChoice({ legend, options, info, multiple, input, meta }) {
+function FormChoice({ legend, options, info, multiple, size, input, meta }) {
   let index = 0;
 
   const getIndex = () => index;
@@ -28,14 +31,21 @@ function FormChoice({ legend, options, info, multiple, input, meta }) {
   };
 
   const check = multiple ? 'checkbox' : 'radio';
+  const classes = cx(`custom-control custom-${check}`, {
+    'custom-control-sm': size === 'sm',
+  });
 
   return (
     <Field meta={meta} info={info}>
-      {legend && <legend className="form-group-legend">{legend}</legend>}
-      {options.map(option =>
-        (<div className={check} key={getIndex()}>
-          <label
-            className={`custom-control custom-${check}`}
+      {legend &&
+        <legend className="form-group-legend">
+          {legend}
+        </legend>}
+      <div className="custom-controls-stacked">
+        {options.map(option =>
+          (<label
+            key={getIndex()}
+            className={classes}
             htmlFor={`${meta.form}-${input.name}-${getIndex()}`}
           >
             {!multiple &&
@@ -72,11 +82,13 @@ function FormChoice({ legend, options, info, multiple, input, meta }) {
                 className="custom-control-input"
               />}
             <div className="custom-control-indicator" />
-            <div className="custom-control-description">{option.label}</div>
-          </label>
-          {increaseIndex()}
-        </div>),
-      )}
+            <div className="custom-control-description">
+              {option.label}
+            </div>
+            {increaseIndex()}
+          </label>),
+        )}
+      </div>
     </Field>
   );
 }

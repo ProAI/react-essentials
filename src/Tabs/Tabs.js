@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TabsNav from './TabsNav';
 import TabsContent from './TabsContent';
 import TabsPane from './TabsPane';
-import IdentifierGenerator from '../shared/IdentifierGenerator';
+import { generateKey } from '../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -29,16 +29,16 @@ class Tabs extends React.Component {
   constructor(props) {
     super(props);
 
-    this.genIdentifier = IdentifierGenerator.generate('gen-tabs-');
+    this.identifier = generateKey('re-tabs-');
+
     if (!props.activeKey) {
       this.state = {
-        activeKey:
-          props.defaultActiveKey || props.children[0].props.id || `${this.genIdentifier}-0`,
+        activeKey: props.defaultActiveKey || props.children[0].props.id || `${this.identifier}-0`,
       };
     }
   }
 
-  onChange = (event, key) => {
+  onChange = (key) => {
     if (this.props.onChange) {
       this.props.onChange();
     } else {
@@ -68,13 +68,17 @@ class Tabs extends React.Component {
     } = this.props;
 
     const tabsNavLinkChildren = React.Children.map(children, (child, i) => {
-      const linkedPaneId = child.props.id || `${this.genIdentifier}-${i}`;
+      const linkedPaneId = child.props.id || `${this.identifier}-${i}`;
 
-      return <TabsNav.Link toPane={linkedPaneId}>{child.props.label}</TabsNav.Link>;
+      return (
+        <TabsNav.Link toPane={linkedPaneId}>
+          {child.props.label}
+        </TabsNav.Link>
+      );
     });
 
     const tabsContentPaneChildren = React.Children.map(children, (child, i) => {
-      const paneId = child.props.id || `${this.genIdentifier}-${i}`;
+      const paneId = child.props.id || `${this.identifier}-${i}`;
 
       return React.cloneElement(child, {
         id: paneId,

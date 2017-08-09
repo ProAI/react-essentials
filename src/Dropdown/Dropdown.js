@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import cx from 'classnames';
 import DropdownToggleButton from './DropdownToggleButton';
 import DropdownMenu from './DropdownMenu';
-import IdentifierGenerator from '../shared/IdentifierGenerator';
+import { generateKey } from '../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -19,7 +18,7 @@ const childContextTypes = {
 
 const defaultProps = {
   onToggle: null,
-  visible: false,
+  visible: null,
   className: null,
 };
 
@@ -30,7 +29,7 @@ class Dropdown extends React.Component {
   static Item = DropdownMenu.Item;
 
   state = {
-    visible: this.props.visible,
+    visible: false,
   };
 
   getChildContext() {
@@ -39,37 +38,46 @@ class Dropdown extends React.Component {
     };
   }
 
-  componentDidMount() {
-    document.addEventListener('click', this.onDocumentClick);
-  }
-
   componentWillUnmount() {
-    document.removeEventListener('click', this.onDocumentClick);
+    if (this.visible()) {
+      document.removeEventListener('mousedown', this.onDocumentClick);
+    }
   }
 
   onDocumentClick = (event) => {
-    const dropdownElement = findDOMNode(this);
-    if (event.target !== dropdownElement && !dropdownElement.contains(event.target)) {
-      if (this.visible()) {
+    const dropdownElement = this.element;
+
+    if (this.visible()) {
+      if (event.target !== dropdownElement && !dropdownElement.contains(event.target)) {
         this.onToggle();
       }
     }
   };
 
   onToggle = () => {
+    if (this.visible()) {
+      document.removeEventListener('mousedown', this.onDocumentClick);
+    } else {
+      document.addEventListener('mousedown', this.onDocumentClick);
+    }
+
+    // execute custom onToggle function
     if (this.props.onToggle) {
       this.props.onToggle();
-    } else {
+    }
+
+    // automatically controlled
+    if (this.props.visible === null) {
       this.setState({
         visible: !this.state.visible,
       });
     }
   };
 
-  genIdentifier = IdentifierGenerator.generate('gen-dropdown-');
+  identifier = generateKey('re-dropdown-');
 
   visible = () => {
-    if (this.props.visible) {
+    if (this.props.visible !== null) {
       return this.props.visible;
     }
 
@@ -97,7 +105,7 @@ class Dropdown extends React.Component {
         if (child.props.id) {
           identifier = child.props.id;
         } else {
-          identifier = this.genIdentifier;
+          identifier = this.identifier;
         }
         return React.cloneElement(child, {
           visible: this.visible(),
@@ -112,7 +120,13 @@ class Dropdown extends React.Component {
     });
 
     return (
-      <div {...attributes} className={classes}>
+      <div
+        {...attributes}
+        ref={(element) => {
+          this.element = element;
+        }}
+        className={classes}
+      >
         {manipulatedChildren}
       </div>
     );

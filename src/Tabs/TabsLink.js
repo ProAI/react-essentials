@@ -24,7 +24,7 @@ class TabsLink extends React.Component {
       this.props.onClick(event);
     }
 
-    this.props.onChange(event, this.props.toPane);
+    this.props.onChange(this.props.toPane, event);
   };
 
   render() {

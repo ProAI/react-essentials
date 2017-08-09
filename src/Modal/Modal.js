@@ -5,7 +5,7 @@ import cx from 'classnames';
 import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
-import IdentifierGenerator from '../shared/IdentifierGenerator';
+import { generateKey } from '../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -95,7 +95,7 @@ class Modal extends React.Component {
     }
   };
 
-  genIdentifier = IdentifierGenerator.generate('gen-modal-title-');
+  identifier = generateKey('re-modal-title-');
 
   handleProps = () => {
     if (this.props.visible) {
@@ -246,7 +246,7 @@ class Modal extends React.Component {
         return React.cloneElement(child, {
           dismissible: this.props.dismissible,
           onToggle: this.props.onToggle,
-          titleId: this.genIdentifier,
+          titleId: this.identifier,
         });
       }
 
@@ -261,7 +261,7 @@ class Modal extends React.Component {
             style={{ display: 'block' }}
             tabIndex="-1"
             role="dialog"
-            aria-labelledby={this.genIdentifier}
+            aria-labelledby={this.identifier}
             aria-hidden={!visible}
           >
             <div

@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Overlay from '../shared/Overlay';
-import { tetherAttachements, triggerCombinations } from '../shared/helpers';
+import { Overlay, getPlacements, getTriggers } from '../utils';
 
 const propTypes = {
   title: PropTypes.node.isRequired,
-  placement: PropTypes.oneOf(tetherAttachements),
+  placement: PropTypes.oneOf(getPlacements()),
   onToggle: PropTypes.func,
   visible: PropTypes.bool,
-  trigger: PropTypes.oneOf(triggerCombinations),
+  trigger: PropTypes.oneOf(getTriggers()),
   disabled: PropTypes.bool,
   target: PropTypes.node.isRequired,
 };
@@ -29,7 +28,7 @@ class Tooltip extends React.Component {
   };
 
   componentDidMount() {
-    // this.target = document.querySelector(`[aria-describedby="${this.genIdentifier}"]`);
+    // this.target = document.querySelector(`[aria-describedby="${this.identifier}"]`);
     this.trigger = this.props.trigger.split(' ');
   }
 

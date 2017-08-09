@@ -1,6 +1,6 @@
 const MAX_UID = 1000000;
 
-class IdentifierGenerator {
+class KeyGenerator {
   counter = 0;
 
   generate = (prefix) => {
@@ -20,6 +20,12 @@ class IdentifierGenerator {
 }
 
 // singleton
-const IdentifierGeneratorInstance = new IdentifierGenerator();
+const KeyGeneratorInstance = new KeyGenerator();
 
-export default IdentifierGeneratorInstance;
+export default function generateKey(prefix, random) {
+  if (random) {
+    return KeyGeneratorInstance.random(prefix);
+  }
+
+  return KeyGeneratorInstance.generate(prefix);
+}

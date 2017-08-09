@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Overlay from '../shared/Overlay';
-import { tetherAttachements, triggerCombinations } from '../shared/helpers';
+import { Overlay, getPlacements, getTriggers } from '../utils';
 
 const propTypes = {
   title: PropTypes.node.isRequired,
   content: PropTypes.node.isRequired,
-  placement: PropTypes.oneOf(tetherAttachements),
+  placement: PropTypes.oneOf(getPlacements()),
   onToggle: PropTypes.func,
   visible: PropTypes.bool,
-  trigger: PropTypes.oneOf(triggerCombinations),
+  trigger: PropTypes.oneOf(getTriggers()),
   disabled: PropTypes.bool,
   target: PropTypes.node.isRequired,
 };
@@ -137,7 +136,10 @@ class Popover extends React.Component {
         role="tooltip"
       >
         <div className="popover-inner">
-          {this.props.title && <h3 className="popover-title">{this.props.title}</h3>}
+          {this.props.title &&
+            <h3 className="popover-title">
+              {this.props.title}
+            </h3>}
           <div className="popover-content">
             {this.props.content}
           </div>

@@ -7,7 +7,7 @@ import CloseIcon from 'react-icons/lib/fa/close';
 import CheckIcon from 'react-icons/lib/fa/check';
 import { chooseTransitionEvent, Timer } from './helpers';
 import Link from '../Link/Link';
-import CloseButton from '../shared/CloseButton';
+import { CloseButton } from '../utils';
 
 const propTypes = {
   alert: PropTypes.object.isRequired,
@@ -192,11 +192,19 @@ class AlertItem extends React.Component {
     }
 
     if (alert.title) {
-      title = <div className="alert-title">{alert.title}</div>;
+      title = (
+        <div className="alert-title">
+          {alert.title}
+        </div>
+      );
     }
 
     if (alert.content) {
-      content = <div className="alert-content">{alert.content}</div>;
+      content = (
+        <div className="alert-content">
+          {alert.content}
+        </div>
+      );
     }
 
     if (alert.dismissible) {
@@ -212,7 +220,11 @@ class AlertItem extends React.Component {
     );
 
     if (alert.link) {
-      body = <Link to={alert.link} className="alert-link">{content}</Link>;
+      body = (
+        <Link to={alert.link} className="alert-link">
+          {content}
+        </Link>
+      );
     }
 
     return (

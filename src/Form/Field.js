@@ -19,11 +19,11 @@ function Field({ children, info, meta }) {
     <fieldset className={fieldsetClasses}>
       {children}
       {meta.error &&
-        <div className="text-danger">
+        <div className="form-text text-danger">
           {meta.error}
         </div>}
       {info &&
-        <div className="text-muted">
+        <div className="form-text text-muted">
           {info}
         </div>}
     </fieldset>
