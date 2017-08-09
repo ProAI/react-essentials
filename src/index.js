@@ -42,6 +42,12 @@ import PopoverButton from './Popover/PopoverButton';
 /* scrollbars components */
 import Scrollbars from './Scrollbars/Scrollbars';
 
+/* spinner components */
+import Spinner from './Spinner/Spinner';
+
+/* switch components */
+import Switch from './Switch/Switch';
+
 /* tabs components */
 import Tabs from './Tabs/Tabs';
 import TabsNav from './Tabs/TabsNav';
@@ -50,6 +56,9 @@ import TabsContent from './Tabs/TabsContent';
 /* overlay components */
 import injectTooltip from './Tooltip/injectTooltip';
 import TooltipButton from './Tooltip/TooltipButton';
+
+/* uploader components */
+import Uploader from './Uploader/Uploader';
 
 export {
   Alert,
@@ -70,9 +79,12 @@ export {
   injectPopover,
   PopoverButton,
   Scrollbars,
+  Spinner,
+  Switch,
   Tabs,
   TabsNav,
   TabsContent,
   injectTooltip,
   TooltipButton,
+  Uploader,
 };
