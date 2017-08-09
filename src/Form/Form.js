@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Field } from 'redux-form';
+import FormText from './FormText';
 import FormInput from './FormInput';
 import FormPicker from './FormPicker';
 import FormDatePicker from './FormDatePicker';
@@ -20,6 +21,7 @@ const defaultProps = {
 };
 
 class Form extends React.Component {
+  static Text = FormText;
   static Input = props => <Field component={FormInput} {...props} />;
   static Picker = props => <Field component={FormPicker} {...props} />;
   static DatePicker = props => <Field component={FormDatePicker} {...props} />;

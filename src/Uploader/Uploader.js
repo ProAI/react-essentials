@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import FileListItem from './FileListItem';
 
 const propTypes = {
-  legend: PropTypes.string,
   children: PropTypes.node.isRequired,
   upload: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(['list', 'thumbs', 'list-thumbs']),
@@ -15,7 +14,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-  legend: null,
   variant: 'list',
   multiple: false,
   accept: null,
@@ -146,46 +144,40 @@ class Uploader extends React.Component {
   };
 
   render() {
-    const { legend, variant, multiple, accept, children } = this.props;
+    const { variant, multiple, accept, children } = this.props;
 
     return (
-      <div className="form-group">
-        {legend &&
-          <div className="form-group-legend">
-            {legend}
-          </div>}
-        <div className="uploader">
-          <input
-            type="file"
-            ref={(fileInput) => {
-              this.fileInput = fileInput;
-            }}
-            style={{ display: 'none' }}
-            multiple={multiple}
-            accept={accept}
-            onChange={this.onChange}
-          />
-          <button
-            tabIndex={0}
-            type="button"
-            onClick={this.onTriggerClick}
-            onKeyDown={this.onTriggerKeyDown}
-            className="btn btn-secondary uploader-control"
-          >
-            {children}
-          </button>
-          <div className={`uploader-file-list ${variant}`}>
-            {Object.keys(this.state.uploads)
-              .reverse()
-              .map(id =>
-                (<FileListItem
-                  key={id}
-                  status={this.state.uploads[id].status}
-                  file={this.state.uploads[id].file}
-                  onRemove={e => this.onFileRemove(e, id)}
-                />),
-              )}
-          </div>
+      <div className="uploader">
+        <input
+          type="file"
+          ref={(fileInput) => {
+            this.fileInput = fileInput;
+          }}
+          style={{ display: 'none' }}
+          multiple={multiple}
+          accept={accept}
+          onChange={this.onChange}
+        />
+        <button
+          tabIndex={0}
+          type="button"
+          onClick={this.onTriggerClick}
+          onKeyDown={this.onTriggerKeyDown}
+          className="btn btn-secondary uploader-control"
+        >
+          {children}
+        </button>
+        <div className={`uploader-file-list ${variant}`}>
+          {Object.keys(this.state.uploads)
+            .reverse()
+            .map(id =>
+              (<FileListItem
+                key={id}
+                status={this.state.uploads[id].status}
+                file={this.state.uploads[id].file}
+                onRemove={e => this.onFileRemove(e, id)}
+              />),
+            )}
         </div>
       </div>
     );
