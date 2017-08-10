@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Overlay, getPlacements, getTriggers } from '../utils';
+import { Overlay, placements, triggers } from '../utils';
 
 const propTypes = {
   title: PropTypes.node.isRequired,
   content: PropTypes.node.isRequired,
-  placement: PropTypes.oneOf(getPlacements()),
+  placement: PropTypes.oneOf(placements),
   onToggle: PropTypes.func,
   visible: PropTypes.bool,
-  trigger: PropTypes.oneOf(getTriggers()),
+  trigger: PropTypes.oneOf(triggers),
   disabled: PropTypes.bool,
   target: PropTypes.node.isRequired,
 };

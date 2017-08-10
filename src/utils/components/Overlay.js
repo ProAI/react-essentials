@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom';
 import Tether from 'tether';
 import generateKey from '../generateKey';
 import getTetherPlacement from '../getTetherPlacement';
-import getPlacements from '../getPlacements';
+import placements from '../placements';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   target: PropTypes.node.isRequired,
   className: PropTypes.string.isRequired,
   arrowClassName: PropTypes.string,
-  placement: PropTypes.oneOf(getPlacements()),
+  placement: PropTypes.oneOf(placements),
   disabled: PropTypes.bool,
   visible: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]).isRequired,
   onToggle: PropTypes.func.isRequired,

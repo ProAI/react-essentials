@@ -1,20 +1,22 @@
+// constants
+import placements from './placements';
+import triggers from './triggers';
+
 // functions
 import formatFileSize from './formatFileSize';
 import generateKey from './generateKey';
-import getPlacements from './getPlacements';
 import getTetherPlacement from './getTetherPlacement';
-import getTriggers from './getTriggers';
 
 // components
 import CloseButton from './components/CloseButton';
 import Overlay from './components/Overlay';
 
 export {
+  placements,
+  triggers,
   formatFileSize,
   generateKey,
-  getPlacements,
   getTetherPlacement,
-  getTriggers,
   CloseButton,
   Overlay,
 };
