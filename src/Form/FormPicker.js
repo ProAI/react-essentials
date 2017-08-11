@@ -46,7 +46,15 @@ function FormPicker({ label, size, options, info, input, meta, multiple, clearab
         className={classes}
         options={options}
         value={input.value}
-        onChange={input.onChange}
+        onChange={(value) => {
+          // split value if multiple is enabled to get an array of values
+          if (multiple) {
+            input.onChange(value.split(','));
+            return;
+          }
+
+          input.onChange(value);
+        }}
         onFocus={input.onFocus}
         onBlur={() => input.onBlur(input.value)}
         multi={multiple}
