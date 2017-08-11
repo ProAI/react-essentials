@@ -50,7 +50,6 @@ function FormChoice({ legend, options, info, multiple, size, input, meta }) {
           >
             {!multiple &&
               <input
-                {...input}
                 type="radio"
                 id={`${meta.form}-${input.name}-${getIndex()}`}
                 name={input.name}
@@ -59,6 +58,10 @@ function FormChoice({ legend, options, info, multiple, size, input, meta }) {
                 onChange={(event) => {
                   const value = event.target.checked ? option.value : input.value;
                   return input.onChange(value);
+                }}
+                onFocus={input.onFocus}
+                onBlur={() => {
+                  input.onBlur(input.value);
                 }}
                 className="custom-control-input"
               />}
@@ -78,6 +81,10 @@ function FormChoice({ legend, options, info, multiple, size, input, meta }) {
                   }
 
                   return input.onChange(newValue);
+                }}
+                onFocus={input.onFocus}
+                onBlur={() => {
+                  input.onBlur(input.value);
                 }}
                 className="custom-control-input"
               />}

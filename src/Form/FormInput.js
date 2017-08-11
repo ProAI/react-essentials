@@ -35,19 +35,33 @@ function FormInput({ label, placeholder, type, size, info, input, meta, multilin
   return (
     <Field meta={meta} info={info}>
       {label &&
-        <label htmlFor={`${meta.form}-${input.name}`} className={labelClasses}>{label}</label>}
+        <label htmlFor={`${meta.form}-${input.name}`} className={labelClasses}>
+          {label}
+        </label>}
       {!multiline &&
         <input
-          {...input}
-          id={`${meta.form}-${input.name}`}
-          placeholder={placeholder}
           type={type}
+          id={`${meta.form}-${input.name}`}
+          name={input.name}
+          value={input.value}
+          onChange={input.onChange}
+          onFocus={input.onFocus}
+          onBlur={() => {
+            input.onBlur(input.value);
+          }}
+          placeholder={placeholder}
           className={inputClasses}
         />}
       {multiline &&
         <textarea
-          {...input}
           id={`${meta.form}-${input.name}`}
+          name={input.name}
+          value={input.value}
+          onChange={input.onChange}
+          onFocus={input.onFocus}
+          onBlur={() => {
+            input.onBlur(input.value);
+          }}
           placeholder={placeholder}
           rows="7"
           className={inputClasses}

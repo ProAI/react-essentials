@@ -147,7 +147,6 @@ class FormDatePicker extends React.Component {
                 * see react-select for an example
               */}
               <div
-                {...input}
                 ref={(element) => {
                   this.input = element;
                 }}
@@ -159,6 +158,7 @@ class FormDatePicker extends React.Component {
                 aria-owns=""
                 aria-activedescendant=""
                 aria-readonly="false"
+                onFocus={input.onFocus}
                 onBlur={() => {
                   input.onBlur(input.value);
                 }}

@@ -32,9 +32,15 @@ function FormCheckbox({ legend, label, info, size, input, meta }) {
         </legend>}
       <label className={classes} htmlFor={`${meta.form}-${input.name}`}>
         <input
-          {...input}
-          id={`${meta.form}-${input.name}`}
           type="checkbox"
+          id={`${meta.form}-${input.name}`}
+          name={input.name}
+          checked={input.value}
+          onChange={input.onChange}
+          onFocus={input.onFocus}
+          onBlur={() => {
+            input.onBlur(input.value);
+          }}
           className="custom-control-input"
         />
         <div className="custom-control-indicator" />

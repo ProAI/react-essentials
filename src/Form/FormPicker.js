@@ -41,13 +41,13 @@ function FormPicker({ label, size, options, info, input, meta, multiple, clearab
           {label}
         </label>}
       <Select
-        {...input}
         inputProps={{ id: `${meta.form}-${input.name}` }}
         instanceId={`${meta.form}-${input.name}`}
         className={classes}
         options={options}
         value={input.value}
         onChange={input.onChange}
+        onFocus={input.onFocus}
         onBlur={() => input.onBlur(input.value)}
         multi={multiple}
         clearable={clearable}
