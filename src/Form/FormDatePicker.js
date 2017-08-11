@@ -67,6 +67,12 @@ class FormDatePicker extends React.Component {
     if (!this.state.isOpen && event.key === 'ArrowDown') {
       this.onToggleMouseDown(event);
     }
+
+    // Destroy datepicker dropdown by calling the onBlur() function, so that
+    // the next tab element can be selected.
+    if (event.key === 'Tab') {
+      this.props.input.onBlur(this.props.input.value);
+    }
   };
 
   onMenuMouseDown = (event) => {
