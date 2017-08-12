@@ -1,28 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Overlay, placements, triggers } from '../utils';
+import PopperJS from 'popper.js';
+import { Overlay, triggers } from '../utils';
 
 const propTypes = {
   title: PropTypes.node.isRequired,
-  placement: PropTypes.oneOf(placements),
+  placement: PropTypes.oneOf(PopperJS.placements),
+  fallbackPlacement: PropTypes.oneOf(['flip', 'clockwise', 'counterwise']),
   onToggle: PropTypes.func,
   visible: PropTypes.bool,
   trigger: PropTypes.oneOf(triggers),
-  disabled: PropTypes.bool,
   target: PropTypes.node.isRequired,
 };
 
 const defaultProps = {
   onToggle: null,
-  visible: false,
+  visible: null,
   placement: 'bottom',
+  fallbackPlacement: null,
   trigger: 'hover focus',
-  disabled: false,
 };
 
 class Tooltip extends React.Component {
   state = {
-    visible: this.props.visible,
+    visible: false,
     isClicked: false,
     isFocused: false,
   };
@@ -94,15 +95,12 @@ class Tooltip extends React.Component {
     }
   };
 
-  onToggle = (e) => {
-    if (this.props.disabled) {
-      e.preventDefault();
-      return;
+  onToggle = () => {
+    if (this.props.onToggle !== null) {
+      this.props.onToggle();
     }
 
-    if (this.props.onToggle) {
-      this.props.onToggle();
-    } else {
+    if (this.props.visible === null) {
       this.setState({
         visible: !this.state.visible,
       });
@@ -110,7 +108,7 @@ class Tooltip extends React.Component {
   };
 
   visible = () => {
-    if (this.props.onToggle) {
+    if (this.props.visible !== null) {
       return this.props.visible;
     }
 
@@ -129,8 +127,15 @@ class Tooltip extends React.Component {
     return (
       <Overlay
         target={target}
-        className="tooltip"
+        className="tooltip show"
         placement={this.props.placement}
+        fallbackPlacement={this.props.fallbackPlacement}
+        placementClassName={{
+          top: 'bs-tooltip-top',
+          bottom: 'bs-tooltip-bottom',
+          left: 'bs-tooltip-left',
+          right: 'bs-tooltip-right',
+        }}
         visible={this.visible()}
         onToggle={this.onToggle}
         role="tooltip"

@@ -1,120 +1,180 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Tether from 'tether';
+import PopperJS from 'popper.js';
+import cx from 'classnames';
 import generateKey from '../generateKey';
-import getTetherPlacement from '../getTetherPlacement';
-import placements from '../placements';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   target: PropTypes.node.isRequired,
   className: PropTypes.string.isRequired,
-  arrowClassName: PropTypes.string,
-  placement: PropTypes.oneOf(placements),
-  disabled: PropTypes.bool,
-  visible: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]).isRequired,
-  onToggle: PropTypes.func.isRequired,
+  placement: PropTypes.oneOf(PopperJS.placements),
+  fallbackPlacement: PropTypes.oneOf(['flip', 'clockwise', 'counterwise']),
+  placementClassName: PropTypes.shape({
+    top: PropTypes.string,
+    bottom: PropTypes.string,
+    left: PropTypes.string,
+    right: PropTypes.string,
+  }).isRequired,
+  visible: PropTypes.bool.isRequired,
   role: PropTypes.string.isRequired,
 };
 
 const defaultProps = {
-  arrowClassName: null,
   disabled: false,
   visible: false,
   placement: 'bottom',
+  fallbackPlacement: null,
   style: null,
 };
 
 class Overlay extends React.Component {
+  state = {
+    placement: this.props.placement,
+    arrowStyle: null,
+    popperStyle: null,
+  };
+
   componentDidMount() {
-    this.handleProps();
+    // create overlay if visibility is visible
+    if (this.props.visible) {
+      this.create();
+    }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.visible !== prevProps.visible) {
-      this.handleProps();
+    // create overlay if visibility changed to visible
+    if (this.props.visible && this.props.visible !== prevProps.visible) {
+      this.create();
+    }
+
+    // update overlay if visibility is still visible
+    if (this.props.visible && this.props.visible === prevProps.visible) {
+      this.update();
+    }
+
+    // destroy overlay if visibility changed to invisible
+    if (!this.props.visible && this.props.visible !== prevProps.visible) {
+      this.destroy();
     }
   }
 
   componentWillUnmount() {
-    this.hide();
-  }
-
-  onToggle = (event) => {
-    if (this.props.disabled) {
-      event.preventDefault();
-      return;
-    }
-
-    this.props.onToggle();
-  };
-
-  getTetherConfig() {
-    const attachments = getTetherPlacement(this.props.placement);
-
-    return {
-      element: this.element,
-      ...attachments,
-      target: `[aria-describedby="${this.identifier}"]`,
-      classPrefix: 'bs-tether',
-      classes: { element: this.props.className, enabled: 'show' },
-      constraints: [
-        { to: 'scrollParent', attachment: 'together none' },
-        { to: 'window', attachment: 'together none' },
-      ],
-    };
+    // force destroy overlay
+    this.destroy();
   }
 
   identifier = generateKey('re-overlay-');
 
-  handleProps() {
-    if (this.props.visible) {
-      this.show();
-    } else {
-      this.hide();
+  create() {
+    // render overlay container
+    if (!this.container) {
+      this.container = document.createElement('div');
+      document.body.appendChild(this.container);
+    }
+    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderPopper(), this.container);
+
+    // create PopperJS instance
+    this.instance = new PopperJS(this.target, this.popper, {
+      placement: this.props.placement,
+      modifiers: {
+        arrow: {
+          element: this.arrow,
+        },
+        flip: {
+          enabled: this.props.fallbackPlacement !== null,
+          behavior: this.props.fallbackPlacement,
+        },
+        applyStyle: { enabled: false },
+        applyReactStyle: {
+          enabled: true,
+          fn: (data) => {
+            this.setState({
+              placement: data.placement,
+              arrowStyle: data.offsets.arrow,
+              popperStyle: data.styles,
+            });
+
+            return data;
+          },
+          order: 900,
+        },
+      },
+    });
+
+    this.instance.scheduleUpdate();
+  }
+
+  update() {
+    // rerender overlay container
+    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderPopper(), this.container);
+  }
+
+  destroy() {
+    // destroy overlay container
+    if (this.container) {
+      ReactDOM.unmountComponentAtNode(this.container);
+      document.body.removeChild(this.container);
+      this.container = null;
+    }
+
+    // destroy PopperJS instance
+    if (this.instance) {
+      this.instance.destroy();
     }
   }
 
-  hide() {
-    if (this.element) {
-      document.body.removeChild(this.element);
-      ReactDOM.unmountComponentAtNode(this.element);
-      this.element = null;
-    }
+  renderPopper() {
+    const { role, children, className, placementClassName } = this.props;
+    const { placement, popperStyle, arrowStyle } = this.state;
 
-    if (this.tether) {
-      this.tether.destroy();
-      this.tether = null;
-    }
-  }
+    const classes = cx(className, placementClassName[placement]);
 
-  show() {
-    this.element = document.createElement('div');
-    this.element.setAttribute('role', this.props.role);
-    this.element.setAttribute('id', this.identifier);
-    document.body.appendChild(this.element);
-    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderChildren(), this.element);
-
-    if (this.props.arrowClassName) {
-      const arrow = document.createElement('div');
-      arrow.setAttribute('class', this.props.arrowClassName);
-      this.element.appendChild(arrow);
-    }
-
-    this.tether = new Tether(this.getTetherConfig());
-    this.tether.position();
-    this.element.childNodes[0].focus();
-  }
-
-  renderChildren() {
-    return this.props.children;
+    return (
+      <div
+        ref={(element) => {
+          this.popper = element;
+        }}
+        role={role}
+        className={classes}
+        style={popperStyle}
+      >
+        <div
+          ref={(element) => {
+            this.arrow = element;
+          }}
+          className="arrow"
+          style={arrowStyle}
+        />
+        {children}
+      </div>
+    );
   }
 
   render() {
-    return React.cloneElement(this.props.target, {
+    // For some reason a ref that is defined on a cloned element does not work,
+    // so we use a wrapping <span> element, on which we can define the ref.
+    // This is just a workaround, so it would be better to solve the original
+    // cloned element issue.
+
+    const target = React.cloneElement(this.props.target, {
+      /* ref: (element) => {
+        this.target = element;
+      }, */
       'aria-describedby': this.props.visible ? this.identifier : null,
     });
+
+    return (
+      <span
+        ref={(element) => {
+          this.target = element;
+        }}
+        style={{ display: 'inline-block' }}
+      >
+        {target}
+      </span>
+    );
   }
 }
 

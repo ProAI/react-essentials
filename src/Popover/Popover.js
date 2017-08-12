@@ -1,29 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Overlay, placements, triggers } from '../utils';
+import PopperJS from 'popper.js';
+import { Overlay, triggers } from '../utils';
 
 const propTypes = {
   title: PropTypes.node.isRequired,
   content: PropTypes.node.isRequired,
-  placement: PropTypes.oneOf(placements),
+  placement: PropTypes.oneOf(PopperJS.placements),
+  fallbackPlacement: PropTypes.oneOf(['flip', 'clockwise', 'counterwise']),
   onToggle: PropTypes.func,
   visible: PropTypes.bool,
   trigger: PropTypes.oneOf(triggers),
-  disabled: PropTypes.bool,
   target: PropTypes.node.isRequired,
 };
 
 const defaultProps = {
   onToggle: null,
-  visible: false,
+  visible: null,
   placement: 'bottom',
+  fallbackPlacement: null,
   trigger: 'click',
-  disabled: false,
 };
 
 class Popover extends React.Component {
   state = {
-    visible: this.props.visible,
+    visible: false,
     isClicked: false,
     isFocused: false,
   };
@@ -94,15 +95,12 @@ class Popover extends React.Component {
     }
   };
 
-  onToggle = (e) => {
-    if (this.props.disabled) {
-      e.preventDefault();
-      return;
+  onToggle = () => {
+    if (this.props.onToggle !== null) {
+      this.props.onToggle();
     }
 
-    if (this.props.onToggle) {
-      this.props.onToggle();
-    } else {
+    if (this.props.visible === null) {
       this.setState({
         visible: !this.state.visible,
       });
@@ -110,7 +108,7 @@ class Popover extends React.Component {
   };
 
   visible = () => {
-    if (this.props.onToggle) {
+    if (this.props.visible !== null) {
       return this.props.visible;
     }
 
@@ -129,20 +127,25 @@ class Popover extends React.Component {
     return (
       <Overlay
         target={target}
-        className="popover"
+        className="popover show"
         placement={this.props.placement}
+        fallbackPlacement={this.props.fallbackPlacement}
+        placementClassName={{
+          top: 'bs-popover-top',
+          bottom: 'bs-popover-bottom',
+          left: 'bs-popover-left',
+          right: 'bs-popover-right',
+        }}
         visible={this.visible()}
         onToggle={this.onToggle}
         role="tooltip"
       >
-        <div className="popover-inner">
-          {this.props.title &&
-            <h3 className="popover-title">
-              {this.props.title}
-            </h3>}
-          <div className="popover-content">
-            {this.props.content}
-          </div>
+        {this.props.title &&
+          <h3 className="popover-header">
+            {this.props.title}
+          </h3>}
+        <div className="popover-body">
+          {this.props.content}
         </div>
       </Overlay>
     );

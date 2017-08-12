@@ -82,7 +82,7 @@ class Modal extends React.Component {
   };
 
   onEscape = (ev) => {
-    if (ev.keyCode === 27) {
+    if (ev.key === 'Escape') {
       this.props.onToggle();
     }
   };
@@ -109,10 +109,10 @@ class Modal extends React.Component {
     const classes = document.body.className.replace('modal-open', '');
     this.removeEvents();
 
-    if (this.element) {
-      ReactDOM.unmountComponentAtNode(this.element);
-      document.body.removeChild(this.element);
-      this.element = null;
+    if (this.container) {
+      ReactDOM.unmountComponentAtNode(this.container);
+      document.body.removeChild(this.container);
+      this.container = null;
     }
 
     document.body.className = cx(classes).trim();
@@ -138,9 +138,9 @@ class Modal extends React.Component {
     this.handleScrollbar();
 
     const classes = document.body.className;
-    this.element = document.createElement('div');
+    this.container = document.createElement('div');
 
-    document.body.appendChild(this.element);
+    document.body.appendChild(this.container);
     document.addEventListener('click', this.onBackdropClick, false);
     document.addEventListener('keyup', this.onEscape, false);
 
@@ -150,7 +150,7 @@ class Modal extends React.Component {
 
     const scrollX = window.scrollX;
     const scrollY = window.scrollY;
-    this.element.focus();
+    this.container.focus();
     window.scrollTo(scrollX, scrollY);
 
     this.handleUpdate();
@@ -227,10 +227,10 @@ class Modal extends React.Component {
   // ----------------------------------------------------------------------
 
   renderIntoSubtree() {
-    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderChildren(), this.element);
+    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderModal(), this.container);
   }
 
-  renderChildren() {
+  renderModal() {
     const { children, visible } = this.props;
 
     let sizeClass = '';

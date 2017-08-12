@@ -62,7 +62,7 @@ class Dropdown extends React.Component {
     }
 
     // execute custom onToggle function
-    if (this.props.onToggle) {
+    if (this.props.onToggle !== null) {
       this.props.onToggle();
     }
 
