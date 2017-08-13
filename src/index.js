@@ -20,11 +20,6 @@ import Emoji from './Emoji/Emoji';
 /* form components */
 import Form from './Form/Form';
 
-/* layout components */
-import Row from './Layout/Row';
-import Container from './Layout/Container';
-import Col from './Layout/Col';
-
 /* link components */
 import ActionLink from './Link/ActionLink';
 import Link from './Link/Link';
@@ -69,9 +64,6 @@ export {
   injectDropdownToggle,
   Emoji,
   Form,
-  Row,
-  Container,
-  Col,
   ActionLink,
   Link,
   Modal,
