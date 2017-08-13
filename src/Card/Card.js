@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import CardBlock from './CardBlock';
+import CardBody from './CardBody';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
 import CardSubtitle from './CardSubtitle';
@@ -16,7 +16,7 @@ const defaultProps = {
 };
 
 class Card extends React.Component {
-  static Block = CardBlock;
+  static Body = CardBody;
   static Footer = CardFooter;
   static Header = CardHeader;
   static Subtitle = CardSubtitle;

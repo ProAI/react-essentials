@@ -34,6 +34,9 @@ function FormChoice({ legend, options, info, multiple, size, input, meta }) {
   const classes = cx(`custom-control custom-${check}`, {
     'custom-control-sm': size === 'sm',
   });
+  const inputClasses = cx('custom-control-input', {
+    'is-invalid': meta.error,
+  });
 
   return (
     <Field meta={meta} info={info}>
@@ -63,7 +66,7 @@ function FormChoice({ legend, options, info, multiple, size, input, meta }) {
                 onBlur={() => {
                   input.onBlur(input.value);
                 }}
-                className="custom-control-input"
+                className={inputClasses}
               />}
             {multiple &&
               <input
@@ -86,7 +89,7 @@ function FormChoice({ legend, options, info, multiple, size, input, meta }) {
                 onBlur={() => {
                   input.onBlur(input.value);
                 }}
-                className="custom-control-input"
+                className={inputClasses}
               />}
             <div className="custom-control-indicator" />
             <div className="custom-control-description">

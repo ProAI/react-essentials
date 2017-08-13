@@ -19,15 +19,18 @@ const defaultProps = {
   info: null,
 };
 
-function FormPicker({ legend, size, info, input, meta, children }) {
-  const selectClasses = cx('form-control custom-select', {
-    'form-control-danger': meta.error,
-    'form-control-sm': size === 'sm',
+function FormSelect({ legend, size, info, input, meta, children }) {
+  const selectClasses = cx('custom-select', {
+    'is-invalid': meta.error,
+    'custom-control-sm': size === 'sm',
   });
 
   return (
     <Field meta={meta} info={info}>
-      {legend && <legend className="form-group-legend">{legend}</legend>}
+      {legend &&
+        <legend className="form-group-legend">
+          {legend}
+        </legend>}
       <select {...input} className={selectClasses}>
         {children}
       </select>
@@ -35,7 +38,7 @@ function FormPicker({ legend, size, info, input, meta, children }) {
   );
 }
 
-FormPicker.propTypes = propTypes;
-FormPicker.defaultProps = defaultProps;
+FormSelect.propTypes = propTypes;
+FormSelect.defaultProps = defaultProps;
 
-export default FormPicker;
+export default FormSelect;

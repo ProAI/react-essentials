@@ -104,7 +104,7 @@ class FormDatePicker extends React.Component {
     const { label, placeholder, info, size, input, meta } = this.props;
     const labelClasses = cx('form-control-label', { active: meta.active });
     const classes = cx('form-datepicker Select Select--single', {
-      'form-datepicker-danger': meta.error,
+      'is-invalid': meta.error,
       'form-datepicker-sm': size === 'sm',
       'has-value': input.value,
       'is-focused': meta.active,

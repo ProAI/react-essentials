@@ -4,12 +4,21 @@ import cx from 'classnames';
 
 const propTypes = {
   className: PropTypes.string,
-  variant: PropTypes.oneOf(['default', 'primary', 'success', 'info', 'warning', 'danger']),
+  variant: PropTypes.oneOf([
+    'primary',
+    'secondary',
+    'success',
+    'danger',
+    'warning',
+    'info',
+    'light',
+    'dark',
+  ]),
 };
 
 const defaultProps = {
   className: null,
-  variant: 'default',
+  variant: 'primary',
 };
 
 function Badge({ variant, className, ...attributes }) {

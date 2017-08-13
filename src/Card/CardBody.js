@@ -11,8 +11,8 @@ const defaultProps = {
   className: null,
 };
 
-function CardBlock({ children, className, ...attributes }) {
-  const classes = cx('card-block', className);
+function CardBody({ children, className, ...attributes }) {
+  const classes = cx('card-body', className);
 
   return (
     <div {...attributes} className={classes}>
@@ -21,7 +21,7 @@ function CardBlock({ children, className, ...attributes }) {
   );
 }
 
-CardBlock.propTypes = propTypes;
-CardBlock.defaultProps = defaultProps;
+CardBody.propTypes = propTypes;
+CardBody.defaultProps = defaultProps;
 
-export default CardBlock;
+export default CardBody;

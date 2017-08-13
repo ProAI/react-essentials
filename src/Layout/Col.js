@@ -6,31 +6,15 @@ import cx from 'classnames';
 const propTypes = {
   children: PropTypes.node.isRequired,
   size: PropTypes.number.isRequired,
-  push: PropTypes.number,
-  pull: PropTypes.number,
-  offset: PropTypes.number,
+  className: PropTypes.string,
 };
 
 const defaultProps = {
-  push: null,
-  pull: null,
-  offset: null,
+  className: null,
 };
 
-function Col({ size, push, pull, offset, children }) {
-  let classes = cx('col-xs-12', `col-md-${size}`);
-
-  if (push) {
-    classes = cx(classes, `push-md-${push}`);
-  }
-
-  if (pull) {
-    classes = cx(classes, `float-md-${pull}`);
-  }
-
-  if (offset) {
-    classes = cx(classes, `offset-md-${offset}`);
-  }
+function Col({ children, size, className }) {
+  const classes = cx('col-12', `col-md-${size}`, className);
 
   return (
     <div className={classes}>

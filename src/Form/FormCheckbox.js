@@ -23,6 +23,9 @@ function FormCheckbox({ legend, label, info, size, input, meta }) {
   const classes = cx('custom-control custom-checkbox', {
     'custom-control-sm': size === 'sm',
   });
+  const inputClasses = cx('custom-control-input', {
+    'is-invalid': meta.error,
+  });
 
   return (
     <Field meta={meta} info={info}>
@@ -41,7 +44,7 @@ function FormCheckbox({ legend, label, info, size, input, meta }) {
           onBlur={() => {
             input.onBlur(input.value);
           }}
-          className="custom-control-input"
+          className={inputClasses}
         />
         <div className="custom-control-indicator" />
         <div className="custom-control-description">

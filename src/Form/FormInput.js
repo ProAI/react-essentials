@@ -28,7 +28,7 @@ function FormInput({ label, placeholder, type, size, info, input, meta, multilin
   const labelClasses = cx('form-control-label', { active: meta.active });
 
   const inputClasses = cx('form-control', {
-    'form-control-danger': meta.error,
+    'is-invalid': meta.error,
     'form-control-sm': size === 'sm',
   });
 

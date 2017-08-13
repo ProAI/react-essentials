@@ -12,8 +12,9 @@ const propTypes = {
     'info',
     'warning',
     'danger',
+    'light',
+    'dark',
     'link',
-    'option',
   ]),
   size: PropTypes.oneOf(['sm', 'lg']),
   onClick: PropTypes.func,
@@ -61,15 +62,16 @@ class Button extends React.Component {
       ...attributes
     } = this.props;
 
-    const classes = variant === 'option'
-      ? cx('btn-option', className)
-      : cx(
-          'btn',
-          `btn-${variant}`,
-          { 'btn-sm': size === 'sm' },
-          { 'btn-lg': size === 'lg' },
-          className,
-        );
+    const classes =
+      variant === 'option'
+        ? cx('btn-option', className)
+        : cx(
+            'btn',
+            `btn-${variant}`,
+            { 'btn-sm': size === 'sm' },
+            { 'btn-lg': size === 'lg' },
+            className,
+          );
 
     return (
       <button

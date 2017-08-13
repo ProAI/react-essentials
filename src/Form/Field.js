@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -14,9 +13,8 @@ const defaultProps = {
 };
 
 function Field({ children, info, meta }) {
-  const fieldsetClasses = cx('form-group', { 'has-danger': meta.error });
   return (
-    <fieldset className={fieldsetClasses}>
+    <fieldset className="form-group">
       {children}
       {meta.error &&
         <div className="form-text text-danger">

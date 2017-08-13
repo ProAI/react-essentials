@@ -30,7 +30,7 @@ function FormPicker({ label, size, options, info, input, meta, multiple, clearab
   const labelClasses = cx('form-control-label', { active: meta.active });
 
   const classes = cx('form-picker', {
-    'form-picker-danger': meta.error,
+    'is-invalid': meta.error,
     'form-picker-sm': size === 'sm',
   });
 
