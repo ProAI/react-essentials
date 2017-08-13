@@ -62,16 +62,13 @@ class Button extends React.Component {
       ...attributes
     } = this.props;
 
-    const classes =
-      variant === 'option'
-        ? cx('btn-option', className)
-        : cx(
-            'btn',
-            `btn-${variant}`,
-            { 'btn-sm': size === 'sm' },
-            { 'btn-lg': size === 'lg' },
-            className,
-          );
+    const classes = cx(
+      'btn',
+      `btn-${variant}`,
+      { 'btn-sm': size === 'sm' },
+      { 'btn-lg': size === 'lg' },
+      className,
+    );
 
     return (
       <button
