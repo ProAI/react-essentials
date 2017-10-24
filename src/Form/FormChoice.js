@@ -21,7 +21,9 @@ const defaultProps = {
   size: null,
 };
 
-function FormChoice({ legend, options, info, multiple, size, input, meta }) {
+function FormChoice({
+  legend, options, info, multiple, size, input, meta,
+}) {
   let index = 0;
 
   const getIndex = () => index;
@@ -40,18 +42,15 @@ function FormChoice({ legend, options, info, multiple, size, input, meta }) {
 
   return (
     <Field meta={meta} info={info}>
-      {legend &&
-        <legend className="form-group-legend">
-          {legend}
-        </legend>}
+      {legend && <legend className="form-group-legend">{legend}</legend>}
       <div className="custom-controls-stacked">
-        {options.map(option =>
-          (<label
+        {options.map(option => (
+          <label
             key={getIndex()}
             className={classes}
             htmlFor={`${meta.form}-${input.name}-${getIndex()}`}
           >
-            {!multiple &&
+            {!multiple && (
               <input
                 type="radio"
                 id={`${meta.form}-${input.name}-${getIndex()}`}
@@ -67,8 +66,9 @@ function FormChoice({ legend, options, info, multiple, size, input, meta }) {
                   input.onBlur(input.value);
                 }}
                 className={inputClasses}
-              />}
-            {multiple &&
+              />
+            )}
+            {multiple && (
               <input
                 type="checkbox"
                 id={`${meta.form}-${input.name}-${getIndex()}`}
@@ -90,14 +90,13 @@ function FormChoice({ legend, options, info, multiple, size, input, meta }) {
                   input.onBlur(input.value);
                 }}
                 className={inputClasses}
-              />}
+              />
+            )}
             <div className="custom-control-indicator" />
-            <div className="custom-control-description">
-              {option.label}
-            </div>
+            <div className="custom-control-description">{option.label}</div>
             {increaseIndex()}
-          </label>),
-        )}
+          </label>
+        ))}
       </div>
     </Field>
   );

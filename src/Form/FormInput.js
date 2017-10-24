@@ -13,6 +13,7 @@ const propTypes = {
   // redux form props
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
+  autoFocus: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -22,9 +23,12 @@ const defaultProps = {
   size: null,
   info: null,
   multiline: false,
+  autoFocus: false,
 };
 
-function FormInput({ label, placeholder, type, size, info, input, meta, multiline }) {
+function FormInput({
+  label, placeholder, type, size, info, input, meta, multiline, autoFocus,
+}) {
   const labelClasses = cx('form-control-label', { active: meta.active });
 
   const inputClasses = cx('form-control', {
@@ -32,13 +36,15 @@ function FormInput({ label, placeholder, type, size, info, input, meta, multilin
     'form-control-sm': size === 'sm',
   });
 
+  /* eslint-disable jsx-a11y/no-autofocus */
   return (
     <Field meta={meta} info={info}>
-      {label &&
+      {label && (
         <label htmlFor={`${meta.form}-${input.name}`} className={labelClasses}>
           {label}
-        </label>}
-      {!multiline &&
+        </label>
+      )}
+      {!multiline && (
         <input
           type={type}
           id={`${meta.form}-${input.name}`}
@@ -51,8 +57,10 @@ function FormInput({ label, placeholder, type, size, info, input, meta, multilin
           }}
           placeholder={placeholder}
           className={inputClasses}
-        />}
-      {multiline &&
+          autoFocus={autoFocus}
+        />
+      )}
+      {multiline && (
         <textarea
           id={`${meta.form}-${input.name}`}
           name={input.name}
@@ -65,9 +73,12 @@ function FormInput({ label, placeholder, type, size, info, input, meta, multilin
           placeholder={placeholder}
           rows="7"
           className={inputClasses}
-        />}
+          autoFocus={autoFocus}
+        />
+      )}
     </Field>
   );
+  /* eslint-enable */
 }
 
 FormInput.propTypes = propTypes;

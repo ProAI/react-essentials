@@ -16,14 +16,8 @@ function Field({ children, info, meta }) {
   return (
     <fieldset className="form-group">
       {children}
-      {meta.error &&
-        <div className="form-text text-danger">
-          {meta.error}
-        </div>}
-      {info &&
-        <div className="form-text text-muted">
-          {info}
-        </div>}
+      {meta.error && <div className="form-text text-danger">{meta.error}</div>}
+      {info && <div className="form-text text-muted">{info}</div>}
     </fieldset>
   );
 }

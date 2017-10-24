@@ -19,7 +19,9 @@ const defaultProps = {
   info: null,
 };
 
-function FormSelect({ legend, size, info, input, meta, children }) {
+function FormSelect({
+  legend, size, info, input, meta, children,
+}) {
   const selectClasses = cx('custom-select', {
     'is-invalid': meta.error,
     'custom-control-sm': size === 'sm',
@@ -27,10 +29,7 @@ function FormSelect({ legend, size, info, input, meta, children }) {
 
   return (
     <Field meta={meta} info={info}>
-      {legend &&
-        <legend className="form-group-legend">
-          {legend}
-        </legend>}
+      {legend && <legend className="form-group-legend">{legend}</legend>}
       <select {...input} className={selectClasses}>
         {children}
       </select>

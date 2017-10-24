@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { Field } from 'redux-form';
+import { Field } from 'formik';
 import FormText from './FormText';
 import FormInput from './FormInput';
 import FormPicker from './FormPicker';

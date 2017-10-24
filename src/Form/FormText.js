@@ -25,11 +25,7 @@ const defaultProps = {
 function FormText({ children, variant, className }) {
   const classes = cx('form-text', className, `text-${variant}`);
 
-  return (
-    <p className={classes}>
-      {children}
-    </p>
-  );
+  return <p className={classes}>{children}</p>;
 }
 
 FormText.propTypes = propTypes;

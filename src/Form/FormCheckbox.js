@@ -19,7 +19,9 @@ const defaultProps = {
   size: null,
 };
 
-function FormCheckbox({ legend, label, info, size, input, meta }) {
+function FormCheckbox({
+  legend, label, info, size, input, meta,
+}) {
   const classes = cx('custom-control custom-checkbox', {
     'custom-control-sm': size === 'sm',
   });
@@ -29,10 +31,7 @@ function FormCheckbox({ legend, label, info, size, input, meta }) {
 
   return (
     <Field meta={meta} info={info}>
-      {legend &&
-        <legend className="form-group-legend">
-          {legend}
-        </legend>}
+      {legend && <legend className="form-group-legend">{legend}</legend>}
       <label className={classes} htmlFor={`${meta.form}-${input.name}`}>
         <input
           type="checkbox"
@@ -47,9 +46,7 @@ function FormCheckbox({ legend, label, info, size, input, meta }) {
           className={inputClasses}
         />
         <div className="custom-control-indicator" />
-        <div className="custom-control-description">
-          {label}
-        </div>
+        <div className="custom-control-description">{label}</div>
       </label>
     </Field>
   );

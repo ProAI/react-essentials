@@ -26,7 +26,9 @@ const defaultProps = {
   multiple: false,
 };
 
-function FormPicker({ label, size, options, info, input, meta, multiple, clearable, searchable }) {
+function FormPicker({
+  label, size, options, info, input, meta, multiple, clearable, searchable,
+}) {
   const labelClasses = cx('form-control-label', { active: meta.active });
 
   const classes = cx('form-picker', {
@@ -36,10 +38,11 @@ function FormPicker({ label, size, options, info, input, meta, multiple, clearab
 
   return (
     <Field meta={meta} info={info}>
-      {label &&
+      {label && (
         <label htmlFor={`${meta.form}-${input.name}`} className={labelClasses}>
           {label}
-        </label>}
+        </label>
+      )}
       <Select
         inputProps={{ id: `${meta.form}-${input.name}` }}
         instanceId={`${meta.form}-${input.name}`}

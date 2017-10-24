@@ -101,7 +101,9 @@ class FormDatePicker extends React.Component {
   };
 
   render() {
-    const { label, placeholder, info, size, input, meta } = this.props;
+    const {
+      label, placeholder, info, size, input, meta,
+    } = this.props;
     const labelClasses = cx('form-control-label', { active: meta.active });
     const classes = cx('form-datepicker Select Select--single', {
       'is-invalid': meta.error,
@@ -118,10 +120,11 @@ class FormDatePicker extends React.Component {
 
     return (
       <Field meta={meta} info={info}>
-        {label &&
+        {label && (
           <label htmlFor={`${meta.form}-${input.name}`} className={labelClasses}>
             {label}
-          </label>}
+          </label>
+        )}
         <div className={classes}>
           <div
             className={controlClasses}
@@ -129,16 +132,14 @@ class FormDatePicker extends React.Component {
             onKeyDown={this.onToggleKeyDown}
           >
             <span className="Select-multi-value-wrapper">
-              {!input.value &&
-                <div className="Select-placeholder">
-                  {placeholder}
-                </div>}
-              {input.value &&
+              {!input.value && <div className="Select-placeholder">{placeholder}</div>}
+              {input.value && (
                 <div className="Select-value">
                   <span className="Select-value-label" role="option" aria-selected="true">
                     {input.value ? pickedDate.toLocaleDateString('en') : ''}
                   </span>
-                </div>}
+                </div>
+              )}
               {/* TODO
                 * aria-owns should be the id of the date list element
                 * aria-activedescendant should be the id of the currently selected day element
@@ -167,7 +168,7 @@ class FormDatePicker extends React.Component {
               />
             </span>
           </div>
-          {this.state.isOpen &&
+          {this.state.isOpen && (
             <div
               ref={(menu) => {
                 this.menu = menu;
@@ -188,7 +189,8 @@ class FormDatePicker extends React.Component {
                 onDayKeyDown={() => {}}
                 enableOutsideDays
               />
-            </div>}
+            </div>
+          )}
         </div>
       </Field>
     );
