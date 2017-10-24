@@ -43,7 +43,7 @@
     "formik": "0.9.4",
     "react": "15.6.1",
     "react-dom": "15.6.1",
-    "react-kickstarter": "0.2.16",
+    "react-kickstarter": "0.2.23",
     "react-router-dom": "4.2.2"
   },
   "peerDependencies": {
