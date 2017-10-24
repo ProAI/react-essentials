@@ -28,35 +28,29 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
-    "date-fns": "^2.0.0-alpha.2",
-    "popper.js": "^1.12.5",
-    "prop-types": "^15.5.10",
-    "react-custom-scrollbars": "^4.1.2",
-    "react-day-picker": "^6.1.0",
-    "react-icons": "^2.2.5",
-    "react-loading": "^0.1.4",
-    "react-select": "^1.0.0-rc.5"
+    "date-fns": "^2.0.0-alpha.7",
+    "popper.js": "^1.12.6",
+    "prop-types": "^15.6.0",
+    "react-custom-scrollbars": "^4.2.0",
+    "react-day-picker": "^6.2.1",
+    "react-icons": "^2.2.7",
+    "react-loading": "^1.0.0",
+    "react-select": "^1.0.0-rc.10"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
-    "eslint": "4.6.1",
+    "eslint": "4.9.0",
+    "formik": "0.9.4",
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "react-kickstarter": "0.2.16",
-    "react-redux": "5.0.6",
-    "react-router": "4.2.0",
-    "react-router-dom": "4.2.2",
-    "redux": "3.7.2",
-    "redux-form": "7.0.3"
+    "react-router-dom": "4.2.2"
   },
   "peerDependencies": {
-    "react": "^15.0.0",
-    "react-dom": "^15.0.0",
-    "react-redux": "^5.0.0",
-    "react-router": "^4.0.0",
-    "react-router-dom": "^4.0.0",
-    "redux": "^3.0.0",
-    "redux-form": "^7.0.0"
+    "formik": ">=0",
+    "react": ">=15",
+    "react-dom": ">=15",
+    "react-router-dom": ">=4"
   },
   "engines": {
     "npm": ">=3",
