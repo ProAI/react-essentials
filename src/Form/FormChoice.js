@@ -43,11 +43,11 @@ class FormChoice extends React.Component {
       'custom-control-sm': size === 'sm',
     });
     const inputClasses = cx('custom-control-input', {
-      'is-invalid': form.errors[name],
+      'is-invalid': !form.touched[name] && form.errors[name],
     });
 
     return (
-      <Field error={form.errors[name]} info={info}>
+      <Field error={form.errors[name]} touched={form.touched[name]} info={info}>
         {legend && <legend className="form-group-legend">{legend}</legend>}
         <div className="custom-controls-stacked">
           {options.map(option => (
@@ -64,10 +64,11 @@ class FormChoice extends React.Component {
                   value={option.value}
                   checked={field.value === option.value}
                   onChange={(event) => {
+                    if (!form.touched[name]) form.setFieldTouched(name, true);
+
                     const value = event.target.checked ? option.value : field.value;
-                    return form.setFieldValue(name, value);
+                    form.setFieldValue(name, value);
                   }}
-                  onBlur={() => form.setFieldTouched(name, true)}
                   className={inputClasses}
                 />
               )}
@@ -79,6 +80,8 @@ class FormChoice extends React.Component {
                   value={option.value}
                   checked={field.value ? field.value.indexOf(option.value) !== -1 : false}
                   onChange={(event) => {
+                    if (!form.touched[name]) form.setFieldTouched(name, true);
+
                     const newValue = field.value ? [...field.value] : [];
                     if (event.target.checked) {
                       newValue.push(option.value);
@@ -86,9 +89,8 @@ class FormChoice extends React.Component {
                       newValue.splice(newValue.indexOf(option.value), 1);
                     }
 
-                    return form.setFieldValue(name, newValue);
+                    form.setFieldValue(name, newValue);
                   }}
-                  onBlur={() => form.setFieldTouched(`${name}[${getIndex()}]`, true)}
                   className={inputClasses}
                 />
               )}

@@ -23,14 +23,22 @@ function FormSelect({
   children, legend, size, info, field: { name, ...field }, form,
 }) {
   const selectClasses = cx('custom-select', {
-    'is-invalid': form.errors[name],
+    'is-invalid': !form.touched[name] && form.errors[name],
     'custom-control-sm': size === 'sm',
   });
 
   return (
-    <Field error={form.errors[name]} info={info}>
+    <Field error={form.errors[name]} touched={form.touched[name]} info={info}>
       {legend && <legend className="form-group-legend">{legend}</legend>}
-      <select name={name} className={selectClasses} {...field}>
+      <select
+        name={name}
+        value={field.value}
+        onChange={(event) => {
+          if (!form.touched[name]) form.setFieldTouched(name, true);
+          field.onChange(event);
+        }}
+        className={selectClasses}
+      >
         {children}
       </select>
     </Field>

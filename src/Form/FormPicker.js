@@ -44,12 +44,12 @@ class FormPicker extends React.Component {
     } = this.props;
 
     const classes = cx('form-picker', {
-      'is-invalid': form.errors[name],
+      'is-invalid': !form.touched[name] && form.errors[name],
       'form-picker-sm': size === 'sm',
     });
 
     return (
-      <Field error={form.errors[name]} info={info}>
+      <Field error={form.errors[name]} touched={form.touched[name]} info={info}>
         {label && (
           <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
             {label}
@@ -62,6 +62,8 @@ class FormPicker extends React.Component {
           options={options}
           value={field.value}
           onChange={(value) => {
+            if (!form.touched[name]) form.setFieldTouched(name, true);
+
             // split value if multiple is enabled to get an array of values
             if (multiple) {
               form.setFieldValue(name, value.split(','));
@@ -70,7 +72,6 @@ class FormPicker extends React.Component {
 
             form.setFieldValue(name, value);
           }}
-          onBlur={() => form.setFieldTouched(name, true)}
           multi={multiple}
           clearable={clearable}
           searchable={searchable}

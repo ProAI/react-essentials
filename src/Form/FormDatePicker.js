@@ -95,6 +95,11 @@ class FormDatePicker extends React.Component {
     // close dropdown
     this.updateState(false);
 
+    // touched
+    if (!this.props.form.touched[this.props.field.name]) {
+      this.props.form.setFieldTouched(this.props.field.name, true);
+    }
+
     // set value
     this.props.form.setFieldValue(this.props.field.name, day);
   };
@@ -130,7 +135,7 @@ class FormDatePicker extends React.Component {
     } = this.props;
 
     const classes = cx('form-datepicker Select Select--single', {
-      'is-invalid': form.errors[name],
+      'is-invalid': !form.touched[name] && form.errors[name],
       'form-datepicker-sm': size === 'sm',
       'has-value': field.value,
       'is-focused': this.state.isFocused,
@@ -143,7 +148,7 @@ class FormDatePicker extends React.Component {
     const initialMonth = new Date(pickedDate.getFullYear(), pickedDate.getMonth());
 
     return (
-      <Field error={form.errors[name]} info={info}>
+      <Field error={form.errors[name]} touched={form.touched[name]} info={info}>
         {label && (
           <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
             {label}
@@ -189,7 +194,6 @@ class FormDatePicker extends React.Component {
                 onFocus={() => {
                   this.updateState(undefined, true);
                 }}
-                onBlur={() => form.setFieldTouched(name, true)}
                 style={{ border: '0px', width: '1px', display: 'inline-block' }}
               />
             </span>

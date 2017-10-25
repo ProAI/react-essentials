@@ -31,11 +31,11 @@ class FormCheckbox extends React.Component {
       'custom-control-sm': size === 'sm',
     });
     const inputClasses = cx('custom-control-input', {
-      'is-invalid': form.errors[name],
+      'is-invalid': !form.touched[name] && form.errors[name],
     });
 
     return (
-      <Field error={form.errors[name]} info={info}>
+      <Field error={form.errors[name]} touched={form.touched[name]} info={info}>
         {legend && <legend className="form-group-legend">{legend}</legend>}
         <label className={classes} htmlFor={`${this.identifier}-${name}`}>
           <input
@@ -43,8 +43,10 @@ class FormCheckbox extends React.Component {
             id={`${this.identifier}-${name}`}
             name={name}
             checked={field.value || false}
-            onChange={field.onChange}
-            onBlur={field.onBlur}
+            onChange={(event) => {
+              if (!form.touched[name]) form.setFieldTouched(name, true);
+              field.onChange(event);
+            }}
             className={inputClasses}
           />
           <div className="custom-control-indicator" />

@@ -44,13 +44,13 @@ class FormInput extends React.Component {
     } = this.props;
 
     const inputClasses = cx('form-control', {
-      'is-invalid': form.errors[name],
+      'is-invalid': !form.touched[name] && form.errors[name],
       'form-control-sm': size === 'sm',
     });
 
     /* eslint-disable jsx-a11y/no-autofocus */
     return (
-      <Field error={form.errors[name]} info={info}>
+      <Field error={form.errors[name]} touched={form.touched[name]} info={info}>
         {label && (
           <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
             {label}
@@ -62,8 +62,10 @@ class FormInput extends React.Component {
             id={`${this.identifier}-${name}`}
             name={name}
             value={field.value || ''}
-            onChange={field.onChange}
-            onBlur={field.onBlur}
+            onChange={(event) => {
+              if (!form.touched[name]) form.setFieldTouched(name, true);
+              field.onChange(event);
+            }}
             placeholder={placeholder}
             className={inputClasses}
             autoFocus={autoFocus}
@@ -74,8 +76,10 @@ class FormInput extends React.Component {
             id={`${this.identifier}-${name}`}
             name={name}
             value={field.value || ''}
-            onChange={field.onChange}
-            onBlur={field.onBlur}
+            onChange={(event) => {
+              if (!form.touched[name]) form.setFieldTouched(name, true);
+              field.onChange(event);
+            }}
             placeholder={placeholder}
             rows="7"
             className={inputClasses}
