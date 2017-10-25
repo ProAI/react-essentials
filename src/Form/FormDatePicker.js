@@ -5,15 +5,16 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DayPicker from 'react-day-picker/DayPicker';
 import Field from './Field';
+import { generateKey } from '../utils';
 
 const propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   info: PropTypes.string,
   size: PropTypes.oneOf(['sm']),
-  // redux form props
-  input: PropTypes.object.isRequired,
-  meta: PropTypes.object.isRequired,
+  // formik props
+  field: PropTypes.object.isRequired,
+  form: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -25,21 +26,22 @@ const defaultProps = {
 
 class FormDatePicker extends React.Component {
   state = {
+    isFocused: false,
     isOpen: false,
   };
 
-  componentWillReceiveProps(nextProps) {
+  /* componentWillReceiveProps(nextProps) {
     // if datepicker is not focused, close dropdown
     if (!nextProps.meta.active && this.state.isOpen) {
       this.toggle();
     }
-  }
+  } */
 
   componentDidUpdate() {
     // if field is active, set focus on tabIndex element
-    if (this.props.meta.active) {
+    /* if (this.props.meta.active) {
       this.input.focus();
-    }
+    } */
 
     // scroll to bottom of menu
     if (this.state.isOpen) {
@@ -55,9 +57,11 @@ class FormDatePicker extends React.Component {
     event.stopPropagation();
 
     // if datepicker is not focused, focus datepicker
-    if (!this.props.meta.active) {
-      this.props.input.onFocus();
-    }
+    /* if (!this.props.meta.active) {
+      this.setState({
+        isFocused: true,
+      });
+    } */
 
     // open/close dropdown
     this.toggle();
@@ -70,9 +74,9 @@ class FormDatePicker extends React.Component {
 
     // Destroy datepicker dropdown by calling the onBlur() function, so that
     // the next tab element can be selected.
-    if (event.key === 'Tab') {
-      this.props.input.onBlur(this.props.input.value);
-    }
+    /* if (event.key === 'Tab') {
+      this.props.field.onBlur(this.props.field.value);
+    } */
   };
 
   onMenuMouseDown = (event) => {
@@ -91,8 +95,10 @@ class FormDatePicker extends React.Component {
     this.toggle();
 
     // set value
-    this.props.input.onChange(day);
+    this.props.form.setFieldValue(this.props.field.name, day);
   };
+
+  identifier = generateKey('re-form-');
 
   toggle = () => {
     this.setState({
@@ -102,26 +108,26 @@ class FormDatePicker extends React.Component {
 
   render() {
     const {
-      label, placeholder, info, size, input, meta,
+      label, placeholder, info, size, field: { name, ...field }, form,
     } = this.props;
-    const labelClasses = cx('form-control-label', { active: meta.active });
+    const labelClasses = cx('form-control-label'); // cx('form-control-label', { active: meta.active });
     const classes = cx('form-datepicker Select Select--single', {
-      'is-invalid': meta.error,
+      'is-invalid': form.errors[name],
       'form-datepicker-sm': size === 'sm',
-      'has-value': input.value,
-      'is-focused': meta.active,
+      'has-value': field.value,
+      'is-focused': this.state.isFocused,
       'is-open': this.state.isOpen,
     });
     const controlClasses = cx('form-datepicker-control Select-control');
     const menuClasses = cx('form-datepicker-menu');
 
-    const pickedDate = input.value ? new Date(input.value) : new Date();
+    const pickedDate = field.value ? new Date(field.value) : new Date();
     const initialMonth = new Date(pickedDate.getFullYear(), pickedDate.getMonth());
 
     return (
-      <Field meta={meta} info={info}>
+      <Field error={form.errors[name]} info={info}>
         {label && (
-          <label htmlFor={`${meta.form}-${input.name}`} className={labelClasses}>
+          <label htmlFor={`${this.identifier}-${name}`} className={labelClasses}>
             {label}
           </label>
         )}
@@ -132,11 +138,11 @@ class FormDatePicker extends React.Component {
             onKeyDown={this.onToggleKeyDown}
           >
             <span className="Select-multi-value-wrapper">
-              {!input.value && <div className="Select-placeholder">{placeholder}</div>}
-              {input.value && (
+              {!field.value && <div className="Select-placeholder">{placeholder}</div>}
+              {field.value && (
                 <div className="Select-value">
                   <span className="Select-value-label" role="option" aria-selected="true">
-                    {input.value ? pickedDate.toLocaleDateString('en') : ''}
+                    {field.value ? pickedDate.toLocaleDateString('en') : ''}
                   </span>
                 </div>
               )}
@@ -151,7 +157,7 @@ class FormDatePicker extends React.Component {
                 ref={(element) => {
                   this.input = element;
                 }}
-                id={`${meta.form}-${input.name}`}
+                id={`${this.identifier}-${name}`}
                 role="combobox"
                 tabIndex="0"
                 className="Select-input"
@@ -159,10 +165,7 @@ class FormDatePicker extends React.Component {
                 aria-owns=""
                 aria-activedescendant=""
                 aria-readonly="false"
-                onFocus={input.onFocus}
-                onBlur={() => {
-                  input.onBlur(input.value);
-                }}
+                onBlur={() => form.setFieldTouched(name, true)}
                 onKeyDown={this.onInputKeyDown}
                 style={{ border: '0px', width: '1px', display: 'inline-block' }}
               />

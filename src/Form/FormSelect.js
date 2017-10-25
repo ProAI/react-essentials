@@ -8,9 +8,9 @@ const propTypes = {
   legend: PropTypes.string,
   size: PropTypes.oneOf(['sm']),
   info: PropTypes.string,
-  // redux form props
-  input: PropTypes.object.isRequired,
-  meta: PropTypes.object.isRequired,
+  // formik props
+  field: PropTypes.object.isRequired,
+  form: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -20,17 +20,17 @@ const defaultProps = {
 };
 
 function FormSelect({
-  legend, size, info, input, meta, children,
+  children, legend, size, info, field: { name, ...field }, form,
 }) {
   const selectClasses = cx('custom-select', {
-    'is-invalid': meta.error,
+    'is-invalid': form.errors[name],
     'custom-control-sm': size === 'sm',
   });
 
   return (
-    <Field meta={meta} info={info}>
+    <Field error={form.errors[name]} info={info}>
       {legend && <legend className="form-group-legend">{legend}</legend>}
-      <select {...input} className={selectClasses}>
+      <select name={name} className={selectClasses} {...field}>
         {children}
       </select>
     </Field>

@@ -28,11 +28,7 @@ class AlertStack extends React.Component {
 
     const positionAttributes = getPositionAttributes(this.props.position);
 
-    return (
-      <div className={`alert-container alert-${positionAttributes.className}`}>
-        {alerts}
-      </div>
-    );
+    return <div className={`alert-container alert-${positionAttributes.className}`}>{alerts}</div>;
   }
 }
 

@@ -9,6 +9,13 @@
     "linebreak-style": "off",
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        components: ["a", "Link"],
+        specialLink: ["href", "to"]
+      }
+    ],
     "jsx-a11y/label-has-for": [
       "error",
       {

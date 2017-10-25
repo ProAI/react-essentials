@@ -140,13 +140,8 @@ class Popover extends React.Component {
         onToggle={this.onToggle}
         role="tooltip"
       >
-        {this.props.title &&
-          <h3 className="popover-header">
-            {this.props.title}
-          </h3>}
-        <div className="popover-body">
-          {this.props.content}
-        </div>
+        {this.props.title && <h3 className="popover-header">{this.props.title}</h3>}
+        <div className="popover-body">{this.props.content}</div>
       </Overlay>
     );
   }

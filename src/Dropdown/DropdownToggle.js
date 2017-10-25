@@ -27,7 +27,9 @@ class DropdownToggle extends React.Component {
   };
 
   render() {
-    const { className, component: Component, visible, onToggle, ...attributes } = this.props;
+    const {
+      className, component: Component, visible, onToggle, ...attributes
+    } = this.props;
 
     const classes = cx({ active: visible }, 'dropdown-toggle', className);
 

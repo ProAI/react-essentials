@@ -45,8 +45,7 @@ class TabsNav extends React.Component {
       React.cloneElement(child, {
         active: activeKey === child.props.toPane,
         onChange,
-      }),
-    );
+      }));
 
     return (
       <ul role="tablist" className={classes} {...attributes}>

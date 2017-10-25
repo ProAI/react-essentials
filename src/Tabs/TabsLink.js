@@ -28,7 +28,9 @@ class TabsLink extends React.Component {
   };
 
   render() {
-    const { children, className, onClick, toPane, active, ...attributes } = this.props;
+    const {
+      children, className, onClick, toPane, active, ...attributes
+    } = this.props;
 
     const linkClasses = cx('nav-link', { active }, className);
 

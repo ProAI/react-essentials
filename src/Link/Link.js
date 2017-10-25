@@ -38,7 +38,9 @@ class Link extends React.Component {
   };
 
   render() {
-    const { to, external, children, preventToggle, preventFocus, ...attributes } = this.props;
+    const {
+      to, external, children, preventToggle, preventFocus, ...attributes
+    } = this.props;
 
     // external link
     if (external) {

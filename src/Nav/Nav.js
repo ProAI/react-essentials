@@ -28,11 +28,7 @@ class Nav extends React.Component {
       className,
     );
 
-    return (
-      <nav className={classes}>
-        {children}
-      </nav>
-    );
+    return <nav className={classes}>{children}</nav>;
   }
 }
 

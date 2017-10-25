@@ -17,7 +17,9 @@ class TabsContent extends React.Component {
   static Pane = props => <TabsPane {...props} />;
 
   render() {
-    const { children, className, activeKey, ...attributes } = this.props;
+    const {
+      children, className, activeKey, ...attributes
+    } = this.props;
 
     // create component classes
     const classes = cx('tab-content', className);
@@ -25,10 +27,13 @@ class TabsContent extends React.Component {
     const manipulatedChildren = React.Children.map(children, child =>
       React.cloneElement(child, {
         active: activeKey === child.props.id,
-      }),
-    );
+      }));
 
-    return <div className={classes} {...attributes}>{manipulatedChildren}</div>;
+    return (
+      <div className={classes} {...attributes}>
+        {manipulatedChildren}
+      </div>
+    );
   }
 }
 

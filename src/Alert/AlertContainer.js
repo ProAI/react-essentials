@@ -1,19 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import AlertStack from './AlertStack';
 import { defaultAlert, constants } from './constants';
 import { getPositionAttributes } from './helpers';
 import Alert from './Alert';
 
-const propTypes = {
-  style: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  preventAnimation: PropTypes.bool,
-};
-
-const defaultProps = {
-  style: {},
-  preventAnimation: false,
-};
+const propTypes = {};
 
 class AlertContainer extends React.Component {
   state = {
@@ -72,7 +63,7 @@ class AlertContainer extends React.Component {
       alert.placement = 'bottom center';
     }
 
-    const alerts = this.state.alerts;
+    const { alerts } = this.state;
     let id;
 
     if (!alert.variant) {
@@ -83,6 +74,7 @@ class AlertContainer extends React.Component {
       throw new Error(`"${alert.variant}" is not a valid variant.`);
     }
 
+    // eslint-disable-next-line no-restricted-globals
     if (isNaN(alert.autoDismiss)) {
       throw new Error('"autoDismiss" must be a number.');
     }
@@ -159,15 +151,10 @@ class AlertContainer extends React.Component {
       });
     }
 
-    return (
-      <div className="alert-wrapper">
-        {positions}
-      </div>
-    );
+    return <div className="alert-wrapper">{positions}</div>;
   }
 }
 
 AlertContainer.propTypes = propTypes;
-AlertContainer.defaultProps = defaultProps;
 
 export default AlertContainer;

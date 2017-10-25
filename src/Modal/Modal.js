@@ -148,8 +148,7 @@ class Modal extends React.Component {
 
     this.renderIntoSubtree();
 
-    const scrollX = window.scrollX;
-    const scrollY = window.scrollY;
+    const { scrollX, scrollY } = window;
     this.container.focus();
     window.scrollTo(scrollX, scrollY);
 
@@ -255,7 +254,7 @@ class Modal extends React.Component {
 
     return (
       <div>
-        {visible &&
+        {visible && (
           <div
             className="modal"
             style={{ display: 'block' }}
@@ -271,11 +270,10 @@ class Modal extends React.Component {
                 this.dialog = c;
               }}
             >
-              <div className="modal-content">
-                {manipulatedChildren}
-              </div>
+              <div className="modal-content">{manipulatedChildren}</div>
             </div>
-          </div>}
+          </div>
+        )}
         {visible && <div key="modal-backdrop" className="modal-backdrop in" />}
       </div>
     );

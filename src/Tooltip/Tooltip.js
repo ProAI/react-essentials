@@ -140,9 +140,7 @@ class Tooltip extends React.Component {
         onToggle={this.onToggle}
         role="tooltip"
       >
-        <div className="tooltip-inner">
-          {this.props.title}
-        </div>
+        <div className="tooltip-inner">{this.props.title}</div>
       </Overlay>
     );
   }

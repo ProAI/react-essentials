@@ -22,11 +22,8 @@ const propTypes = {
 };
 
 const defaultProps = {
-  disabled: false,
-  visible: false,
   placement: 'bottom',
   fallbackPlacement: null,
-  style: null,
 };
 
 class Overlay extends React.Component {
@@ -126,7 +123,9 @@ class Overlay extends React.Component {
   }
 
   renderPopper() {
-    const { role, children, className, placementClassName } = this.props;
+    const {
+      role, children, className, placementClassName,
+    } = this.props;
     const { placement, popperStyle, arrowStyle } = this.state;
 
     const classes = cx(className, placementClassName[placement]);

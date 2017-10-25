@@ -85,7 +85,9 @@ class Dropdown extends React.Component {
   };
 
   render() {
-    const { className, children, visible, onToggle, ...attributes } = this.props;
+    const {
+      className, children, visible, onToggle, ...attributes
+    } = this.props;
 
     // create component classes
     const classes = cx('dropdown', { show: this.visible() }, className);
@@ -94,8 +96,7 @@ class Dropdown extends React.Component {
     if (React.Children.count(children) !== 2) {
       // eslint-disable-next-line
       console.warn(
-        'A dropdown should have exactly two children. The first child should be a <Dropdown.Button> component and the second a <Dropdown.Menu>.',
-      );
+        'A dropdown should have exactly two children. The first child should be a <Dropdown.Button> component and the second a <Dropdown.Menu>.');
     }
 
     let identifier;
@@ -105,6 +106,7 @@ class Dropdown extends React.Component {
         if (child.props.id) {
           identifier = child.props.id;
         } else {
+          // eslint-disable-next-line prefer-destructuring
           identifier = this.identifier;
         }
         return React.cloneElement(child, {

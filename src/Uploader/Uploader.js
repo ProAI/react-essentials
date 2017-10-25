@@ -58,7 +58,7 @@ class Uploader extends React.Component {
 
     // set timeout, so animation could run first
     setTimeout(() => {
-      const uploads = this.state.uploads;
+      const { uploads } = this.state;
       if (uploads[id]) {
         delete uploads[id];
         this.setState({ uploads });
@@ -68,7 +68,7 @@ class Uploader extends React.Component {
 
   onChange = (e) => {
     const newUploads = {};
-    const lastId = this.state.lastId;
+    const { lastId } = this.state;
     for (let i = 0; i < e.target.files.length; i += 1) {
       const id = i + 1 + lastId;
       const file = e.target.files[i];
@@ -144,7 +144,9 @@ class Uploader extends React.Component {
   };
 
   render() {
-    const { variant, multiple, accept, children } = this.props;
+    const {
+      variant, multiple, accept, children,
+    } = this.props;
 
     return (
       <div className="uploader">
@@ -170,14 +172,14 @@ class Uploader extends React.Component {
         <div className={`uploader-file-list ${variant}`}>
           {Object.keys(this.state.uploads)
             .reverse()
-            .map(id =>
-              (<FileListItem
+            .map(id => (
+              <FileListItem
                 key={id}
                 status={this.state.uploads[id].status}
                 file={this.state.uploads[id].file}
                 onRemove={e => this.onFileRemove(e, id)}
-              />),
-            )}
+              />
+            ))}
         </div>
       </div>
     );

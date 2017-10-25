@@ -11,6 +11,7 @@ const propTypes = {
   activeKey: PropTypes.string,
   onChange: PropTypes.func,
   variant: PropTypes.oneOf(['basic', 'tabs', 'pills']),
+  className: PropTypes.string,
   stacked: PropTypes.bool,
 };
 
@@ -70,11 +71,7 @@ class Tabs extends React.Component {
     const tabsNavLinkChildren = React.Children.map(children, (child, i) => {
       const linkedPaneId = child.props.id || `${this.identifier}-${i}`;
 
-      return (
-        <TabsNav.Link toPane={linkedPaneId}>
-          {child.props.label}
-        </TabsNav.Link>
-      );
+      return <TabsNav.Link toPane={linkedPaneId}>{child.props.label}</TabsNav.Link>;
     });
 
     const tabsContentPaneChildren = React.Children.map(children, (child, i) => {
@@ -95,9 +92,7 @@ class Tabs extends React.Component {
         >
           {tabsNavLinkChildren}
         </TabsNav>
-        <TabsContent activeKey={this.activeKey()}>
-          {tabsContentPaneChildren}
-        </TabsContent>
+        <TabsContent activeKey={this.activeKey()}>{tabsContentPaneChildren}</TabsContent>
       </div>
     );
   }

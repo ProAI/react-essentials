@@ -23,7 +23,9 @@ class ActionLink extends React.Component {
   };
 
   render() {
-    const { children, onClick, preventFocus, ...attributes } = this.props;
+    const {
+      children, onClick, preventFocus, ...attributes
+    } = this.props;
 
     // action link
     return (
@@ -33,6 +35,7 @@ class ActionLink extends React.Component {
         ref={(c) => {
           this.link = c;
         }}
+        onKeyPress={/* TODO */ () => {}}
         onClick={this.onClick}
         {...attributes}
       >

@@ -15,7 +15,9 @@ const defaultProps = {
   className: null,
 };
 
-function ModalHeader({ titleId, className, children, dismissible, onToggle, ...props }) {
+function ModalHeader({
+  titleId, className, children, dismissible, onToggle, ...props
+}) {
   let closeButton;
 
   const classes = cx(className, 'modal-header');

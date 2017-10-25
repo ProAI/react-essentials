@@ -44,7 +44,7 @@ class AlertItem extends React.Component {
   componentDidMount() {
     const self = this;
     const transitionEvent = chooseTransitionEvent();
-    const alert = this.props.alert;
+    const { alert } = this.props;
     const element = this.item;
 
     this.isComponentMounted = true;
@@ -83,14 +83,14 @@ class AlertItem extends React.Component {
   };
 
   onMouseEnter = () => {
-    const alert = this.props.alert;
+    const { alert } = this.props;
     if (alert.autoDismiss) {
       this.alertTimer.pause();
     }
   };
 
   onMouseLeave = () => {
-    const alert = this.props.alert;
+    const { alert } = this.props;
     if (alert.autoDismiss) {
       this.alertTimer.resume();
     }
@@ -143,7 +143,7 @@ class AlertItem extends React.Component {
   };
 
   render() {
-    const alert = this.props.alert;
+    const { alert } = this.props;
     let classes = `alert alert-${alert.variant}`;
     let dismiss = null;
     let icon = null;
@@ -192,19 +192,11 @@ class AlertItem extends React.Component {
     }
 
     if (alert.title) {
-      title = (
-        <div className="alert-title">
-          {alert.title}
-        </div>
-      );
+      title = <div className="alert-title">{alert.title}</div>;
     }
 
     if (alert.content) {
-      content = (
-        <div className="alert-content">
-          {alert.content}
-        </div>
-      );
+      content = <div className="alert-content">{alert.content}</div>;
     }
 
     if (alert.dismissible) {

@@ -12,7 +12,9 @@ const defaultProps = {
   className: null,
 };
 
-function TabsPane({ children, className, active, ...attributes }) {
+function TabsPane({
+  children, className, active, ...attributes
+}) {
   const classes = cx('tab-pane', { active }, className);
 
   return (

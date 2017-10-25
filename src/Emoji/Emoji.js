@@ -21,7 +21,9 @@ const defaultProps = {
   cacheBustParam: '?v=2.2.6',
 };
 
-function Emoji({ className, name, sprites, textSize, imagePath, cacheBustParam }) {
+function Emoji({
+  className, name, sprites, textSize, imagePath, cacheBustParam,
+}) {
   const emoji = emojioneList[`:${name}:`];
 
   const unicode = emoji[emoji.length - 1];

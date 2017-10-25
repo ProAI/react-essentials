@@ -14,7 +14,11 @@ const defaultProps = {
 function DropdownMenuItem({ children, className, ...attributes }) {
   const classes = cx('dropdown-item', className);
 
-  return <a {...attributes} className={classes}>{children}</a>;
+  return (
+    <a {...attributes} className={classes}>
+      {children}
+    </a>
+  );
 }
 
 DropdownMenuItem.propTypes = propTypes;
