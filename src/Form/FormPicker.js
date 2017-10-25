@@ -43,8 +43,6 @@ class FormPicker extends React.Component {
       form,
     } = this.props;
 
-    const labelClasses = cx('form-control-label'); // cx('form-control-label', { active: meta.active });
-
     const classes = cx('form-picker', {
       'is-invalid': form.errors[name],
       'form-picker-sm': size === 'sm',
@@ -53,7 +51,7 @@ class FormPicker extends React.Component {
     return (
       <Field error={form.errors[name]} info={info}>
         {label && (
-          <label htmlFor={`${this.identifier}-${name}`} className={labelClasses}>
+          <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
             {label}
           </label>
         )}

@@ -42,7 +42,7 @@ class FormCheckbox extends React.Component {
             type="checkbox"
             id={`${this.identifier}-${name}`}
             name={name}
-            checked={field.value}
+            checked={field.value || false}
             onChange={field.onChange}
             onBlur={field.onBlur}
             className={inputClasses}

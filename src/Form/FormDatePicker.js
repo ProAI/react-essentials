@@ -30,18 +30,11 @@ class FormDatePicker extends React.Component {
     isOpen: false,
   };
 
-  /* componentWillReceiveProps(nextProps) {
-    // if datepicker is not focused, close dropdown
-    if (!nextProps.meta.active && this.state.isOpen) {
-      this.toggle();
-    }
-  } */
-
   componentDidUpdate() {
     // if field is active, set focus on tabIndex element
-    /* if (this.props.meta.active) {
+    if (this.state.isFocused) {
       this.input.focus();
-    } */
+    }
 
     // scroll to bottom of menu
     if (this.state.isOpen) {
@@ -52,47 +45,55 @@ class FormDatePicker extends React.Component {
     }
   }
 
-  onToggleMouseDown = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+  componentWillUnmount() {
+    if (this.state.isOpen || this.state.isFocused) {
+      document.removeEventListener('mousedown', this.onDocumentClick);
+    }
+  }
 
-    // if datepicker is not focused, focus datepicker
-    /* if (!this.props.meta.active) {
-      this.setState({
-        isFocused: true,
-      });
-    } */
+  onDocumentClick = (event) => {
+    // close and unfocus if click is outside
+    if (this.state.isOpen) {
+      const isMenuElement = event.target === this.menu || this.menu.contains(event.target);
+      const isControlElement = event.target === this.control || this.control.contains(event.target);
 
-    // open/close dropdown
-    this.toggle();
+      if (!isMenuElement && !isControlElement) {
+        this.updateState(false, false);
+      }
+    }
+
+    // unfocus if click is outside
+    if (!this.state.isOpen) {
+      const isControlElement = event.target === this.control || this.control.contains(event.target);
+
+      if (!isControlElement) {
+        this.updateState(false, false);
+      }
+    }
   };
 
-  onToggleKeyDown = (event) => {
+  onControlClick = (event) => {
+    event.preventDefault();
+
+    // open/close dropdown
+    this.updateState(!this.state.isOpen, true);
+  };
+
+  onControlKeyDown = (event) => {
     if (!this.state.isOpen && event.key === 'ArrowDown') {
-      this.onToggleMouseDown(event);
+      this.onControlClick(event);
     }
 
     // Destroy datepicker dropdown by calling the onBlur() function, so that
     // the next tab element can be selected.
-    /* if (event.key === 'Tab') {
-      this.props.field.onBlur(this.props.field.value);
-    } */
-  };
-
-  onMenuMouseDown = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-  };
-
-  onInputKeyDown = (event) => {
-    if (this.state.isOpen && event.key === 'Escape') {
-      this.toggle();
+    if (event.key === 'Tab') {
+      this.updateState(false, false);
     }
   };
 
   onDayClick = (day) => {
     // close dropdown
-    this.toggle();
+    this.updateState(false);
 
     // set value
     this.props.form.setFieldValue(this.props.field.name, day);
@@ -100,17 +101,34 @@ class FormDatePicker extends React.Component {
 
   identifier = generateKey('re-form-');
 
-  toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen,
-    });
+  updateState = (open, focus) => {
+    const isFocused = focus !== undefined ? focus : this.state.isFocused;
+    const isOpen = open !== undefined ? open : this.state.isOpen;
+
+    if (!isFocused && !isOpen) {
+      document.removeEventListener('mousedown', this.onDocumentClick);
+    } else {
+      document.addEventListener('mousedown', this.onDocumentClick);
+    }
+
+    if (isFocused !== this.state.isFocused) {
+      this.setState({
+        isFocused,
+      });
+    }
+
+    if (isOpen !== this.state.isOpen) {
+      this.setState({
+        isOpen,
+      });
+    }
   };
 
   render() {
     const {
       label, placeholder, info, size, field: { name, ...field }, form,
     } = this.props;
-    const labelClasses = cx('form-control-label'); // cx('form-control-label', { active: meta.active });
+
     const classes = cx('form-datepicker Select Select--single', {
       'is-invalid': form.errors[name],
       'form-datepicker-sm': size === 'sm',
@@ -127,15 +145,18 @@ class FormDatePicker extends React.Component {
     return (
       <Field error={form.errors[name]} info={info}>
         {label && (
-          <label htmlFor={`${this.identifier}-${name}`} className={labelClasses}>
+          <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
             {label}
           </label>
         )}
         <div className={classes}>
           <div
+            ref={(element) => {
+              this.control = element;
+            }}
             className={controlClasses}
-            onMouseDown={this.onToggleMouseDown}
-            onKeyDown={this.onToggleKeyDown}
+            onClick={this.onControlClick}
+            onKeyDown={this.onControlKeyDown}
           >
             <span className="Select-multi-value-wrapper">
               {!field.value && <div className="Select-placeholder">{placeholder}</div>}
@@ -165,8 +186,10 @@ class FormDatePicker extends React.Component {
                 aria-owns=""
                 aria-activedescendant=""
                 aria-readonly="false"
+                onFocus={() => {
+                  this.updateState(undefined, true);
+                }}
                 onBlur={() => form.setFieldTouched(name, true)}
-                onKeyDown={this.onInputKeyDown}
                 style={{ border: '0px', width: '1px', display: 'inline-block' }}
               />
             </span>
@@ -177,7 +200,6 @@ class FormDatePicker extends React.Component {
                 this.menu = menu;
               }}
               className={menuClasses}
-              onMouseDown={this.onMenuMouseDown}
             >
               {/* TODO
               * renderDay should be used to highlight the currently selected day

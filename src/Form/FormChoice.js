@@ -77,16 +77,16 @@ class FormChoice extends React.Component {
                   id={`${this.identifier}-${name}-${getIndex()}`}
                   name={`${name}[${getIndex()}]`}
                   value={option.value}
-                  checked={field.value.indexOf(option.value) !== -1}
+                  checked={field.value ? field.value.indexOf(option.value) !== -1 : false}
                   onChange={(event) => {
-                    const newValue = [...field.value];
+                    const newValue = field.value ? [...field.value] : [];
                     if (event.target.checked) {
                       newValue.push(option.value);
                     } else {
                       newValue.splice(newValue.indexOf(option.value), 1);
                     }
 
-                    return form.setFieldValue(`${name}[${getIndex()}]`, newValue);
+                    return form.setFieldValue(name, newValue);
                   }}
                   onBlur={() => form.setFieldTouched(`${name}[${getIndex()}]`, true)}
                   className={inputClasses}

@@ -43,8 +43,6 @@ class FormInput extends React.Component {
       form,
     } = this.props;
 
-    const labelClasses = cx('form-control-label'); // cx('form-control-label', { active: meta.active });
-
     const inputClasses = cx('form-control', {
       'is-invalid': form.errors[name],
       'form-control-sm': size === 'sm',
@@ -54,7 +52,7 @@ class FormInput extends React.Component {
     return (
       <Field error={form.errors[name]} info={info}>
         {label && (
-          <label htmlFor={`${this.identifier}-${name}`} className={labelClasses}>
+          <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
             {label}
           </label>
         )}
@@ -63,7 +61,7 @@ class FormInput extends React.Component {
             type={type}
             id={`${this.identifier}-${name}`}
             name={name}
-            value={field.value}
+            value={field.value || ''}
             onChange={field.onChange}
             onBlur={field.onBlur}
             placeholder={placeholder}
@@ -75,7 +73,7 @@ class FormInput extends React.Component {
           <textarea
             id={`${this.identifier}-${name}`}
             name={name}
-            value={field.value}
+            value={field.value || ''}
             onChange={field.onChange}
             onBlur={field.onBlur}
             placeholder={placeholder}

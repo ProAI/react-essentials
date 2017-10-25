@@ -11,7 +11,6 @@ import FormCheckbox from './FormCheckbox';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  name: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   className: PropTypes.string,
 };
