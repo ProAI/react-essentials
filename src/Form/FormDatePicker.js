@@ -8,23 +8,35 @@ import Field from './Field';
 import { generateKey } from '../utils';
 
 const propTypes = {
-  label: PropTypes.string,
+  title: PropTypes.string,
   placeholder: PropTypes.string,
   info: PropTypes.string,
   size: PropTypes.oneOf(['sm']),
+  formatDate: PropTypes.func,
+  formatError: PropTypes.func,
   // formik props
   field: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
-  label: null,
-  placeholder: null,
+  title: null,
+  placeholder: '',
   info: null,
   size: null,
+  formatDate: null,
+  formatError: null,
 };
 
 class FormDatePicker extends React.Component {
+  constructor(props) {
+    super(props);
+
+    if (props.field.value === undefined) {
+      throw Error(`There is no initial value for field "${props.field.name}"`);
+    }
+  }
+
   state = {
     isFocused: false,
     isOpen: false,
@@ -95,10 +107,8 @@ class FormDatePicker extends React.Component {
     // close dropdown
     this.updateState(false);
 
-    // touched
-    if (!this.props.form.touched[this.props.field.name]) {
-      this.props.form.setFieldTouched(this.props.field.name, true);
-    }
+    // reset error
+    this.props.form.setFieldError(this.props.field.name, null);
 
     // set value
     this.props.form.setFieldValue(this.props.field.name, day);
@@ -129,13 +139,27 @@ class FormDatePicker extends React.Component {
     }
   };
 
+  formatPickedDate = (pickedDate) => {
+    if (this.props.formatDate) {
+      return this.props.formatDate(pickedDate);
+    }
+
+    return pickedDate.toLocaleDateString('en');
+  };
+
   render() {
     const {
-      label, placeholder, info, size, field: { name, ...field }, form,
+      title,
+      placeholder,
+      info,
+      size,
+      formatError,
+      field: { name, ...field },
+      form,
     } = this.props;
 
     const classes = cx('form-datepicker Select Select--single', {
-      'is-invalid': !form.touched[name] && form.errors[name],
+      'is-invalid': form.touched[name] && form.errors[name],
       'form-datepicker-sm': size === 'sm',
       'has-value': field.value,
       'is-focused': this.state.isFocused,
@@ -147,11 +171,13 @@ class FormDatePicker extends React.Component {
     const pickedDate = field.value ? new Date(field.value) : new Date();
     const initialMonth = new Date(pickedDate.getFullYear(), pickedDate.getMonth());
 
+    const error = formatError ? formatError(form.errors[name]) : form.errors[name];
+
     return (
-      <Field error={form.errors[name]} touched={form.touched[name]} info={info}>
-        {label && (
+      <Field error={error} touched={form.touched[name]} info={info}>
+        {title && (
           <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
-            {label}
+            {title}
           </label>
         )}
         <div className={classes}>
@@ -168,7 +194,7 @@ class FormDatePicker extends React.Component {
               {field.value && (
                 <div className="Select-value">
                   <span className="Select-value-label" role="option" aria-selected="true">
-                    {field.value ? pickedDate.toLocaleDateString('en') : ''}
+                    {field.value ? this.formatPickedDate(pickedDate) : ''}
                   </span>
                 </div>
               )}
@@ -194,6 +220,7 @@ class FormDatePicker extends React.Component {
                 onFocus={() => {
                   this.updateState(undefined, true);
                 }}
+                onBlur={() => form.setFieldTouched(name, true)}
                 style={{ border: '0px', width: '1px', display: 'inline-block' }}
               />
             </span>

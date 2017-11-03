@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  error: PropTypes.string,
+  error: PropTypes.node,
   touched: PropTypes.bool,
   info: PropTypes.string,
 };
@@ -20,7 +20,7 @@ function Field({
   return (
     <fieldset className="form-group">
       {children}
-      {!touched && error && <div className="form-text text-danger">{error}</div>}
+      {touched && error && <div className="form-text text-danger">{error}</div>}
       {info && <div className="form-text text-muted">{info}</div>}
     </fieldset>
   );

@@ -5,29 +5,49 @@ import Field from './Field';
 import { generateKey } from '../utils';
 
 const propTypes = {
-  legend: PropTypes.string,
-  options: PropTypes.array.isRequired,
+  title: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string,
+    label: PropTypes.node,
+  })).isRequired,
   info: PropTypes.string,
   multiple: PropTypes.bool,
   size: PropTypes.oneOf(['sm']),
+  formatError: PropTypes.func,
   // formik props
   field: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
-  legend: null,
+  title: null,
   info: null,
   multiple: false,
   size: null,
+  formatError: null,
 };
 
 class FormChoice extends React.Component {
+  constructor(props) {
+    super(props);
+
+    if (props.field.value === undefined) {
+      throw Error(`There is no initial value for field "${props.field.name}"`);
+    }
+  }
+
   identifier = generateKey('re-form-');
 
   render() {
     const {
-      legend, options, info, multiple, size, field: { name, ...field }, form,
+      title,
+      options,
+      info,
+      multiple,
+      size,
+      formatError,
+      field: { name, ...field },
+      form,
     } = this.props;
 
     let index = 0;
@@ -43,12 +63,14 @@ class FormChoice extends React.Component {
       'custom-control-sm': size === 'sm',
     });
     const inputClasses = cx('custom-control-input', {
-      'is-invalid': !form.touched[name] && form.errors[name],
+      'is-invalid': form.touched[name] && form.errors[name],
     });
 
+    const error = formatError ? formatError(form.errors[name]) : form.errors[name];
+
     return (
-      <Field error={form.errors[name]} touched={form.touched[name]} info={info}>
-        {legend && <legend className="form-group-legend">{legend}</legend>}
+      <Field error={error} touched={form.touched[name]} info={info}>
+        {title && <legend className="form-group-legend">{title}</legend>}
         <div className="custom-controls-stacked">
           {options.map(option => (
             <label
@@ -64,11 +86,12 @@ class FormChoice extends React.Component {
                   value={option.value}
                   checked={field.value === option.value}
                   onChange={(event) => {
-                    if (!form.touched[name]) form.setFieldTouched(name, true);
+                    form.setFieldError(name, null);
 
                     const value = event.target.checked ? option.value : field.value;
                     form.setFieldValue(name, value);
                   }}
+                  onBlur={() => form.setFieldTouched(name, true)}
                   className={inputClasses}
                 />
               )}
@@ -80,7 +103,7 @@ class FormChoice extends React.Component {
                   value={option.value}
                   checked={field.value ? field.value.indexOf(option.value) !== -1 : false}
                   onChange={(event) => {
-                    if (!form.touched[name]) form.setFieldTouched(name, true);
+                    form.setFieldError(name, null);
 
                     const newValue = field.value ? [...field.value] : [];
                     if (event.target.checked) {
@@ -91,6 +114,7 @@ class FormChoice extends React.Component {
 
                     form.setFieldValue(name, newValue);
                   }}
+                  onBlur={() => form.setFieldTouched(name, true)}
                   className={inputClasses}
                 />
               )}
