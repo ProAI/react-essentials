@@ -5,6 +5,7 @@ import Field from './Field';
 import { generateKey } from '../utils';
 
 const propTypes = {
+  name: PropTypes.string.isRequired,
   title: PropTypes.string,
   placeholder: PropTypes.string,
   type: PropTypes.oneOf(['color', 'email', 'number', 'password', 'range', 'tel', 'text', 'url']),
@@ -13,9 +14,10 @@ const propTypes = {
   multiline: PropTypes.bool,
   autoFocus: PropTypes.bool,
   formatError: PropTypes.func,
-  // formik props
-  field: PropTypes.object.isRequired,
-  form: PropTypes.object.isRequired,
+};
+
+const contextTypes = {
+  formik: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -30,11 +32,11 @@ const defaultProps = {
 };
 
 class FormInput extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    if (props.field.value === undefined) {
-      throw Error(`There is no initial value for field "${props.field.name}"`);
+    if (context.formik.values[props.name] === undefined) {
+      throw Error(`There is no initial value for field "${props.name}"`);
     }
   }
 
@@ -42,6 +44,7 @@ class FormInput extends React.Component {
 
   render() {
     const {
+      name,
       title,
       placeholder,
       type,
@@ -50,20 +53,20 @@ class FormInput extends React.Component {
       multiline,
       autoFocus,
       formatError,
-      field: { name, ...field },
-      form,
     } = this.props;
 
+    const { formik } = this.context;
+
     const inputClasses = cx('form-control', {
-      'is-invalid': form.touched[name] && form.errors[name],
+      'is-invalid': formik.touched[name] && formik.errors[name],
       'form-control-sm': size === 'sm',
     });
 
-    const error = formatError ? formatError(form.errors[name]) : form.errors[name];
+    const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 
     /* eslint-disable jsx-a11y/no-autofocus */
     return (
-      <Field error={error} touched={form.touched[name]} info={info}>
+      <Field error={error} touched={formik.touched[name]} info={info}>
         {title && (
           <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
             {title}
@@ -74,13 +77,13 @@ class FormInput extends React.Component {
             type={type}
             id={`${this.identifier}-${name}`}
             name={name}
-            value={field.value || ''}
+            value={formik.values[name] || ''}
             onChange={(event) => {
-              form.setFieldError(name, null);
+              formik.setFieldError(name, null);
 
-              field.onChange(event);
+              formik.handleChange(event);
             }}
-            onBlur={field.onBlur}
+            onBlur={formik.handleBlur}
             placeholder={placeholder}
             className={inputClasses}
             autoFocus={autoFocus}
@@ -90,13 +93,13 @@ class FormInput extends React.Component {
           <textarea
             id={`${this.identifier}-${name}`}
             name={name}
-            value={field.value || ''}
+            value={formik.values[name] || ''}
             onChange={(event) => {
-              form.setFieldError(name, null);
+              formik.setFieldError(name, null);
 
-              field.onChange(event);
+              formik.handleChange(event);
             }}
-            onBlur={field.onBlur}
+            onBlur={formik.handleBlur}
             placeholder={placeholder}
             rows="7"
             className={inputClasses}
@@ -110,6 +113,7 @@ class FormInput extends React.Component {
 }
 
 FormInput.propTypes = propTypes;
+FormInput.contextTypes = contextTypes;
 FormInput.defaultProps = defaultProps;
 
 export default FormInput;

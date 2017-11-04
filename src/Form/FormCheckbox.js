@@ -5,14 +5,16 @@ import Field from './Field';
 import { generateKey } from '../utils';
 
 const propTypes = {
+  name: PropTypes.string.isRequired,
   title: PropTypes.string,
   label: PropTypes.string.isRequired,
   info: PropTypes.string,
   size: PropTypes.oneOf(['sm']),
   formatError: PropTypes.func,
-  // formik props
-  field: PropTypes.object.isRequired,
-  form: PropTypes.object.isRequired,
+};
+
+const contextTypes = {
+  formik: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -23,11 +25,11 @@ const defaultProps = {
 };
 
 class FormCheckbox extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    if (props.field.value === undefined) {
-      throw Error(`There is no initial value for field "${props.field.name}"`);
+    if (context.formik.values[props.name] === undefined) {
+      throw Error(`There is no initial value for field "${props.name}"`);
     }
   }
 
@@ -35,31 +37,34 @@ class FormCheckbox extends React.Component {
 
   render() {
     const {
-      title, label, info, size, formatError, field: { name, ...field }, form,
+      name, title, label, info, size, formatError,
     } = this.props;
+
+    const { formik } = this.context;
+
     const classes = cx('custom-control custom-checkbox', {
       'custom-control-sm': size === 'sm',
     });
     const inputClasses = cx('custom-control-input', {
-      'is-invalid': form.touched[name] && form.errors[name],
+      'is-invalid': formik.touched[name] && formik.errors[name],
     });
 
-    const error = formatError ? formatError(form.errors[name]) : form.errors[name];
+    const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 
     return (
-      <Field error={error} touched={form.touched[name]} info={info}>
+      <Field error={error} touched={formik.touched[name]} info={info}>
         {title && <legend className="form-group-legend">{title}</legend>}
         <label className={classes} htmlFor={`${this.identifier}-${name}`}>
           <input
             type="checkbox"
             id={`${this.identifier}-${name}`}
             name={name}
-            checked={field.value || false}
+            checked={formik.values[name] || false}
             onChange={(event) => {
-              form.setFieldError(name, null);
-              field.onChange(event);
+              formik.setFieldError(name, null);
+              formik.handleChange(event);
             }}
-            onBlur={field.onBlur}
+            onBlur={formik.handleBlur}
             className={inputClasses}
           />
           <div className="custom-control-indicator" />
@@ -71,6 +76,7 @@ class FormCheckbox extends React.Component {
 }
 
 FormCheckbox.propTypes = propTypes;
+FormCheckbox.contextTypes = contextTypes;
 FormCheckbox.defaultProps = defaultProps;
 
 export default FormCheckbox;

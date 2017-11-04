@@ -8,15 +8,17 @@ import Field from './Field';
 import { generateKey } from '../utils';
 
 const propTypes = {
+  name: PropTypes.string.isRequired,
   title: PropTypes.string,
   placeholder: PropTypes.string,
   info: PropTypes.string,
   size: PropTypes.oneOf(['sm']),
   formatDate: PropTypes.func,
   formatError: PropTypes.func,
-  // formik props
-  field: PropTypes.object.isRequired,
-  form: PropTypes.object.isRequired,
+};
+
+const contextTypes = {
+  formik: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -29,11 +31,11 @@ const defaultProps = {
 };
 
 class FormDatePicker extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    if (props.field.value === undefined) {
-      throw Error(`There is no initial value for field "${props.field.name}"`);
+    if (context.formik.values[props.name] === undefined) {
+      throw Error(`There is no initial value for field "${props.name}"`);
     }
   }
 
@@ -108,10 +110,10 @@ class FormDatePicker extends React.Component {
     this.updateState(false);
 
     // reset error
-    this.props.form.setFieldError(this.props.field.name, null);
+    this.context.formik.setFieldError(this.props.name, null);
 
     // set value
-    this.props.form.setFieldValue(this.props.field.name, day);
+    this.context.formik.setFieldValue(this.props.name, day);
   };
 
   identifier = generateKey('re-form-');
@@ -149,32 +151,28 @@ class FormDatePicker extends React.Component {
 
   render() {
     const {
-      title,
-      placeholder,
-      info,
-      size,
-      formatError,
-      field: { name, ...field },
-      form,
+      name, title, placeholder, info, size, formatError,
     } = this.props;
 
+    const { formik } = this.context;
+
     const classes = cx('form-datepicker Select Select--single', {
-      'is-invalid': form.touched[name] && form.errors[name],
+      'is-invalid': formik.touched[name] && formik.errors[name],
       'form-datepicker-sm': size === 'sm',
-      'has-value': field.value,
+      'has-value': formik.values[name],
       'is-focused': this.state.isFocused,
       'is-open': this.state.isOpen,
     });
     const controlClasses = cx('form-datepicker-control Select-control');
     const menuClasses = cx('form-datepicker-menu');
 
-    const pickedDate = field.value ? new Date(field.value) : new Date();
+    const pickedDate = formik.values[name] ? new Date(formik.values[name]) : new Date();
     const initialMonth = new Date(pickedDate.getFullYear(), pickedDate.getMonth());
 
-    const error = formatError ? formatError(form.errors[name]) : form.errors[name];
+    const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 
     return (
-      <Field error={error} touched={form.touched[name]} info={info}>
+      <Field error={error} touched={formik.touched[name]} info={info}>
         {title && (
           <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
             {title}
@@ -190,11 +188,11 @@ class FormDatePicker extends React.Component {
             onKeyDown={this.onControlKeyDown}
           >
             <span className="Select-multi-value-wrapper">
-              {!field.value && <div className="Select-placeholder">{placeholder}</div>}
-              {field.value && (
+              {!formik.values[name] && <div className="Select-placeholder">{placeholder}</div>}
+              {formik.values[name] && (
                 <div className="Select-value">
                   <span className="Select-value-label" role="option" aria-selected="true">
-                    {field.value ? this.formatPickedDate(pickedDate) : ''}
+                    {formik.values[name] ? this.formatPickedDate(pickedDate) : ''}
                   </span>
                 </div>
               )}
@@ -220,7 +218,7 @@ class FormDatePicker extends React.Component {
                 onFocus={() => {
                   this.updateState(undefined, true);
                 }}
-                onBlur={() => form.setFieldTouched(name, true)}
+                onBlur={() => formik.setFieldTouched(name, true)}
                 style={{ border: '0px', width: '1px', display: 'inline-block' }}
               />
             </span>
@@ -254,6 +252,7 @@ class FormDatePicker extends React.Component {
 }
 
 FormDatePicker.propTypes = propTypes;
+FormDatePicker.contextTypes = contextTypes;
 FormDatePicker.defaultProps = defaultProps;
 
 export default FormDatePicker;

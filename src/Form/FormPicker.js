@@ -6,6 +6,7 @@ import Field from './Field';
 import { generateKey } from '../utils';
 
 const propTypes = {
+  name: PropTypes.string.isRequired,
   title: PropTypes.string,
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(['sm']),
@@ -18,9 +19,10 @@ const propTypes = {
   searchable: PropTypes.bool,
   multiple: PropTypes.bool,
   formatError: PropTypes.func,
-  // formik props
-  field: PropTypes.object.isRequired,
-  form: PropTypes.object.isRequired,
+};
+
+const contextTypes = {
+  formik: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -35,11 +37,11 @@ const defaultProps = {
 };
 
 class FormPicker extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    if (props.field.value === undefined) {
-      throw Error(`There is no initial value for field "${props.field.name}"`);
+    if (context.formik.values[props.name] === undefined) {
+      throw Error(`There is no initial value for field "${props.name}"`);
     }
   }
 
@@ -47,6 +49,7 @@ class FormPicker extends React.Component {
 
   render() {
     const {
+      name,
       title,
       placeholder,
       size,
@@ -56,19 +59,19 @@ class FormPicker extends React.Component {
       clearable,
       searchable,
       formatError,
-      field: { name, ...field },
-      form,
     } = this.props;
 
+    const { formik } = this.context;
+
     const classes = cx('form-picker', {
-      'is-invalid': form.touched[name] && form.errors[name],
+      'is-invalid': formik.touched[name] && formik.errors[name],
       'form-picker-sm': size === 'sm',
     });
 
-    const error = formatError ? formatError(form.errors[name]) : form.errors[name];
+    const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 
     return (
-      <Field error={error} touched={form.touched[name]} info={info}>
+      <Field error={error} touched={formik.touched[name]} info={info}>
         {title && (
           <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
             {title}
@@ -78,19 +81,19 @@ class FormPicker extends React.Component {
           inputProps={{ id: `${this.identifier}-${name}` }}
           instanceId={`${this.identifier}-${name}`}
           options={options}
-          value={field.value}
+          value={formik.values[name]}
           onChange={(value) => {
-            form.setFieldError(name, null);
+            formik.setFieldError(name, null);
 
             // split value if multiple is enabled to get an array of values
             if (multiple) {
-              form.setFieldValue(name, value.split(','));
+              formik.setFieldValue(name, value.split(','));
               return;
             }
 
-            form.setFieldValue(name, value);
+            formik.setFieldValue(name, value);
           }}
-          onBlur={() => form.setFieldTouched(name, true)}
+          onBlur={() => formik.setFieldTouched(name, true)}
           placeholder={placeholder}
           className={classes}
           multi={multiple}
@@ -104,6 +107,7 @@ class FormPicker extends React.Component {
 }
 
 FormPicker.propTypes = propTypes;
+FormPicker.contextTypes = contextTypes;
 FormPicker.defaultProps = defaultProps;
 
 export default FormPicker;

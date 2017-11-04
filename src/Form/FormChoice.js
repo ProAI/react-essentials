@@ -5,6 +5,7 @@ import Field from './Field';
 import { generateKey } from '../utils';
 
 const propTypes = {
+  name: PropTypes.string.isRequired,
   title: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string,
@@ -14,9 +15,10 @@ const propTypes = {
   multiple: PropTypes.bool,
   size: PropTypes.oneOf(['sm']),
   formatError: PropTypes.func,
-  // formik props
-  field: PropTypes.object.isRequired,
-  form: PropTypes.object.isRequired,
+};
+
+const contextTypes = {
+  formik: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -28,11 +30,11 @@ const defaultProps = {
 };
 
 class FormChoice extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    if (props.field.value === undefined) {
-      throw Error(`There is no initial value for field "${props.field.name}"`);
+    if (context.formik.values[props.name] === undefined) {
+      throw Error(`There is no initial value for field "${props.name}"`);
     }
   }
 
@@ -40,15 +42,10 @@ class FormChoice extends React.Component {
 
   render() {
     const {
-      title,
-      options,
-      info,
-      multiple,
-      size,
-      formatError,
-      field: { name, ...field },
-      form,
+      name, title, options, info, multiple, size, formatError,
     } = this.props;
+
+    const { formik } = this.context;
 
     let index = 0;
 
@@ -63,13 +60,13 @@ class FormChoice extends React.Component {
       'custom-control-sm': size === 'sm',
     });
     const inputClasses = cx('custom-control-input', {
-      'is-invalid': form.touched[name] && form.errors[name],
+      'is-invalid': formik.touched[name] && formik.errors[name],
     });
 
-    const error = formatError ? formatError(form.errors[name]) : form.errors[name];
+    const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 
     return (
-      <Field error={error} touched={form.touched[name]} info={info}>
+      <Field error={error} touched={formik.touched[name]} info={info}>
         {title && <legend className="form-group-legend">{title}</legend>}
         <div className="custom-controls-stacked">
           {options.map(option => (
@@ -84,14 +81,14 @@ class FormChoice extends React.Component {
                   id={`${this.identifier}-${name}-${getIndex()}`}
                   name={name}
                   value={option.value}
-                  checked={field.value === option.value}
+                  checked={formik.values[name] === option.value}
                   onChange={(event) => {
-                    form.setFieldError(name, null);
+                    formik.setFieldError(name, null);
 
-                    const value = event.target.checked ? option.value : field.value;
-                    form.setFieldValue(name, value);
+                    const value = event.target.checked ? option.value : formik.values[name];
+                    formik.setFieldValue(name, value);
                   }}
-                  onBlur={() => form.setFieldTouched(name, true)}
+                  onBlur={() => formik.setFieldTouched(name, true)}
                   className={inputClasses}
                 />
               )}
@@ -101,20 +98,22 @@ class FormChoice extends React.Component {
                   id={`${this.identifier}-${name}-${getIndex()}`}
                   name={`${name}[${getIndex()}]`}
                   value={option.value}
-                  checked={field.value ? field.value.indexOf(option.value) !== -1 : false}
+                  checked={
+                    formik.values[name] ? formik.values[name].indexOf(option.value) !== -1 : false
+                  }
                   onChange={(event) => {
-                    form.setFieldError(name, null);
+                    formik.setFieldError(name, null);
 
-                    const newValue = field.value ? [...field.value] : [];
+                    const newValue = formik.values[name] ? [...formik.values[name]] : [];
                     if (event.target.checked) {
                       newValue.push(option.value);
                     } else {
                       newValue.splice(newValue.indexOf(option.value), 1);
                     }
 
-                    form.setFieldValue(name, newValue);
+                    formik.setFieldValue(name, newValue);
                   }}
-                  onBlur={() => form.setFieldTouched(name, true)}
+                  onBlur={() => formik.setFieldTouched(name, true)}
                   className={inputClasses}
                 />
               )}
@@ -130,6 +129,7 @@ class FormChoice extends React.Component {
 }
 
 FormChoice.propTypes = propTypes;
+FormChoice.contextTypes = contextTypes;
 FormChoice.defaultProps = defaultProps;
 
 export default FormChoice;
