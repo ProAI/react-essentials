@@ -4484,9 +4484,9 @@ react-input-autosize@^2.0.1:
     create-react-class "^15.5.2"
     prop-types "^15.5.8"
 
-react-kickstarter@0.2.23:
-  version "0.2.23"
-  resolved "https://registry.yarnpkg.com/react-kickstarter/-/react-kickstarter-0.2.23.tgz#fde7fb511d5f5c7ff7c738b9cd6dfb02efdb211d"
+react-kickstarter@0.2.24:
+  version "0.2.24"
+  resolved "https://registry.yarnpkg.com/react-kickstarter/-/react-kickstarter-0.2.24.tgz#c19753ec57a1c41a84f3ee7daeb1cdcb0ae662e2"
   dependencies:
     autoprefixer "7.1.6"
     babel-cli "6.26.0"
