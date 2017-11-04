@@ -2512,9 +2512,9 @@ form-data@~2.1.1:
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
 
-formik@0.9.4:
-  version "0.9.4"
-  resolved "https://registry.yarnpkg.com/formik/-/formik-0.9.4.tgz#e284620539c54d7d052c1950230b1e44c5acc6a4"
+formik@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/formik/-/formik-0.10.0.tgz#80ee8d976d2a842950fc78481beb5aebc17a5ecd"
   dependencies:
     lodash.isequal "4.5.0"
     prop-types "^15.5.10"
@@ -4429,9 +4429,9 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-custom-scrollbars@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/react-custom-scrollbars/-/react-custom-scrollbars-4.2.0.tgz#cb01aef03c413de9af9e99a1722c04e9350bb3f4"
+react-custom-scrollbars@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/react-custom-scrollbars/-/react-custom-scrollbars-4.2.1.tgz#830fd9502927e97e8a78c2086813899b2a8b66db"
   dependencies:
     dom-css "^2.0.0"
     prop-types "^15.5.10"
@@ -4537,9 +4537,9 @@ react-kickstarter@0.2.23:
     webpack-hot-middleware "2.20.0"
     webpack-isomorphic-tools "3.0.5"
 
-react-loading@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-loading/-/react-loading-1.0.0.tgz#49cb4b1f8010eb2c6623e5fa37dc05778faf4720"
+react-loading@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-loading/-/react-loading-1.0.1.tgz#180c590539bed0a250785e622f1952283be72a14"
 
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"
