@@ -1,6 +1,6 @@
 {
   "name": "react-essentials",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "main": "./lib/index.js",
   "description":
     "React Redux UI collection with file upload/dropzone, form elements/validation and a lot more components",
