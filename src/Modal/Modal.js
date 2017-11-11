@@ -28,6 +28,10 @@ const defaultProps = {
   dismissible: true,
 };
 
+// backwards compatibility for React 15
+const canUseDOM = typeof window !== 'undefined';
+const isReact15 = ReactDOM.createPortal === undefined;
+
 const computeScrollbarWidth = () => {
   const scrollDiv = document.createElement('div');
   scrollDiv.className = 'modal-scrollbar-measure';
@@ -49,18 +53,45 @@ class Modal extends React.Component {
   }
 
   componentWillMount() {
+    // prevent modal on the server, because ssr does not support portals yet
+    if (!canUseDOM) return;
+
     this.onEnter();
+
+    if (this.props.visible) {
+      this.beforeShow();
+    }
   }
 
   componentDidMount() {
     if (this.props.visible) {
-      this.show();
+      // render modal in React 15
+      if (isReact15) this.renderReact15();
+
+      this.afterShow();
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    if (this.props.visible !== nextProps.visible) {
+      if (nextProps.visible) {
+        this.beforeShow();
+      } else {
+        this.beforeHide();
+      }
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.visible !== prevProps.visible) {
-      this.handleProps();
+      // render modal in React 15
+      if (isReact15) this.renderReact15();
+
+      if (this.props.visible) {
+        this.afterShow();
+      } else {
+        this.afterHide();
+      }
     }
   }
 
@@ -76,6 +107,7 @@ class Modal extends React.Component {
 
   onExit = () => {
     this.destroy();
+
     if (this.props.onExit) {
       this.props.onExit();
     }
@@ -97,20 +129,12 @@ class Modal extends React.Component {
 
   identifier = generateKey('re-modal-title-');
 
-  handleProps = () => {
-    if (this.props.visible) {
-      this.show();
-    } else {
-      this.hide();
-    }
-  };
-
   destroy = () => {
     const classes = document.body.className.replace('modal-open', '');
     this.removeEvents();
 
     if (this.container) {
-      ReactDOM.unmountComponentAtNode(this.container);
+      if (isReact15) ReactDOM.unmountComponentAtNode(this.container);
       document.body.removeChild(this.container);
       this.container = null;
     }
@@ -123,17 +147,7 @@ class Modal extends React.Component {
     document.removeEventListener('keyup', this.onEscape, false);
   }
 
-  hide() {
-    this.resetAdjustments();
-    this.resetScrollbar();
-
-    this.renderIntoSubtree();
-    this.removeEvents();
-
-    this.onExit();
-  }
-
-  show() {
+  beforeShow() {
     this.checkScrollbar();
     this.handleScrollbar();
 
@@ -145,20 +159,24 @@ class Modal extends React.Component {
     document.addEventListener('keyup', this.onEscape, false);
 
     document.body.className = cx(classes, 'modal-open');
+  }
 
-    this.renderIntoSubtree();
-
-    const { scrollX, scrollY } = window;
+  afterShow() {
     this.container.focus();
-    window.scrollTo(scrollX, scrollY);
+    window.scrollTo(window.scrollX, window.scrollY);
 
     this.handleUpdate();
   }
 
-  // ----------------------------------------------------------------------
-  // the following methods are used to handle overflowing modals
-  // todo (fat): these should probably be refactored out of modal.js
-  // ----------------------------------------------------------------------
+  beforeHide() {
+    this.resetAdjustments();
+    this.resetScrollbar();
+  }
+
+  afterHide() {
+    this.removeEvents();
+    this.onExit();
+  }
 
   handleUpdate() {
     this.adjustDialog();
@@ -191,6 +209,7 @@ class Modal extends React.Component {
       const documentElementRect = document.documentElement.getBoundingClientRect();
       fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
     }
+
     this.isBodyOverflowing = document.body.clientWidth < fullWindowWidth;
     this.scrollbarWidth = computeScrollbarWidth();
   }
@@ -219,14 +238,6 @@ class Modal extends React.Component {
     if (document.getElementById('navbar')) {
       document.getElementById('navbar').style.paddingRight = this.originalBodyPadding;
     }
-  }
-
-  // ----------------------------------------------------------------------
-  // Rendering
-  // ----------------------------------------------------------------------
-
-  renderIntoSubtree() {
-    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderModal(), this.container);
   }
 
   renderModal() {
@@ -279,8 +290,20 @@ class Modal extends React.Component {
     );
   }
 
+  renderReact15() {
+    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderModal(), this.container);
+  }
+
   render() {
-    return null;
+    // prevent modal on the server, because ssr does not support portals yet
+    if (!canUseDOM) return null;
+
+    // see componentDidMount and componentDidUpdate for React 15 rendering
+    if (isReact15 || !this.props.visible) {
+      return null;
+    }
+
+    return ReactDOM.createPortal(this.renderModal(), this.container);
   }
 }
 

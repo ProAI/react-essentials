@@ -26,6 +26,10 @@ const defaultProps = {
   fallbackPlacement: null,
 };
 
+// backwards compatibility for React 15
+const canUseDOM = typeof window !== 'undefined';
+const isReact15 = ReactDOM.createPortal === undefined;
+
 class Overlay extends React.Component {
   state = {
     placement: this.props.placement,
@@ -33,45 +37,73 @@ class Overlay extends React.Component {
     popperStyle: null,
   };
 
+  componentWillMount() {
+    // prevent modal on the server, because ssr does not support portals yet
+    if (!canUseDOM) return;
+
+    // create overlay if visibility is visible
+    if (this.props.visible) {
+      this.beforeCreate();
+    }
+  }
+
   componentDidMount() {
     // create overlay if visibility is visible
     if (this.props.visible) {
-      this.create();
+      // render modal in React 15
+      if (isReact15) this.renderReact15();
+
+      this.afterCreate();
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    // create overlay if visibility changed to visible
+    if (nextProps.visible && this.props.visible !== nextProps.visible) {
+      // render modal in React 15
+      if (isReact15) this.renderReact15();
+
+      this.beforeCreate();
     }
   }
 
   componentDidUpdate(prevProps) {
     // create overlay if visibility changed to visible
     if (this.props.visible && this.props.visible !== prevProps.visible) {
-      this.create();
+      // render modal in React 15
+      if (isReact15) this.renderReact15();
+
+      this.afterCreate();
     }
 
     // update overlay if visibility is still visible
     if (this.props.visible && this.props.visible === prevProps.visible) {
-      this.update();
+      // rerender modal in React 15
+      if (isReact15) this.renderReact15();
     }
 
     // destroy overlay if visibility changed to invisible
     if (!this.props.visible && this.props.visible !== prevProps.visible) {
-      this.destroy();
+      this.afterDestroy();
     }
   }
 
   componentWillUnmount() {
     // force destroy overlay
-    this.destroy();
+    this.afterDestroy();
   }
 
   identifier = generateKey('re-overlay-');
 
-  create() {
+  beforeCreate() {
     // render overlay container
     if (!this.container) {
       this.container = document.createElement('div');
       document.body.appendChild(this.container);
     }
-    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderPopper(), this.container);
+  }
 
+  afterCreate() {
     // create PopperJS instance
     this.instance = new PopperJS(this.target, this.popper, {
       placement: this.props.placement,
@@ -103,15 +135,10 @@ class Overlay extends React.Component {
     this.instance.scheduleUpdate();
   }
 
-  update() {
-    // rerender overlay container
-    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderPopper(), this.container);
-  }
-
-  destroy() {
+  afterDestroy() {
     // destroy overlay container
     if (this.container) {
-      ReactDOM.unmountComponentAtNode(this.container);
+      if (isReact15) ReactDOM.unmountComponentAtNode(this.container);
       document.body.removeChild(this.container);
       this.container = null;
     }
@@ -122,7 +149,7 @@ class Overlay extends React.Component {
     }
   }
 
-  renderPopper() {
+  renderOverlay() {
     const {
       role, children, className, placementClassName,
     } = this.props;
@@ -151,11 +178,15 @@ class Overlay extends React.Component {
     );
   }
 
+  renderReact15() {
+    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderOverlay(), this.container);
+  }
+
   render() {
-    // For some reason a ref that is defined on a cloned element does not work,
-    // so we use a wrapping <span> element, on which we can define the ref.
-    // This is just a workaround, so it would be better to solve the original
-    // cloned element issue.
+    // TODO: For some reason a ref that is defined on a cloned element does not
+    // work, so we use a wrapping <span> element, on which we can define the
+    // ref. This is just a workaround, so it would be better to solve the
+    // original cloned element issue.
 
     const target = React.cloneElement(this.props.target, {
       /* ref: (element) => {
@@ -172,6 +203,10 @@ class Overlay extends React.Component {
         style={{ display: 'inline-block' }}
       >
         {target}
+        {!isReact15 &&
+          canUseDOM &&
+          this.props.visible &&
+          ReactDOM.createPortal(this.renderOverlay(), this.container)}
       </span>
     );
   }
