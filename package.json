@@ -29,7 +29,7 @@
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
     "date-fns": "^2.0.0-alpha.7",
-    "formik": "^0.10.0",
+    "formik": "^0.10.3",
     "popper.js": "^1.12.6",
     "prop-types": "^15.6.0",
     "react-custom-scrollbars": "^4.2.1",
@@ -41,8 +41,8 @@
   "devDependencies": {
     "babel-cli": "6.26.0",
     "eslint": "4.9.0",
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
+    "react": "16.1.0",
+    "react-dom": "16.1.0",
     "react-kickstarter": "0.2.24",
     "react-router-dom": "4.2.2"
   },
