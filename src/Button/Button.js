@@ -19,7 +19,7 @@ const propTypes = {
   size: PropTypes.oneOf(['sm', 'lg']),
   onClick: PropTypes.func,
   preventToggle: PropTypes.bool,
-  preventFocus: PropTypes.bool,
+  keepFocus: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -33,7 +33,7 @@ const defaultProps = {
   size: null,
   onClick: null,
   preventToggle: false,
-  preventFocus: false,
+  keepFocus: false,
 };
 
 class Button extends React.Component {
@@ -46,20 +46,14 @@ class Button extends React.Component {
       this.context.onToggle();
     }
 
-    if (this.props.preventFocus) {
+    if (!this.props.keepFocus) {
       this.button.blur();
     }
   };
 
   render() {
     const {
-      variant,
-      size,
-      type,
-      className,
-      preventToggle,
-      preventFocus,
-      ...attributes
+      variant, size, type, className, preventToggle, keepFocus, ...attributes
     } = this.props;
 
     const classes = cx(

@@ -8,7 +8,7 @@ const propTypes = {
   to: PropTypes.string.isRequired,
   external: PropTypes.bool,
   preventToggle: PropTypes.bool,
-  preventFocus: PropTypes.bool,
+  keepFocus: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -19,7 +19,7 @@ const defaultProps = {
   onClick: null,
   external: false,
   preventToggle: false,
-  preventFocus: false,
+  keepFocus: false,
 };
 
 class Link extends React.Component {
@@ -32,14 +32,14 @@ class Link extends React.Component {
       this.context.onToggle();
     }
 
-    if (this.props.preventFocus) {
+    if (!this.props.keepFocus) {
       this.link.blur();
     }
   };
 
   render() {
     const {
-      to, external, children, preventToggle, preventFocus, ...attributes
+      to, external, children, preventToggle, keepFocus, ...attributes
     } = this.props;
 
     // external link
@@ -56,7 +56,7 @@ class Link extends React.Component {
         {...attributes}
         to={to}
         onClick={this.onClick}
-        ref={(c) => {
+        innerRef={(c) => {
           this.link = c;
         }}
       >

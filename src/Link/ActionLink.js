@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 const propTypes = {
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired,
-  preventFocus: PropTypes.bool,
+  keepFocus: PropTypes.bool,
 };
 
 const defaultProps = {
-  preventFocus: true,
+  keepFocus: false,
 };
 
 class ActionLink extends React.Component {
@@ -17,19 +17,20 @@ class ActionLink extends React.Component {
 
     this.props.onClick(event);
 
-    if (this.props.preventFocus) {
+    if (!this.props.keepFocus) {
       this.link.blur();
     }
   };
 
   render() {
     const {
-      children, onClick, preventFocus, ...attributes
+      children, onClick, keepFocus, ...attributes
     } = this.props;
 
     // action link
     return (
       <a
+        {...attributes}
         role="button"
         tabIndex="0"
         ref={(c) => {
@@ -37,7 +38,6 @@ class ActionLink extends React.Component {
         }}
         onKeyPress={/* TODO */ () => {}}
         onClick={this.onClick}
-        {...attributes}
       >
         {children}
       </a>
