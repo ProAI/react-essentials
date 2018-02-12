@@ -96,8 +96,10 @@ class Modal extends React.Component {
   }
 
   componentWillUnmount() {
-    this.beforeHide();
-    this.afterHide();
+    if (this.props.visible) {
+      this.beforeHide();
+      this.afterHide();
+    }
   }
 
   onEnter = () => {
