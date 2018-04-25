@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { generateKey } from '../utils';
+import { generateKey } from '../../utils';
 
 const propTypes = {
   checked: PropTypes.bool,

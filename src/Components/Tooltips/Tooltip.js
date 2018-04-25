@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopperJS from 'popper.js';
-import { Overlay, triggers } from '../utils';
+import { Overlay, triggers } from '../../utils';
 
 const propTypes = {
   title: PropTypes.node.isRequired,
-  content: PropTypes.node.isRequired,
   placement: PropTypes.oneOf(PopperJS.placements),
   fallbackPlacement: PropTypes.oneOf(['flip', 'clockwise', 'counterwise']),
   onToggle: PropTypes.func,
@@ -19,10 +18,10 @@ const defaultProps = {
   visible: null,
   placement: 'bottom',
   fallbackPlacement: null,
-  trigger: 'click',
+  trigger: 'hover focus',
 };
 
-class Popover extends React.Component {
+class Tooltip extends React.Component {
   state = {
     visible: false,
     isClicked: false,
@@ -30,6 +29,7 @@ class Popover extends React.Component {
   };
 
   componentDidMount() {
+    // this.target = document.querySelector(`[aria-describedby="${this.identifier}"]`);
     this.trigger = this.props.trigger.split(' ');
   }
 
@@ -127,27 +127,26 @@ class Popover extends React.Component {
     return (
       <Overlay
         target={target}
-        className="popover show"
+        className="tooltip show"
         placement={this.props.placement}
         fallbackPlacement={this.props.fallbackPlacement}
         placementClassName={{
-          top: 'bs-popover-top',
-          bottom: 'bs-popover-bottom',
-          left: 'bs-popover-left',
-          right: 'bs-popover-right',
+          top: 'bs-tooltip-top',
+          bottom: 'bs-tooltip-bottom',
+          left: 'bs-tooltip-left',
+          right: 'bs-tooltip-right',
         }}
         visible={this.visible()}
         onToggle={this.onToggle}
         role="tooltip"
       >
-        {this.props.title && <h3 className="popover-header">{this.props.title}</h3>}
-        <div className="popover-body">{this.props.content}</div>
+        <div className="tooltip-inner">{this.props.title}</div>
       </Overlay>
     );
   }
 }
 
-Popover.propTypes = propTypes;
-Popover.defaultProps = defaultProps;
+Tooltip.propTypes = propTypes;
+Tooltip.defaultProps = defaultProps;
 
-export default Popover;
+export default Tooltip;

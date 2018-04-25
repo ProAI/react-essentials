@@ -5,7 +5,7 @@ import cx from 'classnames';
 import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
-import { generateKey } from '../utils';
+import { generateKey } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,

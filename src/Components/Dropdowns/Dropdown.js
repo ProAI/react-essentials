@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DropdownToggleButton from './DropdownToggleButton';
 import DropdownMenu from './DropdownMenu';
-import { generateKey } from '../utils';
+import { generateKey } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,

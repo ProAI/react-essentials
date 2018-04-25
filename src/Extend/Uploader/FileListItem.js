@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner/Spinner';
-import { CloseButton, formatFileSize } from '../utils';
+import { CloseButton, formatFileSize } from '../../utils';
 
 const propTypes = {
   status: PropTypes.oneOf(['ready', 'uploading', 'completed', 'error']).isRequired,
@@ -88,12 +88,13 @@ class FileListItem extends React.Component {
         }}
       >
         <div className="uploader-file-preview">
-          {this.fileIsImage &&
+          {this.fileIsImage && (
             <img
               className="uploader-file-preview-image"
               src={this.filePreviewUrl}
               alt={file.name}
-            />}
+            />
+          )}
         </div>
         <div className="uploader-file-description">
           {showLoadingIndicator && <Spinner color="#444" width={16} />}
@@ -102,13 +103,14 @@ class FileListItem extends React.Component {
           {showRemoveButton && <CloseButton tabIndex={0} onClick={this.onRemove} />}
         </div>
         <div className={`uploader-file-progressbar ${showProgressBar ? 'active' : null}`}>
-          {showProgressBar &&
+          {showProgressBar && (
             <div
               style={{
                 width: `${(progress * 100).toString()}%`,
               }}
               className={`uploader-file-progressbar-status ${status === 'error' ? 'error' : null}`}
-            />}
+            />
+          )}
         </div>
       </div>
     );

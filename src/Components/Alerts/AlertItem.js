@@ -6,8 +6,8 @@ import ExclamationIcon from 'react-icons/lib/fa/exclamation';
 import CloseIcon from 'react-icons/lib/fa/close';
 import CheckIcon from 'react-icons/lib/fa/check';
 import { chooseTransitionEvent, Timer } from './helpers';
-import Link from '../Link/Link';
-import { CloseButton } from '../utils';
+import Link from '../../Content/Links/Link';
+import { CloseButton } from '../../utils';
 
 const propTypes = {
   alert: PropTypes.object.isRequired,

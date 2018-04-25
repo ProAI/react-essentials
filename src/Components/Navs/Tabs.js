@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TabsNav from './TabsNav';
 import TabsContent from './TabsContent';
 import TabsPane from './TabsPane';
-import { generateKey } from '../utils';
+import { generateKey } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -100,5 +100,7 @@ class Tabs extends React.Component {
 
 Tabs.propTypes = propTypes;
 Tabs.defaultProps = defaultProps;
+
+Tabs.Pane = TabsPane;
 
 export default Tabs;

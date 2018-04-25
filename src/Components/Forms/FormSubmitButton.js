@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '../Button/Button';
+import Button from '../Buttons/Button';
 
 const propTypes = {
   children: PropTypes.node.isRequired,

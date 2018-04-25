@@ -1,59 +1,59 @@
 /* alert components */
-import Alert from './Alert/Alert';
+import Alert from './Components/Alerts/Alert';
 
 /* badge components */
-import Badge from './Badge/Badge';
+import Badge from './Components/Badge/Badge';
 
 /* button components */
-import Button from './Button/Button';
+import Button from './Components/Buttons/Button';
 
 /* card components */
-import Card from './Card/Card';
+import Card from './Components/Card/Card';
 
 /* dropdown components */
-import Dropdown from './Dropdown/Dropdown';
-import injectDropdownToggle from './Dropdown/injectDropdownToggle';
+import Dropdown from './Components/Dropdowns/Dropdown';
+import injectDropdownToggle from './Components/Dropdowns/injectDropdownToggle';
 
 /* emoji components */
-import Emoji from './Emoji/Emoji';
+import Emoji from './Extend/Emoji/Emoji';
 
 /* form components */
-import Form from './Form/Form';
+import Form from './Components/Forms/Form';
 
 /* link components */
-import ActionLink from './Link/ActionLink';
-import Link from './Link/Link';
+import ActionLink from './Content/Links/ActionLink';
+import Link from './Content/Links/Link';
 
 /* modal components */
-import Modal from './Modal/Modal';
+import Modal from './Components/Modal/Modal';
 
 /* nav components */
-import Nav from './Nav/Nav';
+import Nav from './Components/Navs/Nav';
 
 /* popover components */
-import injectPopover from './Popover/injectPopover';
-import PopoverButton from './Popover/PopoverButton';
+import injectPopover from './Components/Popovers/injectPopover';
+import PopoverButton from './Components/Popovers/PopoverButton';
 
 /* scrollbars components */
-import Scrollbars from './Scrollbars/Scrollbars';
+import Scrollbars from './Extend/Scrollbars/Scrollbars';
 
 /* spinner components */
-import Spinner from './Spinner/Spinner';
+import Spinner from './Extend/Spinner/Spinner';
 
 /* switch components */
-import Switch from './Switch/Switch';
+import Switch from './Extend/Switch/Switch';
 
 /* tabs components */
-import Tabs from './Tabs/Tabs';
-import TabsNav from './Tabs/TabsNav';
-import TabsContent from './Tabs/TabsContent';
+import Tabs from './Components/Navs/Tabs';
+import TabsNav from './Components/Navs/TabsNav';
+import TabsContent from './Components/Navs/TabsContent';
 
 /* overlay components */
-import injectTooltip from './Tooltip/injectTooltip';
-import TooltipButton from './Tooltip/TooltipButton';
+import injectTooltip from './Components/Tooltips/injectTooltip';
+import TooltipButton from './Components/Tooltips/TooltipButton';
 
 /* uploader components */
-import Uploader from './Uploader/Uploader';
+import Uploader from './Extend/Uploader/Uploader';
 
 export {
   Alert,
