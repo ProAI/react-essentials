@@ -2,13 +2,13 @@
 import Alert from './Components/Alerts/Alert';
 
 /* badge components */
-import Badge from './Components/Badge/Badge';
+import Badge from './Components/Badges/Badge';
 
 /* button components */
 import Button from './Components/Buttons/Button';
 
 /* card components */
-import Card from './Components/Card/Card';
+import Card from './Components/Cards/Card';
 
 /* dropdown components */
 import Dropdown from './Components/Dropdowns/Dropdown';

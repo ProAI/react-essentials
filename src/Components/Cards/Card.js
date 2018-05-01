@@ -4,7 +4,6 @@ import cx from 'classnames';
 import CardBody from './CardBody';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
-import CardSubtitle from './CardSubtitle';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -19,7 +18,6 @@ class Card extends React.Component {
   static Body = CardBody;
   static Footer = CardFooter;
   static Header = CardHeader;
-  static Subtitle = CardSubtitle;
 
   render() {
     const { children, className, ...attributes } = this.props;

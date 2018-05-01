@@ -1,5 +1,5 @@
 // COLORS prop type
-export const COLORS = [
+export const colors = [
   'primary',
   'secondary',
   'success',
@@ -10,26 +10,26 @@ export const COLORS = [
   'dark',
 ];
 
-export const BUTTON_COLORS = COLORS.push('link');
+export const buttonColors = colors.push('link');
 
-export const TEXT_COLORS = COLORS.concat(['body', 'muted', 'white', 'black-50', 'white-50']);
+export const textColors = colors.concat(['body', 'muted', 'white', 'black-50', 'white-50']);
 
-export const BACKGROUND_COLORS = COLORS.concat(['white', 'transparent']);
+export const backgroundColors = colors.concat(['white', 'transparent']);
 
 // SIZES prop type
-export const SIZES = ['sm', 'md', 'lg'];
+export const sizes = ['sm', 'md', 'lg'];
 
 // HEADING_SIZES prop type
-export const HEADING_SIZES = [1, 2, 3, 4, 5, 6];
+export const headingSizes = [1, 2, 3, 4, 5, 6];
 
 // DISPLAY_HEADING_SIZES prop type
-export const DISPLAY_HEADING_SIZES = [1, 2, 3, 4];
+export const displayHeadingSizes = [1, 2, 3, 4];
 
 // GRID_SIZES prop type
-export const GRID_SIZES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 'auto'];
+export const gridSizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 'auto'];
 
 // UTILS prop type
-export const UTILS = (value, key, componentName, location, propFullName) => {
+export const utils = (value, key, componentName, location, propFullName) => {
   // TODO: check for borders classes
   // TODO: check for clearfix classes
   // TODO: check for close icon classes

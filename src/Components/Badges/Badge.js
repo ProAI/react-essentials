@@ -1,30 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { TextView, propValues } from '../../utils';
 
 const propTypes = {
-  className: PropTypes.string,
-  variant: PropTypes.oneOf([
-    'primary',
-    'secondary',
-    'success',
-    'danger',
-    'warning',
-    'info',
-    'light',
-    'dark',
-  ]),
+  variant: PropTypes.oneOf(propValues.colors),
 };
 
 const defaultProps = {
-  className: null,
   variant: 'primary',
 };
 
-function Badge({ variant, className, ...attributes }) {
-  const classes = cx('badge', `badge-${variant}`, className);
+function Badge({ variant, ...attributes }) {
+  const classes = cx('badge', `badge-${variant}`);
 
-  return <span {...attributes} className={classes} />;
+  return <TextView {...attributes} className={classes} />;
 }
 
 Badge.propTypes = propTypes;

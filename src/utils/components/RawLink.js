@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
+import { RawLink as RouterLink } from 'react-router-dom';
+import BaseText from './BaseText';
+import BaseView from './BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func,
   to: PropTypes.string.isRequired,
   external: PropTypes.bool,
+  onClick: PropTypes.func,
   preventToggle: PropTypes.bool,
   keepFocus: PropTypes.bool,
+  isView: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -16,13 +19,14 @@ const contextTypes = {
 };
 
 const defaultProps = {
-  onClick: null,
   external: false,
+  onClick: null,
   preventToggle: false,
   keepFocus: false,
+  isView: false,
 };
 
-class Link extends React.Component {
+class RawLink extends React.Component {
   onClick = (event) => {
     if (this.props.onClick) {
       this.props.onClick(event);
@@ -39,14 +43,17 @@ class Link extends React.Component {
 
   render() {
     const {
-      to, external, children, preventToggle, keepFocus, ...attributes
+      to, external, children, preventToggle, keepFocus, isView, ...attributes
     } = this.props;
+
+    const BaseTag = isView ? BaseView : BaseText;
 
     // action link
     if (!to) {
       return (
-        <a
+        <BaseTag
           {...attributes}
+          tag="a"
           role="button"
           tabIndex="0"
           ref={(c) => {
@@ -56,15 +63,16 @@ class Link extends React.Component {
           onClick={this.onClick}
         >
           {children}
-        </a>
+        </BaseTag>
       );
     }
 
     // external link
     if (external) {
       return (
-        <a
+        <BaseTag
           {...attributes}
+          tag="a"
           ref={(c) => {
             this.link = c;
           }}
@@ -73,14 +81,16 @@ class Link extends React.Component {
           rel="noopener noreferrer"
         >
           {children}
-        </a>
+        </BaseTag>
       );
     }
 
     // router link
     return (
-      <RouterLink
+      <BaseTag
         {...attributes}
+        tag={RouterLink}
+        withInnerRef
         to={to}
         onClick={this.onClick}
         innerRef={(c) => {
@@ -88,13 +98,13 @@ class Link extends React.Component {
         }}
       >
         {children}
-      </RouterLink>
+      </BaseTag>
     );
   }
 }
 
-Link.propTypes = propTypes;
-Link.defaultProps = defaultProps;
-Link.contextTypes = contextTypes;
+RawLink.propTypes = propTypes;
+RawLink.defaultProps = defaultProps;
+RawLink.contextTypes = contextTypes;
 
-export default Link;
+export default RawLink;
