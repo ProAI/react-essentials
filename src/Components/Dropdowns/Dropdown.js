@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DropdownToggleButton from './DropdownToggleButton';
 import DropdownMenu from './DropdownMenu';
+import DropdownItem from './DropdownItem';
+import { BaseView } from '../../utils/components';
 import { generateKey } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   onToggle: PropTypes.func,
   visible: PropTypes.bool,
-  className: PropTypes.string,
 };
 
 const childContextTypes = {
@@ -19,46 +20,40 @@ const childContextTypes = {
 const defaultProps = {
   onToggle: null,
   visible: null,
-  className: null,
 };
 
 class Dropdown extends React.Component {
-  static ToggleButton = DropdownToggleButton;
-  // wrap <DropdownMenu> so that we can inject triggerId later
-  static Menu = props => <DropdownMenu {...props} />;
-  static Item = DropdownMenu.Item;
-
   state = {
     visible: false,
   };
 
   getChildContext() {
     return {
-      onToggle: this.onToggle,
+      onToggle: this.handleToggle,
     };
   }
 
   componentWillUnmount() {
     if (this.visible()) {
-      document.removeEventListener('mousedown', this.onDocumentClick);
+      document.removeEventListener('mousedown', this.handleDocumentClick);
     }
   }
 
-  onDocumentClick = (event) => {
+  handleDocumentClick = (event) => {
     const dropdownElement = this.element;
 
     if (this.visible()) {
       if (event.target !== dropdownElement && !dropdownElement.contains(event.target)) {
-        this.onToggle();
+        this.handleToggle();
       }
     }
   };
 
-  onToggle = () => {
+  handleToggle = () => {
     if (this.visible()) {
-      document.removeEventListener('mousedown', this.onDocumentClick);
+      document.removeEventListener('mousedown', this.handleDocumentClick);
     } else {
-      document.addEventListener('mousedown', this.onDocumentClick);
+      document.addEventListener('mousedown', this.handleDocumentClick);
     }
 
     // execute custom onToggle function
@@ -86,11 +81,16 @@ class Dropdown extends React.Component {
 
   render() {
     const {
-      className, children, visible, onToggle, ...attributes
+      children, visible, onToggle, ...otherProps
     } = this.props;
 
     // create component classes
-    const classes = cx('dropdown', { show: this.visible() }, className);
+    const classes = cx(
+      // constant classes
+      'dropdown',
+      // variable classes
+      this.visible() && 'show',
+    );
 
     // check if dropdown has a dropdown trigger and menu
     if (React.Children.count(children) !== 2) {
@@ -111,7 +111,7 @@ class Dropdown extends React.Component {
         }
         return React.cloneElement(child, {
           visible: this.visible(),
-          onToggle: this.onToggle,
+          onToggle: this.handleToggle,
           id: identifier,
         });
       }
@@ -122,15 +122,15 @@ class Dropdown extends React.Component {
     });
 
     return (
-      <div
-        {...attributes}
+      <BaseView
+        {...otherProps}
         ref={(element) => {
           this.element = element;
         }}
         className={classes}
       >
         {manipulatedChildren}
-      </div>
+      </BaseView>
     );
   }
 }
@@ -138,5 +138,10 @@ class Dropdown extends React.Component {
 Dropdown.propTypes = propTypes;
 Dropdown.childContextTypes = childContextTypes;
 Dropdown.defaultProps = defaultProps;
+
+Dropdown.ToggleButton = DropdownToggleButton;
+// wrap <DropdownMenu> so that we can inject triggerId later
+Dropdown.Menu = props => <DropdownMenu {...props} />;
+Dropdown.Item = DropdownItem;
 
 export default Dropdown;
