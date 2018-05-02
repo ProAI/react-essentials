@@ -1,32 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { RawButton, propValues } from '../../utils';
+import { BaseText } from '../../utils/components';
+import { BUTTON_COLORS, SIZES } from '../../utils/constants';
+import { createButtonProps } from '../../utils';
 
 const propTypes = {
-  className: PropTypes.string,
-  variant: PropTypes.oneOf(propValues.buttonColors),
-  size: PropTypes.oneOf(propValues.sizes),
+  to: PropTypes.string,
+  onClick: PropTypes.func,
+  variant: PropTypes.oneOf(BUTTON_COLORS),
+  size: PropTypes.oneOf(SIZES),
+  external: PropTypes.bool,
+  preventToggle: PropTypes.bool,
+  keepFocus: PropTypes.bool,
+};
+
+const contextTypes = {
+  onToggle: PropTypes.func,
 };
 
 const defaultProps = {
-  className: null,
+  to: null,
+  onClick: null,
   variant: 'primary',
-  size: null,
+  size: 'md',
+  external: false,
+  preventToggle: false,
+  keepFocus: false,
 };
 
-function ButtonView({ variant, size, ...attributes }) {
+function ButtonView(props, context) {
+  const {
+    variant, size, to, external, onClick, preventToggle, keepFocus, ...otherProps
+  } = props;
+
   const classes = cx(
+    // constant classes
     'btn',
     `btn-${variant}`,
-    { 'btn-sm': size === 'sm' },
-    { 'btn-lg': size === 'lg' },
+    // variable classes
+    size === 'sm' && 'btn-sm',
+    size === 'lg' && 'btn-lg',
   );
 
-  return <RawButton {...attributes} className={classes} />;
+  const buttonProps = createButtonProps(props, context);
+
+  return <BaseText {...otherProps} {...buttonProps} className={classes} blockOnly />;
 }
 
 ButtonView.propTypes = propTypes;
 ButtonView.defaultProps = defaultProps;
+ButtonView.contextTypes = contextTypes;
 
 export default ButtonView;
