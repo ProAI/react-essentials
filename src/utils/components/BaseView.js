@@ -39,7 +39,7 @@ class BaseView extends React.Component {
 
     const classes = cx(
       // add yoga layout styles
-      'yoga',
+      'yoga-view',
       // add (mostly) bootstrap styles
       className,
       // add utils styles

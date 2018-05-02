@@ -65,7 +65,8 @@ class BaseText extends React.Component {
 
     const classes = cx(
       // add yoga styles
-      'yoga-text',
+      !this.context.isInAParentText && 'yoga-text-block',
+      this.context.isInAParentText && 'yoga-text-inline',
       // add (mostly) bootstrap styles
       className,
       // add utils styles
