@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 const propTypes = {
-  className: PropTypes.string,
   onClick: PropTypes.func,
   component: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
   onToggle: PropTypes.func.isRequired,
@@ -11,7 +10,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: null,
   onClick: null,
 };
 
@@ -28,15 +26,15 @@ class DropdownToggle extends React.Component {
 
   render() {
     const {
-      className, component: Component, visible, onToggle, ...attributes
+      component: Component, visible, onToggle, ...otherProps
     } = this.props;
 
-    const classes = cx({ active: visible }, 'dropdown-toggle', className);
+    const classes = cx(visible && 'active', 'dropdown-toggle');
 
     return (
       <Component
-        {...attributes}
-        className={classes}
+        {...otherProps}
+        tempClassName={classes}
         onClick={this.onClick}
         aria-haspopup="true"
         aria-expanded={visible}

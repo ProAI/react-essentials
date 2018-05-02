@@ -7,6 +7,7 @@ import { UTILS } from '../constants';
 const propTypes = {
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
+  tempClassName: PropTypes.string,
   class: PropTypes.arrayOf(UTILS),
   blockOnly: PropTypes.bool,
   inlineOnly: PropTypes.bool,
@@ -22,6 +23,7 @@ const childContextTypes = {
 
 const defaultProps = {
   tag: null,
+  tempClassName: null,
   class: null,
   blockOnly: false,
   inlineOnly: false,
@@ -58,7 +60,7 @@ class BaseText extends React.Component {
 
   render() {
     const {
-      tag, className, class: utils, ...attributes
+      tag, className, tempClassName, class: utils, ...otherProps
     } = this.props;
 
     const Tag = this.getTag(tag);
@@ -69,11 +71,12 @@ class BaseText extends React.Component {
       this.context.isInAParentText && 'yoga-text-inline',
       // add (mostly) bootstrap styles
       className,
+      tempClassName,
       // add utils styles
       utils.join(' '),
     );
 
-    return <Tag className={classes} {...attributes} />;
+    return <Tag {...otherProps} className={classes} />;
   }
 }
 
