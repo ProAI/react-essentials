@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
-import * as propValues from '../propValues';
+import { UTILS } from '../constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
-  class: PropTypes.arrayOf(propValues.utils),
-  innerRef: PropTypes.func,
-  withInnerRef: PropTypes.bool,
+  class: PropTypes.arrayOf(UTILS),
   blockOnly: PropTypes.bool,
 };
 
@@ -21,8 +19,6 @@ const contextTypes = {
 const defaultProps = {
   tag: 'div',
   class: null,
-  innerRef: null,
-  withInnerRef: false,
   blockOnly: false,
 };
 
@@ -38,13 +34,7 @@ class BaseView extends React.Component {
 
   render() {
     const {
-      children,
-      tag: Tag,
-      className,
-      class: utils,
-      innerRef,
-      withInnerRef,
-      ...attributes
+      children, tag: Tag, className, class: utils, ...attributes
     } = this.props;
 
     const classes = cx(
@@ -65,12 +55,8 @@ class BaseView extends React.Component {
         );
       });
     }
-
-    const refProp = withInnerRef ? null : innerRef;
-    const innerRefProp = withInnerRef ? innerRef : null;
-
     return (
-      <Tag className={classes} ref={refProp} innerRef={innerRefProp} {...attributes}>
+      <Tag className={classes} {...attributes}>
         {children}
       </Tag>
     );

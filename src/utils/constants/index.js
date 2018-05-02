@@ -1,5 +1,19 @@
+// TRIGGERS
+export const TRIGGERS = [
+  'click',
+  'hover',
+  'focus',
+  'manual',
+  'click hover',
+  'hover click',
+  'hover focus',
+  'focus hover',
+  'click focus',
+  'focus click',
+];
+
 // COLORS prop type
-export const colors = [
+export const COLORS = [
   'primary',
   'secondary',
   'success',
@@ -9,27 +23,24 @@ export const colors = [
   'light',
   'dark',
 ];
-
-export const buttonColors = colors.push('link');
-
-export const textColors = colors.concat(['body', 'muted', 'white', 'black-50', 'white-50']);
-
-export const backgroundColors = colors.concat(['white', 'transparent']);
+export const BUTTON_COLORS = COLORS.push('link');
+export const TEXT_COLORS = COLORS.concat(['body', 'muted', 'white', 'black-50', 'white-50']);
+export const BACKGROUND_COLORS = COLORS.concat(['white', 'transparent']);
 
 // SIZES prop type
-export const sizes = ['sm', 'md', 'lg'];
+export const SIZES = ['sm', 'md', 'lg'];
 
 // HEADING_SIZES prop type
-export const headingSizes = [1, 2, 3, 4, 5, 6];
+export const HEADING_SIZES = [1, 2, 3, 4, 5, 6];
 
 // DISPLAY_HEADING_SIZES prop type
-export const displayHeadingSizes = [1, 2, 3, 4];
+export const DISPLAY_HEADING_SIZES = [1, 2, 3, 4];
 
 // GRID_SIZES prop type
-export const gridSizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 'auto'];
+export const GRID_SIZES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 'auto'];
 
 // UTILS prop type
-export const utils = (value, key, componentName, location, propFullName) => {
+export const UTILS = (value, key, componentName, location, propFullName) => {
   // TODO: check for borders classes
   // TODO: check for clearfix classes
   // TODO: check for close icon classes

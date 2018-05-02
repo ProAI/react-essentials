@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
-import * as propValues from '../propValues';
+import { UTILS } from '../constants';
 
 const propTypes = {
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
-  class: PropTypes.arrayOf(propValues.utils),
-  innerRef: PropTypes.func,
-  withInnerRef: PropTypes.bool,
+  class: PropTypes.arrayOf(UTILS),
   blockOnly: PropTypes.bool,
+  inlineOnly: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -24,9 +23,8 @@ const childContextTypes = {
 const defaultProps = {
   tag: null,
   class: null,
-  innerRef: null,
-  withInnerRef: false,
   blockOnly: false,
+  inlineOnly: false,
 };
 
 class BaseText extends React.Component {
@@ -38,6 +36,10 @@ class BaseText extends React.Component {
       invariant(
         props.blockOnly && context.isInAParentText,
         "Unexpected use of text block component: This component can't be used inside of a text component.",
+      );
+      invariant(
+        props.inlineOnly && !context.isInAParentText,
+        'Unexpected use of text inline component: This component can only be used inside of a text component.',
       );
     }
   }
@@ -56,7 +58,7 @@ class BaseText extends React.Component {
 
   render() {
     const {
-      tag, className, class: utils, withInnerRef, innerRef, ...attributes
+      tag, className, class: utils, ...attributes
     } = this.props;
 
     const Tag = this.getTag(tag);
@@ -70,10 +72,7 @@ class BaseText extends React.Component {
       utils.join(' '),
     );
 
-    const refProp = withInnerRef ? null : innerRef;
-    const innerRefProp = withInnerRef ? innerRef : null;
-
-    return <Tag className={classes} ref={refProp} innerRef={innerRefProp} {...attributes} />;
+    return <Tag className={classes} {...attributes} />;
   }
 }
 
