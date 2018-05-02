@@ -1,20 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { TextView, propValues } from '../../utils';
+import { BaseText } from '../../utils/components';
+import { COLORS } from '../../utils/constants';
 
 const propTypes = {
-  variant: PropTypes.oneOf(propValues.colors),
+  variant: PropTypes.oneOf(COLORS),
 };
 
 const defaultProps = {
   variant: 'primary',
 };
 
-function Badge({ variant, ...attributes }) {
-  const classes = cx('badge', `badge-${variant}`);
+function Badge({ variant, ...otherProps }) {
+  const classes = cx(
+    // constant classes
+    'badge',
+    `badge-${variant}`,
+  );
 
-  return <TextView {...attributes} className={classes} />;
+  return <BaseText {...otherProps} className={classes} inlineOnly />;
 }
 
 Badge.propTypes = propTypes;
