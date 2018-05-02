@@ -1,27 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import { BaseView } from '../../utils/components';
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-};
-
-const defaultProps = {
-  className: null,
-};
-
-function CardBody({ children, className, ...attributes }) {
-  const classes = cx('card-body', className);
-
-  return (
-    <div {...attributes} className={classes}>
-      {children}
-    </div>
-  );
+function CardBody({ ...otherProps }) {
+  return <BaseView {...otherProps} className="card-body" />;
 }
-
-CardBody.propTypes = propTypes;
-CardBody.defaultProps = defaultProps;
 
 export default CardBody;

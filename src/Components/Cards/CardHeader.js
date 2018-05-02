@@ -1,27 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import { BaseView } from '../../utils/components';
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-};
-
-const defaultProps = {
-  className: null,
-};
-
-function CardHeader({ children, className, ...attributes }) {
-  const classes = cx('card-header', className);
-
-  return (
-    <div {...attributes} className={classes}>
-      {children}
-    </div>
-  );
+function CardHeader({ ...otherProps }) {
+  return <BaseView {...otherProps} className="card-header" />;
 }
-
-CardHeader.propTypes = propTypes;
-CardHeader.defaultProps = defaultProps;
 
 export default CardHeader;
