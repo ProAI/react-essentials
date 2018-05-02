@@ -1,14 +1,14 @@
-export default function createHandleClick(ref, props, context) {
+export default function createHandleClick(ref, onClick, onToggle, options) {
   return (event) => {
-    if (props.onClick) {
-      props.onClick(event);
+    if (onClick) {
+      onClick(event);
     }
 
-    if (context.onToggle !== undefined && !props.preventToggle) {
-      context.onToggle();
+    if (onToggle !== undefined && !options.preventToggle) {
+      onToggle();
     }
 
-    if (!props.keepFocus) {
+    if (!options.keepFocus) {
       ref.current.blur();
     }
   };

@@ -3,16 +3,12 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseText } from '../../utils/components';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
-import { createButtonProps } from '../../utils';
+import { action } from '../../utils';
 
 const propTypes = {
-  to: PropTypes.string,
-  onClick: PropTypes.func,
+  ...action.propTypes,
   variant: PropTypes.oneOf(BUTTON_COLORS),
   size: PropTypes.oneOf(SIZES),
-  external: PropTypes.bool,
-  preventToggle: PropTypes.bool,
-  keepFocus: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -20,19 +16,13 @@ const contextTypes = {
 };
 
 const defaultProps = {
-  to: null,
-  onClick: null,
+  ...action.defaultProps,
   variant: 'primary',
   size: 'md',
-  external: false,
-  preventToggle: false,
-  keepFocus: false,
 };
 
 function Button(props, context) {
-  const {
-    variant, size, to, external, onClick, preventToggle, keepFocus, ...otherProps
-  } = props;
+  const { variant, size, ...otherProps } = props;
 
   const classes = cx(
     // constant classes
@@ -43,9 +33,9 @@ function Button(props, context) {
     size === 'lg' && 'btn-lg',
   );
 
-  const buttonProps = createButtonProps(props, context);
+  const buttonProps = action.createButtonProps(otherProps, context);
 
-  return <BaseText {...otherProps} {...buttonProps} className={classes} blockOnly />;
+  return <BaseText {...buttonProps} className={classes} blockOnly />;
 }
 
 Button.propTypes = propTypes;

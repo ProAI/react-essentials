@@ -3,39 +3,29 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseText } from '../../utils/components';
 import { COLORS } from '../../utils/constants';
-import { createLinkProps } from '../../utils';
+import { action } from '../../utils';
 
 const propTypes = {
-  to: PropTypes.string,
-  onClick: PropTypes.func,
+  ...action.propTypes,
   variant: PropTypes.oneOf(COLORS),
-  external: PropTypes.bool,
-  preventToggle: PropTypes.bool,
-  keepFocus: PropTypes.bool,
 };
 
 const defaultProps = {
-  to: null,
-  onClick: null,
+  ...action.defaultProps,
   variant: 'primary',
-  external: false,
-  preventToggle: false,
-  keepFocus: false,
 };
 
 function LinkBadge(props, context) {
-  const {
-    variant, to, external, onClick, preventToggle, keepFocus, ...otherProps
-  } = props;
+  const { variant, ...otherProps } = props;
   const classes = cx(
     // constant classes
     'badge',
     `badge-${variant}`,
   );
 
-  const linkProps = createLinkProps(props, context);
+  const linkProps = action.createLinkProps(otherProps, context);
 
-  return <BaseText {...otherProps} {...linkProps} className={classes} inlineOnly />;
+  return <BaseText {...linkProps} className={classes} inlineOnly />;
 }
 
 LinkBadge.propTypes = propTypes;

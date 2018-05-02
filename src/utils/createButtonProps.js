@@ -4,29 +4,39 @@ import { Link as RouterLink } from 'react-router-dom';
 import createHandleClick from './createHandleClick';
 
 export default function createButtonProps(props, context) {
+  const {
+    to, external, onClick, preventToggle, keepFocus, ...otherProps
+  } = props;
+  const { onToggle } = context;
+
   const ref = React.createRef();
-  const handleClick = createHandleClick(ref, props, context);
+  const handleClick = createHandleClick(ref, onClick, onToggle, {
+    preventToggle,
+    keepFocus,
+  });
 
   // check props
   if (process.env.NODE_ENV !== 'production') {
-    invariant(!props.to && !props.onClick, "A button needs either a 'to' or an 'onClick' prop.");
-    invariant(!props.to && props.external, "'to' prop for external link is missing.");
+    invariant(!to && !onClick, "A button needs either a 'to' or an 'onClick' prop.");
+    invariant(!to && external, "'to' prop for external link is missing.");
   }
 
   // link button
-  if (props.to) {
+  if (to) {
     return {
+      ...otherProps,
       tag: RouterLink,
-      to: props.to,
+      to,
       innerRef: ref,
       onClick: handleClick,
     };
   }
 
   // external link button
-  if (props.to && props.external) {
+  if (to && external) {
     return {
-      href: props.to,
+      ...otherProps,
+      href: to,
       target: '_blank',
       rel: 'noopener noreferrer',
       ref,
@@ -36,6 +46,7 @@ export default function createButtonProps(props, context) {
 
   // button
   return {
+    ...otherProps,
     tag: 'button',
     ref,
     onClick: handleClick,
