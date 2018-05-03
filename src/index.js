@@ -12,7 +12,6 @@ import Card from './Components/Cards/Card';
 
 /* dropdown components */
 import Dropdown from './Components/Dropdowns/Dropdown';
-import injectDropdownToggle from './Components/Dropdowns/injectDropdownToggle';
 
 /* emoji components */
 import Emoji from './Extend/Emoji/Emoji';
@@ -21,7 +20,6 @@ import Emoji from './Extend/Emoji/Emoji';
 import Form from './Components/Forms/Form';
 
 /* link components */
-import ActionLink from './Content/Links/ActionLink';
 import Link from './Content/Links/Link';
 
 /* modal components */
@@ -61,10 +59,8 @@ export {
   Button,
   Card,
   Dropdown,
-  injectDropdownToggle,
   Emoji,
   Form,
-  ActionLink,
   Link,
   Modal,
   Nav,

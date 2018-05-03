@@ -10,7 +10,7 @@ const defaultProps = {
   ...action.defaultProps,
 };
 
-function DropdownLink(props, context) {
+function DropdownLinkItem(props, context) {
   const { ...otherProps } = props;
 
   const linkProps = action.createLinkProps(otherProps, context);
@@ -18,7 +18,7 @@ function DropdownLink(props, context) {
   return <BaseText {...linkProps} className="dropdown-item" blockOnly />;
 }
 
-DropdownLink.propTypes = propTypes;
-DropdownLink.defaultProps = defaultProps;
+DropdownLinkItem.propTypes = propTypes;
+DropdownLinkItem.defaultProps = defaultProps;
 
-export default DropdownLink;
+export default DropdownLinkItem;

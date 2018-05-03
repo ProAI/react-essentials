@@ -9,6 +9,7 @@ const propTypes = {
   ...action.propTypes,
   variant: PropTypes.oneOf(BUTTON_COLORS),
   size: PropTypes.oneOf(SIZES),
+  caret: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -19,10 +20,13 @@ const defaultProps = {
   ...action.defaultProps,
   variant: 'primary',
   size: 'md',
+  caret: false,
 };
 
 function Button(props, context) {
-  const { variant, size, ...otherProps } = props;
+  const {
+    variant, size, caret, ...otherProps
+  } = props;
 
   const classes = cx(
     // constant classes
@@ -31,6 +35,7 @@ function Button(props, context) {
     // variable classes
     size === 'sm' && 'btn-sm',
     size === 'lg' && 'btn-lg',
+    caret && 'dropdown-toggle',
   );
 
   const buttonProps = action.createButtonProps(otherProps, context);
