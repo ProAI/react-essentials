@@ -4,8 +4,8 @@ import cx from 'classnames';
 import DropdownMenu from './DropdownMenu';
 import DropdownHeader from './DropdownHeader';
 import DropdownDivider from './DropdownDivider';
-import DropdownItem from './DropdownItem';
-import DropdownLinkItem from './DropdownLinkItem';
+import DropdownLink from './DropdownLink';
+import DropdownText from './DropdownText';
 import { BaseView } from '../../utils/components';
 import { generateKey } from '../../utils';
 
@@ -146,7 +146,7 @@ Dropdown.defaultProps = defaultProps;
 Dropdown.Menu = DropdownMenu;
 Dropdown.Divider = DropdownDivider;
 Dropdown.Header = DropdownHeader;
-Dropdown.Item = DropdownItem;
-Dropdown.LinkItem = DropdownLinkItem;
+Dropdown.Link = DropdownLink;
+Dropdown.Text = DropdownText;
 
 export default Dropdown;

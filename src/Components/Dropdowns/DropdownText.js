@@ -1,8 +1,8 @@
 import React from 'react';
 import { BaseText } from '../../utils/components';
 
-function DropdownItem({ ...otherProps }) {
+function DropdownText({ ...otherProps }) {
   return <BaseText {...otherProps} tag="span" className="dropdown-item-text" blockOnly />;
 }
 
-export default DropdownItem;
+export default DropdownText;

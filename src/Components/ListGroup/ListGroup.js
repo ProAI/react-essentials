@@ -1,34 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { UTILS } from '../../utils/propTypes';
+import { BaseView } from '../../utils/components';
+import ListGroupItem from './ListGroupItem';
+import ListGroupButton from './ListGroupButton';
+import ListGroupLink from './ListGroupLink';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
-  fluid: PropTypes.bool,
-  class: PropTypes.arrayOf(UTILS),
-  style: PropTypes.object,
+  flush: PropTypes.bool,
+  actionable: PropTypes.bool,
 };
 
 const defaultProps = {
-  fluid: false,
-  class: null,
-  style: null,
+  flush: false,
+  actionable: false,
 };
 
-function ListGroup({
-  children, fluid, class: utils, style,
-}) {
-  const classes = cx(utils.join(' '));
-
-  return (
-    <div className={classes} style={style}>
-      {children}
-    </div>
+function ListGroup({ flush, actionable, ...otherProps }) {
+  const classes = cx(
+    // constant classes
+    'list-group',
+    // variable classes
+    flush && 'list-group-flush',
   );
+
+  const tag = actionable ? 'div' : 'ul';
+
+  return <BaseView {...otherProps} tag={tag} className={classes} />;
 }
 
 ListGroup.propTypes = propTypes;
 ListGroup.defaultProps = defaultProps;
+
+ListGroup.Item = ListGroupItem;
+ListGroup.Button = ListGroupButton;
+ListGroup.Link = ListGroupLink;
 
 export default ListGroup;

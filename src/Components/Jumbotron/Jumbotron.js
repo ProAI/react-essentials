@@ -1,38 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { UTILS } from '../../utils/propTypes';
+import { BaseView } from '../../utils/components';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
   fluid: PropTypes.bool,
-  class: PropTypes.arrayOf(UTILS),
-  style: PropTypes.object,
 };
 
 const defaultProps = {
   fluid: false,
-  class: null,
-  style: null,
 };
 
-function Jumbotron({
-  children, fluid, class: utils, style,
-}) {
+function Jumbotron({ fluid, ...otherProps }) {
   const classes = cx(
-    // base classes
+    // constant classes
     'jumbotron',
     // variable classes
-    fluid ? 'jumbotron-fluid' : null,
-    // util classes
-    utils.join(' '),
+    fluid && 'jumbotron-fluid',
   );
 
-  return (
-    <div className={classes} style={style}>
-      {children}
-    </div>
-  );
+  return <BaseView {...otherProps} className={classes} />;
 }
 
 Jumbotron.propTypes = propTypes;

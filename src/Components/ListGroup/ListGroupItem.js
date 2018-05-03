@@ -1,27 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { UTILS } from '../../utils/propTypes';
+import { BaseText } from '../../utils/components';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
-  class: PropTypes.arrayOf(UTILS),
-  style: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
-  class: null,
-  style: null,
+  disabled: false,
 };
 
-function ListGroupItem({ children, class: utils, style }) {
-  const classes = cx(utils.join(' '));
-
-  return (
-    <div className={classes} style={style}>
-      {children}
-    </div>
+function ListGroupItem({ disabled, ...otherProps }) {
+  const classes = cx(
+    // constant classes
+    'list-group-item',
+    // variable classes
+    disabled && 'disabled',
   );
+
+  return <BaseText {...otherProps} tag="li" className={classes} blockOnly />;
 }
 
 ListGroupItem.propTypes = propTypes;

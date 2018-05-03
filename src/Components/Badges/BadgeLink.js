@@ -15,7 +15,7 @@ const defaultProps = {
   variant: 'primary',
 };
 
-function LinkBadge(props, context) {
+function BadgeLink(props, context) {
   const { variant, ...otherProps } = props;
   const classes = cx(
     // constant classes
@@ -28,7 +28,7 @@ function LinkBadge(props, context) {
   return <BaseText {...linkProps} className={classes} inlineOnly />;
 }
 
-LinkBadge.propTypes = propTypes;
-LinkBadge.defaultProps = defaultProps;
+BadgeLink.propTypes = propTypes;
+BadgeLink.defaultProps = defaultProps;
 
-export default LinkBadge;
+export default BadgeLink;

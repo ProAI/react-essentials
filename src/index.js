@@ -3,6 +3,7 @@ import Alert from './Components/Alerts/Alert';
 
 /* badge components */
 import Badge from './Components/Badges/Badge';
+import BadgeLink from './Components/Badges/BadgeLink';
 
 /* button components */
 import Button from './Components/Buttons/Button';
@@ -56,6 +57,7 @@ import Uploader from './Extend/Uploader/Uploader';
 export {
   Alert,
   Badge,
+  BadgeLink,
   Button,
   Card,
   Dropdown,
@@ -64,14 +66,14 @@ export {
   Link,
   Modal,
   Nav,
+  Tabs,
+  TabsNav,
+  TabsContent,
   injectPopover,
   PopoverButton,
   Scrollbars,
   Spinner,
   Switch,
-  Tabs,
-  TabsNav,
-  TabsContent,
   injectTooltip,
   TooltipButton,
   Uploader,

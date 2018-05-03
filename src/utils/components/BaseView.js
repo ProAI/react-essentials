@@ -8,7 +8,6 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
-  tempClassName: PropTypes.string,
   class: PropTypes.arrayOf(UTILS),
   blockOnly: PropTypes.bool,
 };
@@ -19,7 +18,6 @@ const contextTypes = {
 
 const defaultProps = {
   tag: 'div',
-  tempClassName: null,
   class: null,
   blockOnly: false,
 };
@@ -36,12 +34,7 @@ class BaseView extends React.Component {
 
   render() {
     const {
-      children,
-      tag: Tag,
-      className,
-      tempClassName,
-      class: utils,
-      ...otherProps
+      children, tag: Tag, className, class: utils, ...otherProps
     } = this.props;
 
     const classes = cx(
@@ -49,7 +42,6 @@ class BaseView extends React.Component {
       'yoga-view',
       // add (mostly) bootstrap styles
       className,
-      tempClassName,
       // add utils styles
       utils.join(' '),
     );
