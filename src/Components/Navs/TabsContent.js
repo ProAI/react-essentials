@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
-import TabsPane from './TabsPane';
+import { BaseView } from '../../utils/components';
+
+import TabsContentPane from './TabsContentPane';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -13,31 +14,24 @@ const defaultProps = {
   className: null,
 };
 
-class TabsContent extends React.Component {
-  static Pane = props => <TabsPane {...props} />;
+function TabsContent({
+  children, className, activeKey, ...otherProps
+}) {
+  const manipulatedChildren = React.Children.map(children, child =>
+    React.cloneElement(child, {
+      active: activeKey === child.props.id,
+    }));
 
-  render() {
-    const {
-      children, className, activeKey, ...attributes
-    } = this.props;
-
-    // create component classes
-    const classes = cx('tab-content', className);
-
-    const manipulatedChildren = React.Children.map(children, child =>
-      React.cloneElement(child, {
-        active: activeKey === child.props.id,
-      }));
-
-    return (
-      <div className={classes} {...attributes}>
-        {manipulatedChildren}
-      </div>
-    );
-  }
+  return (
+    <BaseView {...otherProps} className="tab-content">
+      {manipulatedChildren}
+    </BaseView>
+  );
 }
 
 TabsContent.propTypes = propTypes;
 TabsContent.defaultProps = defaultProps;
+
+TabsContent.Pane = TabsContentPane;
 
 export default TabsContent;

@@ -28,12 +28,12 @@ class FormCheckbox extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    this.identifier = generateKey('re-form-');
+
     if (context.formik.values[props.name] === undefined) {
       throw Error(`There is no initial value for field "${props.name}"`);
     }
   }
-
-  identifier = generateKey('re-form-');
 
   render() {
     const {
@@ -42,12 +42,20 @@ class FormCheckbox extends React.Component {
 
     const { formik } = this.context;
 
-    const classes = cx('custom-control custom-checkbox', {
-      'custom-control-sm': size === 'sm',
-    });
-    const inputClasses = cx('custom-control-input', {
-      'is-invalid': formik.touched[name] && formik.errors[name],
-    });
+    const classes = cx(
+      // constant classes
+      'custom-control',
+      'custom-checkbox',
+      // variable classes
+      size === 'sm' && 'custom-control-sm',
+    );
+
+    const inputClasses = cx(
+      // constant classes
+      'custom-control-input',
+      // variable classes
+      formik.touched[name] && formik.errors[name] && 'is-invalid',
+    );
 
     const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 

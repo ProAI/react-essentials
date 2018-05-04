@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import TabsLink from './TabsLink';
+import { BaseView } from '../../utils/components';
+import TabsNavLink from './TabsNavLink';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  className: PropTypes.string,
   activeKey: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(['basic', 'tabs', 'pills']),
@@ -13,49 +13,38 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: null,
   variant: 'tabs',
   stacked: false,
 };
 
-class TabsNav extends React.Component {
-  static Link = props => <TabsLink {...props} />;
+function TabsNav({
+  children, activeKey, onChange, variant, stacked, ...otherProps
+}) {
+  const classes = cx(
+    // constant classes
+    'nav',
+    // variable classes
+    variant === 'tabs' && 'nav-tabs',
+    variant === 'pills' && 'nav-pills',
+    stacked && 'flex-column',
+  );
 
-  render() {
-    const {
-      children,
-      className,
-      activeKey,
+  const manipulatedChildren = React.Children.map(children, child =>
+    React.cloneElement(child, {
+      active: activeKey === child.props.toPane,
       onChange,
-      variant,
-      stacked,
-      ...attributes
-    } = this.props;
+    }));
 
-    // create component classes
-    const classes = cx(
-      'nav',
-      { 'nav-tabs': variant === 'tabs' },
-      { 'nav-pills': variant === 'pills' },
-      { 'flex-column': stacked },
-      className,
-    );
-
-    const manipulatedChildren = React.Children.map(children, child =>
-      React.cloneElement(child, {
-        active: activeKey === child.props.toPane,
-        onChange,
-      }));
-
-    return (
-      <ul role="tablist" className={classes} {...attributes}>
-        {manipulatedChildren}
-      </ul>
-    );
-  }
+  return (
+    <BaseView {...otherProps} tag="ul" role="tablist" className={classes}>
+      {manipulatedChildren}
+    </BaseView>
+  );
 }
 
 TabsNav.propTypes = propTypes;
 TabsNav.defaultProps = defaultProps;
+
+TabsNav.Link = TabsNavLink;
 
 export default TabsNav;

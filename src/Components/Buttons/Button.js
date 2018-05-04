@@ -19,7 +19,7 @@ const contextTypes = {
 const defaultProps = {
   ...action.defaultProps,
   variant: 'primary',
-  size: 'md',
+  size: null,
   caret: false,
 };
 

@@ -17,6 +17,12 @@ const defaultProps = {
 };
 
 class SwitchButton extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.identifier = generateKey('re-switch-');
+  }
+
   state = {
     checked: false,
   };
@@ -46,8 +52,6 @@ class SwitchButton extends React.Component {
       this.element.blur();
     }, 10);
   };
-
-  identifier = generateKey('re-switch-');
 
   isChecked = () => {
     if (this.props.checked !== null) {

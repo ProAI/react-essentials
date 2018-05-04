@@ -1,34 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import { BaseText } from '../../utils/components';
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  variant: PropTypes.oneOf([
-    'black',
-    'muted',
-    'primary',
-    'success',
-    'info',
-    'warning',
-    'danger',
-    'white',
-  ]),
-  className: PropTypes.string,
-};
-
-const defaultProps = {
-  variant: 'black',
-  className: null,
-};
-
-function FormText({ children, variant, className }) {
-  const classes = cx('form-text', className, `text-${variant}`);
-
-  return <p className={classes}>{children}</p>;
+function FormText({ ...otherProps }) {
+  return <BaseText {...otherProps} className="form-text" />;
 }
-
-FormText.propTypes = propTypes;
-FormText.defaultProps = defaultProps;
 
 export default FormText;

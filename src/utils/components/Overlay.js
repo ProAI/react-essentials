@@ -31,6 +31,12 @@ const canUseDOM = typeof window !== 'undefined';
 const isReact15 = ReactDOM.createPortal === undefined;
 
 class Overlay extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.identifier = generateKey('re-overlay-');
+  }
+
   state = {
     placement: this.props.placement,
     arrowStyle: null,
@@ -92,8 +98,6 @@ class Overlay extends React.Component {
     // force destroy overlay
     this.afterDestroy();
   }
-
-  identifier = generateKey('re-overlay-');
 
   beforeCreate() {
     // render overlay container

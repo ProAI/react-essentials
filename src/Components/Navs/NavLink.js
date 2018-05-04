@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 import { NavLink as RouterNavLink } from 'react-router-dom';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
-  className: PropTypes.string,
   keepFocus: PropTypes.bool,
 };
 const defaultProps = {
   onClick: null,
-  className: null,
   keepFocus: false,
 };
 
@@ -27,20 +24,16 @@ class NavLink extends React.Component {
   };
 
   render() {
-    const {
-      children, className, keepFocus, ...attributes
-    } = this.props;
+    const { children, keepFocus, ...otherProps } = this.props;
 
-    // create component classes
-    const classes = cx('nav-link', className);
     return (
       <RouterNavLink
-        {...attributes}
+        {...otherProps}
         onClick={this.onClick}
         innerRef={(c) => {
           this.link = c;
         }}
-        className={classes}
+        className="nav-link"
         activeClassName="active"
       >
         {children}

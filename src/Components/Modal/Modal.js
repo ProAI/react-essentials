@@ -5,12 +5,15 @@ import cx from 'classnames';
 import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
+import ModalTitle from './ModalTitle';
 import { generateKey } from '../../utils';
+import { SIZES } from '../../utils/constants';
+import { BaseView } from '../../utils/components';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   visible: PropTypes.bool.isRequired,
-  size: PropTypes.oneOf(['sm', 'lg']),
+  size: PropTypes.oneOf(SIZES),
   onToggle: PropTypes.func.isRequired,
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
@@ -42,9 +45,11 @@ const computeScrollbarWidth = () => {
 };
 
 class Modal extends React.Component {
-  static Body = ModalBody;
-  static Footer = ModalFooter;
-  static Header = props => <ModalHeader {...props} />;
+  constructor(props) {
+    super(props);
+
+    this.identifier = generateKey('re-modal-title-');
+  }
 
   getChildContext() {
     return {
@@ -129,8 +134,6 @@ class Modal extends React.Component {
       this.props.onToggle();
     }
   };
-
-  identifier = generateKey('re-modal-title-');
 
   destroy = () => {
     const classes = document.body.className.replace('modal-open', '');
@@ -244,21 +247,45 @@ class Modal extends React.Component {
   }
 
   renderModal() {
-    const { children, visible } = this.props;
+    const {
+      children,
+      visible,
+      size,
+      onToggle,
+      onEnter,
+      onExit,
+      dismissible,
+      ...otherProps
+    } = this.props;
 
-    let sizeClass = '';
-    if (this.props.size) {
-      sizeClass = ` modal-${this.props.size}`;
-    }
+    const modalClasses = cx(
+      // constant classes
+      'modal',
+      // variable classes
+      visible && 'show',
+    );
 
-    const classes = cx(sizeClass, 'modal-dialog');
+    const modalDialogClasses = cx(
+      // constant classes
+      'modal-dialog',
+      // variable classes
+      size === 'sm' && 'modal-sm',
+      size === 'lg' && 'modal-lg',
+    );
+
+    const modalBackdropClasses = cx(
+      // constant classes
+      'modal-backdrop',
+      // variable classes
+      visible && 'show',
+    );
 
     const manipulatedChildren = React.Children.map(children, (child, i) => {
-      // inject dismissible and onToggle props in ModalHeader
+      // inject titleId, dismissible and onToggle props
       if (i === 0) {
         return React.cloneElement(child, {
-          dismissible: this.props.dismissible,
-          onToggle: this.props.onToggle,
+          dismissible,
+          onToggle,
           titleId: this.identifier,
         });
       }
@@ -267,29 +294,28 @@ class Modal extends React.Component {
     });
 
     return (
-      <div>
-        {visible && (
+      <React.Fragment>
+        <div
+          className={modalClasses}
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby={this.identifier}
+          aria-hidden={!visible}
+        >
           <div
-            className="modal"
-            style={{ display: 'block' }}
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby={this.identifier}
-            aria-hidden={!visible}
+            className={modalDialogClasses}
+            role="document"
+            ref={(c) => {
+              this.dialog = c;
+            }}
           >
-            <div
-              className={classes}
-              role="document"
-              ref={(c) => {
-                this.dialog = c;
-              }}
-            >
-              <div className="modal-content">{manipulatedChildren}</div>
-            </div>
+            <BaseView {...otherProps} className="modal-content">
+              {manipulatedChildren}
+            </BaseView>
           </div>
-        )}
-        {visible && <div key="modal-backdrop" className="modal-backdrop in" />}
-      </div>
+        </div>
+        <div key="modal-backdrop" className={modalBackdropClasses} />
+      </React.Fragment>
     );
   }
 
@@ -313,5 +339,10 @@ class Modal extends React.Component {
 Modal.propTypes = propTypes;
 Modal.childContextTypes = childContextTypes;
 Modal.defaultProps = defaultProps;
+
+Modal.Body = ModalBody;
+Modal.Footer = ModalFooter;
+Modal.Header = ModalHeader;
+Modal.Title = ModalTitle;
 
 export default Modal;

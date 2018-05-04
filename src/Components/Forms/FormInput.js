@@ -35,12 +35,12 @@ class FormInput extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    this.identifier = generateKey('re-form-');
+
     if (context.formik.values[props.name] === undefined) {
       throw Error(`There is no initial value for field "${props.name}"`);
     }
   }
-
-  identifier = generateKey('re-form-');
 
   render() {
     const {
@@ -57,10 +57,13 @@ class FormInput extends React.Component {
 
     const { formik } = this.context;
 
-    const inputClasses = cx('form-control', {
-      'is-invalid': formik.touched[name] && formik.errors[name],
-      'form-control-sm': size === 'sm',
-    });
+    const inputClasses = cx(
+      // constant classes
+      'form-control',
+      // variable classes
+      formik.touched[name] && formik.errors[name] && 'is-invalid',
+      size === 'sm' && 'form-control-sm',
+    );
 
     const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 

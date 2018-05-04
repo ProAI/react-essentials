@@ -4,8 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DayPicker from 'react-day-picker/DayPicker';
-import Field from './Field';
-import { generateKey } from '../utils';
+import Field from '../../Components/Forms/Field';
+import { generateKey } from '../../utils';
 
 const propTypes = {
   name: PropTypes.string.isRequired,
@@ -33,6 +33,8 @@ const defaultProps = {
 class FormDatePicker extends React.Component {
   constructor(props, context) {
     super(props, context);
+
+    this.identifier = generateKey('re-form-');
 
     if (context.formik.values[props.name] === undefined) {
       throw Error(`There is no initial value for field "${props.name}"`);
@@ -116,8 +118,6 @@ class FormDatePicker extends React.Component {
     this.context.formik.setFieldValue(this.props.name, day);
   };
 
-  identifier = generateKey('re-form-');
-
   updateState = (open, focus) => {
     const isFocused = focus !== undefined ? focus : this.state.isFocused;
     const isOpen = open !== undefined ? open : this.state.isOpen;
@@ -156,15 +156,18 @@ class FormDatePicker extends React.Component {
 
     const { formik } = this.context;
 
-    const classes = cx('form-datepicker Select Select--single', {
-      'is-invalid': formik.touched[name] && formik.errors[name],
-      'form-datepicker-sm': size === 'sm',
-      'has-value': formik.values[name],
-      'is-focused': this.state.isFocused,
-      'is-open': this.state.isOpen,
-    });
-    const controlClasses = cx('form-datepicker-control Select-control');
-    const menuClasses = cx('form-datepicker-menu');
+    const classes = cx(
+      // constant classes
+      'form-datepicker',
+      'Select',
+      'Select--single',
+      // variable classes
+      formik.touched[name] && formik.errors[name] && 'is-invalid',
+      size === 'sm' && 'form-datepicker-sm',
+      formik.values[name] && 'has-value',
+      this.state.isFocused && 'is-focused',
+      this.state.isOpen && 'is-open',
+    );
 
     const pickedDate = formik.values[name] ? new Date(formik.values[name]) : new Date();
     const initialMonth = new Date(pickedDate.getFullYear(), pickedDate.getMonth());
@@ -183,7 +186,7 @@ class FormDatePicker extends React.Component {
             ref={(element) => {
               this.control = element;
             }}
-            className={controlClasses}
+            className="form-datepicker-control Select-control"
             onClick={this.onControlClick}
             onKeyDown={this.onControlKeyDown}
           >
@@ -228,7 +231,7 @@ class FormDatePicker extends React.Component {
               ref={(menu) => {
                 this.menu = menu;
               }}
-              className={menuClasses}
+              className="form-datepicker-menu"
             >
               {/* TODO
               * renderDay should be used to highlight the currently selected day

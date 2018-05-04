@@ -1,38 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
+import { BaseView } from '../../utils/components';
 import { CloseButton } from '../../utils';
 
 const propTypes = {
-  titleId: PropTypes.string.isRequired,
+  titleId: PropTypes.string,
   children: PropTypes.node.isRequired,
-  className: PropTypes.string,
   onToggle: PropTypes.func.isRequired,
   dismissible: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {
-  className: null,
+  titleId: null,
 };
 
 function ModalHeader({
-  titleId, className, children, dismissible, onToggle, ...props
+  titleId, children, dismissible, onToggle, ...otherProps
 }) {
-  let closeButton;
-
-  const classes = cx(className, 'modal-header');
-
-  if (dismissible) {
-    closeButton = <CloseButton onClick={onToggle} />;
-  }
+  // inject titleId
+  const manipulatedChildren = React.Children.map(children, child =>
+    React.cloneElement(child, {
+      titleId: this.identifier,
+    }));
 
   return (
-    <div {...props} className={classes}>
-      <h4 className="modal-title" id={titleId}>
-        {children}
-      </h4>
-      {closeButton}
-    </div>
+    <BaseView {...otherProps} className="modal-header">
+      {manipulatedChildren}
+      {dismissible && <CloseButton onClick={onToggle} />}
+    </BaseView>
   );
 }
 

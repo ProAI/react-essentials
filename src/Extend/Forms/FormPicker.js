@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Select from 'react-select';
-import Field from './Field';
-import { generateKey } from '../utils';
+import Field from '../../Components/Forms/Field';
+import { generateKey } from '../../utils';
 
 const propTypes = {
   name: PropTypes.string.isRequired,
@@ -40,12 +40,12 @@ class FormPicker extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    this.identifier = generateKey('re-form-');
+
     if (context.formik.values[props.name] === undefined) {
       throw Error(`There is no initial value for field "${props.name}"`);
     }
   }
-
-  identifier = generateKey('re-form-');
 
   render() {
     const {
@@ -63,10 +63,13 @@ class FormPicker extends React.Component {
 
     const { formik } = this.context;
 
-    const classes = cx('form-picker', {
-      'is-invalid': formik.touched[name] && formik.errors[name],
-      'form-picker-sm': size === 'sm',
-    });
+    const classes = cx(
+      // constant classes
+      'form-picker',
+      // variable classes
+      formik.touched[name] && formik.errors[name] && 'is-invalid',
+      size === 'sm' && 'form-picker-sm',
+    );
 
     const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 

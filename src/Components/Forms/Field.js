@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { BaseView, BaseText } from '../../utils/components';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -18,11 +19,11 @@ function Field({
   children, error, touched, info,
 }) {
   return (
-    <fieldset className="form-group">
+    <BaseView className="form-group">
       {children}
-      {touched && error && <div className="form-text text-danger">{error}</div>}
-      {info && <div className="form-text text-muted">{info}</div>}
-    </fieldset>
+      {touched && error && <BaseText className="form-text text-danger">{error}</BaseText>}
+      {info && <BaseText className="form-text text-muted">{info}</BaseText>}
+    </BaseView>
   );
 }
 

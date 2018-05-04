@@ -1,27 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import { BaseView } from '../../utils/components';
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-};
-
-const defaultProps = {
-  className: null,
-};
-
-function ModalBody({ className, children, ...props }) {
-  const classes = cx(className, 'modal-body');
-
-  return (
-    <div {...props} className={classes}>
-      {children}
-    </div>
-  );
+function ModalBody({ ...otherProps }) {
+  return <BaseView {...otherProps} className="modal-body" />;
 }
-
-ModalBody.propTypes = propTypes;
-ModalBody.defaultProps = defaultProps;
 
 export default ModalBody;

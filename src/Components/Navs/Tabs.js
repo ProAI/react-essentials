@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TabsNav from './TabsNav';
-import TabsContent from './TabsContent';
-import TabsPane from './TabsPane';
+import { BaseView } from '../../utils/components';
 import { generateKey } from '../../utils';
+import TabsNav from './TabsNav';
+import TabsNavLink from './TabsNavLink';
+import TabsContent from './TabsContent';
+import TabsContentPane from './TabsContentPane';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -11,12 +13,10 @@ const propTypes = {
   activeKey: PropTypes.string,
   onChange: PropTypes.func,
   variant: PropTypes.oneOf(['basic', 'tabs', 'pills']),
-  className: PropTypes.string,
   stacked: PropTypes.bool,
 };
 
 const defaultProps = {
-  className: null,
   defaultActiveKey: null,
   activeKey: null,
   onChange: null,
@@ -25,8 +25,6 @@ const defaultProps = {
 };
 
 class Tabs extends React.Component {
-  static Pane = props => <TabsPane {...props} />;
-
   constructor(props) {
     super(props);
 
@@ -65,13 +63,13 @@ class Tabs extends React.Component {
       onChange,
       variant,
       stacked,
-      ...attributes
+      ...otherProps
     } = this.props;
 
     const tabsNavLinkChildren = React.Children.map(children, (child, i) => {
       const linkedPaneId = child.props.id || `${this.identifier}-${i}`;
 
-      return <TabsNav.Link toPane={linkedPaneId}>{child.props.label}</TabsNav.Link>;
+      return <TabsNavLink toPane={linkedPaneId}>{child.props.label}</TabsNavLink>;
     });
 
     const tabsContentPaneChildren = React.Children.map(children, (child, i) => {
@@ -83,7 +81,7 @@ class Tabs extends React.Component {
     });
 
     return (
-      <div {...attributes}>
+      <BaseView {...otherProps} className="">
         <TabsNav
           activeKey={this.activeKey()}
           onChange={this.onChange}
@@ -93,7 +91,7 @@ class Tabs extends React.Component {
           {tabsNavLinkChildren}
         </TabsNav>
         <TabsContent activeKey={this.activeKey()}>{tabsContentPaneChildren}</TabsContent>
-      </div>
+      </BaseView>
     );
   }
 }
@@ -101,6 +99,6 @@ class Tabs extends React.Component {
 Tabs.propTypes = propTypes;
 Tabs.defaultProps = defaultProps;
 
-Tabs.Pane = TabsPane;
+Tabs.Pane = TabsContentPane;
 
 export default Tabs;

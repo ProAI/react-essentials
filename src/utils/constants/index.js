@@ -28,7 +28,7 @@ export const TEXT_COLORS = COLORS.concat(['body', 'muted', 'white', 'black-50', 
 export const BACKGROUND_COLORS = COLORS.concat(['white', 'transparent']);
 
 // SIZES prop type
-export const SIZES = ['sm', 'md', 'lg'];
+export const SIZES = ['sm', 'lg'];
 
 // HEADING_SIZES prop type
 export const HEADING_SIZES = [1, 2, 3, 4, 5, 6];

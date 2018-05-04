@@ -4,19 +4,19 @@ import cx from 'classnames';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  className: PropTypes.string,
   toPane: PropTypes.string.isRequired,
-  active: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func,
+  onChange: PropTypes.func,
+  active: PropTypes.bool,
 };
 
 const defaultProps = {
-  className: null,
   onClick: null,
+  onChange: null,
+  active: null,
 };
 
-class TabsLink extends React.Component {
+class TabsNavLink extends React.Component {
   onClick = (event) => {
     event.preventDefault();
 
@@ -29,20 +29,25 @@ class TabsLink extends React.Component {
 
   render() {
     const {
-      children, className, onClick, toPane, active, ...attributes
+      children, onClick, toPane, active, ...otherProps
     } = this.props;
 
-    const linkClasses = cx('nav-link', { active }, className);
+    const linkClasses = cx(
+      // constant classes
+      'nav-link',
+      // variable classes
+      active && 'active',
+    );
 
     return (
       <li className="nav-item">
         <a
+          {...otherProps}
           role="tab"
           href={`#${toPane}`}
           onClick={this.onClick}
           className={linkClasses}
           aria-controls={toPane}
-          {...attributes}
         >
           {children}
         </a>
@@ -51,7 +56,7 @@ class TabsLink extends React.Component {
   }
 }
 
-TabsLink.propTypes = propTypes;
-TabsLink.defaultProps = defaultProps;
+TabsNavLink.propTypes = propTypes;
+TabsNavLink.defaultProps = defaultProps;
 
-export default TabsLink;
+export default TabsNavLink;

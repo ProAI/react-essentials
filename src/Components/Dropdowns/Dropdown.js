@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import invariant from 'fbjs/lib/invariant';
 import DropdownMenu from './DropdownMenu';
 import DropdownHeader from './DropdownHeader';
 import DropdownDivider from './DropdownDivider';
@@ -25,6 +26,12 @@ const defaultProps = {
 };
 
 class Dropdown extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.identifier = generateKey('re-dropdown-');
+  }
+
   state = {
     visible: false,
   };
@@ -71,8 +78,6 @@ class Dropdown extends React.Component {
     }
   };
 
-  identifier = generateKey('re-dropdown-');
-
   visible = () => {
     if (this.props.visible !== null) {
       return this.props.visible;
@@ -86,6 +91,14 @@ class Dropdown extends React.Component {
       children, visible, onToggle, ...otherProps
     } = this.props;
 
+    // check if dropdown has a dropdown trigger and menu
+    if (process.env.NODE_ENV !== 'production') {
+      invariant(
+        React.Children.count(children) !== 2,
+        'A dropdown should have exactly two children. The first child should be a <Button> or <Link> component and the second a <Dropdown.Menu>.',
+      );
+    }
+
     // create component classes
     const classes = cx(
       // constant classes
@@ -93,13 +106,6 @@ class Dropdown extends React.Component {
       // variable classes
       this.visible() && 'show',
     );
-
-    // check if dropdown has a dropdown trigger and menu
-    if (React.Children.count(children) !== 2) {
-      // eslint-disable-next-line
-      console.warn(
-        'A dropdown should have exactly two children. The first child should be a <Button> or <Link> component and the second a <Dropdown.Menu>.');
-    }
 
     const identifier = children[0].props.id ? children[0].props.id : this.identifier;
 
@@ -113,14 +119,14 @@ class Dropdown extends React.Component {
       this.handleToggle();
     };
 
-    const toggle = React.cloneElement(children[0], {
+    const toggleChild = React.cloneElement(children[0], {
       id: identifier,
       onClick,
       'aria-haspopup': true,
       'aria-expanded': this.visible(),
     });
 
-    const menu = React.cloneElement(children[1], {
+    const menuChild = React.cloneElement(children[1], {
       triggerId: identifier,
     });
 
@@ -132,8 +138,8 @@ class Dropdown extends React.Component {
         }}
         className={classes}
       >
-        {toggle}
-        {menu}
+        {toggleChild}
+        {menuChild}
       </BaseView>
     );
   }

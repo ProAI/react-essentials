@@ -1,27 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import { BaseView } from '../../utils/components';
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-};
-
-const defaultProps = {
-  className: null,
-};
-
-function ModalFooter({ className, children, ...props }) {
-  const classes = cx(className, 'modal-footer');
-
-  return (
-    <div {...props} className={classes}>
-      {children}
-    </div>
-  );
+function ModalFooter({ ...otherProps }) {
+  return <BaseView {...otherProps} className="modal-footer" />;
 }
-
-ModalFooter.propTypes = propTypes;
-ModalFooter.defaultProps = defaultProps;
 
 export default ModalFooter;
