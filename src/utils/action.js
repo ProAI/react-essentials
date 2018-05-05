@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import createHandleClick from './createHandleClick';
 import createButtonProps from './createButtonProps';
 import createLinkProps from './createLinkProps';
 
@@ -10,6 +11,9 @@ export default {
     preventToggle: PropTypes.bool,
     keepFocus: PropTypes.bool,
   },
+  contextTypes: {
+    onToggle: PropTypes.func,
+  },
   defaultProps: {
     to: null,
     onClick: null,
@@ -17,6 +21,7 @@ export default {
     preventToggle: false,
     keepFocus: false,
   },
+  createHandleClick,
   createButtonProps,
   createLinkProps,
 };

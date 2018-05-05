@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import PopperJS from 'popper.js';
 import cx from 'classnames';
+import BaseView from './BaseView';
 import generateKey from '../generateKey';
 
 const propTypes = {
@@ -162,7 +163,7 @@ class Overlay extends React.Component {
     const classes = cx(className, placementClassName[placement]);
 
     return (
-      <div
+      <BaseView
         ref={(element) => {
           this.popper = element;
         }}
@@ -178,7 +179,7 @@ class Overlay extends React.Component {
           style={arrowStyle}
         />
         {children}
-      </div>
+      </BaseView>
     );
   }
 

@@ -36,7 +36,7 @@ function TabsNav({
     }));
 
   return (
-    <BaseView {...otherProps} tag="ul" role="tablist" className={classes}>
+    <BaseView {...otherProps} tag="nav" role="tablist" className={classes}>
       {manipulatedChildren}
     </BaseView>
   );

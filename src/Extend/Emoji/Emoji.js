@@ -5,7 +5,6 @@ import getUnicodeChars from './getUnicodeChars';
 import emojioneList from './emojioneList';
 
 const propTypes = {
-  className: PropTypes.string,
   name: PropTypes.string.isRequired,
   textSize: PropTypes.oneOf(['sm', 'lg']),
   sprites: PropTypes.bool,
@@ -14,7 +13,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-  className: null,
   textSize: null,
   sprites: false,
   imagePath: '/emojis',
@@ -22,7 +20,7 @@ const defaultProps = {
 };
 
 function Emoji({
-  className, name, sprites, textSize, imagePath, cacheBustParam,
+  name, sprites, textSize, imagePath, cacheBustParam,
 }) {
   const emoji = emojioneList[`:${name}:`];
 
@@ -32,10 +30,11 @@ function Emoji({
     : `${imagePath}/${unicode}.svg${cacheBustParam}`;
 
   const classes = cx(
+    // constant classes
     'emoji',
-    { 'emoji-sm': textSize === 'sm' },
-    { 'emoji-lg': textSize === 'lg' },
-    className,
+    // variable classes
+    textSize === 'sm' && 'emoji-sm',
+    textSize === 'lg' && 'emoji-lg',
   );
 
   const unicodeChars = getUnicodeChars(emoji[0]);

@@ -1,45 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink as RouterNavLink } from 'react-router-dom';
+import cx from 'classnames';
+import { Route, Link as RouterLink } from 'react-router-dom';
+import { BaseText } from '../../utils/components';
+import { action } from '../../utils';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
-  onClick: PropTypes.func,
-  keepFocus: PropTypes.bool,
+  ...action.propTypes,
+  exact: PropTypes.bool,
+  strict: PropTypes.bool,
 };
 const defaultProps = {
-  onClick: null,
-  keepFocus: false,
+  ...action.defaultProps,
+  exact: false,
+  strict: false,
 };
 
-class NavLink extends React.Component {
-  onClick = (event) => {
-    if (this.props.onClick) {
-      this.props.onClick(event);
-    }
+function NavLink(props, context) {
+  const {
+    to, external, onClick, preventToggle, keepFocus, exact, strict, ...otherProps
+  } = props;
+  const { onToggle } = context;
 
-    if (!this.props.keepFocus) {
-      this.link.blur();
-    }
-  };
+  const ref = React.createRef();
+  const handleClick = action.createHandleClick(ref, onClick, onToggle, {
+    preventToggle,
+    keepFocus,
+  });
 
-  render() {
-    const { children, keepFocus, ...otherProps } = this.props;
+  const path = typeof to === 'object' ? to.pathname : to;
 
-    return (
-      <RouterNavLink
-        {...otherProps}
-        onClick={this.onClick}
-        innerRef={(c) => {
-          this.link = c;
-        }}
-        className="nav-link"
-        activeClassName="active"
-      >
-        {children}
-      </RouterNavLink>
-    );
-  }
+  // Regex taken from: https://github.com/pillarjs/path-to-regexp/blob/master/index.js#L202
+  const escapedPath = path && path.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1');
+
+  return (
+    <Route
+      path={escapedPath}
+      exact={exact}
+      strict={strict}
+      render={({ match }) => {
+        const classes = cx(
+          // constant classes
+          'nav-link',
+          // variable classes
+          match && 'active',
+        );
+
+        return (
+          <BaseText
+            {...otherProps}
+            tag={RouterLink}
+            to={to}
+            innerRef={ref}
+            onClick={handleClick}
+            className={classes}
+          />
+        );
+      }}
+    />
+  );
 }
 
 NavLink.propTypes = propTypes;

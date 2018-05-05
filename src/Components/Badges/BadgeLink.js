@@ -10,6 +10,10 @@ const propTypes = {
   variant: PropTypes.oneOf(COLORS),
 };
 
+const contextTypes = {
+  ...action.contextTypes,
+};
+
 const defaultProps = {
   ...action.defaultProps,
   variant: 'primary',
@@ -29,6 +33,7 @@ function BadgeLink(props, context) {
 }
 
 BadgeLink.propTypes = propTypes;
+BadgeLink.contextTypes = contextTypes;
 BadgeLink.defaultProps = defaultProps;
 
 export default BadgeLink;

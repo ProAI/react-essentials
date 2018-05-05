@@ -10,6 +10,10 @@ const propTypes = {
   active: PropTypes.bool,
 };
 
+const contextTypes = {
+  ...action.contextTypes,
+};
+
 const defaultProps = {
   ...action.defaultProps,
   disabled: false,
@@ -33,6 +37,7 @@ function ListGroupButton(props, context) {
 }
 
 ListGroupButton.propTypes = propTypes;
+ListGroupButton.contextTypes = contextTypes;
 ListGroupButton.defaultProps = defaultProps;
 
 export default ListGroupButton;

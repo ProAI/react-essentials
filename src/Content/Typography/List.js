@@ -1,33 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { UTILS } from '../../utils/propTypes';
+import { BaseView } from '../../utils/components';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
+  data: PropTypes.object.isRequired,
   variant: PropTypes.oneOf(['unordered', 'ordered']),
+  unstyled: PropTypes.bool,
   inline: PropTypes.bool,
-  class: PropTypes.arrayOf(UTILS),
-  style: PropTypes.object,
 };
 
 const defaultProps = {
   variant: 'unordered',
+  unstyled: false,
   inline: false,
-  class: null,
-  style: null,
 };
 
 function List({
-  children, variant, inline, class: utils, style,
+  data, variant, unstyled, inline,
 }) {
-  const classes = cx(utils.join(' '));
-
-  return (
-    <div className={classes} style={style}>
-      {children}
-    </div>
+  const classes = cx(
+    // variable classes
+    unstyled && 'list-unstyled',
+    inline && 'list-inline',
   );
+
+  // TODO: apply data
+
+  return <BaseView tag={variant === 'unordered' ? 'ul' : 'ol'} className={classes} />;
 }
 
 List.propTypes = propTypes;

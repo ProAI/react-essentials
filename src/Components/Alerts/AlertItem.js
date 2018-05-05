@@ -7,10 +7,22 @@ import CloseIcon from 'react-icons/lib/fa/close';
 import CheckIcon from 'react-icons/lib/fa/check';
 import { chooseTransitionEvent, Timer } from './helpers';
 import Link from '../../Content/Links/Link';
+import { BaseText } from '../../utils/components';
 import { CloseButton } from '../../utils';
+import { COLORS } from '../../utils/constants';
 
 const propTypes = {
-  alert: PropTypes.object.isRequired,
+  alert: PropTypes.shape({
+    uid: PropTypes.number,
+    variant: PropTypes.oneOf(COLORS),
+    title: PropTypes.string,
+    content: PropTypes.string,
+    link: PropTypes.string,
+    autoDismiss: PropTypes.number,
+    dismissible: PropTypes.bool,
+    icon: PropTypes.bool,
+    small: PropTypes.bool,
+  }).isRequired,
   onRemove: PropTypes.func,
   preventAnimation: PropTypes.bool,
 };
@@ -103,11 +115,13 @@ class AlertItem extends React.Component {
   };
 
   removeAlert = () => {
-    this.props.onRemove(this.props.alert.uid);
+    const { alert } = this.props;
+    this.props.onRemove(alert.uid);
   };
 
   dismiss = () => {
-    if (!this.props.alert.dismissible) {
+    const { alert } = this.props;
+    if (!alert.dismissible) {
       return;
     }
 
@@ -192,11 +206,19 @@ class AlertItem extends React.Component {
     }
 
     if (alert.title) {
-      title = <div className="alert-title">{alert.title}</div>;
+      title = (
+        <BaseText className="alert-title" blockOnly>
+          {alert.title}
+        </BaseText>
+      );
     }
 
     if (alert.content) {
-      content = <div className="alert-content">{alert.content}</div>;
+      content = (
+        <BaseText className="alert-content" blockOnly>
+          {alert.content}
+        </BaseText>
+      );
     }
 
     if (alert.dismissible) {

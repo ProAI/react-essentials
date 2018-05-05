@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { UTILS } from '../utils/propTypes';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
   bordered: PropTypes.bool,
   striped: PropTypes.bool,
   hover: PropTypes.bool,
@@ -13,8 +11,6 @@ const propTypes = {
   responsiveMd: PropTypes.bool,
   responsiveLg: PropTypes.bool,
   responsiveXl: PropTypes.bool,
-  class: PropTypes.arrayOf(UTILS),
-  style: PropTypes.object,
 };
 
 const defaultProps = {
@@ -26,13 +22,10 @@ const defaultProps = {
   responsiveMd: false,
   responsiveLg: false,
   responsiveXl: false,
-  class: null,
-  style: null,
 };
 
 function Table({
-  children,
-  bordered, // borderless?
+  bordered,
   striped,
   hover,
   responsive,
@@ -40,18 +33,23 @@ function Table({
   responsiveMd,
   responsiveLg,
   responsiveXl,
-  class: utils,
-  style,
+  ...otherProps
 }) {
   const classes = cx(
-    // util classes
-    utils.join(' '));
-
-  return (
-    <div className={classes} style={style}>
-      {children}
-    </div>
+    // constant classes
+    'table',
+    // variable classes
+    bordered && 'table-bordered',
+    striped && 'table-striped',
+    hover && 'table-hover',
+    responsive && 'table-responsive',
+    responsiveSm && 'table-responsive-sm',
+    responsiveMd && 'table-responsive-md',
+    responsiveLg && 'table-responsive-lg',
+    responsiveXl && 'table-responsive-xl',
   );
+
+  return <div {...otherProps} className={classes} />;
 }
 
 Table.propTypes = propTypes;

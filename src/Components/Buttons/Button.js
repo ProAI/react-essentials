@@ -13,7 +13,7 @@ const propTypes = {
 };
 
 const contextTypes = {
-  onToggle: PropTypes.func,
+  ...action.contextTypes,
 };
 
 const defaultProps = {
@@ -44,7 +44,7 @@ function Button(props, context) {
 }
 
 Button.propTypes = propTypes;
-Button.defaultProps = defaultProps;
 Button.contextTypes = contextTypes;
+Button.defaultProps = defaultProps;
 
 export default Button;

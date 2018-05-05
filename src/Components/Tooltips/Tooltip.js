@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopperJS from 'popper.js';
+import { BaseText } from '../../utils/components';
 import { Overlay, triggers } from '../../utils';
 
 const propTypes = {
@@ -140,7 +141,9 @@ class Tooltip extends React.Component {
         onToggle={this.onToggle}
         role="tooltip"
       >
-        <div className="tooltip-inner">{this.props.title}</div>
+        <BaseText className="tooltip-inner" blockOnly>
+          {this.props.title}
+        </BaseText>
       </Overlay>
     );
   }

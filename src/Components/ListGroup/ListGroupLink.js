@@ -10,6 +10,10 @@ const propTypes = {
   active: PropTypes.bool,
 };
 
+const contextTypes = {
+  ...action.contextTypes,
+};
+
 const defaultProps = {
   ...action.defaultProps,
   disabled: false,
@@ -34,6 +38,7 @@ function ListGroupLink(props, context) {
 }
 
 ListGroupLink.propTypes = propTypes;
+ListGroupLink.contextTypes = contextTypes;
 ListGroupLink.defaultProps = defaultProps;
 
 export default ListGroupLink;

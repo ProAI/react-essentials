@@ -6,6 +6,10 @@ const propTypes = {
   ...action.propTypes,
 };
 
+const contextTypes = {
+  ...action.contextTypes,
+};
+
 const defaultProps = {
   ...action.defaultProps,
 };
@@ -19,6 +23,7 @@ function DropdownLink(props, context) {
 }
 
 DropdownLink.propTypes = propTypes;
+DropdownLink.contextTypes = contextTypes;
 DropdownLink.defaultProps = defaultProps;
 
 export default DropdownLink;

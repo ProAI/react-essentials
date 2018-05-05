@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { BaseView, BaseText } from '../../utils/components';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
   toPane: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   onChange: PropTypes.func,
@@ -29,7 +29,7 @@ class TabsNavLink extends React.Component {
 
   render() {
     const {
-      children, onClick, toPane, active, ...otherProps
+      onClick, toPane, active, ...otherProps
     } = this.props;
 
     const linkClasses = cx(
@@ -40,18 +40,17 @@ class TabsNavLink extends React.Component {
     );
 
     return (
-      <li className="nav-item">
-        <a
+      <BaseView tag="li" className="nav-item">
+        <BaseText
           {...otherProps}
+          tag="a"
           role="tab"
           href={`#${toPane}`}
           onClick={this.onClick}
           className={linkClasses}
           aria-controls={toPane}
-        >
-          {children}
-        </a>
-      </li>
+        />
+      </BaseView>
     );
   }
 }

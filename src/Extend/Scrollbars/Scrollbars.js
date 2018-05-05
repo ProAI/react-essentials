@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Scrollbars as ReactCustomScrollbars } from 'react-custom-scrollbars';
+import { Scrollbars as ReactScrollbars } from 'react-custom-scrollbars';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function Scrollbars({ children, ...attributes }) {
+function Scrollbars({ children, ...otherProps }) {
   return (
-    <ReactCustomScrollbars {...attributes} universal>
+    <ReactScrollbars {...otherProps} universal>
       {children}
-    </ReactCustomScrollbars>
+    </ReactScrollbars>
   );
 }
 

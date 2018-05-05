@@ -5,11 +5,11 @@ import cx from 'classnames';
 import { UTILS } from '../constants';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
   class: PropTypes.arrayOf(UTILS),
-  blockOnly: PropTypes.bool,
+  withoutChildren: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -17,9 +17,10 @@ const contextTypes = {
 };
 
 const defaultProps = {
+  children: null,
   tag: 'div',
   class: null,
-  blockOnly: false,
+  withoutChildren: false,
 };
 
 class BaseView extends React.Component {
@@ -34,8 +35,26 @@ class BaseView extends React.Component {
 
   render() {
     const {
-      children, tag: Tag, className, class: utils, ...otherProps
+      children,
+      tag: Tag,
+      className,
+      class: utils,
+      withoutChildren,
+      ...otherProps
     } = this.props;
+
+    // check children
+    if (process.env.NODE_ENV !== 'production') {
+      invariant(withoutChildren && children, 'This component does not allow a children prop.');
+      invariant(!withoutChildren && !children, 'Children prop is missing in component.');
+
+      React.Children.toArray(this.props.children).forEach((item) => {
+        invariant(
+          typeof item !== 'string',
+          `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`,
+        );
+      });
+    }
 
     const classes = cx(
       // add yoga layout styles
@@ -46,15 +65,6 @@ class BaseView extends React.Component {
       utils.join(' '),
     );
 
-    // check children
-    if (process.env.NODE_ENV !== 'production') {
-      React.Children.toArray(this.props.children).forEach((item) => {
-        invariant(
-          typeof item !== 'string',
-          `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`,
-        );
-      });
-    }
     return (
       <Tag {...otherProps} className={classes}>
         {children}

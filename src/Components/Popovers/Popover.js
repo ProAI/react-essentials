@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopperJS from 'popper.js';
+import { BaseText } from '../../utils/components';
 import { Overlay, triggers } from '../../utils';
 
 const propTypes = {
@@ -140,8 +141,14 @@ class Popover extends React.Component {
         onToggle={this.onToggle}
         role="tooltip"
       >
-        {this.props.title && <h3 className="popover-header">{this.props.title}</h3>}
-        <div className="popover-body">{this.props.content}</div>
+        {this.props.title && (
+          <BaseText tag="h3" className="popover-header" blockOnly>
+            {this.props.title}
+          </BaseText>
+        )}
+        <BaseText className="popover-body" blockOnly>
+          {this.props.content}
+        </BaseText>
       </Overlay>
     );
   }

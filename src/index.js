@@ -14,14 +14,15 @@ import Card from './Components/Cards/Card';
 /* dropdown components */
 import Dropdown from './Components/Dropdowns/Dropdown';
 
-/* emoji components */
-import Emoji from './Extend/Emoji/Emoji';
-
 /* form components */
 import Form from './Components/Forms/Form';
 
-/* link components */
-import Link from './Content/Links/Link';
+/* jumbotron components */
+import Jumbotron from './Components/Jumbotron/Jumbotron';
+
+/* list group components */
+import ListGroup from './Components/ListGroup/ListGroup';
+import TabsListGroup from './Components/ListGroup/TabsListGroup';
 
 /* modal components */
 import Modal from './Components/Modal/Modal';
@@ -33,15 +34,6 @@ import Nav from './Components/Navs/Nav';
 import injectPopover from './Components/Popovers/injectPopover';
 import PopoverButton from './Components/Popovers/PopoverButton';
 
-/* scrollbars components */
-import Scrollbars from './Extend/Scrollbars/Scrollbars';
-
-/* spinner components */
-import Spinner from './Extend/Spinner/Spinner';
-
-/* switch components */
-import Switch from './Extend/Switch/Switch';
-
 /* tabs components */
 import Tabs from './Components/Navs/Tabs';
 import TabsNav from './Components/Navs/TabsNav';
@@ -51,19 +43,42 @@ import TabsContent from './Components/Navs/TabsContent';
 import injectTooltip from './Components/Tooltips/injectTooltip';
 import TooltipButton from './Components/Tooltips/TooltipButton';
 
-/* uploader components */
+/* content components */
+import Image from './Content/Images/Image';
+import Link from './Content/Links/Link';
+import Table from './Content/Tables/Table';
+import Blockquote from './Content/Typography/Blockquote';
+import Cite from './Content/Typography/Cite';
+import DisplayHeading from './Content/Typography/DisplayHeading';
+import Heading from './Content/Typography/Heading';
+import List from './Content/Typography/List';
+import Paragraph from './Content/Typography/Paragraph';
+import Text from './Content/Typography/Text';
+
+/* extend components */
+import Emoji from './Extend/Emoji/Emoji';
+import Scrollbars from './Extend/Scrollbars/Scrollbars';
+import Spinner from './Extend/Spinner/Spinner';
+import Switch from './Extend/Switch/Switch';
 import Uploader from './Extend/Uploader/Uploader';
 
+/* layout components */
+import Container from './Layout/Container/Container';
+import Grid from './Layout/Grid/Grid';
+import View from './Layout/View/View';
+
 export {
+  // components
   Alert,
   Badge,
   BadgeLink,
   Button,
   Card,
   Dropdown,
-  Emoji,
   Form,
-  Link,
+  Jumbotron,
+  ListGroup,
+  TabsListGroup,
   Modal,
   Nav,
   Tabs,
@@ -71,10 +86,27 @@ export {
   TabsContent,
   injectPopover,
   PopoverButton,
+  injectTooltip,
+  TooltipButton,
+  // content
+  Image,
+  Link,
+  Table,
+  Blockquote,
+  Cite,
+  DisplayHeading,
+  Heading,
+  List,
+  Paragraph,
+  Text,
+  // extend
+  Emoji,
   Scrollbars,
   Spinner,
   Switch,
-  injectTooltip,
-  TooltipButton,
   Uploader,
+  // layout
+  Container,
+  Grid,
+  View,
 };

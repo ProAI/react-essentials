@@ -2,12 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
-import { UTILS } from '../constants';
+import { UTILS, TEXT_COLORS } from '../constants';
 
 const propTypes = {
+  children: PropTypes.node.isRequired,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
   class: PropTypes.arrayOf(UTILS),
+  color: PropTypes.oneOf(TEXT_COLORS),
+  align: PropTypes.oneOf(['justify', 'left', 'center', 'right']),
+  mark: PropTypes.bool,
+  small: PropTypes.bool,
+  underline: PropTypes.bool,
+  bold: PropTypes.bool,
+  italic: PropTypes.bool,
   blockOnly: PropTypes.bool,
   inlineOnly: PropTypes.bool,
 };
@@ -23,6 +31,13 @@ const childContextTypes = {
 const defaultProps = {
   tag: null,
   class: null,
+  align: null,
+  color: null,
+  mark: false,
+  small: false,
+  underline: false,
+  bold: false,
+  italic: false,
   blockOnly: false,
   inlineOnly: false,
 };
@@ -58,22 +73,48 @@ class BaseText extends React.Component {
 
   render() {
     const {
-      tag, className, class: utils, ...otherProps
+      children,
+      tag,
+      className,
+      class: utils,
+      align,
+      color,
+      mark,
+      small,
+      underline,
+      bold,
+      italic,
+      blockOnly,
+      inlineOnly,
+      ...otherProps
     } = this.props;
 
     const Tag = this.getTag(tag);
 
     const classes = cx(
       // add yoga styles
-      !this.context.isInAParentText && 'yoga-text-block',
-      this.context.isInAParentText && 'yoga-text-inline',
+      this.context.isInAParentText ? 'yoga-text-inline' : 'yoga-text-block',
+      // variable classes
+      color && `text-${color}`,
+      align && `text-${align}`,
+      mark && 'mark',
+      small && 'small',
       // add (mostly) bootstrap styles
       className,
       // add utils styles
       utils.join(' '),
     );
 
-    return <Tag {...otherProps} className={classes} />;
+    // wrap children with underline, bold and italic tags
+    const childrenWithU = underline ? <u>{children}</u> : children;
+    const childrenWithUB = bold ? <strong>{childrenWithU}</strong> : childrenWithU;
+    const childrenWithUBI = italic ? <em>{childrenWithUB}</em> : childrenWithUB;
+
+    return (
+      <Tag {...otherProps} className={classes}>
+        {childrenWithUBI}
+      </Tag>
+    );
   }
 }
 

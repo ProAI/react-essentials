@@ -1,41 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { UTILS } from '../../utils/propTypes';
+import { BaseView } from '../../utils/components';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
   fluid: PropTypes.bool,
-  class: PropTypes.arrayOf(UTILS),
-  style: PropTypes.object,
 };
 
 const defaultProps = {
   fluid: false,
-  class: null,
-  style: null,
 };
 
-function Heading({
-  children, fluid, class: utils, style,
-}) {
+function Container({ fluid, ...otherProps }) {
   const classes = cx(
-    // base classes
+    // constant classes
     'container',
     // variable classes
     fluid ? 'container-fluid' : null,
-    // util classes
-    utils.join(' '),
   );
 
-  return (
-    <div className={classes} style={style}>
-      {children}
-    </div>
-  );
+  return <BaseView {...otherProps} className={classes} />;
 }
 
-Heading.propTypes = propTypes;
-Heading.defaultProps = defaultProps;
+Container.propTypes = propTypes;
+Container.defaultProps = defaultProps;
 
-export default Heading;
+export default Container;

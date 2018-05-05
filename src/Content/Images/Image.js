@@ -1,36 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { UTILS } from '../utils/propTypes';
 
 const propTypes = {
   source: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
   fluid: PropTypes.bool,
   thumbnail: PropTypes.bool,
-  class: PropTypes.arrayOf(UTILS),
-  style: PropTypes.object,
 };
 
 const defaultProps = {
   fluid: false,
   thumbnail: false,
-  class: null,
-  style: null,
 };
 
 function Image({
-  source, alt, fluid, thumbnail, class: utils, style,
+  source, alt, fluid, thumbnail,
 }) {
   const classes = cx(
     // variable classes
-    fluid ? 'img-fluid' : null,
-    thumbnail ? 'img-thumbnail' : null,
-    // util classes
-    utils.join(' '),
+    fluid && 'img-fluid',
+    thumbnail && 'img-thumbnail',
   );
 
-  return <img src={source} alt={alt} className={classes} style={style} />;
+  return <img src={source} alt={alt} className={classes} />;
 }
 
 Image.propTypes = propTypes;

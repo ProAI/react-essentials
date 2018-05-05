@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { GRID_SIZES, UTILS } from '../../utils/propTypes';
+import { BaseView } from '../../utils/components';
+import { GRID_SIZES } from '../../utils/constants';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
   size: PropTypes.oneOf(GRID_SIZES).isRequired,
   sizeSm: PropTypes.oneOf(GRID_SIZES),
   sizeMd: PropTypes.oneOf(GRID_SIZES),
   sizeLg: PropTypes.oneOf(GRID_SIZES),
   sizeXl: PropTypes.oneOf(GRID_SIZES),
-  class: PropTypes.arrayOf(UTILS),
-  style: PropTypes.object,
 };
 
 const defaultProps = {
@@ -19,30 +17,22 @@ const defaultProps = {
   sizeMd: null,
   sizeLg: null,
   sizeXl: null,
-  class: null,
-  style: null,
 };
 
 function GridBox({
-  children, size, sizeSm, sizeMd, sizeLg, sizeXl, class: utils, style,
+  size, sizeSm, sizeMd, sizeLg, sizeXl, ...otherProps
 }) {
   const classes = cx(
-    // base classes
+    // constant classes
     `col-${size.toString()}`,
     // variable classes
-    sizeSm ? `col-sm-${sizeSm.toString()}` : null,
-    sizeMd ? `col-sm-${sizeMd.toString()}` : null,
-    sizeLg ? `col-sm-${sizeLg.toString()}` : null,
-    sizeXl ? `col-sm-${sizeXl.toString()}` : null,
-    // util classes
-    utils.join(' '),
+    sizeSm && `col-sm-${sizeSm.toString()}`,
+    sizeMd && `col-sm-${sizeMd.toString()}`,
+    sizeLg && `col-sm-${sizeLg.toString()}`,
+    sizeXl && `col-sm-${sizeXl.toString()}`,
   );
 
-  return (
-    <div className={classes} style={style}>
-      {children}
-    </div>
-  );
+  return <BaseView {...otherProps} className={classes} />;
 }
 
 GridBox.propTypes = propTypes;
