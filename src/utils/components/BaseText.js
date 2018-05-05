@@ -6,17 +6,18 @@ import { UTILS, TEXT_COLORS } from '../constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  elementProps: PropTypes.object.isRequired,
+  elementProps: PropTypes.shape({
+    class: PropTypes.arrayOf(UTILS),
+    color: PropTypes.oneOf(TEXT_COLORS),
+    align: PropTypes.oneOf(['justify', 'left', 'center', 'right']),
+    mark: PropTypes.bool,
+    small: PropTypes.bool,
+    underline: PropTypes.bool,
+    bold: PropTypes.bool,
+    italic: PropTypes.bool,
+  }),
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
-  class: PropTypes.arrayOf(UTILS),
-  color: PropTypes.oneOf(TEXT_COLORS),
-  align: PropTypes.oneOf(['justify', 'left', 'center', 'right']),
-  mark: PropTypes.bool,
-  small: PropTypes.bool,
-  underline: PropTypes.bool,
-  bold: PropTypes.bool,
-  italic: PropTypes.bool,
   blockOnly: PropTypes.bool,
   inlineOnly: PropTypes.bool,
 };
@@ -30,15 +31,17 @@ const childContextTypes = {
 };
 
 const defaultProps = {
+  elementProps: {
+    class: null,
+    align: null,
+    color: null,
+    mark: false,
+    small: false,
+    underline: false,
+    bold: false,
+    italic: false,
+  },
   tag: null,
-  class: null,
-  align: null,
-  color: null,
-  mark: false,
-  small: false,
-  underline: false,
-  bold: false,
-  italic: false,
   blockOnly: false,
   inlineOnly: false,
 };
@@ -75,17 +78,19 @@ class BaseText extends React.Component {
   render() {
     const {
       children,
-      elementProps,
+      elementProps: {
+        class: utils,
+        align,
+        color,
+        mark,
+        small,
+        underline,
+        bold,
+        italic,
+        ...elementProps
+      },
       tag,
       className,
-      class: utils,
-      align,
-      color,
-      mark,
-      small,
-      underline,
-      bold,
-      italic,
     } = this.props;
 
     const Tag = this.getTag(tag);

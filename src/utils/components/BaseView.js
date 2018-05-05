@@ -6,10 +6,11 @@ import { UTILS } from '../constants';
 
 const propTypes = {
   children: PropTypes.node,
-  elementProps: PropTypes.object.isRequired,
+  elementProps: PropTypes.shape({
+    class: PropTypes.arrayOf(UTILS),
+  }),
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
-  class: PropTypes.arrayOf(UTILS),
   withoutChildren: PropTypes.bool,
 };
 
@@ -19,8 +20,10 @@ const contextTypes = {
 
 const defaultProps = {
   children: null,
+  elementProps: {
+    class: null,
+  },
   tag: 'div',
-  class: null,
   withoutChildren: false,
 };
 
@@ -37,10 +40,9 @@ class BaseView extends React.Component {
   render() {
     const {
       children,
-      elementProps,
+      elementProps: { class: utils, ...elementProps },
       tag: Tag,
       className,
-      class: utils,
       withoutChildren,
     } = this.props;
 
