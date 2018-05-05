@@ -1,7 +1,7 @@
 import React from 'react';
 
-function TableRow({ ...otherProps }) {
-  return <div {...otherProps} className="" />;
+function TableRow({ ...elementProps }) {
+  return <div elementProps={elementProps} className="" />;
 }
 
 export default TableRow;

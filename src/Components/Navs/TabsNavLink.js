@@ -29,7 +29,7 @@ class TabsNavLink extends React.Component {
 
   render() {
     const {
-      onClick, toPane, active, ...otherProps
+      onClick, toPane, active, ...elementProps
     } = this.props;
 
     const linkClasses = cx(
@@ -42,7 +42,7 @@ class TabsNavLink extends React.Component {
     return (
       <BaseView tag="li" className="nav-item">
         <BaseText
-          {...otherProps}
+          elementProps={elementProps}
           tag="a"
           role="tab"
           href={`#${toPane}`}

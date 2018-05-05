@@ -1,7 +1,7 @@
 import React from 'react';
 
-function TableFooter({ ...otherProps }) {
-  return <div {...otherProps} className="" />;
+function TableFooter({ ...elementProps }) {
+  return <div elementProps={elementProps} className="" />;
 }
 
 export default TableFooter;

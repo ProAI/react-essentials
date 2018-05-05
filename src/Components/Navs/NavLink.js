@@ -18,7 +18,7 @@ const defaultProps = {
 
 function NavLink(props, context) {
   const {
-    to, external, onClick, preventToggle, keepFocus, exact, strict, ...otherProps
+    to, external, onClick, preventToggle, keepFocus, exact, strict, ...elementProps
   } = props;
   const { onToggle } = context;
 
@@ -48,7 +48,7 @@ function NavLink(props, context) {
 
         return (
           <BaseText
-            {...otherProps}
+            elementProps={elementProps}
             tag={RouterLink}
             to={to}
             innerRef={ref}

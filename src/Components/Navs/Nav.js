@@ -12,7 +12,7 @@ const defaultProps = {
   variant: 'basic',
 };
 
-function Nav({ variant, ...otherProps }) {
+function Nav({ variant, ...elementProps }) {
   const classes = cx(
     // constant classes
     'nav',
@@ -21,7 +21,7 @@ function Nav({ variant, ...otherProps }) {
     variant === 'pills' && 'nav-pills',
   );
 
-  return <BaseView {...otherProps} tag="nav" className={classes} />;
+  return <BaseView elementProps={elementProps} tag="nav" className={classes} />;
 }
 
 Nav.propTypes = propTypes;

@@ -11,7 +11,7 @@ const defaultProps = {
   disabled: false,
 };
 
-function ListGroupItem({ disabled, ...otherProps }) {
+function ListGroupItem({ disabled, ...elementProps }) {
   const classes = cx(
     // constant classes
     'list-group-item',
@@ -19,7 +19,7 @@ function ListGroupItem({ disabled, ...otherProps }) {
     disabled && 'disabled',
   );
 
-  return <BaseText {...otherProps} tag="li" className={classes} blockOnly />;
+  return <BaseText elementProps={elementProps} tag="li" className={classes} blockOnly />;
 }
 
 ListGroupItem.propTypes = propTypes;

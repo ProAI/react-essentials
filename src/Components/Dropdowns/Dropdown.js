@@ -88,7 +88,7 @@ class Dropdown extends React.Component {
 
   render() {
     const {
-      children, visible, onToggle, ...otherProps
+      children, visible, onToggle, ...elementProps
     } = this.props;
 
     // check if dropdown has a dropdown trigger and menu
@@ -132,7 +132,7 @@ class Dropdown extends React.Component {
 
     return (
       <BaseView
-        {...otherProps}
+        elementProps={elementProps}
         ref={(element) => {
           this.element = element;
         }}

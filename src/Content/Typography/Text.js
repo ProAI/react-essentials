@@ -1,8 +1,8 @@
 import React from 'react';
 import { BaseText } from '../../utils/components';
 
-function Text({ ...otherProps }) {
-  return <BaseText {...otherProps} className="" />;
+function Text({ ...elementProps }) {
+  return <BaseText elementProps={elementProps} className="" />;
 }
 
 export default Text;

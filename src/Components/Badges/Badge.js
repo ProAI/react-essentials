@@ -12,14 +12,14 @@ const defaultProps = {
   variant: 'primary',
 };
 
-function Badge({ variant, ...otherProps }) {
+function Badge({ variant, ...elementProps }) {
   const classes = cx(
     // constant classes
     'badge',
     `badge-${variant}`,
   );
 
-  return <BaseText {...otherProps} className={classes} inlineOnly />;
+  return <BaseText elementProps={elementProps} className={classes} inlineOnly />;
 }
 
 Badge.propTypes = propTypes;

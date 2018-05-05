@@ -33,7 +33,7 @@ function Table({
   responsiveMd,
   responsiveLg,
   responsiveXl,
-  ...otherProps
+  ...elementProps
 }) {
   const classes = cx(
     // constant classes
@@ -49,7 +49,7 @@ function Table({
     responsiveXl && 'table-responsive-xl',
   );
 
-  return <div {...otherProps} className={classes} />;
+  return <div elementProps={elementProps} className={classes} />;
 }
 
 Table.propTypes = propTypes;

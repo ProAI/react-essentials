@@ -8,8 +8,8 @@ import CardSubtitle from './CardSubtitle';
 import CardTitle from './CardTitle';
 import { BaseView } from '../../utils/components';
 
-function Card({ ...otherProps }) {
-  return <BaseView {...otherProps} className="card" />;
+function Card({ ...elementProps }) {
+  return <BaseView elementProps={elementProps} className="card" />;
 }
 
 Card.Body = CardBody;

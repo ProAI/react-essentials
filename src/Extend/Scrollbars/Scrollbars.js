@@ -6,9 +6,9 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function Scrollbars({ children, ...otherProps }) {
+function Scrollbars({ children, ...elementProps }) {
   return (
-    <ReactScrollbars {...otherProps} universal>
+    <ReactScrollbars elementProps={elementProps} universal>
       {children}
     </ReactScrollbars>
   );

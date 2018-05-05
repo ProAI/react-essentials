@@ -11,9 +11,9 @@ const defaultProps = {
 };
 
 function CardLink(props, context) {
-  const { ...otherProps } = props;
+  const { ...elementProps } = props;
 
-  const linkProps = action.createLinkProps(otherProps, context);
+  const linkProps = action.createLinkProps(elementProps, context);
 
   return <BaseText {...linkProps} className="card-link" blockOnly />;
 }

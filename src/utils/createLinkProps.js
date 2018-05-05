@@ -5,7 +5,7 @@ import createHandleClick from './createHandleClick';
 
 export default function makeLinkProps(props, context) {
   const {
-    to, external, onClick, preventToggle, keepFocus, ...otherProps
+    to, external, onClick, preventToggle, keepFocus, ...elementProps
   } = props;
   const { onToggle } = context;
 
@@ -24,7 +24,7 @@ export default function makeLinkProps(props, context) {
   // action link
   if (!to) {
     return {
-      ...otherProps,
+      ...elementProps,
       tag: 'a',
       role: 'button',
       tabIndex: 0,
@@ -37,7 +37,7 @@ export default function makeLinkProps(props, context) {
   // external link
   if (external) {
     return {
-      ...otherProps,
+      ...elementProps,
       href: to,
       target: '_blank',
       rel: 'noopener noreferrer',
@@ -48,7 +48,7 @@ export default function makeLinkProps(props, context) {
 
   // router link
   return {
-    ...otherProps,
+    ...elementProps,
     tag: RouterLink,
     to,
     innerRef: ref,

@@ -255,7 +255,7 @@ class Modal extends React.Component {
       onEnter,
       onExit,
       dismissible,
-      ...otherProps
+      ...elementProps
     } = this.props;
 
     const modalClasses = cx(
@@ -309,7 +309,7 @@ class Modal extends React.Component {
               this.dialog = c;
             }}
           >
-            <BaseView {...otherProps} className="modal-content">
+            <BaseView elementProps={elementProps} className="modal-content">
               {manipulatedChildren}
             </BaseView>
           </div>

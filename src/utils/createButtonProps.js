@@ -5,7 +5,7 @@ import createHandleClick from './createHandleClick';
 
 export default function createButtonProps(props, context) {
   const {
-    to, external, onClick, preventToggle, keepFocus, ...otherProps
+    to, external, onClick, preventToggle, keepFocus, ...elementProps
   } = props;
   const { onToggle } = context;
 
@@ -24,7 +24,7 @@ export default function createButtonProps(props, context) {
   // link button
   if (to) {
     return {
-      ...otherProps,
+      ...elementProps,
       tag: RouterLink,
       to,
       innerRef: ref,
@@ -35,7 +35,7 @@ export default function createButtonProps(props, context) {
   // external link button
   if (to && external) {
     return {
-      ...otherProps,
+      ...elementProps,
       href: to,
       target: '_blank',
       rel: 'noopener noreferrer',
@@ -46,7 +46,7 @@ export default function createButtonProps(props, context) {
 
   // button
   return {
-    ...otherProps,
+    ...elementProps,
     tag: 'button',
     ref,
     onClick: handleClick,

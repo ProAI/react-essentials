@@ -20,7 +20,7 @@ const defaultProps = {
 };
 
 function GridBox({
-  size, sizeSm, sizeMd, sizeLg, sizeXl, ...otherProps
+  size, sizeSm, sizeMd, sizeLg, sizeXl, ...elementProps
 }) {
   const classes = cx(
     // constant classes
@@ -32,7 +32,7 @@ function GridBox({
     sizeXl && `col-sm-${sizeXl.toString()}`,
   );
 
-  return <BaseView {...otherProps} className={classes} />;
+  return <BaseView elementProps={elementProps} className={classes} />;
 }
 
 GridBox.propTypes = propTypes;

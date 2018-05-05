@@ -11,7 +11,7 @@ const defaultProps = {
   active: false,
 };
 
-function TabsContentPane({ active, ...otherProps }) {
+function TabsContentPane({ active, ...elementProps }) {
   const classes = cx(
     // constant classes
     'tab-pane',
@@ -19,7 +19,7 @@ function TabsContentPane({ active, ...otherProps }) {
     active && 'active',
   );
 
-  return <BaseView {...otherProps} role="tabpanel" className={classes} />;
+  return <BaseView elementProps={elementProps} role="tabpanel" className={classes} />;
 }
 
 TabsContentPane.propTypes = propTypes;

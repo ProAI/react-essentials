@@ -63,7 +63,7 @@ class Tabs extends React.Component {
       onChange,
       variant,
       stacked,
-      ...otherProps
+      ...elementProps
     } = this.props;
 
     const tabsNavLinkChildren = React.Children.map(children, (child, i) => {
@@ -81,7 +81,7 @@ class Tabs extends React.Component {
     });
 
     return (
-      <BaseView {...otherProps} className="">
+      <BaseView elementProps={elementProps} className="">
         <TabsNav
           activeKey={this.activeKey()}
           onChange={this.onChange}

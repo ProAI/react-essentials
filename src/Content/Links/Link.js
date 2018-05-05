@@ -15,9 +15,9 @@ const defaultProps = {
 };
 
 function Link(props, context) {
-  const { ...otherProps } = props;
+  const { ...elementProps } = props;
 
-  const linkProps = action.createLinkProps(otherProps, context);
+  const linkProps = action.createLinkProps(elementProps, context);
 
   return <BaseText {...linkProps} className="" />;
 }

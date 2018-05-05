@@ -1,7 +1,7 @@
 import React from 'react';
 
-function TableHeading({ ...otherProps }) {
-  return <div {...otherProps} className="" />;
+function TableHeading({ ...elementProps }) {
+  return <div elementProps={elementProps} className="" />;
 }
 
 export default TableHeading;

@@ -11,7 +11,7 @@ const defaultProps = {
   fluid: false,
 };
 
-function Jumbotron({ fluid, ...otherProps }) {
+function Jumbotron({ fluid, ...elementProps }) {
   const classes = cx(
     // constant classes
     'jumbotron',
@@ -19,7 +19,7 @@ function Jumbotron({ fluid, ...otherProps }) {
     fluid && 'jumbotron-fluid',
   );
 
-  return <BaseView {...otherProps} className={classes} />;
+  return <BaseView elementProps={elementProps} className={classes} />;
 }
 
 Jumbotron.propTypes = propTypes;

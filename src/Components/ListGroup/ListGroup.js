@@ -16,7 +16,7 @@ const defaultProps = {
   actionable: false,
 };
 
-function ListGroup({ flush, actionable, ...otherProps }) {
+function ListGroup({ flush, actionable, ...elementProps }) {
   const classes = cx(
     // constant classes
     'list-group',
@@ -26,7 +26,7 @@ function ListGroup({ flush, actionable, ...otherProps }) {
 
   const tag = actionable ? 'div' : 'ul';
 
-  return <BaseView {...otherProps} tag={tag} className={classes} />;
+  return <BaseView elementProps={elementProps} tag={tag} className={classes} />;
 }
 
 ListGroup.propTypes = propTypes;

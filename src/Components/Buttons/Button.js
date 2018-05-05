@@ -25,7 +25,7 @@ const defaultProps = {
 
 function Button(props, context) {
   const {
-    variant, size, caret, ...otherProps
+    variant, size, caret, ...elementProps
   } = props;
 
   const classes = cx(
@@ -38,7 +38,7 @@ function Button(props, context) {
     caret && 'dropdown-toggle',
   );
 
-  const buttonProps = action.createButtonProps(otherProps, context);
+  const buttonProps = action.createButtonProps(elementProps, context);
 
   return <BaseText {...buttonProps} className={classes} blockOnly />;
 }

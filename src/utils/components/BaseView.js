@@ -6,6 +6,7 @@ import { UTILS } from '../constants';
 
 const propTypes = {
   children: PropTypes.node,
+  elementProps: PropTypes.object.isRequired,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
   class: PropTypes.arrayOf(UTILS),
@@ -36,11 +37,11 @@ class BaseView extends React.Component {
   render() {
     const {
       children,
+      elementProps,
       tag: Tag,
       className,
       class: utils,
       withoutChildren,
-      ...otherProps
     } = this.props;
 
     // check children
@@ -66,7 +67,7 @@ class BaseView extends React.Component {
     );
 
     return (
-      <Tag {...otherProps} className={classes}>
+      <Tag {...elementProps} className={classes}>
         {children}
       </Tag>
     );

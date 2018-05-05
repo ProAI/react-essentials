@@ -21,7 +21,7 @@ const defaultProps = {
 };
 
 function ListGroupLink(props, context) {
-  const { disabled, active, ...otherProps } = props;
+  const { disabled, active, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -32,7 +32,7 @@ function ListGroupLink(props, context) {
     active && 'active',
   );
 
-  const linkProps = action.createLinkProps(otherProps, context);
+  const linkProps = action.createLinkProps(elementProps, context);
 
   return <BaseText {...linkProps} className={classes} blockOnly />;
 }

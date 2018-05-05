@@ -1,8 +1,8 @@
 import React from 'react';
 import { BaseView } from '../../utils/components';
 
-function CardHeader({ ...otherProps }) {
-  return <BaseView {...otherProps} className="card-header" />;
+function CardHeader({ ...elementProps }) {
+  return <BaseView elementProps={elementProps} className="card-header" />;
 }
 
 export default CardHeader;

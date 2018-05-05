@@ -18,7 +18,7 @@ const defaultProps = {
 };
 
 function TabsNav({
-  children, activeKey, onChange, variant, stacked, ...otherProps
+  children, activeKey, onChange, variant, stacked, ...elementProps
 }) {
   const classes = cx(
     // constant classes
@@ -36,7 +36,7 @@ function TabsNav({
     }));
 
   return (
-    <BaseView {...otherProps} tag="nav" role="tablist" className={classes}>
+    <BaseView elementProps={elementProps} tag="nav" role="tablist" className={classes}>
       {manipulatedChildren}
     </BaseView>
   );

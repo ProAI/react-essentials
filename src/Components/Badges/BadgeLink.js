@@ -20,14 +20,14 @@ const defaultProps = {
 };
 
 function BadgeLink(props, context) {
-  const { variant, ...otherProps } = props;
+  const { variant, ...elementProps } = props;
   const classes = cx(
     // constant classes
     'badge',
     `badge-${variant}`,
   );
 
-  const linkProps = action.createLinkProps(otherProps, context);
+  const linkProps = action.createLinkProps(elementProps, context);
 
   return <BaseText {...linkProps} className={classes} inlineOnly />;
 }

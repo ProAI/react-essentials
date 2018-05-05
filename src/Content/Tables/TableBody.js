@@ -1,7 +1,7 @@
 import React from 'react';
 
-function TableBody({ ...otherProps }) {
-  return <div {...otherProps} className="" />;
+function TableBody({ ...elementProps }) {
+  return <div elementProps={elementProps} className="" />;
 }
 
 export default TableBody;

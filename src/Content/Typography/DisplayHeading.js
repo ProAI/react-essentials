@@ -7,8 +7,8 @@ const propTypes = {
   size: PropTypes.oneOf(DISPLAY_HEADING_SIZES).isRequired,
 };
 
-function DisplayHeading({ size, ...otherProps }) {
-  return <BaseText {...otherProps} tag="h1" className={`display-${size}`} blockOnly />;
+function DisplayHeading({ size, ...elementProps }) {
+  return <BaseText elementProps={elementProps} tag="h1" className={`display-${size}`} blockOnly />;
 }
 
 DisplayHeading.propTypes = propTypes;

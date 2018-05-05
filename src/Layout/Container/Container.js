@@ -11,7 +11,7 @@ const defaultProps = {
   fluid: false,
 };
 
-function Container({ fluid, ...otherProps }) {
+function Container({ fluid, ...elementProps }) {
   const classes = cx(
     // constant classes
     'container',
@@ -19,7 +19,7 @@ function Container({ fluid, ...otherProps }) {
     fluid ? 'container-fluid' : null,
   );
 
-  return <BaseView {...otherProps} className={classes} />;
+  return <BaseView elementProps={elementProps} className={classes} />;
 }
 
 Container.propTypes = propTypes;

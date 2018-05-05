@@ -15,7 +15,7 @@ const defaultProps = {
 };
 
 function TabsContent({
-  children, className, activeKey, ...otherProps
+  children, className, activeKey, ...elementProps
 }) {
   const manipulatedChildren = React.Children.map(children, child =>
     React.cloneElement(child, {
@@ -23,7 +23,7 @@ function TabsContent({
     }));
 
   return (
-    <BaseView {...otherProps} className="tab-content">
+    <BaseView elementProps={elementProps} className="tab-content">
       {manipulatedChildren}
     </BaseView>
   );

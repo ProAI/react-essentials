@@ -15,7 +15,7 @@ const defaultProps = {
 };
 
 function ModalHeader({
-  titleId, children, dismissible, onToggle, ...otherProps
+  titleId, children, dismissible, onToggle, ...elementProps
 }) {
   // inject titleId
   const manipulatedChildren = React.Children.map(children, child =>
@@ -24,7 +24,7 @@ function ModalHeader({
     }));
 
   return (
-    <BaseView {...otherProps} className="modal-header">
+    <BaseView elementProps={elementProps} className="modal-header">
       {manipulatedChildren}
       {dismissible && <CloseButton onClick={onToggle} />}
     </BaseView>

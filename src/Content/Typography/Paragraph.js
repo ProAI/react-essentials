@@ -10,8 +10,8 @@ const defaultProps = {
   lead: false,
 };
 
-function Paragraph({ ...otherProps }) {
-  return <BaseText {...otherProps} tag="p" className="" blockOnly />;
+function Paragraph({ ...elementProps }) {
+  return <BaseText elementProps={elementProps} tag="p" className="" blockOnly />;
 }
 
 Paragraph.propTypes = propTypes;

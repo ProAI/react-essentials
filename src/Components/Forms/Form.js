@@ -22,7 +22,7 @@ const defaultProps = {
 
 function Form(props) {
   const {
-    children, initialValues, validate, onSubmit, ...otherProps
+    children, initialValues, validate, onSubmit, ...elementProps
   } = props;
 
   return (
@@ -33,7 +33,7 @@ function Form(props) {
       validate={validate}
       onSubmit={onSubmit}
       render={form => (
-        <BaseView {...otherProps} tag="form" onSubmit={form.handleSubmit} className="form">
+        <BaseView elementProps={elementProps} tag="form" onSubmit={form.handleSubmit} className="form">
           {typeof children === 'function' ? children(form) : children}
         </BaseView>
       )}

@@ -6,6 +6,7 @@ import { UTILS, TEXT_COLORS } from '../constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
+  elementProps: PropTypes.object.isRequired,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
   class: PropTypes.arrayOf(UTILS),
@@ -74,6 +75,7 @@ class BaseText extends React.Component {
   render() {
     const {
       children,
+      elementProps,
       tag,
       className,
       class: utils,
@@ -84,9 +86,6 @@ class BaseText extends React.Component {
       underline,
       bold,
       italic,
-      blockOnly,
-      inlineOnly,
-      ...otherProps
     } = this.props;
 
     const Tag = this.getTag(tag);
@@ -111,7 +110,7 @@ class BaseText extends React.Component {
     const childrenWithUBI = italic ? <em>{childrenWithUB}</em> : childrenWithUB;
 
     return (
-      <Tag {...otherProps} className={classes}>
+      <Tag {...elementProps} className={classes}>
         {childrenWithUBI}
       </Tag>
     );

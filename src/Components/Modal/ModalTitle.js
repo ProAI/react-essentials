@@ -10,8 +10,8 @@ const defaultProps = {
   titleId: null,
 };
 
-function ModalTitle({ titleId, ...otherProps }) {
-  return <BaseText {...otherProps} tag="h5" className="modal-title" id={titleId} />;
+function ModalTitle({ titleId, ...elementProps }) {
+  return <BaseText elementProps={elementProps} tag="h5" className="modal-title" id={titleId} />;
 }
 
 ModalTitle.propTypes = propTypes;

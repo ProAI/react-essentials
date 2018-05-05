@@ -21,7 +21,7 @@ const defaultProps = {
 };
 
 function ListGroupButton(props, context) {
-  const { disabled, active, ...otherProps } = props;
+  const { disabled, active, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -31,7 +31,7 @@ function ListGroupButton(props, context) {
     active && 'active',
   );
 
-  const buttonProps = action.createButtonProps(otherProps, context);
+  const buttonProps = action.createButtonProps(elementProps, context);
 
   return <BaseText {...buttonProps} disabled={disabled} className={classes} blockOnly />;
 }

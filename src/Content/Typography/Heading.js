@@ -7,8 +7,8 @@ const propTypes = {
   size: PropTypes.oneOf(HEADING_SIZES).isRequired,
 };
 
-function Heading({ size, ...otherProps }) {
-  return <BaseText {...otherProps} tag={`h${size.toString()}`} className="" blockOnly />;
+function Heading({ size, ...elementProps }) {
+  return <BaseText elementProps={elementProps} tag={`h${size.toString()}`} className="" blockOnly />;
 }
 
 Heading.propTypes = propTypes;
