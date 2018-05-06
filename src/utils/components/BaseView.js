@@ -6,7 +6,7 @@ import { UTILS } from '../constants';
 
 const propTypes = {
   children: PropTypes.node,
-  elementProps: PropTypes.shape({
+  props: PropTypes.shape({
     class: PropTypes.arrayOf(UTILS),
   }),
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
@@ -20,7 +20,7 @@ const contextTypes = {
 
 const defaultProps = {
   children: null,
-  elementProps: {
+  props: {
     class: null,
   },
   tag: 'div',
@@ -40,7 +40,7 @@ class BaseView extends React.Component {
   render() {
     const {
       children,
-      elementProps: { class: utils, ...elementProps },
+      props: { class: utils, ...otherProps },
       tag: Tag,
       className,
       withoutChildren,
@@ -69,7 +69,7 @@ class BaseView extends React.Component {
     );
 
     return (
-      <Tag {...elementProps} className={classes}>
+      <Tag {...otherProps} className={classes}>
         {children}
       </Tag>
     );

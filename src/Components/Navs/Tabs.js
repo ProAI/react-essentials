@@ -81,7 +81,7 @@ class Tabs extends React.Component {
     });
 
     return (
-      <BaseView elementProps={elementProps} className="">
+      <BaseView props={elementProps} className="">
         <TabsNav
           activeKey={this.activeKey()}
           onChange={this.onChange}

@@ -8,7 +8,7 @@ const propTypes = {
 
 function Scrollbars({ children, ...elementProps }) {
   return (
-    <ReactScrollbars elementProps={elementProps} universal>
+    <ReactScrollbars props={elementProps} universal>
       {children}
     </ReactScrollbars>
   );

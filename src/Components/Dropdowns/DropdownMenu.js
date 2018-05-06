@@ -11,7 +11,7 @@ const defaultProps = {
 };
 
 function DropdownMenu({ triggerId, ...elementProps }) {
-  return <BaseView elementProps={elementProps} className="dropdown-menu" aria-labelledby={triggerId} />;
+  return <BaseView props={elementProps} className="dropdown-menu" aria-labelledby={triggerId} />;
 }
 
 DropdownMenu.propTypes = propTypes;

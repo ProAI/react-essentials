@@ -309,7 +309,7 @@ class Modal extends React.Component {
               this.dialog = c;
             }}
           >
-            <BaseView elementProps={elementProps} className="modal-content">
+            <BaseView props={elementProps} className="modal-content">
               {manipulatedChildren}
             </BaseView>
           </div>

@@ -3,7 +3,7 @@ import { BaseView } from '../../utils/components';
 import GridBox from './GridBox';
 
 function Grid({ ...elementProps }) {
-  return <BaseView elementProps={elementProps} className="row" />;
+  return <BaseView props={elementProps} className="row" />;
 }
 
 Grid.Box = GridBox;

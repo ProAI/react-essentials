@@ -32,7 +32,7 @@ function GridBox({
     sizeXl && `col-sm-${sizeXl.toString()}`,
   );
 
-  return <BaseView elementProps={elementProps} className={classes} />;
+  return <BaseView props={elementProps} className={classes} />;
 }
 
 GridBox.propTypes = propTypes;

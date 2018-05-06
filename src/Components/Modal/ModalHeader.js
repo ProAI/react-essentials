@@ -24,7 +24,7 @@ function ModalHeader({
     }));
 
   return (
-    <BaseView elementProps={elementProps} className="modal-header">
+    <BaseView props={elementProps} className="modal-header">
       {manipulatedChildren}
       {dismissible && <CloseButton onClick={onToggle} />}
     </BaseView>

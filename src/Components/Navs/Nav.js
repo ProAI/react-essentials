@@ -21,7 +21,7 @@ function Nav({ variant, ...elementProps }) {
     variant === 'pills' && 'nav-pills',
   );
 
-  return <BaseView elementProps={elementProps} tag="nav" className={classes} />;
+  return <BaseView props={elementProps} tag="nav" className={classes} />;
 }
 
 Nav.propTypes = propTypes;

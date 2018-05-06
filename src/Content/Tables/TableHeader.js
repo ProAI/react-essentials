@@ -1,7 +1,7 @@
 import React from 'react';
 
 function TableHeader({ ...elementProps }) {
-  return <div elementProps={elementProps} className="" />;
+  return <div props={elementProps} className="" />;
 }
 
 export default TableHeader;

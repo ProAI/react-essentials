@@ -11,7 +11,7 @@ const defaultProps = {
 };
 
 function Paragraph({ ...elementProps }) {
-  return <BaseText elementProps={elementProps} tag="p" className="" blockOnly />;
+  return <BaseText props={elementProps} tag="p" className="" blockOnly />;
 }
 
 Paragraph.propTypes = propTypes;

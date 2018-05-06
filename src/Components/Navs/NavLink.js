@@ -48,7 +48,7 @@ function NavLink(props, context) {
 
         return (
           <BaseText
-            elementProps={elementProps}
+            props={elementProps}
             tag={RouterLink}
             to={to}
             innerRef={ref}

@@ -19,7 +19,7 @@ function ListGroupItem({ disabled, ...elementProps }) {
     disabled && 'disabled',
   );
 
-  return <BaseText elementProps={elementProps} tag="li" className={classes} blockOnly />;
+  return <BaseText props={elementProps} tag="li" className={classes} blockOnly />;
 }
 
 ListGroupItem.propTypes = propTypes;

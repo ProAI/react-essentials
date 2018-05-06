@@ -23,7 +23,7 @@ function TabsContent({
     }));
 
   return (
-    <BaseView elementProps={elementProps} className="tab-content">
+    <BaseView props={elementProps} className="tab-content">
       {manipulatedChildren}
     </BaseView>
   );

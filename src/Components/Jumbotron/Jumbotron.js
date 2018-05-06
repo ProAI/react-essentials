@@ -19,7 +19,7 @@ function Jumbotron({ fluid, ...elementProps }) {
     fluid && 'jumbotron-fluid',
   );
 
-  return <BaseView elementProps={elementProps} className={classes} />;
+  return <BaseView props={elementProps} className={classes} />;
 }
 
 Jumbotron.propTypes = propTypes;

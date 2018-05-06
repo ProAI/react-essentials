@@ -19,7 +19,7 @@ function Badge({ variant, ...elementProps }) {
     `badge-${variant}`,
   );
 
-  return <BaseText elementProps={elementProps} className={classes} inlineOnly />;
+  return <BaseText props={elementProps} className={classes} inlineOnly />;
 }
 
 Badge.propTypes = propTypes;

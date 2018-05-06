@@ -19,7 +19,7 @@ function TabsContentPane({ active, ...elementProps }) {
     active && 'active',
   );
 
-  return <BaseView elementProps={elementProps} role="tabpanel" className={classes} />;
+  return <BaseView props={elementProps} role="tabpanel" className={classes} />;
 }
 
 TabsContentPane.propTypes = propTypes;

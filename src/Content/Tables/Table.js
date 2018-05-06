@@ -49,7 +49,7 @@ function Table({
     responsiveXl && 'table-responsive-xl',
   );
 
-  return <div elementProps={elementProps} className={classes} />;
+  return <div props={elementProps} className={classes} />;
 }
 
 Table.propTypes = propTypes;

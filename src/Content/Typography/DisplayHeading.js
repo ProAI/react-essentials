@@ -8,7 +8,7 @@ const propTypes = {
 };
 
 function DisplayHeading({ size, ...elementProps }) {
-  return <BaseText elementProps={elementProps} tag="h1" className={`display-${size}`} blockOnly />;
+  return <BaseText props={elementProps} tag="h1" className={`display-${size}`} blockOnly />;
 }
 
 DisplayHeading.propTypes = propTypes;

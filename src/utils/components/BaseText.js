@@ -6,7 +6,7 @@ import { UTILS, TEXT_COLORS } from '../constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  elementProps: PropTypes.shape({
+  props: PropTypes.shape({
     class: PropTypes.arrayOf(UTILS),
     color: PropTypes.oneOf(TEXT_COLORS),
     align: PropTypes.oneOf(['justify', 'left', 'center', 'right']),
@@ -31,7 +31,7 @@ const childContextTypes = {
 };
 
 const defaultProps = {
-  elementProps: {
+  props: {
     class: null,
     align: null,
     color: null,
@@ -78,16 +78,8 @@ class BaseText extends React.Component {
   render() {
     const {
       children,
-      elementProps: {
-        class: utils,
-        align,
-        color,
-        mark,
-        small,
-        underline,
-        bold,
-        italic,
-        ...elementProps
+      props: {
+        class: utils, align, color, mark, small, underline, bold, italic, ...otherProps
       },
       tag,
       className,
@@ -115,7 +107,7 @@ class BaseText extends React.Component {
     const childrenWithUBI = italic ? <em>{childrenWithUB}</em> : childrenWithUB;
 
     return (
-      <Tag {...elementProps} className={classes}>
+      <Tag {...otherProps} className={classes}>
         {childrenWithUBI}
       </Tag>
     );

@@ -19,7 +19,7 @@ function Container({ fluid, ...elementProps }) {
     fluid ? 'container-fluid' : null,
   );
 
-  return <BaseView elementProps={elementProps} className={classes} />;
+  return <BaseView props={elementProps} className={classes} />;
 }
 
 Container.propTypes = propTypes;

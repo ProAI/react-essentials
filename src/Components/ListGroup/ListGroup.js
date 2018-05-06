@@ -26,7 +26,7 @@ function ListGroup({ flush, actionable, ...elementProps }) {
 
   const tag = actionable ? 'div' : 'ul';
 
-  return <BaseView elementProps={elementProps} tag={tag} className={classes} />;
+  return <BaseView props={elementProps} tag={tag} className={classes} />;
 }
 
 ListGroup.propTypes = propTypes;

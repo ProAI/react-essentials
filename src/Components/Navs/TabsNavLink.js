@@ -42,7 +42,7 @@ class TabsNavLink extends React.Component {
     return (
       <BaseView tag="li" className="nav-item">
         <BaseText
-          elementProps={elementProps}
+          props={elementProps}
           tag="a"
           role="tab"
           href={`#${toPane}`}
