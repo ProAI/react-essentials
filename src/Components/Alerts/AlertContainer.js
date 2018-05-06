@@ -1,10 +1,22 @@
 import React from 'react';
 import AlertStack from './AlertStack';
-import { defaultAlert, constants } from './constants';
 import { getPositionAttributes } from './helpers';
+import { COLORS, POSITIONS } from '../../utils/constants';
 import Alert from './Alert';
 
 const propTypes = {};
+
+export const defaultAlert = {
+  title: null,
+  content: null,
+  color: null,
+  placement: 'top center',
+  autoDismiss: 5,
+  dismissible: true,
+  icon: true,
+  small: false,
+  link: null,
+};
 
 class AlertContainer extends React.Component {
   state = {
@@ -66,12 +78,12 @@ class AlertContainer extends React.Component {
     const { alerts } = this.state;
     let id;
 
-    if (!alert.variant) {
-      throw new Error('alert variant is required.');
+    if (!alert.color) {
+      throw new Error('alert color is required.');
     }
 
-    if (constants.variants.indexOf(alert.variant) === -1) {
-      throw new Error(`"${alert.variant}" is not a valid variant.`);
+    if (COLORS.indexOf(alert.color) === -1) {
+      throw new Error(`"${alert.color}" is not a valid color.`);
     }
 
     // eslint-disable-next-line no-restricted-globals
@@ -79,7 +91,7 @@ class AlertContainer extends React.Component {
       throw new Error('"autoDismiss" must be a number.');
     }
 
-    if (constants.positions.indexOf(alert.placement) === -1) {
+    if (POSITIONS.indexOf(alert.placement) === -1) {
       throw new Error(`"${alert.placement}" is not a valid position.`);
     }
 
@@ -127,7 +139,7 @@ class AlertContainer extends React.Component {
     let positions = null;
 
     if (this.state.alerts.length) {
-      positions = constants.positions.map((position) => {
+      positions = POSITIONS.map((position) => {
         const alerts = this.state.alerts.filter(alert => position === alert.placement);
 
         const positionAttributes = getPositionAttributes(position);

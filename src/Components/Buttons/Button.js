@@ -7,7 +7,7 @@ import { action } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
-  variant: PropTypes.oneOf(BUTTON_COLORS),
+  color: PropTypes.oneOf(BUTTON_COLORS),
   size: PropTypes.oneOf(SIZES),
   caret: PropTypes.bool,
 };
@@ -18,20 +18,20 @@ const contextTypes = {
 
 const defaultProps = {
   ...action.defaultProps,
-  variant: 'primary',
+  color: 'primary',
   size: null,
   caret: false,
 };
 
 function Button(props, context) {
   const {
-    variant, size, caret, ...elementProps
+    color, size, caret, ...elementProps
   } = props;
 
   const classes = cx(
     // constant classes
     'btn',
-    `btn-${variant}`,
+    `btn-${color}`,
     // variable classes
     size === 'sm' && 'btn-sm',
     size === 'lg' && 'btn-lg',

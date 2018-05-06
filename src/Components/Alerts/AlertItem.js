@@ -14,7 +14,7 @@ import { COLORS } from '../../utils/constants';
 const propTypes = {
   alert: PropTypes.shape({
     uid: PropTypes.number,
-    variant: PropTypes.oneOf(COLORS),
+    color: PropTypes.oneOf(COLORS),
     title: PropTypes.string,
     content: PropTypes.string,
     link: PropTypes.string,
@@ -158,7 +158,7 @@ class AlertItem extends React.Component {
 
   render() {
     const { alert } = this.props;
-    let classes = `alert alert-${alert.variant}`;
+    let classes = `alert alert-${alert.color}`;
     let dismiss = null;
     let icon = null;
     let title = null;
@@ -187,7 +187,7 @@ class AlertItem extends React.Component {
     }
 
     if (alert.icon) {
-      switch (alert.variant) {
+      switch (alert.color) {
         case 'info':
           icon = <InfoIcon className="alert-icon" />;
           break;

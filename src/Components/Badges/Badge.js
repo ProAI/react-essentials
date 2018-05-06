@@ -5,18 +5,18 @@ import { BaseText } from '../../utils/components';
 import { COLORS } from '../../utils/constants';
 
 const propTypes = {
-  variant: PropTypes.oneOf(COLORS),
+  color: PropTypes.oneOf(COLORS),
 };
 
 const defaultProps = {
-  variant: 'primary',
+  color: 'primary',
 };
 
-function Badge({ variant, ...elementProps }) {
+function Badge({ color, ...elementProps }) {
   const classes = cx(
     // constant classes
     'badge',
-    `badge-${variant}`,
+    `badge-${color}`,
   );
 
   return <BaseText props={elementProps} className={classes} inlineOnly />;

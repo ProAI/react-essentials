@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
-import { UTILS } from '../constants';
+import checkClassProp from '../checkClassProp';
 
 const propTypes = {
   children: PropTypes.node,
   props: PropTypes.shape({
-    class: PropTypes.arrayOf(UTILS),
+    class: PropTypes.arrayOf(checkClassProp),
   }),
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,

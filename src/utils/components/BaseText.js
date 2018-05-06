@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
-import { UTILS, TEXT_COLORS } from '../constants';
+import checkClassProp from '../checkClassProp';
+import { TEXT_COLORS } from '../constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   props: PropTypes.shape({
-    class: PropTypes.arrayOf(UTILS),
+    class: PropTypes.arrayOf(checkClassProp),
     color: PropTypes.oneOf(TEXT_COLORS),
     align: PropTypes.oneOf(['justify', 'left', 'center', 'right']),
     mark: PropTypes.bool,

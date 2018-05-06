@@ -7,7 +7,7 @@ import { action } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
-  variant: PropTypes.oneOf(COLORS),
+  color: PropTypes.oneOf(COLORS),
 };
 
 const contextTypes = {
@@ -16,15 +16,15 @@ const contextTypes = {
 
 const defaultProps = {
   ...action.defaultProps,
-  variant: 'primary',
+  color: 'primary',
 };
 
 function BadgeLink(props, context) {
-  const { variant, ...elementProps } = props;
+  const { color, ...elementProps } = props;
   const classes = cx(
     // constant classes
     'badge',
-    `badge-${variant}`,
+    `badge-${color}`,
   );
 
   const linkProps = action.createLinkProps(elementProps, context);
