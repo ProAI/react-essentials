@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView, BaseText } from '../../utils/components';
+import { BaseText } from '../../utils/components';
 
 const propTypes = {
   toPane: PropTypes.string.isRequired,
@@ -16,7 +16,7 @@ const defaultProps = {
   active: null,
 };
 
-class TabsNavLink extends React.Component {
+class TabsListGroupTab extends React.Component {
   onClick = (event) => {
     event.preventDefault();
 
@@ -34,7 +34,8 @@ class TabsNavLink extends React.Component {
 
     const linkClasses = cx(
       // constant classes
-      'nav-link',
+      'list-group-item',
+      'list-group-item-action',
       // variable classes
       active && 'active',
     );
@@ -53,7 +54,7 @@ class TabsNavLink extends React.Component {
   }
 }
 
-TabsNavLink.propTypes = propTypes;
-TabsNavLink.defaultProps = defaultProps;
+TabsListGroupTab.propTypes = propTypes;
+TabsListGroupTab.defaultProps = defaultProps;
 
-export default TabsNavLink;
+export default TabsListGroupTab;

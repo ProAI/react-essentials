@@ -6,17 +6,10 @@ import TabsContentPane from './TabsContentPane';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  className: PropTypes.string,
   activeKey: PropTypes.string.isRequired,
 };
 
-const defaultProps = {
-  className: null,
-};
-
-function TabsContent({
-  children, className, activeKey, ...elementProps
-}) {
+function TabsContent({ children, activeKey, ...elementProps }) {
   const manipulatedChildren = React.Children.map(children, child =>
     React.cloneElement(child, {
       active: activeKey === child.props.id,
@@ -30,7 +23,6 @@ function TabsContent({
 }
 
 TabsContent.propTypes = propTypes;
-TabsContent.defaultProps = defaultProps;
 
 TabsContent.Pane = TabsContentPane;
 

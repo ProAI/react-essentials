@@ -2,23 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseView } from '../../utils/components';
-import TabsNavLink from './TabsNavLink';
+import TabsNavTab from './TabsNavTab';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   activeKey: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf(['basic', 'tabs', 'pills']),
-  stacked: PropTypes.bool,
+  variant: PropTypes.oneOf(['tabs', 'pills']),
 };
 
 const defaultProps = {
   variant: 'tabs',
-  stacked: false,
 };
 
 function TabsNav({
-  children, activeKey, onChange, variant, stacked, ...elementProps
+  children, activeKey, onChange, variant, ...elementProps
 }) {
   const classes = cx(
     // constant classes
@@ -26,7 +24,6 @@ function TabsNav({
     // variable classes
     variant === 'tabs' && 'nav-tabs',
     variant === 'pills' && 'nav-pills',
-    stacked && 'flex-column',
   );
 
   const manipulatedChildren = React.Children.map(children, child =>
@@ -45,6 +42,6 @@ function TabsNav({
 TabsNav.propTypes = propTypes;
 TabsNav.defaultProps = defaultProps;
 
-TabsNav.Link = TabsNavLink;
+TabsNav.Tab = TabsNavTab;
 
 export default TabsNav;

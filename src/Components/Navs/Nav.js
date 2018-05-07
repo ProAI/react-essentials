@@ -5,11 +5,11 @@ import { BaseView } from '../../utils/components';
 import NavLink from './NavLink';
 
 const propTypes = {
-  variant: PropTypes.oneOf(['basic', 'tabs', 'pills']),
+  variant: PropTypes.oneOf(['tabs', 'pills']),
 };
 
 const defaultProps = {
-  variant: 'basic',
+  variant: 'tabs',
 };
 
 function Nav({ variant, ...elementProps }) {

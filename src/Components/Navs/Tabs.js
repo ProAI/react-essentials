@@ -12,7 +12,7 @@ const propTypes = {
   defaultActiveKey: PropTypes.string,
   activeKey: PropTypes.string,
   onChange: PropTypes.func,
-  variant: PropTypes.oneOf(['basic', 'tabs', 'pills']),
+  variant: PropTypes.oneOf(['tabs', 'pills']),
   stacked: PropTypes.bool,
 };
 

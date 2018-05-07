@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseView } from '../../utils/components';
-import TabsListGroupLink from './TabsListGroupLink';
+import TabsListGroupTab from './TabsListGroupTab';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -41,6 +41,6 @@ function TabsListGroup({
 TabsListGroup.propTypes = propTypes;
 TabsListGroup.defaultProps = defaultProps;
 
-TabsListGroup.Link = TabsListGroupLink;
+TabsListGroup.Tab = TabsListGroupTab;
 
 export default TabsListGroup;
