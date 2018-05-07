@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { BaseImage } from '../../utils/components';
 
 const propTypes = {
-  source: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
   fluid: PropTypes.bool,
   thumbnail: PropTypes.bool,
 };
@@ -14,16 +13,14 @@ const defaultProps = {
   thumbnail: false,
 };
 
-function Image({
-  source, alt, fluid, thumbnail,
-}) {
+function Image({ fluid, thumbnail, ...elementProps }) {
   const classes = cx(
     // variable classes
     fluid && 'img-fluid',
     thumbnail && 'img-thumbnail',
   );
 
-  return <img src={source} alt={alt} className={classes} />;
+  return <BaseImage props={elementProps} className={classes} />;
 }
 
 Image.propTypes = propTypes;
