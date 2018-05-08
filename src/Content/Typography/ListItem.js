@@ -6,17 +6,15 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function TableData({ children, ...elementProps }) {
+function List({ children, ...elementProps }) {
   // TODO: Remove pseudo view and add react-native compatible component
   return (
-    <BaseView pseudo tag="td" props={elementProps} className="">
-      <BaseText className="" blockOnly>
-        {children}
-      </BaseText>
+    <BaseView pseudo tag="li" className="" props={elementProps}>
+      <BaseText blockOnly>{children}</BaseText>
     </BaseView>
   );
 }
 
-TableData.propTypes = propTypes;
+List.propTypes = propTypes;
 
-export default TableData;
+export default List;

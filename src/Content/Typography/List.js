@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseView } from '../../utils/components';
+import ListItem from './ListItem';
 
 const propTypes = {
-  data: PropTypes.object.isRequired,
   variant: PropTypes.oneOf(['unordered', 'ordered']),
   unstyled: PropTypes.bool,
   inline: PropTypes.bool,
@@ -17,7 +17,7 @@ const defaultProps = {
 };
 
 function List({
-  data, variant, unstyled, inline,
+  variant, unstyled, inline, ...elementProps
 }) {
   const classes = cx(
     // variable classes
@@ -25,12 +25,20 @@ function List({
     inline && 'list-inline',
   );
 
-  // TODO: apply data
-
-  return <BaseView tag={variant === 'unordered' ? 'ul' : 'ol'} className={classes} />;
+  // TODO: Remove pseudo view and add react-native compatible component
+  return (
+    <BaseView
+      pseudo
+      tag={variant === 'unordered' ? 'ul' : 'ol'}
+      props={elementProps}
+      className={classes}
+    />
+  );
 }
 
 List.propTypes = propTypes;
 List.defaultProps = defaultProps;
+
+List.Item = ListItem;
 
 export default List;

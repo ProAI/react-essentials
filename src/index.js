@@ -47,6 +47,9 @@ import TooltipButton from './Components/Tooltips/TooltipButton';
 import Image from './Content/Images/Image';
 import Link from './Content/Links/Link';
 import Table from './Content/Tables/Table';
+import TD from './Content/Tables/TableData';
+import TH from './Content/Tables/TableHeading';
+import TR from './Content/Tables/TableRow';
 import Blockquote from './Content/Typography/Blockquote';
 import Cite from './Content/Typography/Cite';
 import DisplayHeading from './Content/Typography/DisplayHeading';
@@ -92,6 +95,9 @@ export {
   Image,
   Link,
   Table,
+  TD,
+  TH,
+  TR,
   Blockquote,
   Cite,
   DisplayHeading,

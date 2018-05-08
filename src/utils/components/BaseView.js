@@ -11,6 +11,7 @@ const propTypes = {
   }),
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
+  pseudo: PropTypes.bool,
   withoutChildren: PropTypes.bool,
 };
 
@@ -24,6 +25,7 @@ const defaultProps = {
     class: null,
   },
   tag: 'div',
+  pseudo: false,
   withoutChildren: false,
 };
 
@@ -43,6 +45,7 @@ class BaseView extends React.Component {
       props: { class: utils, ...otherProps },
       tag: Tag,
       className,
+      pseudo,
       withoutChildren,
     } = this.props;
 
@@ -61,7 +64,7 @@ class BaseView extends React.Component {
 
     const classes = cx(
       // add yoga layout styles
-      'yoga-view',
+      !pseudo && 'yoga-view',
       // add (mostly) bootstrap styles
       className,
       // add utils styles
