@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BaseView } from '../../utils/components';
-import { generateKey } from '../../utils';
 import TabsNav from './TabsNav';
-import TabsNavLink from './TabsNavLink';
+import TabsNavTab from './TabsNavTab';
 import TabsContent from './TabsContent';
 import TabsContentPane from './TabsContentPane';
 
@@ -16,6 +15,10 @@ const propTypes = {
   stacked: PropTypes.bool,
 };
 
+const contextTypes = {
+  generateKey: PropTypes.func.isRequired,
+};
+
 const defaultProps = {
   defaultActiveKey: null,
   activeKey: null,
@@ -25,10 +28,10 @@ const defaultProps = {
 };
 
 class Tabs extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    this.identifier = generateKey('re-tabs-');
+    this.identifier = context.generateKey('re-tabs-');
 
     if (!props.activeKey) {
       this.state = {
@@ -69,7 +72,7 @@ class Tabs extends React.Component {
     const tabsNavLinkChildren = React.Children.map(children, (child, i) => {
       const linkedPaneId = child.props.id || `${this.identifier}-${i}`;
 
-      return <TabsNavLink toPane={linkedPaneId}>{child.props.label}</TabsNavLink>;
+      return <TabsNavTab toPane={linkedPaneId}>{child.props.label}</TabsNavTab>;
     });
 
     const tabsContentPaneChildren = React.Children.map(children, (child, i) => {
@@ -97,6 +100,7 @@ class Tabs extends React.Component {
 }
 
 Tabs.propTypes = propTypes;
+Tabs.contextTypes = contextTypes;
 Tabs.defaultProps = defaultProps;
 
 Tabs.Pane = TabsContentPane;

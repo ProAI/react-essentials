@@ -6,7 +6,6 @@ import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
 import ModalTitle from './ModalTitle';
-import { generateKey } from '../../utils';
 import { SIZES } from '../../utils/constants';
 import { BaseView } from '../../utils/components';
 
@@ -18,6 +17,10 @@ const propTypes = {
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
   dismissible: PropTypes.bool,
+};
+
+const contextTypes = {
+  generateKey: PropTypes.func.isRequired,
 };
 
 const childContextTypes = {
@@ -45,10 +48,10 @@ const computeScrollbarWidth = () => {
 };
 
 class Modal extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    this.identifier = generateKey('re-modal-title-');
+    this.identifier = context.generateKey('re-modal-title-');
   }
 
   getChildContext() {
@@ -337,6 +340,7 @@ class Modal extends React.Component {
 }
 
 Modal.propTypes = propTypes;
+Modal.contextTypes = contextTypes;
 Modal.childContextTypes = childContextTypes;
 Modal.defaultProps = defaultProps;
 

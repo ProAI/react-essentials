@@ -2,12 +2,15 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { generateKey } from '../../utils';
 
 const propTypes = {
   checked: PropTypes.bool,
   onChange: PropTypes.func,
   variant: PropTypes.oneOf(['blank', 'symbols', 'onoff', 'yesno']),
+};
+
+const contextTypes = {
+  generateKey: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -16,11 +19,11 @@ const defaultProps = {
   variant: 'blank',
 };
 
-class SwitchButton extends React.Component {
-  constructor(props) {
-    super(props);
+class Switch extends React.Component {
+  constructor(props, context) {
+    super(props, context);
 
-    this.identifier = generateKey('re-switch-');
+    this.identifier = context.generateKey('re-switch-');
   }
 
   state = {
@@ -88,7 +91,8 @@ class SwitchButton extends React.Component {
   }
 }
 
-SwitchButton.propTypes = propTypes;
-SwitchButton.defaultProps = defaultProps;
+Switch.propTypes = propTypes;
+Switch.contextTypes = contextTypes;
+Switch.defaultProps = defaultProps;
 
-export default SwitchButton;
+export default Switch;

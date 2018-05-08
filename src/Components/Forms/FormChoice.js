@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Field from './Field';
-import { generateKey } from '../../utils';
 
 const propTypes = {
   name: PropTypes.string.isRequired,
@@ -19,6 +18,7 @@ const propTypes = {
 
 const contextTypes = {
   formik: PropTypes.object.isRequired,
+  generateKey: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -33,7 +33,7 @@ class FormChoice extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.identifier = generateKey('re-form-');
+    this.identifier = context.generateKey('re-form-');
 
     if (context.formik.values[props.name] === undefined) {
       throw Error(`There is no initial value for field "${props.name}"`);

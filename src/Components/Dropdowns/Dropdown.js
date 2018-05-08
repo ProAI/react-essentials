@@ -8,12 +8,15 @@ import DropdownDivider from './DropdownDivider';
 import DropdownLink from './DropdownLink';
 import DropdownText from './DropdownText';
 import { BaseView } from '../../utils/components';
-import { generateKey } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   onToggle: PropTypes.func,
   visible: PropTypes.bool,
+};
+
+const contextTypes = {
+  generateKey: PropTypes.func.isRequired,
 };
 
 const childContextTypes = {
@@ -26,10 +29,10 @@ const defaultProps = {
 };
 
 class Dropdown extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    this.identifier = generateKey('re-dropdown-');
+    this.identifier = context.generateKey('re-dropdown-');
   }
 
   state = {
@@ -146,6 +149,7 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.propTypes = propTypes;
+Dropdown.contextTypes = contextTypes;
 Dropdown.childContextTypes = childContextTypes;
 Dropdown.defaultProps = defaultProps;
 

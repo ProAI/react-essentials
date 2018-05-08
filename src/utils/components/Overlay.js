@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import PopperJS from 'popper.js';
 import cx from 'classnames';
 import BaseView from './BaseView';
-import generateKey from '../generateKey';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -22,6 +21,10 @@ const propTypes = {
   role: PropTypes.string.isRequired,
 };
 
+const contextTypes = {
+  generateKey: PropTypes.func.isRequired,
+};
+
 const defaultProps = {
   placement: 'bottom',
   fallbackPlacement: null,
@@ -32,10 +35,10 @@ const canUseDOM = typeof window !== 'undefined';
 const isReact15 = ReactDOM.createPortal === undefined;
 
 class Overlay extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
-    this.identifier = generateKey('re-overlay-');
+    this.identifier = context.generateKey('re-overlay-');
   }
 
   state = {
@@ -218,6 +221,7 @@ class Overlay extends React.Component {
 }
 
 Overlay.propTypes = propTypes;
+Overlay.contextTypes = contextTypes;
 Overlay.defaultProps = defaultProps;
 
 export default Overlay;
