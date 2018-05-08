@@ -1,8 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { BaseView } from '../../utils/components';
 
-function CardFooter({ ...elementProps }) {
-  return <BaseView props={elementProps} className="card-footer" />;
+const propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+function CardFooter({ children, ...elementProps }) {
+  return (
+    <BaseView props={elementProps} className="card-footer">
+      {children}
+    </BaseView>
+  );
 }
+
+CardFooter.propTypes = propTypes;
 
 export default CardFooter;

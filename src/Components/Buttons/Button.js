@@ -7,6 +7,7 @@ import { action } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
+  children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(BUTTON_COLORS),
   size: PropTypes.oneOf(SIZES),
   caret: PropTypes.bool,
@@ -25,7 +26,7 @@ const defaultProps = {
 
 function Button(props, context) {
   const {
-    color, size, caret, ...elementProps
+    children, color, size, caret, ...elementProps
   } = props;
 
   const classes = cx(
@@ -40,7 +41,11 @@ function Button(props, context) {
 
   const buttonProps = action.createButtonProps(elementProps, context);
 
-  return <BaseText {...buttonProps} className={classes} blockOnly />;
+  return (
+    <BaseText {...buttonProps} className={classes} blockOnly>
+      {children}
+    </BaseText>
+  );
 }
 
 Button.propTypes = propTypes;

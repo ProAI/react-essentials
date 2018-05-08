@@ -12,7 +12,6 @@ const propTypes = {
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
   pseudo: PropTypes.bool,
-  withoutChildren: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -26,7 +25,6 @@ const defaultProps = {
   },
   tag: 'div',
   pseudo: false,
-  withoutChildren: false,
 };
 
 class BaseView extends React.Component {
@@ -46,14 +44,10 @@ class BaseView extends React.Component {
       tag: Tag,
       className,
       pseudo,
-      withoutChildren,
     } = this.props;
 
     // check children
     if (process.env.NODE_ENV !== 'production') {
-      invariant(withoutChildren && children, 'This component does not allow a children prop.');
-      invariant(!withoutChildren && !children, 'Children prop is missing in component.');
-
       React.Children.toArray(this.props.children).forEach((item) => {
         invariant(
           typeof item !== 'string',
@@ -68,7 +62,7 @@ class BaseView extends React.Component {
       // add (mostly) bootstrap styles
       className,
       // add utils styles
-      utils.join(' '),
+      utils && utils.join(' '),
     );
 
     return (

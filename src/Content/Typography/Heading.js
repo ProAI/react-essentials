@@ -4,11 +4,16 @@ import { BaseText } from '../../utils/components';
 import { HEADING_SIZES } from '../../utils/constants';
 
 const propTypes = {
+  children: PropTypes.node.isRequired,
   size: PropTypes.oneOf(HEADING_SIZES).isRequired,
 };
 
-function Heading({ size, ...elementProps }) {
-  return <BaseText props={elementProps} tag={`h${size.toString()}`} className="" blockOnly />;
+function Heading({ children, size, ...elementProps }) {
+  return (
+    <BaseText props={elementProps} tag={`h${size.toString()}`} className="" blockOnly>
+      {children}
+    </BaseText>
+  );
 }
 
 Heading.propTypes = propTypes;

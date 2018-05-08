@@ -6,6 +6,7 @@ import { action } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
+  children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   active: PropTypes.bool,
 };
@@ -21,7 +22,9 @@ const defaultProps = {
 };
 
 function ListGroupButton(props, context) {
-  const { disabled, active, ...elementProps } = props;
+  const {
+    children, disabled, active, ...elementProps
+  } = props;
 
   const classes = cx(
     // constant classes
@@ -31,9 +34,13 @@ function ListGroupButton(props, context) {
     active && 'active',
   );
 
-  const buttonProps = action.createButtonProps(elementProps, context);
+  const buttonProps = action.createButtonProps({ ...elementProps, disabled }, context);
 
-  return <BaseText {...buttonProps} disabled={disabled} className={classes} blockOnly />;
+  return (
+    <BaseText {...buttonProps} className={classes} blockOnly>
+      {children}
+    </BaseText>
+  );
 }
 
 ListGroupButton.propTypes = propTypes;

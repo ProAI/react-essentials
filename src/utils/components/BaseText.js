@@ -99,7 +99,7 @@ class BaseText extends React.Component {
       // add (mostly) bootstrap styles
       className,
       // add utils styles
-      utils.join(' '),
+      utils && utils.join(' '),
     );
 
     // wrap children with underline, bold and italic tags

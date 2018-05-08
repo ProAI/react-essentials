@@ -4,6 +4,7 @@ import cx from 'classnames';
 import { BaseView } from '../../utils/components';
 
 const propTypes = {
+  children: PropTypes.node.isRequired,
   fluid: PropTypes.bool,
 };
 
@@ -11,7 +12,7 @@ const defaultProps = {
   fluid: false,
 };
 
-function Jumbotron({ fluid, ...elementProps }) {
+function Jumbotron({ children, fluid, ...elementProps }) {
   const classes = cx(
     // constant classes
     'jumbotron',
@@ -19,7 +20,11 @@ function Jumbotron({ fluid, ...elementProps }) {
     fluid && 'jumbotron-fluid',
   );
 
-  return <BaseView props={elementProps} className={classes} />;
+  return (
+    <BaseView props={elementProps} className={classes}>
+      {children}
+    </BaseView>
+  );
 }
 
 Jumbotron.propTypes = propTypes;

@@ -33,9 +33,9 @@ export const COLORS = [
   'light',
   'dark',
 ];
-export const BUTTON_COLORS = COLORS.push('link');
-export const TEXT_COLORS = COLORS.concat(['body', 'muted', 'white', 'black-50', 'white-50']);
-export const BACKGROUND_COLORS = COLORS.concat(['white', 'transparent']);
+export const BUTTON_COLORS = ['link', ...COLORS];
+export const TEXT_COLORS = ['body', 'muted', 'white', 'black-50', 'white-50', ...COLORS];
+export const BACKGROUND_COLORS = ['white', 'transparent', ...COLORS];
 
 // SIZES prop type
 export const SIZES = ['sm', 'lg'];

@@ -24,34 +24,41 @@ export default function makeLinkProps(props, context) {
   // action link
   if (!to) {
     return {
-      ...elementProps,
       tag: 'a',
-      role: 'button',
-      tabIndex: 0,
-      ref,
-      onClick: handleClick,
-      // TODO onKeyPress: () => {},
+      elementProps: {
+        ...elementProps,
+        role: 'button',
+        tabIndex: 0,
+        ref,
+        onClick: handleClick,
+        // TODO onKeyPress: () => {},
+      },
     };
   }
 
   // external link
   if (external) {
     return {
-      ...elementProps,
-      href: to,
-      target: '_blank',
-      rel: 'noopener noreferrer',
-      ref,
-      onClick: handleClick,
+      tag: 'a',
+      elementProps: {
+        ...elementProps,
+        href: to,
+        target: '_blank',
+        rel: 'noopener noreferrer',
+        ref,
+        onClick: handleClick,
+      },
     };
   }
 
   // router link
   return {
-    ...elementProps,
     tag: RouterLink,
-    to,
-    innerRef: ref,
-    onClick: handleClick,
+    elementProps: {
+      ...elementProps,
+      to,
+      innerRef: ref,
+      onClick: handleClick,
+    },
   };
 }

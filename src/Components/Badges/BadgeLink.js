@@ -7,6 +7,7 @@ import { action } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
+  children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(COLORS),
 };
 
@@ -20,7 +21,7 @@ const defaultProps = {
 };
 
 function BadgeLink(props, context) {
-  const { color, ...elementProps } = props;
+  const { children, color, ...elementProps } = props;
   const classes = cx(
     // constant classes
     'badge',
@@ -29,7 +30,11 @@ function BadgeLink(props, context) {
 
   const linkProps = action.createLinkProps(elementProps, context);
 
-  return <BaseText {...linkProps} className={classes} inlineOnly />;
+  return (
+    <BaseText {...linkProps} className={classes} inlineOnly>
+      {children}
+    </BaseText>
+  );
 }
 
 BadgeLink.propTypes = propTypes;

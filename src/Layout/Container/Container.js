@@ -4,6 +4,7 @@ import cx from 'classnames';
 import { BaseView } from '../../utils/components';
 
 const propTypes = {
+  children: PropTypes.node.isRequired,
   fluid: PropTypes.bool,
 };
 
@@ -11,7 +12,7 @@ const defaultProps = {
   fluid: false,
 };
 
-function Container({ fluid, ...elementProps }) {
+function Container({ children, fluid, ...elementProps }) {
   const classes = cx(
     // constant classes
     'container',
@@ -19,7 +20,11 @@ function Container({ fluid, ...elementProps }) {
     fluid ? 'container-fluid' : null,
   );
 
-  return <BaseView props={elementProps} className={classes} />;
+  return (
+    <BaseView props={elementProps} className={classes}>
+      {children}
+    </BaseView>
+  );
 }
 
 Container.propTypes = propTypes;

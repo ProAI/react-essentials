@@ -4,6 +4,7 @@ import cx from 'classnames';
 import { BaseText } from '../../utils/components';
 
 const propTypes = {
+  children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
 };
 
@@ -11,7 +12,7 @@ const defaultProps = {
   disabled: false,
 };
 
-function ListGroupItem({ disabled, ...elementProps }) {
+function ListGroupItem({ children, disabled, ...elementProps }) {
   const classes = cx(
     // constant classes
     'list-group-item',
@@ -19,7 +20,11 @@ function ListGroupItem({ disabled, ...elementProps }) {
     disabled && 'disabled',
   );
 
-  return <BaseText props={elementProps} tag="li" className={classes} blockOnly />;
+  return (
+    <BaseText tag="li" props={elementProps} className={classes} blockOnly>
+      {children}
+    </BaseText>
+  );
 }
 
 ListGroupItem.propTypes = propTypes;

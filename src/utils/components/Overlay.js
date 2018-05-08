@@ -167,12 +167,14 @@ class Overlay extends React.Component {
 
     return (
       <BaseView
-        ref={(element) => {
-          this.popper = element;
+        elementProps={{
+          ref: (element) => {
+            this.popper = element;
+          },
+          role,
+          style: popperStyle,
         }}
-        role={role}
         className={classes}
-        style={popperStyle}
       >
         <div
           ref={(element) => {

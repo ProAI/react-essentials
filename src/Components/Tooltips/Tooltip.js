@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopperJS from 'popper.js';
-import { BaseText } from '../../utils/components';
-import { Overlay, triggers } from '../../utils';
+import { BaseText, Overlay } from '../../utils/components';
+import { TRIGGERS } from '../../utils/constants';
 
 const propTypes = {
   title: PropTypes.node.isRequired,
@@ -10,7 +10,7 @@ const propTypes = {
   fallbackPlacement: PropTypes.oneOf(['flip', 'clockwise', 'counterwise']),
   onToggle: PropTypes.func,
   visible: PropTypes.bool,
-  trigger: PropTypes.oneOf(triggers),
+  trigger: PropTypes.oneOf(TRIGGERS),
   target: PropTypes.node.isRequired,
 };
 

@@ -135,9 +135,11 @@ class Dropdown extends React.Component {
 
     return (
       <BaseView
-        props={elementProps}
-        ref={(element) => {
-          this.element = element;
+        props={{
+          ...elementProps,
+          ref: (element) => {
+            this.element = element;
+          },
         }}
         className={classes}
       >

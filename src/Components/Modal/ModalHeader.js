@@ -4,8 +4,8 @@ import { BaseView } from '../../utils/components';
 import { CloseButton } from '../../utils';
 
 const propTypes = {
-  titleId: PropTypes.string,
   children: PropTypes.node.isRequired,
+  titleId: PropTypes.string,
   onToggle: PropTypes.func.isRequired,
   dismissible: PropTypes.bool.isRequired,
 };
@@ -15,7 +15,7 @@ const defaultProps = {
 };
 
 function ModalHeader({
-  titleId, children, dismissible, onToggle, ...elementProps
+  children, titleId, dismissible, onToggle, ...elementProps
 }) {
   // inject titleId
   const manipulatedChildren = React.Children.map(children, child =>

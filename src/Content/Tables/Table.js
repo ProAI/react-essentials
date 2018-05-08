@@ -10,6 +10,7 @@ import TableHeading from './TableHeading';
 import TableRow from './TableRow';
 
 const propTypes = {
+  children: PropTypes.node.isRequired,
   bordered: PropTypes.bool,
   striped: PropTypes.bool,
   hover: PropTypes.bool,
@@ -32,6 +33,7 @@ const defaultProps = {
 };
 
 function Table({
+  children,
   bordered,
   striped,
   hover,
@@ -57,7 +59,11 @@ function Table({
   );
 
   // TODO: Remove pseudo view and add react-native compatible component
-  return <BaseView pseudo tag="table" props={elementProps} className={classes} />;
+  return (
+    <BaseView pseudo tag="table" props={elementProps} className={classes}>
+      {children}
+    </BaseView>
+  );
 }
 
 Table.propTypes = propTypes;

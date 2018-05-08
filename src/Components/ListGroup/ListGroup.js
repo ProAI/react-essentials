@@ -7,6 +7,7 @@ import ListGroupButton from './ListGroupButton';
 import ListGroupLink from './ListGroupLink';
 
 const propTypes = {
+  children: PropTypes.node.isRequired,
   flush: PropTypes.bool,
   actionable: PropTypes.bool,
 };
@@ -16,7 +17,9 @@ const defaultProps = {
   actionable: false,
 };
 
-function ListGroup({ flush, actionable, ...elementProps }) {
+function ListGroup({
+  children, flush, actionable, ...elementProps
+}) {
   const classes = cx(
     // constant classes
     'list-group',
@@ -26,7 +29,11 @@ function ListGroup({ flush, actionable, ...elementProps }) {
 
   const tag = actionable ? 'div' : 'ul';
 
-  return <BaseView props={elementProps} tag={tag} className={classes} />;
+  return (
+    <BaseView tag={tag} props={elementProps} className={classes}>
+      {children}
+    </BaseView>
+  );
 }
 
 ListGroup.propTypes = propTypes;

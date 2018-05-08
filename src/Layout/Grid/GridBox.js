@@ -5,6 +5,7 @@ import { BaseView } from '../../utils/components';
 import { GRID_SIZES } from '../../utils/constants';
 
 const propTypes = {
+  children: PropTypes.node.isRequired,
   size: PropTypes.oneOf(GRID_SIZES).isRequired,
   sizeSm: PropTypes.oneOf(GRID_SIZES),
   sizeMd: PropTypes.oneOf(GRID_SIZES),
@@ -20,7 +21,7 @@ const defaultProps = {
 };
 
 function GridBox({
-  size, sizeSm, sizeMd, sizeLg, sizeXl, ...elementProps
+  children, size, sizeSm, sizeMd, sizeLg, sizeXl, ...elementProps
 }) {
   const classes = cx(
     // constant classes
@@ -32,7 +33,11 @@ function GridBox({
     sizeXl && `col-sm-${sizeXl.toString()}`,
   );
 
-  return <BaseView props={elementProps} className={classes} />;
+  return (
+    <BaseView props={elementProps} className={classes}>
+      {children}
+    </BaseView>
+  );
 }
 
 GridBox.propTypes = propTypes;

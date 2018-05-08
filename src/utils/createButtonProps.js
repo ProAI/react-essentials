@@ -24,32 +24,39 @@ export default function createButtonProps(props, context) {
   // link button
   if (to) {
     return {
-      ...elementProps,
       tag: RouterLink,
-      to,
-      innerRef: ref,
-      onClick: handleClick,
+      elementProps: {
+        ...elementProps,
+        to,
+        innerRef: ref,
+        onClick: handleClick,
+      },
     };
   }
 
   // external link button
   if (to && external) {
     return {
-      ...elementProps,
-      href: to,
-      target: '_blank',
-      rel: 'noopener noreferrer',
-      ref,
-      onClick: handleClick,
+      tag: 'a',
+      elementProps: {
+        ...elementProps,
+        href: to,
+        target: '_blank',
+        rel: 'noopener noreferrer',
+        ref,
+        onClick: handleClick,
+      },
     };
   }
 
   // button
   return {
-    ...elementProps,
     tag: 'button',
-    ref,
-    onClick: handleClick,
-    // TODO onKeyPress: () => {},
+    elementProps: {
+      ...elementProps,
+      ref,
+      onClick: handleClick,
+      // TODO onKeyPress: () => {},
+    },
   };
 }

@@ -4,6 +4,7 @@ import cx from 'classnames';
 import { BaseText } from '../../utils/components';
 
 const propTypes = {
+  children: PropTypes.node.isRequired,
   toPane: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   onChange: PropTypes.func,
@@ -29,7 +30,7 @@ class TabsListGroupTab extends React.Component {
 
   render() {
     const {
-      onClick, toPane, active, ...elementProps
+      children, onClick, toPane, active, ...elementProps
     } = this.props;
 
     const linkClasses = cx(
@@ -42,14 +43,18 @@ class TabsListGroupTab extends React.Component {
 
     return (
       <BaseText
-        props={elementProps}
         tag="a"
-        role="tab"
-        href={`#${toPane}`}
-        onClick={this.onClick}
+        props={{
+          ...elementProps,
+          role: 'tab',
+          href: `#${toPane}`,
+          onClick: this.onClick,
+          'aria-controls': toPane,
+        }}
         className={linkClasses}
-        aria-controls={toPane}
-      />
+      >
+        {children}
+      </BaseText>
     );
   }
 }

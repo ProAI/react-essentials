@@ -1,8 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { BaseView } from '../../utils/components';
 
-function View({ ...elementProps }) {
-  return <BaseView props={elementProps} className="" />;
+const propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+function View({ children, ...elementProps }) {
+  return (
+    <BaseView props={elementProps} className="">
+      {children}
+    </BaseView>
+  );
 }
+
+View.propTypes = propTypes;
 
 export default View;

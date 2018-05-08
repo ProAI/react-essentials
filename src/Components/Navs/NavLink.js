@@ -7,6 +7,7 @@ import { action } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
+  children: PropTypes.node.isRequired,
   exact: PropTypes.bool,
   strict: PropTypes.bool,
 };
@@ -18,7 +19,15 @@ const defaultProps = {
 
 function NavLink(props, context) {
   const {
-    to, external, onClick, preventToggle, keepFocus, exact, strict, ...elementProps
+    children,
+    to,
+    external,
+    onClick,
+    preventToggle,
+    keepFocus,
+    exact,
+    strict,
+    ...elementProps
   } = props;
   const { onToggle } = context;
 
@@ -48,13 +57,17 @@ function NavLink(props, context) {
 
         return (
           <BaseText
-            props={elementProps}
             tag={RouterLink}
-            to={to}
-            innerRef={ref}
-            onClick={handleClick}
+            props={{
+              ...elementProps,
+              to,
+              innerRef: ref,
+              onClick: handleClick,
+            }}
             className={classes}
-          />
+          >
+            {children}
+          </BaseText>
         );
       }}
     />

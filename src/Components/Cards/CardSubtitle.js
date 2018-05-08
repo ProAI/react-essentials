@@ -1,8 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { BaseText } from '../../utils/components';
 
-function CardSubtitle({ ...elementProps }) {
-  return <BaseText props={elementProps} tag="h6" className="card-subtitle" blockOnly />;
+const propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+function CardSubtitle({ children, ...elementProps }) {
+  return (
+    <BaseText tag="h6" props={elementProps} className="card-subtitle" blockOnly>
+      {children}
+    </BaseText>
+  );
 }
+
+CardSubtitle.propTypes = propTypes;
 
 export default CardSubtitle;

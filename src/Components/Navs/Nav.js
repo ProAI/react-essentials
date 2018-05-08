@@ -5,6 +5,7 @@ import { BaseView } from '../../utils/components';
 import NavLink from './NavLink';
 
 const propTypes = {
+  children: PropTypes.node.isRequired,
   variant: PropTypes.oneOf(['tabs', 'pills']),
 };
 
@@ -12,7 +13,7 @@ const defaultProps = {
   variant: 'tabs',
 };
 
-function Nav({ variant, ...elementProps }) {
+function Nav({ children, variant, ...elementProps }) {
   const classes = cx(
     // constant classes
     'nav',
@@ -21,7 +22,11 @@ function Nav({ variant, ...elementProps }) {
     variant === 'pills' && 'nav-pills',
   );
 
-  return <BaseView props={elementProps} tag="nav" className={classes} />;
+  return (
+    <BaseView tag="nav" props={elementProps} className={classes}>
+      {children}
+    </BaseView>
+  );
 }
 
 Nav.propTypes = propTypes;

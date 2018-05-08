@@ -1,3 +1,6 @@
+/* provider component */
+import Provider from './Provider';
+
 /* alert components */
 import Alert from './Components/Alerts/Alert';
 
@@ -71,6 +74,8 @@ import Grid from './Layout/Grid/Grid';
 import View from './Layout/View/View';
 
 export {
+  // provider
+  Provider,
   // components
   Alert,
   Badge,

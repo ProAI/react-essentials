@@ -1,10 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { BaseView } from '../../utils/components';
 import GridBox from './GridBox';
 
-function Grid({ ...elementProps }) {
-  return <BaseView props={elementProps} className="row" />;
+const propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+function Grid({ children, ...elementProps }) {
+  return (
+    <BaseView props={elementProps} className="row">
+      {children}
+    </BaseView>
+  );
 }
+
+Grid.propTypes = propTypes;
 
 Grid.Box = GridBox;
 

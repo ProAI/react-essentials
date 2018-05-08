@@ -5,6 +5,7 @@ import { BaseView } from '../../utils/components';
 import ListItem from './ListItem';
 
 const propTypes = {
+  children: PropTypes.node.isRequired,
   variant: PropTypes.oneOf(['unordered', 'ordered']),
   unstyled: PropTypes.bool,
   inline: PropTypes.bool,
@@ -17,7 +18,7 @@ const defaultProps = {
 };
 
 function List({
-  variant, unstyled, inline, ...elementProps
+  children, variant, unstyled, inline, ...elementProps
 }) {
   const classes = cx(
     // variable classes
@@ -32,7 +33,9 @@ function List({
       tag={variant === 'unordered' ? 'ul' : 'ol'}
       props={elementProps}
       className={classes}
-    />
+    >
+      {children}
+    </BaseView>
   );
 }
 

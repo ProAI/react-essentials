@@ -6,6 +6,7 @@ import { action } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
+  children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   active: PropTypes.bool,
 };
@@ -21,7 +22,9 @@ const defaultProps = {
 };
 
 function ListGroupLink(props, context) {
-  const { disabled, active, ...elementProps } = props;
+  const {
+    children, disabled, active, ...elementProps
+  } = props;
 
   const classes = cx(
     // constant classes
@@ -34,7 +37,11 @@ function ListGroupLink(props, context) {
 
   const linkProps = action.createLinkProps(elementProps, context);
 
-  return <BaseText {...linkProps} className={classes} blockOnly />;
+  return (
+    <BaseText {...linkProps} className={classes} blockOnly>
+      {children}
+    </BaseText>
+  );
 }
 
 ListGroupLink.propTypes = propTypes;

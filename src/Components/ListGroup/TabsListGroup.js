@@ -32,7 +32,7 @@ function TabsListGroup({
     }));
 
   return (
-    <BaseView props={elementProps} tag="div" role="tablist" className={classes}>
+    <BaseView tag="div" props={{ ...elementProps, role: 'tablist' }} className={classes}>
       {manipulatedChildren}
     </BaseView>
   );
