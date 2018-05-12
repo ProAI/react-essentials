@@ -22,6 +22,9 @@ export const POSITIONS = [
   'bottom center',
 ];
 
+// PAGE_SECTIONS prop type
+export const PAGE_SECTIONS = ['main', 'aside', 'header', 'footer'];
+
 // COLORS prop type
 export const COLORS = [
   'primary',

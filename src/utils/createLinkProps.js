@@ -17,15 +17,17 @@ export default function makeLinkProps(props, context) {
 
   // check props
   if (process.env.NODE_ENV !== 'production') {
-    invariant(!to && !onClick, "A button needs either a 'to' or an 'onClick' prop.");
-    invariant(!to && external, "'to' prop for external link is missing.");
+    invariant(to || onClick, "A link needs either a 'to' or an 'onClick' prop.");
+    if (external) {
+      invariant(to, "'to' prop for external link is missing.");
+    }
   }
 
   // action link
   if (!to) {
     return {
       tag: 'a',
-      elementProps: {
+      props: {
         ...elementProps,
         role: 'button',
         tabIndex: 0,
@@ -40,7 +42,7 @@ export default function makeLinkProps(props, context) {
   if (external) {
     return {
       tag: 'a',
-      elementProps: {
+      props: {
         ...elementProps,
         href: to,
         target: '_blank',
@@ -54,10 +56,12 @@ export default function makeLinkProps(props, context) {
   // router link
   return {
     tag: RouterLink,
-    elementProps: {
+    props: {
       ...elementProps,
       to,
-      innerRef: ref,
+      innerRef: (c) => {
+        ref.current = c;
+      },
       onClick: handleClick,
     },
   };

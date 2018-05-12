@@ -4,6 +4,8 @@ import cx from 'classnames';
 import { BaseImage } from '../../utils/components';
 
 const propTypes = {
+  source: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   fluid: PropTypes.bool,
   thumbnail: PropTypes.bool,
 };
@@ -13,14 +15,16 @@ const defaultProps = {
   thumbnail: false,
 };
 
-function Image({ fluid, thumbnail, ...elementProps }) {
+function Image({
+  source, label, fluid, thumbnail, ...elementProps
+}) {
   const classes = cx(
     // variable classes
     fluid && 'img-fluid',
     thumbnail && 'img-thumbnail',
   );
 
-  return <BaseImage props={elementProps} className={classes} />;
+  return <BaseImage source={source} label={label} props={elementProps} className={classes} />;
 }
 
 Image.propTypes = propTypes;

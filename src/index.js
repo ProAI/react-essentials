@@ -38,7 +38,6 @@ import injectPopover from './Components/Popovers/injectPopover';
 import PopoverButton from './Components/Popovers/PopoverButton';
 
 /* tabs components */
-import Tabs from './Components/Navs/Tabs';
 import TabsNav from './Components/Navs/TabsNav';
 import TabsContent from './Components/Navs/TabsContent';
 
@@ -89,7 +88,6 @@ export {
   TabsListGroup,
   Modal,
   Nav,
-  Tabs,
   TabsNav,
   TabsContent,
   injectPopover,

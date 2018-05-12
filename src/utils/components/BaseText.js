@@ -7,8 +7,10 @@ import { TEXT_COLORS } from '../constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
+  tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   props: PropTypes.shape({
     class: PropTypes.arrayOf(checkClassProp),
+    className: PropTypes.string,
     color: PropTypes.oneOf(TEXT_COLORS),
     align: PropTypes.oneOf(['justify', 'left', 'center', 'right']),
     mark: PropTypes.bool,
@@ -17,7 +19,6 @@ const propTypes = {
     bold: PropTypes.bool,
     italic: PropTypes.bool,
   }),
-  tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
   blockOnly: PropTypes.bool,
   inlineOnly: PropTypes.bool,
@@ -53,14 +54,18 @@ class BaseText extends React.Component {
 
     // check if a block only component is used inside of a text component
     if (process.env.NODE_ENV !== 'production') {
-      invariant(
-        props.blockOnly && context.isInAParentText,
-        "Unexpected use of text block component: This component can't be used inside of a text component.",
-      );
-      invariant(
-        props.inlineOnly && !context.isInAParentText,
-        'Unexpected use of text inline component: This component can only be used inside of a text component.',
-      );
+      if (props.blockOnly) {
+        invariant(
+          !context.isInAParentText,
+          "Unexpected use of text block component: This component can't be used inside of a text component.",
+        );
+      }
+      if (props.inlineOnly) {
+        invariant(
+          context.isInAParentText,
+          'Unexpected use of text inline component: This component can only be used inside of a text component.',
+        );
+      }
     }
   }
 
@@ -80,7 +85,16 @@ class BaseText extends React.Component {
     const {
       children,
       props: {
-        class: utils, align, color, mark, small, underline, bold, italic, ...otherProps
+        class: utils,
+        className: customClassName,
+        align,
+        color,
+        mark,
+        small,
+        underline,
+        bold,
+        italic,
+        ...otherProps
       },
       tag,
       className,
@@ -98,6 +112,8 @@ class BaseText extends React.Component {
       small && 'small',
       // add (mostly) bootstrap styles
       className,
+      // add custom styles
+      customClassName,
       // add utils styles
       utils && utils.join(' '),
     );

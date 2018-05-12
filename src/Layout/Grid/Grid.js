@@ -9,7 +9,7 @@ const propTypes = {
 
 function Grid({ children, ...elementProps }) {
   return (
-    <BaseView props={elementProps} className="row">
+    <BaseView props={elementProps} className="row flex-row">
       {children}
     </BaseView>
   );

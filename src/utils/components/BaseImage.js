@@ -8,6 +8,7 @@ const propTypes = {
   label: PropTypes.string.isRequired,
   props: PropTypes.shape({
     class: PropTypes.arrayOf(checkClassProp),
+    className: PropTypes.string,
   }),
   className: PropTypes.string.isRequired,
 };
@@ -22,18 +23,20 @@ function BaseImage(props) {
   const {
     source,
     label,
-    props: { class: utils, ...otherProps },
+    props: { class: utils, className: customClassName, ...otherProps },
     className,
   } = props;
 
   const classes = cx(
     // add (mostly) bootstrap styles
     className,
+    // add custom styles
+    customClassName,
     // add utils styles
-    utils.join(' '),
+    utils && utils.join(' '),
   );
 
-  return <img {...otherProps} source={source} alt={label} className={classes} />;
+  return <img {...otherProps} src={source} alt={label} className={classes} />;
 }
 
 BaseImage.propTypes = propTypes;

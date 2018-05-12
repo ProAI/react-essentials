@@ -6,10 +6,11 @@ import checkClassProp from '../checkClassProp';
 
 const propTypes = {
   children: PropTypes.node,
+  tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   props: PropTypes.shape({
     class: PropTypes.arrayOf(checkClassProp),
+    className: PropTypes.string,
   }),
-  tag: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string.isRequired,
   pseudo: PropTypes.bool,
 };
@@ -33,14 +34,14 @@ class BaseView extends React.Component {
 
     // check if in a parent text
     if (process.env.NODE_ENV !== 'production') {
-      invariant(context.isInAParentText, 'A view cannot be used inside of a text component');
+      invariant(!context.isInAParentText, 'A view cannot be used inside of a text component');
     }
   }
 
   render() {
     const {
       children,
-      props: { class: utils, ...otherProps },
+      props: { class: utils, className: customClassName, ...otherProps },
       tag: Tag,
       className,
       pseudo,
@@ -61,6 +62,8 @@ class BaseView extends React.Component {
       !pseudo && 'yoga-view',
       // add (mostly) bootstrap styles
       className,
+      // add custom styles
+      customClassName,
       // add utils styles
       utils && utils.join(' '),
     );

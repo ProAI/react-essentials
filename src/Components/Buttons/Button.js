@@ -10,6 +10,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(BUTTON_COLORS),
   size: PropTypes.oneOf(SIZES),
+  block: PropTypes.bool,
   caret: PropTypes.bool,
 };
 
@@ -21,12 +22,13 @@ const defaultProps = {
   ...action.defaultProps,
   color: 'primary',
   size: null,
+  block: false,
   caret: false,
 };
 
 function Button(props, context) {
   const {
-    children, color, size, caret, ...elementProps
+    children, color, size, block, caret, ...elementProps
   } = props;
 
   const classes = cx(
@@ -36,6 +38,7 @@ function Button(props, context) {
     // variable classes
     size === 'sm' && 'btn-sm',
     size === 'lg' && 'btn-lg',
+    block && 'btn-block',
     caret && 'dropdown-toggle',
   );
 
