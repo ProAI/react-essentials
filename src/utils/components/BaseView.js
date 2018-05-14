@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
-import checkClassProp from '../checkClassProp';
+import createElement from 'react-native-web/dist/exports/createElement';
+import checkUtilityClasses from '../checkUtilityClasses';
 
 const propTypes = {
   children: PropTypes.node,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   props: PropTypes.shape({
-    class: PropTypes.arrayOf(checkClassProp),
+    class: PropTypes.string,
     className: PropTypes.string,
   }),
   className: PropTypes.string.isRequired,
@@ -42,13 +43,17 @@ class BaseView extends React.Component {
     const {
       children,
       props: { class: utils, className: customClassName, ...otherProps },
-      tag: Tag,
+      tag,
       className,
       pseudo,
     } = this.props;
 
     // check children
     if (process.env.NODE_ENV !== 'production') {
+      if (utils) {
+        checkUtilityClasses(utils);
+      }
+
       React.Children.toArray(this.props.children).forEach((item) => {
         invariant(
           typeof item !== 'string',
@@ -65,14 +70,10 @@ class BaseView extends React.Component {
       // add custom styles
       customClassName,
       // add utils styles
-      utils && utils.join(' '),
+      utils,
     );
 
-    return (
-      <Tag {...otherProps} className={classes}>
-        {children}
-      </Tag>
-    );
+    return createElement(tag, { ...otherProps, className: classes }, children);
   }
 }
 

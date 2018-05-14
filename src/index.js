@@ -1,4 +1,6 @@
-/* provider component */
+/* misc */
+import StyleSheet from 'react-native-web/dist/exports/StyleSheet';
+import getStyleSheet from './getStyleSheet';
 import Provider from './Provider';
 
 /* alert components */
@@ -73,7 +75,9 @@ import Grid from './Layout/Grid/Grid';
 import View from './Layout/View/View';
 
 export {
-  // provider
+  // misc
+  StyleSheet,
+  getStyleSheet,
   Provider,
   // components
   Alert,

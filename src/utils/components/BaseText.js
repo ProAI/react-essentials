@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
-import checkClassProp from '../checkClassProp';
+import createElement from 'react-native-web/dist/exports/createElement';
+import checkUtilityClasses from '../checkUtilityClasses';
 import { TEXT_COLORS } from '../constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   props: PropTypes.shape({
-    class: PropTypes.arrayOf(checkClassProp),
+    class: PropTypes.string,
     className: PropTypes.string,
     color: PropTypes.oneOf(TEXT_COLORS),
     align: PropTypes.oneOf(['justify', 'left', 'center', 'right']),
@@ -96,11 +97,17 @@ class BaseText extends React.Component {
         italic,
         ...otherProps
       },
-      tag,
+      tag: customTag,
       className,
     } = this.props;
 
-    const Tag = this.getTag(tag);
+    if (process.env.NODE_ENV !== 'production') {
+      if (utils) {
+        checkUtilityClasses(utils);
+      }
+    }
+
+    const tag = this.getTag(customTag);
 
     const classes = cx(
       // add yoga styles
@@ -115,7 +122,7 @@ class BaseText extends React.Component {
       // add custom styles
       customClassName,
       // add utils styles
-      utils && utils.join(' '),
+      utils,
     );
 
     // wrap children with underline, bold and italic tags
@@ -123,11 +130,7 @@ class BaseText extends React.Component {
     const childrenWithUB = bold ? <strong>{childrenWithU}</strong> : childrenWithU;
     const childrenWithUBI = italic ? <em>{childrenWithUB}</em> : childrenWithUB;
 
-    return (
-      <Tag {...otherProps} className={classes}>
-        {childrenWithUBI}
-      </Tag>
-    );
+    return createElement(tag, { ...otherProps, className: classes }, childrenWithUBI);
   }
 }
 

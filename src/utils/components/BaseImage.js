@@ -1,13 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import checkClassProp from '../checkClassProp';
+import createElement from 'react-native-web/dist/exports/createElement';
+import checkUtilityClasses from '../checkUtilityClasses';
 
 const propTypes = {
   source: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   props: PropTypes.shape({
-    class: PropTypes.arrayOf(checkClassProp),
+    class: PropTypes.string,
     className: PropTypes.string,
   }),
   className: PropTypes.string.isRequired,
@@ -27,16 +27,31 @@ function BaseImage(props) {
     className,
   } = props;
 
+  if (process.env.NODE_ENV !== 'production') {
+    if (utils) {
+      checkUtilityClasses(utils);
+    }
+  }
+
   const classes = cx(
     // add (mostly) bootstrap styles
     className,
     // add custom styles
     customClassName,
     // add utils styles
-    utils && utils.join(' '),
+    utils,
   );
 
-  return <img {...otherProps} src={source} alt={label} className={classes} />;
+  return createElement(
+    'img',
+    {
+      ...otherProps,
+      src: source,
+      alt: label,
+      className: classes,
+    },
+    null,
+  );
 }
 
 BaseImage.propTypes = propTypes;
