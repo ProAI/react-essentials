@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import PopperJS from 'popper.js';
 import cx from 'classnames';
 import BaseView from './BaseView';
+import { contextTypes } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -21,10 +22,6 @@ const propTypes = {
   role: PropTypes.string.isRequired,
 };
 
-const contextTypes = {
-  generateKey: PropTypes.func.isRequired,
-};
-
 const defaultProps = {
   placement: 'bottom',
   fallbackPlacement: null,
@@ -38,7 +35,7 @@ class Overlay extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.identifier = context.generateKey('re-overlay-');
+    this.identifier = context.essentials.generateKey('re-overlay-');
   }
 
   state = {

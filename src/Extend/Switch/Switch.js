@@ -2,15 +2,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { contextTypes } from '../../utils';
 
 const propTypes = {
   checked: PropTypes.bool,
   onChange: PropTypes.func,
   variant: PropTypes.oneOf(['blank', 'symbols', 'onoff', 'yesno']),
-};
-
-const contextTypes = {
-  generateKey: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -23,7 +20,7 @@ class Switch extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.identifier = context.generateKey('re-switch-');
+    this.identifier = context.essentials.generateKey('re-switch-');
   }
 
   state = {

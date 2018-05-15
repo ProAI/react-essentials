@@ -8,6 +8,7 @@ import ModalHeader from './ModalHeader';
 import ModalTitle from './ModalTitle';
 import { SIZES } from '../../utils/constants';
 import { BaseView } from '../../utils/components';
+import { contextTypes } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -17,10 +18,6 @@ const propTypes = {
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
   dismissible: PropTypes.bool,
-};
-
-const contextTypes = {
-  generateKey: PropTypes.func.isRequired,
 };
 
 const childContextTypes = {
@@ -51,7 +48,7 @@ class Modal extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.identifier = context.generateKey('re-modal-title-');
+    this.identifier = context.essentials.generateKey('re-modal-title-');
   }
 
   getChildContext() {
