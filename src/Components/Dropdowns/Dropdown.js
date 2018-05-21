@@ -5,8 +5,8 @@ import invariant from 'fbjs/lib/invariant';
 import DropdownMenu from './DropdownMenu';
 import DropdownHeader from './DropdownHeader';
 import DropdownDivider from './DropdownDivider';
-import DropdownLink from './DropdownLink';
-import DropdownText from './DropdownText';
+import DropdownItem from './DropdownItem';
+import DropdownItemText from './DropdownItemText';
 import { BaseView } from '../../utils/components';
 import { contextTypes } from '../../utils';
 
@@ -155,7 +155,7 @@ Dropdown.defaultProps = defaultProps;
 Dropdown.Menu = DropdownMenu;
 Dropdown.Divider = DropdownDivider;
 Dropdown.Header = DropdownHeader;
-Dropdown.Link = DropdownLink;
-Dropdown.Text = DropdownText;
+Dropdown.Item = DropdownItem;
+Dropdown.ItemText = DropdownItemText;
 
 export default Dropdown;

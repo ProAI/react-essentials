@@ -16,7 +16,7 @@ const defaultProps = {
   ...action.defaultProps,
 };
 
-function DropdownLink(props, context) {
+function DropdownItem(props, context) {
   const { children, ...elementProps } = props;
 
   const linkProps = action.createLinkProps(elementProps, context);
@@ -28,8 +28,8 @@ function DropdownLink(props, context) {
   );
 }
 
-DropdownLink.propTypes = propTypes;
-DropdownLink.contextTypes = contextTypes;
-DropdownLink.defaultProps = defaultProps;
+DropdownItem.propTypes = propTypes;
+DropdownItem.contextTypes = contextTypes;
+DropdownItem.defaultProps = defaultProps;
 
-export default DropdownLink;
+export default DropdownItem;
