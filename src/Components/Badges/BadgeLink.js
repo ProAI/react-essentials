@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseText } from '../../utils/components';
+import { BaseView, BaseText } from '../../utils/components';
 import { COLORS } from '../../utils/constants';
 import { action } from '../../utils';
 
@@ -31,9 +31,11 @@ function BadgeLink(props, context) {
   const linkProps = action.createLinkProps(elementProps, context);
 
   return (
-    <BaseText {...linkProps} className={classes} inlineOnly>
-      {children}
-    </BaseText>
+    <BaseView {...linkProps} className={classes} inlineOnly>
+      <BaseText className="" blockOnly>
+        {children}
+      </BaseText>
+    </BaseView>
   );
 }
 

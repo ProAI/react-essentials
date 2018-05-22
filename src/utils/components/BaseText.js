@@ -111,7 +111,7 @@ class BaseText extends React.Component {
 
     const classes = cx(
       // add yoga styles
-      this.context.isInAParentText ? 'yoga-text-inline' : 'yoga-text-block',
+      this.context.isInAParentText ? 'yti' : 'ytb',
       // variable classes
       color && `text-${color}`,
       align && `text-${align}`,

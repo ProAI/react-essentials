@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseText } from '../../utils/components';
+import { BaseView, BaseText } from '../../utils/components';
 import { COLORS } from '../../utils/constants';
 
 const propTypes = {
@@ -21,9 +21,11 @@ function Badge({ children, color, ...elementProps }) {
   );
 
   return (
-    <BaseText props={elementProps} className={classes} inlineOnly>
-      {children}
-    </BaseText>
+    <BaseView props={elementProps} className={classes} inlineOnly>
+      <BaseText className="" blockOnly>
+        {children}
+      </BaseText>
+    </BaseView>
   );
 }
 
