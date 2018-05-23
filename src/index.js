@@ -48,6 +48,8 @@ import injectTooltip from './Components/Tooltips/injectTooltip';
 import TooltipButton from './Components/Tooltips/TooltipButton';
 
 /* content components */
+import BlockCode from './Content/Code/BlockCode';
+import Code from './Content/Code/Code';
 import Image from './Content/Images/Image';
 import BlockLink from './Content/Links/BlockLink';
 import Link from './Content/Links/Link';
@@ -101,6 +103,8 @@ export {
   injectTooltip,
   TooltipButton,
   // content
+  BlockCode,
+  Code,
   Image,
   BlockLink,
   Link,
