@@ -23,7 +23,7 @@ const defaultProps = {
   raw: false,
 };
 
-function ListGroupActionItem(props, context) {
+function ActionListGroupItem(props, context) {
   const {
     children, disabled, active, raw, ...elementProps
   } = props;
@@ -46,8 +46,8 @@ function ListGroupActionItem(props, context) {
   );
 }
 
-ListGroupActionItem.propTypes = propTypes;
-ListGroupActionItem.contextTypes = contextTypes;
-ListGroupActionItem.defaultProps = defaultProps;
+ActionListGroupItem.propTypes = propTypes;
+ActionListGroupItem.contextTypes = contextTypes;
+ActionListGroupItem.defaultProps = defaultProps;
 
-export default ListGroupActionItem;
+export default ActionListGroupItem;

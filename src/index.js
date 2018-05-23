@@ -26,6 +26,7 @@ import Form from './Components/Forms/Form';
 import Jumbotron from './Components/Jumbotron/Jumbotron';
 
 /* list group components */
+import ActionListGroup from './Components/ListGroup/ActionListGroup';
 import ListGroup from './Components/ListGroup/ListGroup';
 import TabsListGroup from './Components/ListGroup/TabsListGroup';
 
@@ -92,6 +93,7 @@ export {
   Dropdown,
   Form,
   Jumbotron,
+  ActionListGroup,
   ListGroup,
   TabsListGroup,
   Modal,

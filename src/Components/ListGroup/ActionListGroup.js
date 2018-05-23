@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseView } from '../../utils/components';
-import ListGroupItem from './ListGroupItem';
+import ActionListGroupItem from './ActionListGroupItem';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -13,7 +13,7 @@ const defaultProps = {
   flush: false,
 };
 
-function ListGroup({ children, flush, ...elementProps }) {
+function ActionListGroup({ children, flush, ...elementProps }) {
   const classes = cx(
     // constant classes
     'list-group',
@@ -22,15 +22,15 @@ function ListGroup({ children, flush, ...elementProps }) {
   );
 
   return (
-    <BaseView tag="ul" props={elementProps} className={classes}>
+    <BaseView tag="div" props={elementProps} className={classes}>
       {children}
     </BaseView>
   );
 }
 
-ListGroup.propTypes = propTypes;
-ListGroup.defaultProps = defaultProps;
+ActionListGroup.propTypes = propTypes;
+ActionListGroup.defaultProps = defaultProps;
 
-ListGroup.Item = ListGroupItem;
+ActionListGroup.Item = ActionListGroupItem;
 
-export default ListGroup;
+export default ActionListGroup;
