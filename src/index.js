@@ -7,8 +7,8 @@ import Provider from './Provider';
 import Alert from './Components/Alerts/Alert';
 
 /* badge components */
+import ActionBadge from './Components/Badges/ActionBadge';
 import Badge from './Components/Badges/Badge';
-import BadgeLink from './Components/Badges/BadgeLink';
 
 /* button components */
 import Button from './Components/Buttons/Button';
@@ -49,6 +49,7 @@ import TooltipButton from './Components/Tooltips/TooltipButton';
 
 /* content components */
 import Image from './Content/Images/Image';
+import BlockLink from './Content/Links/BlockLink';
 import Link from './Content/Links/Link';
 import Table from './Content/Tables/Table';
 import TD from './Content/Tables/TableData';
@@ -82,8 +83,8 @@ export {
   Provider,
   // components
   Alert,
+  ActionBadge,
   Badge,
-  BadgeLink,
   Button,
   Card,
   Dropdown,
@@ -101,6 +102,7 @@ export {
   TooltipButton,
   // content
   Image,
+  BlockLink,
   Link,
   Table,
   TD,

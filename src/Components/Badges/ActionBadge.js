@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import { BaseView, BaseText } from '../../utils/components';
+import { COLORS } from '../../utils/constants';
 import { action } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
   children: PropTypes.node.isRequired,
+  color: PropTypes.oneOf(COLORS),
 };
 
 const contextTypes = {
@@ -14,15 +17,21 @@ const contextTypes = {
 
 const defaultProps = {
   ...action.defaultProps,
+  color: 'primary',
 };
 
-function DropdownItem(props, context) {
-  const { children, ...elementProps } = props;
+function ActionBadge(props, context) {
+  const { children, color, ...elementProps } = props;
+  const classes = cx(
+    // constant classes
+    'badge',
+    `badge-${color}`,
+  );
 
   const linkProps = action.createLinkProps(elementProps, context);
 
   return (
-    <BaseView {...linkProps} className="dropdown-item" blockOnly>
+    <BaseView {...linkProps} className={classes} inlineOnly>
       <BaseText className="" blockOnly>
         {children}
       </BaseText>
@@ -30,8 +39,8 @@ function DropdownItem(props, context) {
   );
 }
 
-DropdownItem.propTypes = propTypes;
-DropdownItem.contextTypes = contextTypes;
-DropdownItem.defaultProps = defaultProps;
+ActionBadge.propTypes = propTypes;
+ActionBadge.contextTypes = contextTypes;
+ActionBadge.defaultProps = defaultProps;
 
-export default DropdownItem;
+export default ActionBadge;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseText } from '../../utils/components';
+import { BaseView, BaseText } from '../../utils/components';
 import { action } from '../../utils';
 
 const propTypes = {
@@ -21,7 +21,7 @@ const defaultProps = {
   active: false,
 };
 
-function ListGroupLink(props, context) {
+function ListGroupActionItem(props, context) {
   const {
     children, disabled, active, ...elementProps
   } = props;
@@ -38,14 +38,16 @@ function ListGroupLink(props, context) {
   const linkProps = action.createLinkProps(elementProps, context);
 
   return (
-    <BaseText {...linkProps} className={classes} blockOnly>
-      {children}
-    </BaseText>
+    <BaseView {...linkProps} className={classes} blockOnly>
+      <BaseText className="" blockOnly>
+        {children}
+      </BaseText>
+    </BaseView>
   );
 }
 
-ListGroupLink.propTypes = propTypes;
-ListGroupLink.contextTypes = contextTypes;
-ListGroupLink.defaultProps = defaultProps;
+ListGroupActionItem.propTypes = propTypes;
+ListGroupActionItem.contextTypes = contextTypes;
+ListGroupActionItem.defaultProps = defaultProps;
 
-export default ListGroupLink;
+export default ListGroupActionItem;

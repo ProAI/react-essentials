@@ -8,22 +8,25 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   activeKey: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf(['tabs', 'pills']),
+  pills: PropTypes.bool,
+  stacked: PropTypes.bool,
 };
 
 const defaultProps = {
-  variant: 'tabs',
+  pills: false,
+  stacked: false,
 };
 
 function TabsNav({
-  children, activeKey, onChange, variant, ...elementProps
+  children, activeKey, onChange, pills, stacked, ...elementProps
 }) {
   const classes = cx(
     // constant classes
     'nav',
     // variable classes
-    variant === 'tabs' && 'nav-tabs',
-    variant === 'pills' && 'nav-pills',
+    !pills && 'nav-tabs',
+    pills && 'nav-pills',
+    stacked && 'flex-column',
   );
 
   const manipulatedChildren = React.Children.map(children, child =>

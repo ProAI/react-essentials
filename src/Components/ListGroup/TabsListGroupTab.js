@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseText } from '../../utils/components';
+import { BaseView, BaseText } from '../../utils/components';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -42,7 +42,7 @@ class TabsListGroupTab extends React.Component {
     );
 
     return (
-      <BaseText
+      <BaseView
         tag="a"
         props={{
           ...elementProps,
@@ -53,8 +53,10 @@ class TabsListGroupTab extends React.Component {
         }}
         className={linkClasses}
       >
-        {children}
-      </BaseText>
+        <BaseText className="" blockOnly>
+          {children}
+        </BaseText>
+      </BaseView>
     );
   }
 }

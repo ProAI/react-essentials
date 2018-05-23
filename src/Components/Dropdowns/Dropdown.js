@@ -6,7 +6,7 @@ import DropdownMenu from './DropdownMenu';
 import DropdownHeader from './DropdownHeader';
 import DropdownDivider from './DropdownDivider';
 import DropdownItem from './DropdownItem';
-import DropdownItemText from './DropdownItemText';
+import DropdownTextItem from './DropdownTextItem';
 import { BaseView } from '../../utils/components';
 import { contextTypes } from '../../utils';
 
@@ -156,6 +156,6 @@ Dropdown.Menu = DropdownMenu;
 Dropdown.Divider = DropdownDivider;
 Dropdown.Header = DropdownHeader;
 Dropdown.Item = DropdownItem;
-Dropdown.ItemText = DropdownItemText;
+Dropdown.TextItem = DropdownTextItem;
 
 export default Dropdown;

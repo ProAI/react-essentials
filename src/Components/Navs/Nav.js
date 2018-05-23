@@ -6,20 +6,25 @@ import NavLink from './NavLink';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  variant: PropTypes.oneOf(['tabs', 'pills']),
+  pills: PropTypes.bool,
+  stacked: PropTypes.bool,
 };
 
 const defaultProps = {
-  variant: 'tabs',
+  pills: false,
+  stacked: false,
 };
 
-function Nav({ children, variant, ...elementProps }) {
+function Nav({
+  children, pills, stacked, ...elementProps
+}) {
   const classes = cx(
     // constant classes
     'nav',
     // variable classes
-    variant === 'tabs' && 'nav-tabs',
-    variant === 'pills' && 'nav-pills',
+    !pills && 'nav-tabs',
+    pills && 'nav-pills',
+    stacked && 'flex-column',
   );
 
   return (

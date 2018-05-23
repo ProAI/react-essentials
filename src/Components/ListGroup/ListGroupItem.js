@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseText } from '../../utils/components';
+import { BaseView, BaseText } from '../../utils/components';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -21,9 +21,11 @@ function ListGroupItem({ children, disabled, ...elementProps }) {
   );
 
   return (
-    <BaseText tag="li" props={elementProps} className={classes} blockOnly>
-      {children}
-    </BaseText>
+    <BaseView tag="li" props={elementProps} className={classes} blockOnly>
+      <BaseText className="" blockOnly>
+        {children}
+      </BaseText>
+    </BaseView>
   );
 }
 

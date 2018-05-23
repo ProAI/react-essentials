@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseText } from '../../utils/components';
+import { BaseView, BaseText } from '../../utils/components';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -13,9 +13,11 @@ const defaultProps = {
 
 function ModalTitle({ children, titleId, ...elementProps }) {
   return (
-    <BaseText tag="h5" props={elementProps} className="modal-title" id={titleId}>
-      {children}
-    </BaseText>
+    <BaseView tag="h5" props={elementProps} className="modal-title" id={titleId}>
+      <BaseText className="" blockOnly>
+        {children}
+      </BaseText>
+    </BaseView>
   );
 }
 

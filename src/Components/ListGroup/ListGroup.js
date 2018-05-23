@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseView } from '../../utils/components';
 import ListGroupItem from './ListGroupItem';
-import ListGroupButton from './ListGroupButton';
-import ListGroupLink from './ListGroupLink';
+import ListGroupActionItem from './ListGroupActionItem';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -40,7 +39,6 @@ ListGroup.propTypes = propTypes;
 ListGroup.defaultProps = defaultProps;
 
 ListGroup.Item = ListGroupItem;
-ListGroup.Button = ListGroupButton;
-ListGroup.Link = ListGroupLink;
+ListGroup.ActionItem = ListGroupActionItem;
 
 export default ListGroup;

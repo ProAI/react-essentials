@@ -6,9 +6,9 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function DropdownHeader({ children, ...elementProps }) {
+function DropdownTextItem({ children, ...elementProps }) {
   return (
-    <BaseView tag="h6" props={elementProps} className="dropdown-header" blockOnly>
+    <BaseView tag="span" props={elementProps} className="dropdown-item-text" blockOnly>
       <BaseText className="" blockOnly>
         {children}
       </BaseText>
@@ -16,6 +16,6 @@ function DropdownHeader({ children, ...elementProps }) {
   );
 }
 
-DropdownHeader.propTypes = propTypes;
+DropdownTextItem.propTypes = propTypes;
 
-export default DropdownHeader;
+export default DropdownTextItem;
