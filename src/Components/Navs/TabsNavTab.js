@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseText } from '../../utils/components';
+import { BaseView } from '../../utils/components';
+import { formatChildren } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -9,12 +10,14 @@ const propTypes = {
   onClick: PropTypes.func,
   onChange: PropTypes.func,
   active: PropTypes.bool,
+  raw: PropTypes.bool,
 };
 
 const defaultProps = {
   onClick: null,
   onChange: null,
   active: null,
+  raw: false,
 };
 
 class TabsNavTab extends React.Component {
@@ -30,7 +33,7 @@ class TabsNavTab extends React.Component {
 
   render() {
     const {
-      children, onClick, toPane, active, ...elementProps
+      children, onClick, toPane, active, raw, ...elementProps
     } = this.props;
 
     const linkClasses = cx(
@@ -41,7 +44,7 @@ class TabsNavTab extends React.Component {
     );
 
     return (
-      <BaseText
+      <BaseView
         tag="a"
         props={{
           ...elementProps,
@@ -52,8 +55,8 @@ class TabsNavTab extends React.Component {
         }}
         className={linkClasses}
       >
-        {children}
-      </BaseText>
+        {formatChildren(children, raw)}
+      </BaseView>
     );
   }
 }

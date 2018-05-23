@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView, BaseText } from '../../utils/components';
+import { BaseView } from '../../utils/components';
+import { formatChildren } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
+  raw: PropTypes.bool,
 };
 
 const defaultProps = {
   disabled: false,
+  raw: false,
 };
 
-function ListGroupItem({ children, disabled, ...elementProps }) {
+function ListGroupItem({
+  children, disabled, raw, ...elementProps
+}) {
   const classes = cx(
     // constant classes
     'list-group-item',
@@ -22,9 +27,7 @@ function ListGroupItem({ children, disabled, ...elementProps }) {
 
   return (
     <BaseView tag="li" props={elementProps} className={classes} blockOnly>
-      <BaseText className="" blockOnly>
-        {children}
-      </BaseText>
+      {formatChildren(children, raw)}
     </BaseView>
   );
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView, BaseText } from '../../utils/components';
+import { BaseView } from '../../utils/components';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
-import { action } from '../../utils';
+import { action, formatChildren } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
@@ -12,6 +12,7 @@ const propTypes = {
   size: PropTypes.oneOf(SIZES),
   block: PropTypes.bool,
   caret: PropTypes.bool,
+  raw: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -24,11 +25,12 @@ const defaultProps = {
   size: null,
   block: false,
   caret: false,
+  raw: false,
 };
 
 function Button(props, context) {
   const {
-    children, color, size, block, caret, ...elementProps
+    children, color, size, block, caret, raw, ...elementProps
   } = props;
 
   const classes = cx(
@@ -46,9 +48,7 @@ function Button(props, context) {
 
   return (
     <BaseView {...buttonProps} className={classes} blockOnly>
-      <BaseText className="" blockOnly>
-        {children}
-      </BaseText>
+      {formatChildren(children, raw)}
     </BaseView>
   );
 }

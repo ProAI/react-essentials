@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView, BaseText } from '../../utils/components';
+import { BaseView } from '../../utils/components';
+import { formatChildren } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -9,12 +10,14 @@ const propTypes = {
   onClick: PropTypes.func,
   onChange: PropTypes.func,
   active: PropTypes.bool,
+  raw: PropTypes.bool,
 };
 
 const defaultProps = {
   onClick: null,
   onChange: null,
   active: null,
+  raw: false,
 };
 
 class TabsListGroupTab extends React.Component {
@@ -30,7 +33,7 @@ class TabsListGroupTab extends React.Component {
 
   render() {
     const {
-      children, onClick, toPane, active, ...elementProps
+      children, onClick, toPane, active, raw, ...elementProps
     } = this.props;
 
     const linkClasses = cx(
@@ -53,9 +56,7 @@ class TabsListGroupTab extends React.Component {
         }}
         className={linkClasses}
       >
-        <BaseText className="" blockOnly>
-          {children}
-        </BaseText>
+        {formatChildren(children, raw)}
       </BaseView>
     );
   }

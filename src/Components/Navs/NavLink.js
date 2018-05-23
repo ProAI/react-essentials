@@ -2,19 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Route, Link as RouterLink } from 'react-router-dom';
-import { BaseText } from '../../utils/components';
-import { action } from '../../utils';
+import { BaseView } from '../../utils/components';
+import { action, formatChildren } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
   children: PropTypes.node.isRequired,
   exact: PropTypes.bool,
   strict: PropTypes.bool,
+  raw: PropTypes.bool,
 };
 const defaultProps = {
   ...action.defaultProps,
   exact: false,
   strict: false,
+  raw: false,
 };
 
 function NavLink(props, context) {
@@ -27,6 +29,7 @@ function NavLink(props, context) {
     keepFocus,
     exact,
     strict,
+    raw,
     ...elementProps
   } = props;
   const { onToggle } = context;
@@ -56,7 +59,7 @@ function NavLink(props, context) {
         );
 
         return (
-          <BaseText
+          <BaseView
             tag={RouterLink}
             props={{
               ...elementProps,
@@ -66,8 +69,8 @@ function NavLink(props, context) {
             }}
             className={classes}
           >
-            {children}
-          </BaseText>
+            {formatChildren(children, raw)}
+          </BaseView>
         );
       }}
     />

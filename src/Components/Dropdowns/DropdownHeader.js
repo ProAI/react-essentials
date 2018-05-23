@@ -1,21 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView, BaseText } from '../../utils/components';
+import { BaseView } from '../../utils/components';
+import { formatChildren } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
+  raw: PropTypes.bool,
 };
 
-function DropdownHeader({ children, ...elementProps }) {
+const defaultProps = {
+  raw: false,
+};
+
+function DropdownHeader({ children, raw, ...elementProps }) {
   return (
     <BaseView tag="h6" props={elementProps} className="dropdown-header" blockOnly>
-      <BaseText className="" blockOnly>
-        {children}
-      </BaseText>
+      {formatChildren(children, raw)}
     </BaseView>
   );
 }
 
 DropdownHeader.propTypes = propTypes;
+DropdownHeader.defaultProps = defaultProps;
 
 export default DropdownHeader;

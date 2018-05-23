@@ -1,23 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView, BaseText } from '../../utils/components';
+import { BaseView } from '../../utils/components';
+import { formatChildren } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
+  raw: PropTypes.bool,
 };
 
-function BlockCode({ children, ...elementProps }) {
+const defaultProps = {
+  raw: false,
+};
+
+function BlockCode({ children, raw, ...elementProps }) {
   return (
     <BaseView props={elementProps} tag="pre" className="">
       <BaseView props={elementProps} tag="code" className="">
-        <BaseText className="" blockOnly>
-          {children}
-        </BaseText>
+        {formatChildren(children, raw)}
       </BaseView>
     </BaseView>
   );
 }
 
 BlockCode.propTypes = propTypes;
+BlockCode.defaultProps = defaultProps;
 
 export default BlockCode;

@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView, BaseText } from '../../utils/components';
-import { action } from '../../utils';
+import { BaseView } from '../../utils/components';
+import { action, formatChildren } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
   children: PropTypes.node.isRequired,
+  raw: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -14,18 +15,17 @@ const contextTypes = {
 
 const defaultProps = {
   ...action.defaultProps,
+  raw: false,
 };
 
 function BlockLink(props, context) {
-  const { children, ...elementProps } = props;
+  const { children, raw, ...elementProps } = props;
 
   const linkProps = action.createLinkProps(elementProps, context);
 
   return (
     <BaseView {...linkProps} className="">
-      <BaseText className="" blockOnly>
-        {children}
-      </BaseText>
+      {formatChildren(children, raw)}
     </BaseView>
   );
 }

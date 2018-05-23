@@ -1,22 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView, BaseText } from '../../utils/components';
+import { BaseView } from '../../utils/components';
+import { formatChildren } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
+  raw: PropTypes.bool,
 };
 
-function TableHeading({ children, ...elementProps }) {
+const defaultProps = {
+  raw: false,
+};
+
+function TableHeading({ children, raw, ...elementProps }) {
   // TODO: Remove pseudo view and add react-native compatible component
   return (
     <BaseView pseudo tag="th" props={elementProps} className="">
-      <BaseText className="" blockOnly>
-        {children}
-      </BaseText>
+      {formatChildren(children, raw)}
     </BaseView>
   );
 }
 
 TableHeading.propTypes = propTypes;
+TableHeading.defaultProps = defaultProps;
 
 export default TableHeading;
