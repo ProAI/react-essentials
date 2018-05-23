@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { BaseView } from '../../utils/components';
-import FormText from './FormText';
 import FormInput from './FormInput';
 import FormPicker from '../../Extend/Forms/FormPicker';
 import FormDatePicker from '../../Extend/Forms/FormDatePicker';
@@ -44,7 +43,6 @@ function Form(props) {
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;
 
-Form.Text = FormText;
 Form.Input = FormInput;
 Form.Picker = FormPicker;
 Form.DatePicker = FormDatePicker;
