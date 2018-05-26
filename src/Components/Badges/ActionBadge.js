@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseView } from '../../utils/components';
 import { COLORS } from '../../utils/constants';
-import { action, formatChildren } from '../../utils';
+import { action } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
   children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(COLORS),
-  raw: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -19,13 +18,10 @@ const contextTypes = {
 const defaultProps = {
   ...action.defaultProps,
   color: 'primary',
-  raw: false,
 };
 
 function ActionBadge(props, context) {
-  const {
-    children, color, raw, ...elementProps
-  } = props;
+  const { children, color, ...elementProps } = props;
   const classes = cx(
     // constant classes
     'badge',
@@ -36,7 +32,7 @@ function ActionBadge(props, context) {
 
   return (
     <BaseView {...linkProps} className={classes} inlineOnly>
-      {formatChildren(children, raw)}
+      {children}
     </BaseView>
   );
 }

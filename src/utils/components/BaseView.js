@@ -29,52 +29,43 @@ const defaultProps = {
   pseudo: false,
 };
 
-class BaseView extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+function BaseView(props, context) {
+  const {
+    children,
+    props: { class: utils, className: customClassName, ...otherProps },
+    tag: Tag,
+    className,
+    pseudo,
+  } = props;
 
-    // check if in a parent text
-    if (process.env.NODE_ENV !== 'production') {
-      invariant(!context.isInAParentText, 'A view cannot be used inside of a text component');
-    }
-  }
-
-  render() {
-    const {
-      children,
-      props: { class: utils, className: customClassName, ...otherProps },
-      tag: Tag,
-      className,
-      pseudo,
-    } = this.props;
-
-    // check children
-    if (process.env.NODE_ENV !== 'production') {
-      if (utils) {
-        checkUtilityClasses(utils);
-      }
-
-      React.Children.toArray(this.props.children).forEach((item) => {
-        invariant(
-          typeof item !== 'string',
-          `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`,
-        );
-      });
+  // checks
+  if (process.env.NODE_ENV !== 'production') {
+    if (utils) {
+      checkUtilityClasses(utils);
     }
 
-    const classes = cx(
-      // add yoga layout styles
-      !pseudo && 'yv',
-      // add (mostly) bootstrap styles
-      className,
-      // add custom styles
-      customClassName,
-      // add utils styles
-      utils,
-    );
+    invariant(!context.isInAParentText, 'A view cannot be used inside of a text component');
 
-    return <Tag {...createDOMProps({ ...otherProps, className: classes })}>{children}</Tag>;
+    React.Children.toArray(children).forEach((item) => {
+      invariant(
+        typeof item !== 'string',
+        `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`,
+      );
+    });
   }
+
+  const classes = cx(
+    // add yoga layout styles
+    !pseudo && 'yv',
+    // add (mostly) bootstrap styles
+    className,
+    // add custom styles
+    customClassName,
+    // add utils styles
+    utils,
+  );
+
+  return <Tag {...createDOMProps({ ...otherProps, className: classes })}>{children}</Tag>;
 }
 
 BaseView.propTypes = propTypes;

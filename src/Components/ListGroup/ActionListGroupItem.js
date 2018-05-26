@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseView } from '../../utils/components';
-import { action, formatChildren } from '../../utils';
+import { action } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   active: PropTypes.bool,
-  raw: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -20,12 +19,11 @@ const defaultProps = {
   ...action.defaultProps,
   disabled: false,
   active: false,
-  raw: false,
 };
 
 function ActionListGroupItem(props, context) {
   const {
-    children, disabled, active, raw, ...elementProps
+    children, disabled, active, ...elementProps
   } = props;
 
   const classes = cx(
@@ -41,7 +39,7 @@ function ActionListGroupItem(props, context) {
 
   return (
     <BaseView {...linkProps} className={classes} blockOnly>
-      {formatChildren(children, raw)}
+      {children}
     </BaseView>
   );
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseView } from '../../utils/components';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
-import { action, formatChildren } from '../../utils';
+import { action } from '../../utils';
 
 const propTypes = {
   ...action.propTypes,
@@ -12,7 +12,6 @@ const propTypes = {
   size: PropTypes.oneOf(SIZES),
   block: PropTypes.bool,
   caret: PropTypes.bool,
-  raw: PropTypes.bool,
 };
 
 const contextTypes = {
@@ -25,12 +24,11 @@ const defaultProps = {
   size: null,
   block: false,
   caret: false,
-  raw: false,
 };
 
 function Button(props, context) {
   const {
-    children, color, size, block, caret, raw, ...elementProps
+    children, color, size, block, caret, ...elementProps
   } = props;
 
   const classes = cx(
@@ -48,7 +46,7 @@ function Button(props, context) {
 
   return (
     <BaseView {...buttonProps} className={classes} blockOnly>
-      {formatChildren(children, raw)}
+      {children}
     </BaseView>
   );
 }
