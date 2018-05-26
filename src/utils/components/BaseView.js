@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
-import createElement from 'react-native-web/dist/exports/createElement';
+import createDOMProps from '../createDOMProps';
 import checkUtilityClasses from '../checkUtilityClasses';
 
 const propTypes = {
@@ -43,7 +43,7 @@ class BaseView extends React.Component {
     const {
       children,
       props: { class: utils, className: customClassName, ...otherProps },
-      tag,
+      tag: Tag,
       className,
       pseudo,
     } = this.props;
@@ -73,7 +73,7 @@ class BaseView extends React.Component {
       utils,
     );
 
-    return createElement(tag, { ...otherProps, className: classes }, children);
+    return <Tag {...createDOMProps({ ...otherProps, className: classes })}>{children}</Tag>;
   }
 }
 

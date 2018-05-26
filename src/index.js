@@ -1,5 +1,5 @@
 /* misc */
-import StyleSheet from 'react-native-web/dist/exports/StyleSheet';
+import StyleSheet from 'react-native-web/dist/cjs/exports/StyleSheet';
 import getStyleSheet from './getStyleSheet';
 import Provider from './Provider';
 

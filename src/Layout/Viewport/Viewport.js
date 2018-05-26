@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Dimensions from 'react-native-web/dist/exports/Dimensions';
+import Dimensions from 'react-native-web/dist/cjs/exports/Dimensions';
 import { contextTypes } from '../../utils';
 
 const propTypes = {
@@ -85,8 +85,6 @@ class Viewport extends React.Component {
       isDownMd: !(lg || xl),
       isDownLg: !xl,
     };
-
-    console.log(media.isUpMd);
 
     return childrenFn(media);
   }

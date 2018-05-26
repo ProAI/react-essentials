@@ -4,11 +4,12 @@ import { BaseView } from '../../utils/components';
 import { PAGE_SECTIONS } from '../../utils/constants';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   variant: PropTypes.oneOf(PAGE_SECTIONS),
 };
 
 const defaultProps = {
+  children: null,
   variant: null,
 };
 

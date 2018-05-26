@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppContainer from 'react-native-web/dist/exports/AppRegistry/AppContainer';
+import AppContainer from 'react-native-web/dist/cjs/exports/AppRegistry/AppContainer';
 import { contextTypes } from './utils';
 
 const propTypes = {
@@ -24,6 +24,12 @@ const defaultProps = {
 const childContextTypes = contextTypes;
 
 class Provider extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.generateKey = this.generateKey.bind(this);
+  }
+
   state = {
     count: 0,
   };

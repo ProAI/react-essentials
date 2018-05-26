@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import createElement from 'react-native-web/dist/exports/createElement';
+import createElement from 'react-native-web/dist/cjs/exports/createElement';
 import checkUtilityClasses from '../checkUtilityClasses';
 
 const propTypes = {

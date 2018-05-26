@@ -94,7 +94,7 @@ class Dropdown extends React.Component {
     // check if dropdown has a dropdown trigger and menu
     if (process.env.NODE_ENV !== 'production') {
       invariant(
-        React.Children.count(children) !== 2,
+        React.Children.count(children) === 2,
         'A dropdown should have exactly two children. The first child should be a <Button> or <Link> component and the second a <Dropdown.Menu>.',
       );
     }
@@ -141,7 +141,7 @@ class Dropdown extends React.Component {
         className={classes}
       >
         {toggleChild}
-        {menuChild}
+        {this.visible() && menuChild}
       </BaseView>
     );
   }

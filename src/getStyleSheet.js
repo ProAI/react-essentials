@@ -1,15 +1,17 @@
 import React from 'react';
-import styleResolver from 'react-native-web/dist/exports/StyleSheet/styleResolver';
+import styleResolver from 'react-native-web/dist/cjs/exports/StyleSheet/styleResolver';
 
 export default function getStyleSheet() {
-  const sheet = styleResolver.getStyleSheet();
-
   return {
-    getStyleTags: () => `<style id="${sheet.id}">${sheet.textContent}</style>`,
+    getStyleTags: () => {
+      const sheet = styleResolver.getStyleSheet();
+      return `<style id="${sheet.id}">${sheet.textContent}</style>`;
+    },
     /* eslint-disable react/no-danger */
-    getStyleElement: () => (
-      <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />
-    ),
+    getStyleElement: () => {
+      const sheet = styleResolver.getStyleSheet();
+      return <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />;
+    },
     /* eslint-enable */
   };
 }

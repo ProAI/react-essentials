@@ -42,15 +42,13 @@ function NavLink(props, context) {
 
   const path = typeof to === 'object' ? to.pathname : to;
 
-  // Regex taken from: https://github.com/pillarjs/path-to-regexp/blob/master/index.js#L202
-  const escapedPath = path && path.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1');
-
   return (
+    /* eslint-disable react/no-children-prop */
     <Route
-      path={escapedPath}
+      path={path}
       exact={exact}
       strict={strict}
-      render={({ match }) => {
+      children={({ match }) => {
         const classes = cx(
           // constant classes
           'nav-link',
@@ -64,7 +62,9 @@ function NavLink(props, context) {
             props={{
               ...elementProps,
               to,
-              innerRef: ref,
+              innerRef: (c) => {
+                ref.current = c;
+              },
               onClick: handleClick,
             }}
             className={classes}
@@ -74,6 +74,7 @@ function NavLink(props, context) {
         );
       }}
     />
+    /* eslint-enable */
   );
 }
 

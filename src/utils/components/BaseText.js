@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
-import createElement from 'react-native-web/dist/exports/createElement';
+import createDOMProps from '../createDOMProps';
 import checkUtilityClasses from '../checkUtilityClasses';
 import { TEXT_COLORS } from '../constants';
 
@@ -97,7 +97,7 @@ class BaseText extends React.Component {
         italic,
         ...otherProps
       },
-      tag: customTag,
+      tag,
       className,
     } = this.props;
 
@@ -107,7 +107,7 @@ class BaseText extends React.Component {
       }
     }
 
-    const tag = this.getTag(customTag);
+    const Tag = this.getTag(tag);
 
     const classes = cx(
       // add yoga styles
@@ -130,7 +130,7 @@ class BaseText extends React.Component {
     const childrenWithUB = bold ? <strong>{childrenWithU}</strong> : childrenWithU;
     const childrenWithUBI = italic ? <em>{childrenWithUB}</em> : childrenWithUB;
 
-    return createElement(tag, { ...otherProps, className: classes }, childrenWithUBI);
+    return <Tag {...createDOMProps({ ...otherProps, className: classes })}>{childrenWithUBI}</Tag>;
   }
 }
 
