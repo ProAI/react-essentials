@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import StyleSheetPropType from 'react-native-web/dist/cjs/modules/StyleSheetPropType';
+import TextStylePropTypes from 'react-native-web/dist/cjs/exports/Text/TextStylePropTypes';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
 import createDOMProps from '../createDOMProps';
 import checkUtilityClasses from '../checkUtilityClasses';
 import { TEXT_COLORS } from '../constants';
+
+const stylePropType = StyleSheetPropType(TextStylePropTypes);
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -19,6 +23,7 @@ const propTypes = {
     underline: PropTypes.bool,
     bold: PropTypes.bool,
     italic: PropTypes.bool,
+    style: stylePropType,
   }),
   className: PropTypes.string.isRequired,
   blockOnly: PropTypes.bool,

@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import StyleSheetPropType from 'react-native-web/dist/cjs/modules/StyleSheetPropType';
+import ViewStylePropTypes from 'react-native-web/dist/cjs/exports/Text/TextStylePropTypes';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
 import createDOMProps from '../createDOMProps';
 import checkUtilityClasses from '../checkUtilityClasses';
+
+const stylePropType = StyleSheetPropType(ViewStylePropTypes);
 
 const propTypes = {
   children: PropTypes.node,
@@ -11,6 +15,7 @@ const propTypes = {
   props: PropTypes.shape({
     class: PropTypes.string,
     className: PropTypes.string,
+    style: stylePropType,
   }),
   className: PropTypes.string.isRequired,
   pseudo: PropTypes.bool,

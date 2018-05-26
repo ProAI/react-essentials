@@ -7,26 +7,27 @@ export default function checkUtilityClasses(value) {
     // TODO: check for close icon classes
 
     // check for color classes
+    // don't use text utils, because they are part of <BaseText>
     if (
-      /^(text-(primary|secondary|success|danger|warning|info|light|dark|body|muted|white|black-50|white-50)|bg-(primary|secondary|success|danger|warning|info|light|dark|white|transparent))$/.test(className)
+      /^(bg-(primary|secondary|success|danger|warning|info|light|dark|white|transparent))$/.test(className)
     ) {
-      return null;
+      return;
     }
 
     // check for display classes
-    if (
-      /^(d(-(sm|md|lg|xl))?-(none|inline|inline-block|block|table|table-cell|table-row|flex|inline-flex))$/.test(className)
-    ) {
-      return null;
-    }
+    // display classes not supported in react-native
 
     // TODO: check for embed classes
-    // TODO: check for flex classes
+
+    // check for flex classes
+    if (
+      /^((flex-(((sm|md|lg|xl)-)?((row|column)(-reverse)?|fill|((grow|shrink)-[0-1])|nowrap|wrap|wrap-reverse)))|(justify-content-((sm|md|lg|xl)-)?(start|end|center|between|around))|(align-((items|self)-((sm|md|lg|xl)-)?(start|end|center|baseline|stretch)))|(order-((sm|md|lg|xl)-)?[0-12])|(align-content-((sm|md|lg|xl)-)?(start|end|center|around|stretch)))$/.test(className)
+    ) {
+      return;
+    }
 
     // check for float classes
-    if (/^(float(-(sm|md|lg|xl))?-(left|right|none))$/.test(className)) {
-      return null;
-    }
+    // float classes not supported in react-native
 
     // TODO: check for image replacement classes
 
@@ -34,7 +35,7 @@ export default function checkUtilityClasses(value) {
     if (
       /^(position-(static|relative|absolute|fixed|sticky)|fixed-(top|bottom)|sticky-top)$/.test(className)
     ) {
-      return null;
+      return;
     }
 
     // TODO: check for screenreaders classes
@@ -43,20 +44,17 @@ export default function checkUtilityClasses(value) {
 
     // check for spacing classes
     if (/^(p|m)(t|b|l|r|x|y)?-([0-5]|auto)$/.test(className)) {
-      return null;
+      return;
     }
 
     // check for text classes
-    if (
-      /^(text-(justify|(((sm|md|lg|xl)-)?(left|center|right))|nowrap|truncate|lowercase|uppercase|capitalize|monospace)|font-(weight-(bold|normal|light)|italic))$/.test(className)
-    ) {
-      return null;
-    }
+    // don't use text utils, because they are part of <BaseText>
 
     // TODO: check for vertical align classes
     // TODO: check for visibility classes
 
     // value is not valid style class, return error
-    return new Error(`Invalid prop class with invalid utility class \`${className}\` supplied. Validation failed.`);
+    // eslint-disable-next-line no-console
+    console.error(`Invalid prop class with invalid utility class \`${className}\` supplied. Validation failed.`);
   });
 }
