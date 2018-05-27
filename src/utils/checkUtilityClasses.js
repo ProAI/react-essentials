@@ -43,7 +43,7 @@ export default function checkUtilityClasses(value) {
     // TODO: check for sizing classes
 
     // check for spacing classes
-    if (/^(p|m)(t|b|l|r|x|y)?-([0-5]|auto)$/.test(className)) {
+    if (/^(p|m)(t|b|l|r|x|y)?-((sm|md|lg|xl)-)?([0-5]|auto)$/.test(className)) {
       return;
     }
 
