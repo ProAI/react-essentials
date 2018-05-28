@@ -6,6 +6,7 @@ import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
 import createDOMProps from '../createDOMProps';
 import checkUtilityClasses from '../checkUtilityClasses';
+import createUtilityClasses from '../createUtilityClasses';
 import { TEXT_COLORS } from '../constants';
 
 const stylePropType = StyleSheetPropType(TextStylePropTypes);
@@ -127,7 +128,7 @@ class BaseText extends React.Component {
       // add custom styles
       customClassName,
       // add utils styles
-      utils,
+      createUtilityClasses(utils),
     );
 
     // wrap children with underline, bold and italic tags

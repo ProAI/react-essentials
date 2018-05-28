@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import createElement from 'react-native-web/dist/cjs/exports/createElement';
 import checkUtilityClasses from '../checkUtilityClasses';
+import createUtilityClasses from '../createUtilityClasses';
 
 const propTypes = {
   source: PropTypes.string.isRequired,
@@ -39,7 +40,7 @@ function BaseImage(props) {
     // add custom styles
     customClassName,
     // add utils styles
-    utils,
+    createUtilityClasses(utils),
   );
 
   return createElement(

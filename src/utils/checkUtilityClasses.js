@@ -21,7 +21,7 @@ export default function checkUtilityClasses(value) {
 
     // check for flex classes
     if (
-      /^((flex-(((sm|md|lg|xl)-)?((row|column)(-reverse)?|fill|((grow|shrink)-[0-1])|nowrap|wrap|wrap-reverse)))|(justify-content-((sm|md|lg|xl)-)?(start|end|center|between|around))|(align-((items|self)-((sm|md|lg|xl)-)?(start|end|center|baseline|stretch)))|(order-((sm|md|lg|xl)-)?[0-12])|(align-content-((sm|md|lg|xl)-)?(start|end|center|around|stretch)))$/.test(className)
+      /^((f-(((sm|md|lg|xl)-)?((row|column)(-reverse)?|fill|((grow|shrink)-[0-1])|nowrap|wrap|wrap-reverse)))|(jc-((sm|md|lg|xl)-)?(start|end|center|between|around))|(a((i|s)-((sm|md|lg|xl)-)?(start|end|center|baseline|stretch)))|(order-((sm|md|lg|xl)-)?[0-12])|(ac-((sm|md|lg|xl)-)?(start|end|center|around|stretch)))$/.test(className)
     ) {
       return;
     }

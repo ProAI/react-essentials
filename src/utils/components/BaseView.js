@@ -6,6 +6,7 @@ import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
 import createDOMProps from '../createDOMProps';
 import checkUtilityClasses from '../checkUtilityClasses';
+import createUtilityClasses from '../createUtilityClasses';
 
 const stylePropType = StyleSheetPropType(ViewStylePropTypes);
 
@@ -67,7 +68,7 @@ function BaseView(props, context) {
     // add custom styles
     customClassName,
     // add utils styles
-    utils,
+    createUtilityClasses(utils),
   );
 
   return <Tag {...createDOMProps({ ...otherProps, className: classes })}>{children}</Tag>;
