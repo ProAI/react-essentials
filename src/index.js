@@ -10,6 +10,10 @@ import Alert from './Components/Alerts/Alert';
 import ActionBadge from './Components/Badges/ActionBadge';
 import Badge from './Components/Badges/Badge';
 
+/* button group components */
+import ButtonGroup from './Components/ButtonGroup/ButtonGroup';
+import ButtonToolbar from './Components/ButtonGroup/ButtonToolbar';
+
 /* button components */
 import Button from './Components/Buttons/Button';
 
@@ -21,6 +25,9 @@ import Dropdown from './Components/Dropdowns/Dropdown';
 
 /* form components */
 import Form from './Components/Forms/Form';
+
+/* input group components */
+import InputGroup from './Components/InputGroup/InputGroup';
 
 /* jumbotron components */
 import Jumbotron from './Components/Jumbotron/Jumbotron';
@@ -88,10 +95,13 @@ export {
   Alert,
   ActionBadge,
   Badge,
+  ButtonGroup,
+  ButtonToolbar,
   Button,
   Card,
   Dropdown,
   Form,
+  InputGroup,
   Jumbotron,
   ActionListGroup,
   ListGroup,
