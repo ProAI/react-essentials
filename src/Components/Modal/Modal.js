@@ -5,6 +5,7 @@ import cx from 'classnames';
 import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
+import ModalTitle from './ModalTitle';
 import { SIZES } from '../../utils/constants';
 import { BaseView } from '../../utils/components';
 import { contextTypes } from '../../utils';
@@ -343,5 +344,6 @@ Modal.defaultProps = defaultProps;
 Modal.Body = ModalBody;
 Modal.Footer = ModalFooter;
 Modal.Header = ModalHeader;
+Modal.Title = ModalTitle;
 
 export default Modal;

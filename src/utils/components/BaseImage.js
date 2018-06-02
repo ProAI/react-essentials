@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import createElement from 'react-native-web/dist/cjs/exports/createElement';
+import invariant from 'fbjs/lib/invariant';
 import checkUtilityClasses from '../checkUtilityClasses';
 import createUtilityClasses from '../createUtilityClasses';
 
@@ -14,13 +15,17 @@ const propTypes = {
   className: PropTypes.string.isRequired,
 };
 
+const contextTypes = {
+  isInAParentText: PropTypes.bool,
+};
+
 const defaultProps = {
   props: {
     class: null,
   },
 };
 
-function BaseImage(props) {
+function BaseImage(props, context) {
   const {
     source,
     label,
@@ -32,6 +37,8 @@ function BaseImage(props) {
     if (utils) {
       checkUtilityClasses(utils);
     }
+
+    invariant(!context.isInAParentText, 'A view cannot be used inside of a text component');
   }
 
   const classes = cx(
@@ -57,5 +64,6 @@ function BaseImage(props) {
 
 BaseImage.propTypes = propTypes;
 BaseImage.defaultProps = defaultProps;
+BaseImage.contextTypes = contextTypes;
 
 export default BaseImage;

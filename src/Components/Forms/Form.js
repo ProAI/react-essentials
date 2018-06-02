@@ -32,7 +32,11 @@ function Form(props) {
       validate={validate}
       onSubmit={onSubmit}
       render={form => (
-        <BaseView props={elementProps} tag="form" onSubmit={form.handleSubmit} className="form">
+        <BaseView
+          props={{ onSubmit: form.handleSubmit, ...elementProps }}
+          tag="form"
+          className="form"
+        >
           {typeof children === 'function' ? children(form) : children}
         </BaseView>
       )}
