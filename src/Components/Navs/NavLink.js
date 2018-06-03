@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Route, Link as RouterLink } from 'react-router-dom';
-import { BaseView } from '../../utils/components';
+import { BaseTouchable } from '../../utils/components';
 import { action } from '../../utils';
 
 const propTypes = {
@@ -54,7 +54,7 @@ function NavLink(props, context) {
         );
 
         return (
-          <BaseView
+          <BaseTouchable
             tag={RouterLink}
             props={{
               ...elementProps,
@@ -67,7 +67,7 @@ function NavLink(props, context) {
             className={classes}
           >
             {children}
-          </BaseView>
+          </BaseTouchable>
         );
       }}
     />

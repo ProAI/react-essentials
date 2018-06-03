@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import { BaseTouchable } from '../../utils/components';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -42,7 +42,7 @@ class TabsListGroupTab extends React.Component {
     );
 
     return (
-      <BaseView
+      <BaseTouchable
         tag="a"
         props={{
           ...elementProps,
@@ -54,7 +54,7 @@ class TabsListGroupTab extends React.Component {
         className={linkClasses}
       >
         {children}
-      </BaseView>
+      </BaseTouchable>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import { BaseTouchable } from '../../utils/components';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
 import { action } from '../../utils';
 
@@ -51,9 +51,9 @@ function Button(props, context) {
   const buttonProps = action.createButtonProps(elementProps, context);
 
   return (
-    <BaseView {...buttonProps} className={classes} blockOnly>
+    <BaseTouchable {...buttonProps} className={classes}>
       {children}
-    </BaseView>
+    </BaseTouchable>
   );
 }
 

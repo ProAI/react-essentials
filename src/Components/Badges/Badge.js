@@ -21,7 +21,7 @@ function Badge({ children, color, ...elementProps }) {
   );
 
   return (
-    <BaseView props={elementProps} className={classes} inlineOnly>
+    <BaseView props={elementProps} className={classes}>
       {children}
     </BaseView>
   );

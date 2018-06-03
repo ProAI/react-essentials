@@ -38,7 +38,7 @@ function BaseImage(props, context) {
       checkUtilityClasses(utils);
     }
 
-    invariant(!context.isInAParentText, 'A view cannot be used inside of a text component');
+    invariant(!context.isInAParentText, 'An image cannot be used inside of a text component');
   }
 
   const classes = cx(

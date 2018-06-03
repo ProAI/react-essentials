@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView } from '../../utils/components';
+import { BaseTouchable } from '../../utils/components';
 import { action } from '../../utils';
 
 const propTypes = {
@@ -22,9 +22,9 @@ function DropdownItem(props, context) {
   const linkProps = action.createLinkProps(elementProps, context);
 
   return (
-    <BaseView {...linkProps} className="dropdown-item" blockOnly>
+    <BaseTouchable {...linkProps} className="dropdown-item" blockOnly>
       {children}
-    </BaseView>
+    </BaseTouchable>
   );
 }
 

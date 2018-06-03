@@ -16,12 +16,16 @@ export default function createButtonProps(props, context) {
   });
 
   // check props
-  /* if (process.env.NODE_ENV !== 'production') {
-    invariant(to || onClick, "A button needs either a 'to' or an 'onClick' prop.");
+  if (process.env.NODE_ENV !== 'production') {
+    const isFormButton =
+      elementProps.type && (elementProps.type === 'submit' || elementProps.type === 'reset');
+
+    invariant(to || onClick || isFormButton, "A button needs either a 'to' or an 'onClick' prop.");
+
     if (external) {
       invariant(to, "'to' prop for external link is missing.");
     }
-  } */
+  }
 
   // link button
   if (to) {

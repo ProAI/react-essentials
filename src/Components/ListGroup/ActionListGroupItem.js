@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import { BaseTouchable } from '../../utils/components';
 import { action } from '../../utils';
 
 const propTypes = {
@@ -38,9 +38,9 @@ function ActionListGroupItem(props, context) {
   const linkProps = action.createLinkProps(elementProps, context);
 
   return (
-    <BaseView {...linkProps} className={classes} blockOnly>
+    <BaseTouchable {...linkProps} className={classes} blockOnly>
       {children}
-    </BaseView>
+    </BaseTouchable>
   );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import { BaseTouchable } from '../../utils/components';
 import { COLORS } from '../../utils/constants';
 import { action } from '../../utils';
 
@@ -31,9 +31,9 @@ function ActionBadge(props, context) {
   const linkProps = action.createLinkProps(elementProps, context);
 
   return (
-    <BaseView {...linkProps} className={classes} inlineOnly>
+    <BaseTouchable {...linkProps} className={classes}>
       {children}
-    </BaseView>
+    </BaseTouchable>
   );
 }
 
