@@ -80,11 +80,7 @@ class FormChoice extends React.Component {
         {title && <legend className="form-group-legend">{title}</legend>}
         <div className="custom-controls-stacked">
           {options.map(option => (
-            <label
-              key={getIndex()}
-              className={classes}
-              htmlFor={`${this.identifier}-${name}-${getIndex()}`}
-            >
+            <div key={getIndex()} className={classes}>
               {!multiple && (
                 <input
                   type="radio"
@@ -127,10 +123,14 @@ class FormChoice extends React.Component {
                   className={inputClasses}
                 />
               )}
-              <div className="custom-control-indicator" />
-              <div className="custom-control-description">{option.label}</div>
+              <label
+                className="custom-control-label"
+                htmlFor={`${this.identifier}-${name}-${getIndex()}`}
+              >
+                {option.label}
+              </label>
               {increaseIndex()}
-            </label>
+            </div>
           ))}
         </div>
       </Field>

@@ -63,7 +63,7 @@ class FormCheckbox extends React.Component {
     return (
       <Field error={error} touched={formik.touched[name]} info={info}>
         {title && <legend className="form-group-legend">{title}</legend>}
-        <label className={classes} htmlFor={`${this.identifier}-${name}`}>
+        <div className={classes}>
           <input
             type="checkbox"
             id={`${this.identifier}-${name}`}
@@ -76,9 +76,10 @@ class FormCheckbox extends React.Component {
             onBlur={formik.handleBlur}
             className={inputClasses}
           />
-          <div className="custom-control-indicator" />
-          <div className="custom-control-description">{label}</div>
-        </label>
+          <label className="custom-control-label" htmlFor={`${this.identifier}-${name}`}>
+            {label}
+          </label>
+        </div>
       </Field>
     );
   }
