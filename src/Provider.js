@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppContainer from 'react-native-web/dist/cjs/exports/AppRegistry/AppContainer';
+import Alert from './Components/Alerts/Alert';
 import { contextTypes } from './utils';
 
 const propTypes = {
@@ -30,10 +31,6 @@ class Provider extends React.Component {
     this.generateKey = this.generateKey.bind(this);
   }
 
-  state = {
-    count: 0,
-  };
-
   getChildContext() {
     return {
       essentials: {
@@ -44,18 +41,25 @@ class Provider extends React.Component {
     };
   }
 
+  key = 0;
+
   generateKey(prefix) {
-    const key = `${prefix}${this.state.count}`;
+    const { key } = this;
 
-    this.setState(({ count }) => ({ count: count + 1 }));
+    this.key = key + 1;
 
-    return key;
+    return `${prefix}${key}`;
   }
 
   render() {
     const { children, root } = this.props;
 
-    return <AppContainer rootTag={root}>{children}</AppContainer>;
+    return (
+      <React.Fragment>
+        <AppContainer rootTag={root}>{children}</AppContainer>
+        <Alert.Container />
+      </React.Fragment>
+    );
   }
 }
 

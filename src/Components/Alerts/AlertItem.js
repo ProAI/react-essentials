@@ -6,9 +6,8 @@ import ExclamationIcon from 'react-icons/lib/fa/exclamation';
 import CloseIcon from 'react-icons/lib/fa/close';
 import CheckIcon from 'react-icons/lib/fa/check';
 import { chooseTransitionEvent, Timer } from './helpers';
-import Link from '../../Content/Links/Link';
-import { BaseText } from '../../utils/components';
-import { CloseButton } from '../../utils';
+import { Link as RouterLink } from 'react-router-dom';
+import { BaseText, CloseButton } from '../../utils/components';
 import { COLORS } from '../../utils/constants';
 
 const propTypes = {
@@ -158,88 +157,47 @@ class AlertItem extends React.Component {
 
   render() {
     const { alert } = this.props;
-    let classes = `alert alert-${alert.color}`;
-    let dismiss = null;
-    let icon = null;
-    let title = null;
-    let content = null;
+    const { visible, removed } = this.state;
 
-    if (this.state.visible) {
-      classes = cx(classes, 'alert-visible');
-    } else {
-      classes = cx(classes, 'alert-hidden');
-    }
-
-    if (alert.icon) {
-      classes = cx(classes, 'alert-with-icon');
-    }
-
-    if (alert.small) {
-      classes = cx(classes, 'alert-sm');
-    }
-
-    if (!alert.dismissible) {
-      classes = cx(classes, 'alert-not-dismissible');
-    }
-
-    if (this.state.removed) {
-      classes = cx(classes, 'alert-removed');
-    }
-
-    if (alert.icon) {
-      switch (alert.color) {
-        case 'info':
-          icon = <InfoIcon className="alert-icon" />;
-          break;
-        case 'warning':
-          icon = <ExclamationIcon className="alert-icon" />;
-          break;
-        case 'danger':
-          icon = <CloseIcon className="alert-icon" />;
-          break;
-        case 'success':
-          icon = <CheckIcon className="alert-icon" />;
-          break;
-        default:
-          icon = <InfoIcon className="alert-icon" />;
-      }
-    }
-
-    if (alert.title) {
-      title = (
-        <BaseText className="alert-title" blockOnly>
-          {alert.title}
-        </BaseText>
-      );
-    }
-
-    if (alert.content) {
-      content = (
-        <BaseText className="alert-content" blockOnly>
-          {alert.content}
-        </BaseText>
-      );
-    }
-
-    if (alert.dismissible) {
-      dismiss = <CloseButton onClick={this.dismiss} />;
-    }
-
-    let body = (
-      <span>
-        {icon}
-        {title}
-        {content}
-      </span>
+    const classes = cx(
+      // constant classes
+      'alert',
+      `alert-${alert.color}`,
+      // variable classes
+      visible && 'alert-visible',
+      !visible && 'alert-hidden',
+      alert.icon && 'alert-with-icon',
+      alert.small && 'alert-sm',
+      !alert.dismissible && 'alert-not-dismissible',
+      removed && 'alert-removed',
     );
 
-    if (alert.link) {
-      body = (
-        <Link to={alert.link} className="alert-link">
-          {content}
-        </Link>
-      );
-    }
+    const body = (
+      <React.Fragment>
+        {alert.title && (
+          <BaseText className="alert-title" blockOnly>
+            {alert.title}
+          </BaseText>
+        )}
+        {alert.content && (
+          <BaseText className="alert-content" blockOnly>
+            {alert.content}
+          </BaseText>
+        )}
+      </React.Fragment>
+    );
+
+    const bodyWithLink = alert.link ? (
+      <RouterLink
+        to={alert.link}
+        onClick={alert.dismissible ? this.dismiss : null}
+        className="alert-link"
+      >
+        {body}
+      </RouterLink>
+    ) : (
+      body
+    );
 
     return (
       <div
@@ -251,8 +209,12 @@ class AlertItem extends React.Component {
         }}
         role="alert"
       >
-        {dismiss}
-        {body}
+        {alert.dismissible && <CloseButton onClick={this.dismiss} />}
+        {alert.icon && alert.color === 'info' && <InfoIcon className="alert-icon" />}
+        {alert.icon && alert.color === 'warning' && <ExclamationIcon className="alert-icon" />}
+        {alert.icon && alert.color === 'danger' && <CloseIcon className="alert-icon" />}
+        {alert.icon && alert.color === 'success' && <CheckIcon className="alert-icon" />}
+        {bodyWithLink}
       </div>
     );
   }
