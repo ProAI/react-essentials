@@ -16,7 +16,7 @@ export default function createButtonProps(props, context) {
   });
 
   // check props
-  if (process.env.NODE_ENV !== 'production') {
+  /* if (process.env.NODE_ENV !== 'production') {
     const isFormButton =
       elementProps.type && (elementProps.type === 'submit' || elementProps.type === 'reset');
 
@@ -25,7 +25,7 @@ export default function createButtonProps(props, context) {
     if (external) {
       invariant(to, "'to' prop for external link is missing.");
     }
-  }
+  } */
 
   // link button
   if (to) {

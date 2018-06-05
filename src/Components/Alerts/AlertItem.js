@@ -5,8 +5,8 @@ import InfoIcon from 'react-icons/lib/fa/info';
 import ExclamationIcon from 'react-icons/lib/fa/exclamation';
 import CloseIcon from 'react-icons/lib/fa/close';
 import CheckIcon from 'react-icons/lib/fa/check';
-import { chooseTransitionEvent, Timer } from './helpers';
 import { Link as RouterLink } from 'react-router-dom';
+import { chooseTransitionEvent, Timer } from './helpers';
 import { BaseText, CloseButton } from '../../utils/components';
 import { COLORS } from '../../utils/constants';
 

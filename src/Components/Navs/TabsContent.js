@@ -10,10 +10,11 @@ const propTypes = {
 };
 
 function TabsContent({ children, activeKey, ...elementProps }) {
-  const manipulatedChildren = React.Children.map(children, child =>
-    React.cloneElement(child, {
-      active: activeKey === child.props.id,
-    }));
+  const manipulatedChildren = React.Children.map(children, (child) => {
+    const active = activeKey === child.props.id;
+
+    return active ? child : null;
+  });
 
   return (
     <BaseView props={elementProps} className="tab-content">
