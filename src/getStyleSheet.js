@@ -3,7 +3,7 @@ import styleResolver from 'react-native-web/dist/cjs/exports/StyleSheet/styleRes
 
 export default function getStyleSheet() {
   return {
-    getStyleTags: () => {
+    getStyleTag: () => {
       const sheet = styleResolver.getStyleSheet();
       return `<style id="${sheet.id}">${sheet.textContent}</style>`;
     },
