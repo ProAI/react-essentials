@@ -26,6 +26,11 @@
     "prepublishOnly": "yarn clean && yarn build",
     "lint": "./node_modules/.bin/eslint src"
   },
+  "files": [
+    "dist",
+    "es",
+    "lib"
+  ],
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
