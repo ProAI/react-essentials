@@ -19,12 +19,14 @@ class Viewport extends React.Component {
   }
 
   componentDidMount() {
+    const { state } = this;
+
     Dimensions.addEventListener('change', this.handleChange);
 
     const viewport = this.calculateViewport(Dimensions.get('window').width);
 
     // check if server guess for viewport was right
-    if (this.state.viewport !== viewport) {
+    if (state.viewport !== viewport) {
       // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({ viewport });
     }
@@ -35,7 +37,9 @@ class Viewport extends React.Component {
   }
 
   calculateViewport(width) {
-    const { breakpoints } = this.context.essentials;
+    const {
+      essentials: { breakpoints },
+    } = this.context;
 
     if (width < breakpoints.sm) {
       return 'xs';
@@ -53,9 +57,10 @@ class Viewport extends React.Component {
   }
 
   handleChange(dimensions) {
+    const { state } = this;
     const viewport = this.calculateViewport(dimensions.window.width);
 
-    if (this.state.viewport !== viewport) {
+    if (state.viewport !== viewport) {
       this.setState({ viewport });
     }
   }

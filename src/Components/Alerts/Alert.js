@@ -3,15 +3,15 @@ import AlertContainer from './AlertContainer';
 class Alert {
   container = null;
 
-  init = (ref) => {
+  init = ref => {
     this.container = ref;
   };
 
-  add = (alert) => {
+  add = alert => {
     this.container.add(alert);
   };
 
-  remove = (alert) => {
+  remove = alert => {
     this.container.remove(alert);
   };
 

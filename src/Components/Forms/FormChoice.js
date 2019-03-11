@@ -7,10 +7,12 @@ import { contextTypes as essentialsContextTypes } from '../../utils';
 const propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.node,
-  })).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.node,
+    }),
+  ).isRequired,
   info: PropTypes.string,
   multiple: PropTypes.bool,
   size: PropTypes.oneOf(['sm']),
@@ -19,6 +21,7 @@ const propTypes = {
 
 const contextTypes = {
   ...essentialsContextTypes,
+  // eslint-disable-next-line react/forbid-prop-types
   formik: PropTypes.object.isRequired,
 };
 
@@ -42,9 +45,7 @@ class FormChoice extends React.Component {
   }
 
   render() {
-    const {
-      name, title, options, info, multiple, size, formatError,
-    } = this.props;
+    const { name, title, options, info, multiple, size, formatError } = this.props;
 
     const { formik } = this.context;
 
@@ -75,6 +76,7 @@ class FormChoice extends React.Component {
 
     const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 
+    /* eslint-disable jsx-a11y/label-has-for */
     return (
       <Field error={error} touched={formik.touched[name]} info={info}>
         {title && <legend className="form-group-legend">{title}</legend>}
@@ -88,7 +90,7 @@ class FormChoice extends React.Component {
                   name={name}
                   value={option.value}
                   checked={formik.values[name] === option.value}
-                  onChange={(event) => {
+                  onChange={event => {
                     formik.setFieldError(name, null);
 
                     const value = event.target.checked ? option.value : formik.values[name];
@@ -107,7 +109,7 @@ class FormChoice extends React.Component {
                   checked={
                     formik.values[name] ? formik.values[name].indexOf(option.value) !== -1 : false
                   }
-                  onChange={(event) => {
+                  onChange={event => {
                     formik.setFieldError(name, null);
 
                     const newValue = formik.values[name] ? [...formik.values[name]] : [];
@@ -135,6 +137,7 @@ class FormChoice extends React.Component {
         </div>
       </Field>
     );
+    /* eslint-enable */
   }
 }
 

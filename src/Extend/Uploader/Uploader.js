@@ -34,7 +34,7 @@ class Uploader extends React.Component {
     };
   }
 
-  onTriggerClick = (e) => {
+  onTriggerClick = e => {
     if (!this.fileInput) return;
 
     e.target.blur();
@@ -42,7 +42,7 @@ class Uploader extends React.Component {
     this.fileInput.click();
   };
 
-  onTriggerKeyDown = (e) => {
+  onTriggerKeyDown = e => {
     if (e.key === 'Enter') {
       this.onTriggerClick(e);
     }
@@ -51,9 +51,11 @@ class Uploader extends React.Component {
   onFileRemove = (e, id) => {
     e.preventDefault();
 
+    const { props, state } = this;
+
     // call custom onRemove function
-    if (this.props.onRemove) {
-      this.props.onRemove(this.state.uploads[id].file);
+    if (props.onRemove) {
+      props.onRemove(state.uploads[id].file);
     }
 
     // set timeout, so animation could run first
@@ -66,7 +68,9 @@ class Uploader extends React.Component {
     }, 200);
   };
 
-  onChange = (e) => {
+  onChange = e => {
+    const { props, state } = this;
+
     const newUploads = {};
     const { lastId } = this.state;
     for (let i = 0; i < e.target.files.length; i += 1) {
@@ -81,29 +85,29 @@ class Uploader extends React.Component {
     }
 
     // add new files to state and update last id
-    this.setState({
-      uploads: Object.assign({}, newUploads, this.state.uploads),
+    this.setState(({ uploads }) => ({
+      uploads: Object.assign({}, newUploads, uploads),
       lastId: lastId + e.target.files.length,
-    });
+    }));
 
     // process upload after setting state to prevent race conditions
     for (let i = 0; i < e.target.files.length; i += 1) {
       const id = i + 1 + lastId;
       const file = e.target.files[i];
 
-      this.props.upload(file).then(
+      props.upload(file).then(
         // upload successful
         () => {
           // make sure upload file is still in list after async action
-          if (!this.state.uploads[id]) return;
+          if (!state.uploads[id]) return;
 
           // call custom onCompleted function
-          if (this.props.onCompleted) {
-            this.props.onCompleted(file);
+          if (props.onCompleted) {
+            props.onCompleted(file);
           }
 
           this.setState({
-            uploads: Object.assign({}, this.state.uploads, {
+            uploads: Object.assign({}, state.uploads, {
               [id]: {
                 status: 'completed',
                 error: null,
@@ -113,17 +117,17 @@ class Uploader extends React.Component {
           });
         },
         // upload fails
-        (error) => {
+        error => {
           // make sure upload file is still in list after async action
-          if (!this.state.uploads[id]) return;
+          if (!state.uploads[id]) return;
 
           // call custom onError function
-          if (this.props.onError) {
-            this.props.onError(file, error);
+          if (props.onError) {
+            props.onError(file, error);
           }
 
           this.setState({
-            uploads: Object.assign({}, this.state.uploads, {
+            uploads: Object.assign({}, state.uploads, {
               [id]: {
                 status: 'error',
                 error,
@@ -144,15 +148,14 @@ class Uploader extends React.Component {
   };
 
   render() {
-    const {
-      variant, multiple, accept, children,
-    } = this.props;
+    const { state } = this;
+    const { variant, multiple, accept, children } = this.props;
 
     return (
       <div className="uploader">
         <input
           type="file"
-          ref={(fileInput) => {
+          ref={fileInput => {
             this.fileInput = fileInput;
           }}
           style={{ display: 'none' }}
@@ -170,13 +173,13 @@ class Uploader extends React.Component {
           {children}
         </button>
         <div className={`uploader-file-list ${variant}`}>
-          {Object.keys(this.state.uploads)
+          {Object.keys(state.uploads)
             .reverse()
             .map(id => (
               <FileListItem
                 key={id}
-                status={this.state.uploads[id].status}
-                file={this.state.uploads[id].file}
+                status={state.uploads[id].status}
+                file={state.uploads[id].file}
                 onRemove={e => this.onFileRemove(e, id)}
               />
             ))}

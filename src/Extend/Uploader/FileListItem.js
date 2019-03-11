@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner/Spinner';
-import { CloseButton, formatFileSize } from '../../utils';
+import { formatFileSize } from '../../utils';
+import { CloseButton } from '../../utils/components';
 
 const propTypes = {
   status: PropTypes.oneOf(['ready', 'uploading', 'completed', 'error']).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   file: PropTypes.object.isRequired,
   onRemove: PropTypes.func.isRequired,
 };
@@ -26,12 +28,16 @@ class FileListItem extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.status !== nextProps.status || this.state.progress !== nextState.progress;
+    const { props, state } = this;
+
+    return props.status !== nextProps.status || state.progress !== nextState.progress;
   }
 
   componentWillUpdate(nextProps) {
+    const { props } = this;
+
     // trigger progress bar complete animation
-    if (this.props.status === 'uploading' && nextProps.status === 'completed') {
+    if (props.status === 'uploading' && nextProps.status === 'completed') {
       this.completeProgressBar();
     }
 
@@ -46,11 +52,13 @@ class FileListItem extends React.Component {
     (window.URL || window.webkitURL).revokeObjectURL(this.filePreviewUrl);
   }
 
-  onRemove = (e) => {
+  onRemove = e => {
+    const { props } = this;
+
     this.item.style.transition = 'opacity .4s ease';
     this.item.style.opacity = 0;
 
-    this.props.onRemove(e);
+    props.onRemove(e);
   };
 
   setProgressBarToErrorState = () => {
@@ -60,12 +68,14 @@ class FileListItem extends React.Component {
   };
 
   completeProgressBar = () => {
+    const { state } = this;
+
     const id = setInterval(() => {
-      if (this.state.progress >= 1) {
+      if (state.progress >= 1) {
         clearInterval(id);
       } else {
         this.setState({
-          progress: this.state.progress + 0.05,
+          progress: state.progress + 0.05,
         });
       }
     }, 20);
@@ -83,7 +93,7 @@ class FileListItem extends React.Component {
     return (
       <div
         className="uploader-file-list-item"
-        ref={(item) => {
+        ref={item => {
           this.item = item;
         }}
       >

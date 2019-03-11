@@ -4,6 +4,7 @@ import { BaseText } from '../../utils/components';
 import { action } from '../../utils';
 
 const propTypes = {
+  // eslint-disable-next-line react/forbid-foreign-prop-types
   ...action.propTypes,
   children: PropTypes.node.isRequired,
 };

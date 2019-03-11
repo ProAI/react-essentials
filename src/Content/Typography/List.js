@@ -17,9 +17,7 @@ const defaultProps = {
   inline: false,
 };
 
-function List({
-  children, variant, unstyled, inline, ...elementProps
-}) {
+function List({ children, variant, unstyled, inline, ...elementProps }) {
   const classes = cx(
     // variable classes
     unstyled && 'list-unstyled',

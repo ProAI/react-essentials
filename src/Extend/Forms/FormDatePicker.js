@@ -19,6 +19,7 @@ const propTypes = {
 
 const contextTypes = {
   ...essentialsContextTypes,
+  // eslint-disable-next-line react/forbid-prop-types
   formik: PropTypes.object.isRequired,
 };
 
@@ -48,13 +49,15 @@ class FormDatePicker extends React.Component {
   };
 
   componentDidUpdate() {
+    const { state } = this;
+
     // if field is active, set focus on tabIndex element
-    if (this.state.isFocused) {
+    if (state.isFocused) {
       this.input.focus();
     }
 
     // scroll to bottom of menu
-    if (this.state.isOpen) {
+    if (state.isOpen) {
       const menuRect = this.menu.getBoundingClientRect();
       if (window.innerHeight < menuRect.bottom) {
         window.scrollBy(0, menuRect.bottom - window.innerHeight);
@@ -63,14 +66,18 @@ class FormDatePicker extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.state.isOpen || this.state.isFocused) {
+    const { state } = this;
+
+    if (state.isOpen || state.isFocused) {
       document.removeEventListener('mousedown', this.onDocumentClick);
     }
   }
 
-  onDocumentClick = (event) => {
+  onDocumentClick = event => {
+    const { state } = this;
+
     // close and unfocus if click is outside
-    if (this.state.isOpen) {
+    if (state.isOpen) {
       const isMenuElement = event.target === this.menu || this.menu.contains(event.target);
       const isControlElement = event.target === this.control || this.control.contains(event.target);
 
@@ -80,7 +87,7 @@ class FormDatePicker extends React.Component {
     }
 
     // unfocus if click is outside
-    if (!this.state.isOpen) {
+    if (!state.isOpen) {
       const isControlElement = event.target === this.control || this.control.contains(event.target);
 
       if (!isControlElement) {
@@ -89,15 +96,19 @@ class FormDatePicker extends React.Component {
     }
   };
 
-  onControlClick = (event) => {
+  onControlClick = event => {
     event.preventDefault();
 
+    const { state } = this;
+
     // open/close dropdown
-    this.updateState(!this.state.isOpen, true);
+    this.updateState(!state.isOpen, true);
   };
 
-  onControlKeyDown = (event) => {
-    if (!this.state.isOpen && event.key === 'ArrowDown') {
+  onControlKeyDown = event => {
+    const { state } = this;
+
+    if (!state.isOpen && event.key === 'ArrowDown') {
       this.onControlClick(event);
     }
 
@@ -108,20 +119,24 @@ class FormDatePicker extends React.Component {
     }
   };
 
-  onDayClick = (day) => {
+  onDayClick = day => {
+    const { props, context } = this;
+
     // close dropdown
     this.updateState(false);
 
     // reset error
-    this.context.formik.setFieldError(this.props.name, null);
+    context.formik.setFieldError(props.name, null);
 
     // set value
-    this.context.formik.setFieldValue(this.props.name, day);
+    context.formik.setFieldValue(props.name, day);
   };
 
   updateState = (open, focus) => {
-    const isFocused = focus !== undefined ? focus : this.state.isFocused;
-    const isOpen = open !== undefined ? open : this.state.isOpen;
+    const { state } = this;
+
+    const isFocused = focus !== undefined ? focus : state.isFocused;
+    const isOpen = open !== undefined ? open : state.isOpen;
 
     if (!isFocused && !isOpen) {
       document.removeEventListener('mousedown', this.onDocumentClick);
@@ -129,31 +144,33 @@ class FormDatePicker extends React.Component {
       document.addEventListener('mousedown', this.onDocumentClick);
     }
 
-    if (isFocused !== this.state.isFocused) {
+    if (isFocused !== state.isFocused) {
       this.setState({
         isFocused,
       });
     }
 
-    if (isOpen !== this.state.isOpen) {
+    if (isOpen !== state.isOpen) {
       this.setState({
         isOpen,
       });
     }
   };
 
-  formatPickedDate = (pickedDate) => {
-    if (this.props.formatDate) {
-      return this.props.formatDate(pickedDate);
+  formatPickedDate = pickedDate => {
+    const { props } = this;
+
+    if (props.formatDate) {
+      return props.formatDate(pickedDate);
     }
 
     return pickedDate.toLocaleDateString('en');
   };
 
   render() {
-    const {
-      name, title, placeholder, info, size, formatError,
-    } = this.props;
+    const { state } = this;
+
+    const { name, title, placeholder, info, size, formatError } = this.props;
 
     const { formik } = this.context;
 
@@ -166,8 +183,8 @@ class FormDatePicker extends React.Component {
       formik.touched[name] && formik.errors[name] && 'is-invalid',
       size === 'sm' && 'form-datepicker-sm',
       formik.values[name] && 'has-value',
-      this.state.isFocused && 'is-focused',
-      this.state.isOpen && 'is-open',
+      state.isFocused && 'is-focused',
+      state.isOpen && 'is-open',
     );
 
     const pickedDate = formik.values[name] ? new Date(formik.values[name]) : new Date();
@@ -175,6 +192,7 @@ class FormDatePicker extends React.Component {
 
     const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 
+    /* eslint-disable jsx-a11y/label-has-for */
     return (
       <Field error={error} touched={formik.touched[name]} info={info}>
         {title && (
@@ -184,7 +202,7 @@ class FormDatePicker extends React.Component {
         )}
         <div className={classes}>
           <div
-            ref={(element) => {
+            ref={element => {
               this.control = element;
             }}
             className="form-datepicker-control Select-control"
@@ -208,14 +226,14 @@ class FormDatePicker extends React.Component {
                 * see react-select for an example
               */}
               <div
-                ref={(element) => {
+                ref={element => {
                   this.input = element;
                 }}
                 id={`${this.identifier}-${name}`}
                 role="combobox"
                 tabIndex="0"
                 className="Select-input"
-                aria-expanded={this.state.isOpen}
+                aria-expanded={state.isOpen}
                 aria-owns=""
                 aria-activedescendant=""
                 aria-readonly="false"
@@ -227,17 +245,17 @@ class FormDatePicker extends React.Component {
               />
             </span>
           </div>
-          {this.state.isOpen && (
+          {state.isOpen && (
             <div
-              ref={(menu) => {
+              ref={menu => {
                 this.menu = menu;
               }}
               className="form-datepicker-menu"
             >
               {/* TODO
-              * renderDay should be used to highlight the currently selected day
-              * onDayKeyDown should be used to navigate with arrow keys
-            */}
+               * renderDay should be used to highlight the currently selected day
+               * onDayKeyDown should be used to navigate with arrow keys
+               */}
               <DayPicker
                 initialMonth={initialMonth}
                 selectedDays={pickedDate}
@@ -252,6 +270,7 @@ class FormDatePicker extends React.Component {
         </div>
       </Field>
     );
+    /* eslint-enable */
   }
 }
 

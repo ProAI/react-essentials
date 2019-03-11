@@ -18,20 +18,20 @@ const defaultProps = {
 };
 
 class TabsListGroupTab extends React.Component {
-  onClick = (event) => {
+  onClick = event => {
     event.preventDefault();
 
-    if (this.props.onClick) {
-      this.props.onClick(event);
+    const { props } = this;
+
+    if (props.onClick) {
+      props.onClick(event);
     }
 
-    this.props.onChange(this.props.toPane, event);
+    props.onChange(props.toPane, event);
   };
 
   render() {
-    const {
-      children, onClick, toPane, active, ...elementProps
-    } = this.props;
+    const { children, onClick, toPane, active, ...elementProps } = this.props;
 
     const linkClasses = cx(
       // constant classes

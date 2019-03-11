@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import PopperJS from 'popper.js';
 import cx from 'classnames';
-import { contextTypes } from '../../utils';
+import { contextTypes } from '..';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -38,24 +38,29 @@ class Overlay extends React.Component {
   }
 
   state = {
+    // eslint-disable-next-line react/destructuring-assignment
     placement: this.props.placement,
     arrowStyle: null,
     popperStyle: null,
   };
 
   componentWillMount() {
+    const { props } = this;
+
     // prevent modal on the server, because ssr does not support portals yet
     if (!canUseDOM) return;
 
     // create overlay if visibility is visible
-    if (this.props.visible) {
+    if (props.visible) {
       this.beforeCreate();
     }
   }
 
   componentDidMount() {
+    const { props } = this;
+
     // create overlay if visibility is visible
-    if (this.props.visible) {
+    if (props.visible) {
       // render modal in React 15
       if (isReact15) this.renderReact15();
 
@@ -64,8 +69,10 @@ class Overlay extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
+    const { props } = this;
+
     // create overlay if visibility changed to visible
-    if (nextProps.visible && this.props.visible !== nextProps.visible) {
+    if (nextProps.visible && props.visible !== nextProps.visible) {
       // render modal in React 15
       if (isReact15) this.renderReact15();
 
@@ -74,8 +81,10 @@ class Overlay extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { props } = this;
+
     // create overlay if visibility changed to visible
-    if (this.props.visible && this.props.visible !== prevProps.visible) {
+    if (props.visible && props.visible !== prevProps.visible) {
       // render modal in React 15
       if (isReact15) this.renderReact15();
 
@@ -83,13 +92,13 @@ class Overlay extends React.Component {
     }
 
     // update overlay if visibility is still visible
-    if (this.props.visible && this.props.visible === prevProps.visible) {
+    if (props.visible && props.visible === prevProps.visible) {
       // rerender modal in React 15
       if (isReact15) this.renderReact15();
     }
 
     // destroy overlay if visibility changed to invisible
-    if (!this.props.visible && this.props.visible !== prevProps.visible) {
+    if (!props.visible && props.visible !== prevProps.visible) {
       this.afterDestroy();
     }
   }
@@ -108,21 +117,23 @@ class Overlay extends React.Component {
   }
 
   afterCreate() {
+    const { props } = this;
+
     // create PopperJS instance
     this.instance = new PopperJS(this.target, this.popper, {
-      placement: this.props.placement,
+      placement: props.placement,
       modifiers: {
         arrow: {
           element: this.arrow,
         },
         flip: {
-          enabled: this.props.fallbackPlacement !== null,
-          behavior: this.props.fallbackPlacement,
+          enabled: props.fallbackPlacement !== null,
+          behavior: props.fallbackPlacement,
         },
         applyStyle: { enabled: false },
         applyReactStyle: {
           enabled: true,
-          fn: (data) => {
+          fn: data => {
             this.setState({
               placement: data.placement,
               arrowStyle: data.offsets.arrow,
@@ -154,16 +165,14 @@ class Overlay extends React.Component {
   }
 
   renderOverlay() {
-    const {
-      role, children, className, placementClassName,
-    } = this.props;
+    const { role, children, className, placementClassName } = this.props;
     const { placement, popperStyle, arrowStyle } = this.state;
 
     const classes = cx(className, placementClassName[placement]);
 
     return (
       <div
-        ref={(element) => {
+        ref={element => {
           this.popper = element;
         }}
         role={role}
@@ -171,7 +180,7 @@ class Overlay extends React.Component {
         className={classes}
       >
         <div
-          ref={(element) => {
+          ref={element => {
             this.arrow = element;
           }}
           className="arrow"
@@ -187,21 +196,23 @@ class Overlay extends React.Component {
   }
 
   render() {
+    const { props } = this;
+
     // TODO: For some reason a ref that is defined on a cloned element does not
     // work, so we use a wrapping <span> element, on which we can define the
     // ref. This is just a workaround, so it would be better to solve the
     // original cloned element issue.
 
-    const target = React.cloneElement(this.props.target, {
+    const target = React.cloneElement(props.target, {
       /* ref: (element) => {
         this.target = element;
       }, */
-      'aria-describedby': this.props.visible ? this.identifier : null,
+      'aria-describedby': props.visible ? this.identifier : null,
     });
 
     return (
       <span
-        ref={(element) => {
+        ref={element => {
           this.target = element;
         }}
         style={{ display: 'inline-block' }}
@@ -209,7 +220,7 @@ class Overlay extends React.Component {
         {target}
         {!isReact15 &&
           canUseDOM &&
-          this.props.visible &&
+          props.visible &&
           ReactDOM.createPortal(this.renderOverlay(), this.container)}
       </span>
     );

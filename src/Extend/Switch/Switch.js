@@ -27,15 +27,17 @@ class Switch extends React.Component {
     checked: false,
   };
 
-  onChange = (event) => {
+  onChange = event => {
+    const { props } = this;
+
     const nextCheckedState = !this.isChecked();
 
-    if (this.props.onChange !== null) {
-      this.props.onChange(nextCheckedState, event);
+    if (props.onChange !== null) {
+      props.onChange(nextCheckedState, event);
     }
 
     // automatically check/uncheck switch
-    if (this.props.checked === null) {
+    if (props.checked === null) {
       this.setState({
         checked: nextCheckedState,
       });
@@ -54,11 +56,13 @@ class Switch extends React.Component {
   };
 
   isChecked = () => {
-    if (this.props.checked !== null) {
-      return this.props.checked;
+    const { props, state } = this;
+
+    if (props.checked !== null) {
+      return props.checked;
     }
 
-    return this.state.checked;
+    return state.checked;
   };
 
   render() {
@@ -68,7 +72,7 @@ class Switch extends React.Component {
       <div className="switch">
         <label className="switch-control" htmlFor={this.identifier} onMouseUp={this.onLabelMouseUp}>
           <input
-            ref={(ref) => {
+            ref={ref => {
               this.element = ref;
             }}
             name="switch"

@@ -52,9 +52,9 @@ class Modal extends React.Component {
   }
 
   getChildContext() {
-    return {
-      onToggle: this.props.onToggle,
-    };
+    const { onToggle } = this.props;
+
+    return { onToggle };
   }
 
   componentWillMount() {
@@ -63,13 +63,17 @@ class Modal extends React.Component {
 
     this.onEnter();
 
-    if (this.props.visible) {
+    const { props } = this;
+
+    if (props.visible) {
       this.beforeShow();
     }
   }
 
   componentDidMount() {
-    if (this.props.visible) {
+    const { props } = this;
+
+    if (props.visible) {
       // render modal in React 15
       if (isReact15) this.renderReact15();
 
@@ -78,7 +82,9 @@ class Modal extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (this.props.visible !== nextProps.visible) {
+    const { props } = this;
+
+    if (props.visible !== nextProps.visible) {
       if (nextProps.visible) {
         this.beforeShow();
       } else {
@@ -88,11 +94,13 @@ class Modal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.visible !== prevProps.visible) {
+    const { props } = this;
+
+    if (props.visible !== prevProps.visible) {
       // render modal in React 15
       if (isReact15) this.renderReact15();
 
-      if (this.props.visible) {
+      if (props.visible) {
         this.afterShow();
       } else {
         this.afterHide();
@@ -101,37 +109,46 @@ class Modal extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.props.visible) {
+    const { props } = this;
+
+    if (props.visible) {
       this.beforeHide();
       this.afterHide();
     }
   }
 
   onEnter = () => {
-    if (this.props.onEnter) {
-      this.props.onEnter();
+    const { props } = this;
+
+    if (props.onEnter) {
+      props.onEnter();
     }
   };
 
   onExit = () => {
     this.destroy();
 
-    if (this.props.onExit) {
-      this.props.onExit();
+    const { props } = this;
+
+    if (props.onExit) {
+      props.onExit();
     }
   };
 
-  onEscape = (ev) => {
+  onEscape = ev => {
+    const { props } = this;
+
     if (ev.key === 'Escape') {
-      this.props.onToggle();
+      props.onToggle();
     }
   };
 
-  onBackdropClick = (ev) => {
+  onBackdropClick = ev => {
     const container = this.dialog;
+    const { props } = this;
 
     if (ev.target && !container.contains(ev.target)) {
-      this.props.onToggle();
+      props.onToggle();
     }
   };
 
@@ -305,7 +322,7 @@ class Modal extends React.Component {
           <div
             className={modalDialogClasses}
             role="document"
-            ref={(c) => {
+            ref={c => {
               this.dialog = c;
             }}
           >
@@ -324,11 +341,13 @@ class Modal extends React.Component {
   }
 
   render() {
+    const { props } = this;
+
     // prevent modal on the server, because ssr does not support portals yet
     if (!canUseDOM) return null;
 
     // see componentDidMount and componentDidUpdate for React 15 rendering
-    if (isReact15 || !this.props.visible) {
+    if (isReact15 || !props.visible) {
       return null;
     }
 

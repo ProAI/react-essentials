@@ -15,9 +15,7 @@ const defaultProps = {
   info: null,
 };
 
-function Field({
-  children, error, touched, info,
-}) {
+function Field({ children, error, touched, info }) {
   return (
     <BaseView className="form-group">
       {children}

@@ -18,6 +18,7 @@ const propTypes = {
 
 const contextTypes = {
   ...essentialsContextTypes,
+  // eslint-disable-next-line react/forbid-prop-types
   formik: PropTypes.object.isRequired,
 };
 
@@ -68,6 +69,7 @@ class FormInput extends React.Component {
 
     const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 
+    /* eslint-disable jsx-a11y/label-has-for */
     /* eslint-disable jsx-a11y/no-autofocus */
     return (
       <Field error={error} touched={formik.touched[name]} info={info}>
@@ -82,7 +84,7 @@ class FormInput extends React.Component {
             id={`${this.identifier}-${name}`}
             name={name}
             value={formik.values[name] || ''}
-            onChange={(event) => {
+            onChange={event => {
               formik.setFieldError(name, null);
 
               formik.handleChange(event);
@@ -98,7 +100,7 @@ class FormInput extends React.Component {
             id={`${this.identifier}-${name}`}
             name={name}
             value={formik.values[name] || ''}
-            onChange={(event) => {
+            onChange={event => {
               formik.setFieldError(name, null);
 
               formik.handleChange(event);

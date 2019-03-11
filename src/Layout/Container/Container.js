@@ -15,9 +15,7 @@ const defaultProps = {
   fluid: false,
 };
 
-function Container({
-  children, variant, fluid, ...elementProps
-}) {
+function Container({ children, variant, fluid, ...elementProps }) {
   const classes = cx(
     // constant classes
     'container',

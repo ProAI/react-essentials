@@ -15,9 +15,7 @@ const defaultProps = {
   stacked: false,
 };
 
-function Nav({
-  children, pills, stacked, ...elementProps
-}) {
+function Nav({ children, pills, stacked, ...elementProps }) {
   const classes = cx(
     // constant classes
     'nav',

@@ -6,6 +6,7 @@ import { COLORS } from '../../utils/constants';
 import { action } from '../../utils';
 
 const propTypes = {
+  // eslint-disable-next-line react/forbid-foreign-prop-types
   ...action.propTypes,
   children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(COLORS),

@@ -15,9 +15,7 @@ const defaultProps = {
   flush: false,
 };
 
-function TabsListGroup({
-  children, activeKey, onChange, flush, ...elementProps
-}) {
+function TabsListGroup({ children, activeKey, onChange, flush, ...elementProps }) {
   const classes = cx(
     // constant classes
     'list-group',
@@ -29,7 +27,8 @@ function TabsListGroup({
     React.cloneElement(child, {
       active: activeKey === child.props.toPane,
       onChange,
-    }));
+    }),
+  );
 
   return (
     <BaseView tag="div" props={{ ...elementProps, role: 'tablist' }} className={classes}>

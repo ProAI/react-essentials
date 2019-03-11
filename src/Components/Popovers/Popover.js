@@ -31,24 +31,28 @@ class Popover extends React.Component {
   };
 
   componentDidMount() {
-    this.trigger = this.props.trigger.split(' ');
+    const { props } = this;
+
+    this.trigger = props.trigger.split(' ');
   }
 
   onTargetClick = () => {
+    const { state } = this;
+
     // handle click trigger
     if (this.trigger.indexOf('click') !== -1) {
-      if (!this.state.isClicked) {
+      if (!state.isClicked) {
         this.setState({
-          isClicked: !this.state.isClicked,
+          isClicked: !state.isClicked,
         });
         if (!this.visible()) {
           this.onToggle();
         }
       } else {
         this.setState({
-          isClicked: !this.state.isClicked,
+          isClicked: !state.isClicked,
         });
-        if (this.trigger.indexOf('hover') === -1 && !this.state.isFocused) {
+        if (this.trigger.indexOf('hover') === -1 && !state.isFocused) {
           this.onToggle();
         }
       }
@@ -56,10 +60,12 @@ class Popover extends React.Component {
   };
 
   onTargetFocus = () => {
+    const { state } = this;
+
     // handle focus trigger
-    if (this.trigger.indexOf('focus') !== -1 && !this.state.isFocused) {
+    if (this.trigger.indexOf('focus') !== -1 && !state.isFocused) {
       this.setState({
-        isFocused: !this.state.isFocused,
+        isFocused: !state.isFocused,
       });
       if (!this.visible()) {
         this.onToggle();
@@ -68,10 +74,12 @@ class Popover extends React.Component {
   };
 
   onTargetBlur = () => {
+    const { state } = this;
+
     // handle focus trigger
-    if (this.trigger.indexOf('focus') !== -1 && this.visible() && !this.state.isClicked) {
+    if (this.trigger.indexOf('focus') !== -1 && this.visible() && !state.isClicked) {
       this.setState({
-        isFocused: !this.state.isFocused,
+        isFocused: !state.isFocused,
       });
       this.onToggle();
     }
@@ -85,39 +93,47 @@ class Popover extends React.Component {
   };
 
   onTargetMouseLeave = () => {
+    const { state } = this;
+
     // handle hover trigger
     if (
       this.trigger.indexOf('hover') !== -1 &&
       this.visible() &&
-      !this.state.isClicked &&
-      !this.state.isFocused
+      !state.isClicked &&
+      !state.isFocused
     ) {
       this.onToggle();
     }
   };
 
   onToggle = () => {
-    if (this.props.onToggle !== null) {
-      this.props.onToggle();
+    const { props, state } = this;
+
+    if (props.onToggle !== null) {
+      props.onToggle();
     }
 
-    if (this.props.visible === null) {
+    if (props.visible === null) {
       this.setState({
-        visible: !this.state.visible,
+        visible: !state.visible,
       });
     }
   };
 
   visible = () => {
-    if (this.props.visible !== null) {
-      return this.props.visible;
+    const { props, state } = this;
+
+    if (props.visible !== null) {
+      return props.visible;
     }
 
-    return this.state.visible;
+    return state.visible;
   };
 
   render() {
-    const target = React.cloneElement(this.props.target, {
+    const { props } = this;
+
+    const target = React.cloneElement(props.target, {
       onClick: this.onTargetClick,
       onFocus: this.onTargetFocus,
       onBlur: this.onTargetBlur,
@@ -129,8 +145,8 @@ class Popover extends React.Component {
       <Overlay
         target={target}
         className="popover show"
-        placement={this.props.placement}
-        fallbackPlacement={this.props.fallbackPlacement}
+        placement={props.placement}
+        fallbackPlacement={props.fallbackPlacement}
         placementClassName={{
           top: 'bs-popover-top',
           bottom: 'bs-popover-bottom',
@@ -141,13 +157,13 @@ class Popover extends React.Component {
         onToggle={this.onToggle}
         role="tooltip"
       >
-        {this.props.title && (
+        {props.title && (
           <BaseText tag="h3" className="popover-header" blockOnly>
-            {this.props.title}
+            {props.title}
           </BaseText>
         )}
         <BaseText className="popover-body" blockOnly>
-          {this.props.content}
+          {props.content}
         </BaseText>
       </Overlay>
     );

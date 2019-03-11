@@ -48,8 +48,9 @@ class AlertItem extends React.Component {
   }
 
   componentWillMount() {
+    const { props } = this;
     this.isComponentMounted = false;
-    this.preventAnimation = this.props.preventAnimation;
+    this.preventAnimation = props.preventAnimation;
   }
 
   componentDidMount() {
@@ -86,8 +87,9 @@ class AlertItem extends React.Component {
   }
 
   onTransitionEnd = () => {
+    const { state } = this;
     if (this.removeCount > 0) return;
-    if (this.state.removed) {
+    if (state.removed) {
       this.removeCount += 1;
       this.removeAlert();
     }
@@ -108,19 +110,23 @@ class AlertItem extends React.Component {
   };
 
   onToggle = () => {
-    if (this.state.visible) {
+    const { state } = this;
+
+    if (state.visible) {
       this.hideAlert();
     }
   };
 
   removeAlert = () => {
-    const { alert } = this.props;
-    this.props.onRemove(alert.uid);
+    const { props } = this;
+
+    props.onRemove(props.alert.uid);
   };
 
   dismiss = () => {
-    const { alert } = this.props;
-    if (!alert.dismissible) {
+    const { props } = this.props;
+
+    if (!props.alert.dismissible) {
       return;
     }
 
@@ -204,7 +210,7 @@ class AlertItem extends React.Component {
         className={classes}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
-        ref={(c) => {
+        ref={c => {
           this.item = c;
         }}
         role="alert"

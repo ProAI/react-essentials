@@ -1,5 +1,5 @@
 export default function createHandleClick(ref, onClick, onToggle, options) {
-  return (event) => {
+  return event => {
     if (onClick) {
       onClick(event);
     }

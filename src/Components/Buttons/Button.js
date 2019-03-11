@@ -6,6 +6,7 @@ import { BUTTON_COLORS, SIZES } from '../../utils/constants';
 import { action } from '../../utils';
 
 const propTypes = {
+  // eslint-disable-next-line react/forbid-foreign-prop-types
   ...action.propTypes,
   children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(BUTTON_COLORS),
@@ -31,9 +32,7 @@ const defaultProps = {
 };
 
 function Button(props, context) {
-  const {
-    children, color, size, active, disabled, block, caret, ...elementProps
-  } = props;
+  const { children, color, size, active, disabled, block, caret, ...elementProps } = props;
 
   const classes = cx(
     // constant classes

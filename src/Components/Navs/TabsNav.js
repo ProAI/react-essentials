@@ -17,9 +17,7 @@ const defaultProps = {
   stacked: false,
 };
 
-function TabsNav({
-  children, activeKey, onChange, pills, stacked, ...elementProps
-}) {
+function TabsNav({ children, activeKey, onChange, pills, stacked, ...elementProps }) {
   const classes = cx(
     // constant classes
     'nav',
@@ -33,7 +31,8 @@ function TabsNav({
     React.cloneElement(child, {
       active: activeKey === child.props.toPane,
       onChange,
-    }));
+    }),
+  );
 
   return (
     <BaseView props={{ ...elementProps, role: 'tablist' }} tag="div" className={classes}>

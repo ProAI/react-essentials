@@ -22,9 +22,7 @@ const defaultProps = {
   sizeXl: null,
 };
 
-function GridBox({
-  children, variant, size, sizeSm, sizeMd, sizeLg, sizeXl, ...elementProps
-}) {
+function GridBox({ children, variant, size, sizeSm, sizeMd, sizeLg, sizeXl, ...elementProps }) {
   const classes = cx(
     // constant classes
     `col-${size.toString()}`,

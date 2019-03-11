@@ -48,7 +48,7 @@ class Dropdown extends React.Component {
     }
   }
 
-  handleDocumentClick = (event) => {
+  handleDocumentClick = event => {
     const dropdownElement = this.element;
 
     if (this.visible()) {
@@ -65,31 +65,33 @@ class Dropdown extends React.Component {
       document.addEventListener('mousedown', this.handleDocumentClick);
     }
 
+    const { state, props } = this;
+
     // execute custom onToggle function
-    if (this.props.onToggle !== null) {
-      this.props.onToggle();
+    if (props.onToggle !== null) {
+      props.onToggle();
     }
 
     // automatically controlled
-    if (this.props.visible === null) {
+    if (props.visible === null) {
       this.setState({
-        visible: !this.state.visible,
+        visible: !state.visible,
       });
     }
   };
 
   visible = () => {
-    if (this.props.visible !== null) {
-      return this.props.visible;
+    const { state, props } = this;
+
+    if (props.visible !== null) {
+      return props.visible;
     }
 
-    return this.state.visible;
+    return state.visible;
   };
 
   render() {
-    const {
-      children, visible, onToggle, ...elementProps
-    } = this.props;
+    const { children, visible, onToggle, ...elementProps } = this.props;
 
     // check if dropdown has a dropdown trigger and menu
     if (process.env.NODE_ENV !== 'production') {
@@ -109,7 +111,7 @@ class Dropdown extends React.Component {
 
     const identifier = children[0].props.id ? children[0].props.id : this.identifier;
 
-    const onClick = (e) => {
+    const onClick = e => {
       e.preventDefault();
 
       if (children[0].props.onClick) {
@@ -134,7 +136,7 @@ class Dropdown extends React.Component {
       <BaseView
         props={{
           ...elementProps,
-          ref: (element) => {
+          ref: element => {
             this.element = element;
           },
         }}

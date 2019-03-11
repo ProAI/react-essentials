@@ -1,7 +1,7 @@
 export default function checkUtilityClasses(value) {
   const classNames = value.split(' ');
 
-  classNames.forEach((className) => {
+  classNames.forEach(className => {
     // TODO: check for borders classes
     // TODO: check for clearfix classes
     // TODO: check for close icon classes
@@ -9,7 +9,9 @@ export default function checkUtilityClasses(value) {
     // check for color classes
     // don't use text utils, because they are part of <BaseText>
     if (
-      /^(bg-(primary|secondary|success|danger|warning|info|light|dark|white|transparent))$/.test(className)
+      /^(bg-(primary|secondary|success|danger|warning|info|light|dark|white|transparent))$/.test(
+        className,
+      )
     ) {
       return;
     }
@@ -21,7 +23,9 @@ export default function checkUtilityClasses(value) {
 
     // check for flex classes
     if (
-      /^((f-(((sm|md|lg|xl)-)?((row|column)(-reverse)?|fill|((grow|shrink)-[0-1])|nowrap|wrap|wrap-reverse)))|(jc-((sm|md|lg|xl)-)?(start|end|center|between|around))|(a((i|s)-((sm|md|lg|xl)-)?(start|end|center|baseline|stretch)))|(order-((sm|md|lg|xl)-)?[0-12])|(ac-((sm|md|lg|xl)-)?(start|end|center|around|stretch)))$/.test(className)
+      /^((f-(((sm|md|lg|xl)-)?((row|column)(-reverse)?|fill|((grow|shrink)-[0-1])|nowrap|wrap|wrap-reverse)))|(jc-((sm|md|lg|xl)-)?(start|end|center|between|around))|(a((i|s)-((sm|md|lg|xl)-)?(start|end|center|baseline|stretch)))|(order-((sm|md|lg|xl)-)?[0-12])|(ac-((sm|md|lg|xl)-)?(start|end|center|around|stretch)))$/.test(
+        className,
+      )
     ) {
       return;
     }
@@ -33,7 +37,9 @@ export default function checkUtilityClasses(value) {
 
     // check for position classes
     if (
-      /^(position-(static|relative|absolute|fixed|sticky)|fixed-(top|bottom)|sticky-top)$/.test(className)
+      /^(position-(static|relative|absolute|fixed|sticky)|fixed-(top|bottom)|sticky-top)$/.test(
+        className,
+      )
     ) {
       return;
     }
@@ -55,6 +61,8 @@ export default function checkUtilityClasses(value) {
 
     // value is not valid style class, return error
     // eslint-disable-next-line no-console
-    console.error(`Invalid prop class with invalid utility class \`${className}\` supplied. Validation failed.`);
+    console.error(
+      `Invalid prop class with invalid utility class \`${className}\` supplied. Validation failed.`,
+    );
   });
 }

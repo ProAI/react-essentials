@@ -1,12 +1,10 @@
 import React from 'react';
-import invariant from 'fbjs/lib/invariant';
+// import invariant from 'fbjs/lib/invariant';
 import { Link as RouterLink } from 'react-router-dom';
 import createHandleClick from './createHandleClick';
 
 export default function createButtonProps(props, context) {
-  const {
-    to, external, onClick, preventToggle, keepFocus, ...elementProps
-  } = props;
+  const { to, external, onClick, preventToggle, keepFocus, ...elementProps } = props;
   const { onToggle } = context;
 
   const ref = React.createRef();
@@ -34,7 +32,7 @@ export default function createButtonProps(props, context) {
       props: {
         ...elementProps,
         to,
-        innerRef: (c) => {
+        innerRef: c => {
           ref.current = c;
         },
         onClick: handleClick,

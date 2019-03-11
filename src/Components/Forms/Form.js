@@ -10,6 +10,7 @@ import FormCheckbox from './FormCheckbox';
 
 const propTypes = {
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   initialValues: PropTypes.object.isRequired,
   validate: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
@@ -20,9 +21,7 @@ const defaultProps = {
 };
 
 function Form(props) {
-  const {
-    children, initialValues, validate, onSubmit, ...elementProps
-  } = props;
+  const { children, initialValues, validate, onSubmit, ...elementProps } = props;
 
   return (
     <Formik

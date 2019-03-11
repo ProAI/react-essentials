@@ -15,9 +15,7 @@ const defaultProps = {
   dismissible: null,
 };
 
-function ModalHeader({
-  children, titleId, dismissible, onToggle, ...elementProps
-}) {
+function ModalHeader({ children, titleId, dismissible, onToggle, ...elementProps }) {
   // inject titleId
   const manipulatedChildren = React.Children.map(children, (child, i) => {
     if (i === 0) {

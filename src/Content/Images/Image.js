@@ -15,9 +15,7 @@ const defaultProps = {
   thumbnail: false,
 };
 
-function Image({
-  source, label, fluid, thumbnail, ...elementProps
-}) {
+function Image({ source, label, fluid, thumbnail, ...elementProps }) {
   const classes = cx(
     // variable classes
     fluid && 'img-fluid',

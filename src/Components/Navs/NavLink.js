@@ -6,6 +6,7 @@ import { BaseTouchable } from '../../utils/components';
 import { action } from '../../utils';
 
 const propTypes = {
+  // eslint-disable-next-line react/forbid-foreign-prop-types
   ...action.propTypes,
   children: PropTypes.node.isRequired,
   exact: PropTypes.bool,
@@ -59,7 +60,7 @@ function NavLink(props, context) {
             props={{
               ...elementProps,
               to,
-              innerRef: (c) => {
+              innerRef: c => {
                 ref.current = c;
               },
               onClick: handleClick,

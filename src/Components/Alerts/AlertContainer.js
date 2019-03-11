@@ -23,17 +23,18 @@ class AlertContainer extends React.Component {
     alerts: [],
   };
 
-  componentWillMount() {
-    Alert.init(this);
-  }
-
   stacks = [];
 
   uid = 3400;
 
-  didAlertRemoved = (uid) => {
+  componentWillMount() {
+    Alert.init(this);
+  }
+
+  didAlertRemoved = uid => {
+    const { state } = this;
     let alert;
-    const alerts = this.state.alerts.filter((toCheck) => {
+    const alerts = state.alerts.filter(toCheck => {
       if (toCheck.uid === uid) {
         alert = toCheck;
         return false;
@@ -48,7 +49,7 @@ class AlertContainer extends React.Component {
     this.setState({ alerts });
   };
 
-  add = (customAlert) => {
+  add = customAlert => {
     if (
       customAlert.placement === undefined ||
       customAlert.placement === 'top center' ||
@@ -64,7 +65,7 @@ class AlertContainer extends React.Component {
     }
 
     const alert = {};
-    Object.keys(defaultAlert).forEach((value) => {
+    Object.keys(defaultAlert).forEach(value => {
       alert[value] = customAlert[value] === undefined ? defaultAlert[value] : customAlert[value];
     });
 
@@ -120,11 +121,11 @@ class AlertContainer extends React.Component {
     return alert;
   };
 
-  remove = (activeAlert) => {
+  remove = activeAlert => {
     const self = this;
-    Object.keys(this.stacks).forEach((stack) => {
+    Object.keys(this.stacks).forEach(stack => {
       if (stack.indexOf('stack') > -1) {
-        Object.keys(self.refs[stack].refs).forEach((alert) => {
+        Object.keys(self.refs[stack].refs).forEach(alert => {
           const uid = activeAlert.uid ? activeAlert.uid : activeAlert;
           if (alert === `alert-${uid}`) {
             self.refs[stack].refs[alert].hideAlert();
@@ -136,18 +137,19 @@ class AlertContainer extends React.Component {
 
   render() {
     const self = this;
+    const { state } = this;
     let positions = null;
 
-    if (this.state.alerts.length) {
-      positions = POSITIONS.map((position) => {
-        const alerts = this.state.alerts.filter(alert => position === alert.placement);
+    if (state.alerts.length) {
+      positions = POSITIONS.map(position => {
+        const alerts = state.alerts.filter(alert => position === alert.placement);
 
         const positionAttributes = getPositionAttributes(position);
 
         if (alerts.length) {
           return (
             <AlertStack
-              ref={(c) => {
+              ref={c => {
                 this.stacks[positionAttributes.className] = c;
               }}
               key={positionAttributes.className}

@@ -5,18 +5,20 @@ import { getPositionAttributes } from './helpers';
 
 const propTypes = {
   position: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   alerts: PropTypes.array.isRequired,
 };
 
 class AlertStack extends React.Component {
   render() {
     const self = this;
+    const { props } = this;
 
-    if (['bottom left', 'bottom right', 'bottom center'].indexOf(this.props.position) > -1) {
-      this.props.alerts.reverse();
+    if (['bottom left', 'bottom right', 'bottom center'].indexOf(props.position) > -1) {
+      props.alerts.reverse();
     }
 
-    const alerts = this.props.alerts.map(alert => (
+    const alerts = props.alerts.map(alert => (
       <AlertItem
         ref={`alert-${alert.uid}`}
         key={alert.uid}
@@ -26,7 +28,7 @@ class AlertStack extends React.Component {
       />
     ));
 
-    const positionAttributes = getPositionAttributes(this.props.position);
+    const positionAttributes = getPositionAttributes(props.position);
 
     return <div className={`alert-container alert-${positionAttributes.className}`}>{alerts}</div>;
   }

@@ -15,6 +15,7 @@ const propTypes = {
 
 const contextTypes = {
   ...essentialsContextTypes,
+  // eslint-disable-next-line react/forbid-prop-types
   formik: PropTypes.object.isRequired,
 };
 
@@ -37,9 +38,7 @@ class FormCheckbox extends React.Component {
   }
 
   render() {
-    const {
-      name, title, label, info, size, formatError,
-    } = this.props;
+    const { name, title, label, info, size, formatError } = this.props;
 
     const { formik } = this.context;
 
@@ -60,6 +59,7 @@ class FormCheckbox extends React.Component {
 
     const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 
+    /* eslint-disable jsx-a11y/label-has-for */
     return (
       <Field error={error} touched={formik.touched[name]} info={info}>
         {title && <legend className="form-group-legend">{title}</legend>}
@@ -69,7 +69,7 @@ class FormCheckbox extends React.Component {
             id={`${this.identifier}-${name}`}
             name={name}
             checked={formik.values[name] || false}
-            onChange={(event) => {
+            onChange={event => {
               formik.setFieldError(name, null);
               formik.handleChange(event);
             }}
@@ -82,6 +82,7 @@ class FormCheckbox extends React.Component {
         </div>
       </Field>
     );
+    /* eslint-enable */
   }
 }
 

@@ -52,7 +52,7 @@ function BaseView(props, context) {
 
     invariant(!context.isInAParentText, 'A view cannot be used inside of a text component');
 
-    React.Children.toArray(children).forEach((item) => {
+    React.Children.toArray(children).forEach(item => {
       invariant(
         typeof item !== 'string',
         `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`,

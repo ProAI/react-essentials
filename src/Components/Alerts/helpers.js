@@ -78,7 +78,7 @@ export function chooseTransitionEvent() {
   };
 
   let foundTransition = null;
-  Object.keys(transitions).forEach((value) => {
+  Object.keys(transitions).forEach(value => {
     if (el.style[value] !== undefined) {
       foundTransition = transitions[value];
     }

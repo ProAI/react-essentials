@@ -83,7 +83,8 @@ class BaseText extends React.Component {
   getTag(tag) {
     if (tag) return tag;
 
-    if (!this.context.isInAParentText) return 'div';
+    const { isInAParentText } = this.context;
+    if (!isInAParentText) return 'div';
 
     return 'span';
   }
@@ -115,9 +116,10 @@ class BaseText extends React.Component {
 
     const Tag = this.getTag(tag);
 
+    const { isInAParentText } = this.context;
     const classes = cx(
       // add yoga styles
-      this.context.isInAParentText ? 'yti' : 'ytb',
+      isInAParentText ? 'yti' : 'ytb',
       // variable classes
       color && `text-${color}`,
       align && `text-${align}`,

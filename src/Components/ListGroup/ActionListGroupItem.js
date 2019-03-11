@@ -5,6 +5,7 @@ import { BaseTouchable } from '../../utils/components';
 import { action } from '../../utils';
 
 const propTypes = {
+  // eslint-disable-next-line react/forbid-foreign-prop-types
   ...action.propTypes,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
@@ -22,9 +23,7 @@ const defaultProps = {
 };
 
 function ActionListGroupItem(props, context) {
-  const {
-    children, disabled, active, ...elementProps
-  } = props;
+  const { children, disabled, active, ...elementProps } = props;
 
   const classes = cx(
     // constant classes

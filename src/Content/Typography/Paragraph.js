@@ -14,9 +14,7 @@ const defaultProps = {
   last: false,
 };
 
-function Paragraph({
-  children, lead, last, ...elementProps
-}) {
+function Paragraph({ children, lead, last, ...elementProps }) {
   const classes = cx(
     // variable classes
     lead && 'lead',

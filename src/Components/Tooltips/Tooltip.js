@@ -30,25 +30,29 @@ class Tooltip extends React.Component {
   };
 
   componentDidMount() {
+    const { props } = this;
+
     // this.target = document.querySelector(`[aria-describedby="${this.identifier}"]`);
-    this.trigger = this.props.trigger.split(' ');
+    this.trigger = props.trigger.split(' ');
   }
 
   onTargetClick = () => {
+    const { state } = this;
+
     // handle click trigger
     if (this.trigger.indexOf('click') !== -1) {
-      if (!this.state.isClicked) {
+      if (!state.isClicked) {
         this.setState({
-          isClicked: !this.state.isClicked,
+          isClicked: !state.isClicked,
         });
         if (!this.visible()) {
           this.onToggle();
         }
       } else {
         this.setState({
-          isClicked: !this.state.isClicked,
+          isClicked: !state.isClicked,
         });
-        if (this.trigger.indexOf('hover') === -1 && !this.state.isFocused) {
+        if (this.trigger.indexOf('hover') === -1 && !state.isFocused) {
           this.onToggle();
         }
       }
@@ -56,10 +60,12 @@ class Tooltip extends React.Component {
   };
 
   onTargetFocus = () => {
+    const { state } = this;
+
     // handle focus trigger
-    if (this.trigger.indexOf('focus') !== -1 && !this.state.isFocused) {
+    if (this.trigger.indexOf('focus') !== -1 && !state.isFocused) {
       this.setState({
-        isFocused: !this.state.isFocused,
+        isFocused: !state.isFocused,
       });
       if (!this.visible()) {
         this.onToggle();
@@ -68,10 +74,12 @@ class Tooltip extends React.Component {
   };
 
   onTargetBlur = () => {
+    const { state } = this;
+
     // handle focus trigger
-    if (this.trigger.indexOf('focus') !== -1 && this.visible() && !this.state.isClicked) {
+    if (this.trigger.indexOf('focus') !== -1 && this.visible() && !state.isClicked) {
       this.setState({
-        isFocused: !this.state.isFocused,
+        isFocused: !state.isFocused,
       });
       this.onToggle();
     }
@@ -85,39 +93,47 @@ class Tooltip extends React.Component {
   };
 
   onTargetMouseLeave = () => {
+    const { state } = this;
+
     // handle hover trigger
     if (
       this.trigger.indexOf('hover') !== -1 &&
       this.visible() &&
-      !this.state.isClicked &&
-      !this.state.isFocused
+      !state.isClicked &&
+      !state.isFocused
     ) {
       this.onToggle();
     }
   };
 
   onToggle = () => {
-    if (this.props.onToggle !== null) {
-      this.props.onToggle();
+    const { props, state } = this;
+
+    if (props.onToggle !== null) {
+      props.onToggle();
     }
 
-    if (this.props.visible === null) {
+    if (props.visible === null) {
       this.setState({
-        visible: !this.state.visible,
+        visible: !state.visible,
       });
     }
   };
 
   visible = () => {
-    if (this.props.visible !== null) {
-      return this.props.visible;
+    const { props, state } = this;
+
+    if (props.visible !== null) {
+      return props.visible;
     }
 
-    return this.state.visible;
+    return state.visible;
   };
 
   render() {
-    const target = React.cloneElement(this.props.target, {
+    const { props } = this;
+
+    const target = React.cloneElement(props.target, {
       onClick: this.onTargetClick,
       onFocus: this.onTargetFocus,
       onBlur: this.onTargetBlur,
@@ -129,8 +145,8 @@ class Tooltip extends React.Component {
       <Overlay
         target={target}
         className="tooltip show"
-        placement={this.props.placement}
-        fallbackPlacement={this.props.fallbackPlacement}
+        placement={props.placement}
+        fallbackPlacement={props.fallbackPlacement}
         placementClassName={{
           top: 'bs-tooltip-top',
           bottom: 'bs-tooltip-bottom',
@@ -142,7 +158,7 @@ class Tooltip extends React.Component {
         role="tooltip"
       >
         <BaseText className="tooltip-inner" blockOnly>
-          {this.props.title}
+          {props.title}
         </BaseText>
       </Overlay>
     );

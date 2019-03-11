@@ -6,6 +6,7 @@ import { contextTypes } from './utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   root: PropTypes.any,
   ssrViewport: PropTypes.string,
   breakpoints: PropTypes.shape({
@@ -25,6 +26,8 @@ const defaultProps = {
 const childContextTypes = contextTypes;
 
 class Provider extends React.Component {
+  key = 0;
+
   constructor(props, context) {
     super(props, context);
 
@@ -32,16 +35,16 @@ class Provider extends React.Component {
   }
 
   getChildContext() {
+    const { ssrViewport, breakpoints } = this.props;
+
     return {
       essentials: {
-        ssrViewport: this.props.ssrViewport,
-        breakpoints: this.props.breakpoints,
+        ssrViewport,
+        breakpoints,
         generateKey: this.generateKey,
       },
     };
   }
-
-  key = 0;
 
   generateKey(prefix) {
     const { key } = this;

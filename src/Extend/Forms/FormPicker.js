@@ -10,10 +10,12 @@ const propTypes = {
   title: PropTypes.string,
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(['sm']),
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.node,
-  })).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.node,
+    }),
+  ).isRequired,
   info: PropTypes.string,
   clearable: PropTypes.bool,
   searchable: PropTypes.bool,
@@ -23,6 +25,7 @@ const propTypes = {
 
 const contextTypes = {
   ...essentialsContextTypes,
+  // eslint-disable-next-line react/forbid-prop-types
   formik: PropTypes.object.isRequired,
 };
 
@@ -74,6 +77,7 @@ class FormPicker extends React.Component {
 
     const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
 
+    /* eslint-disable jsx-a11y/label-has-for */
     return (
       <Field error={error} touched={formik.touched[name]} info={info}>
         {title && (
@@ -86,7 +90,7 @@ class FormPicker extends React.Component {
           instanceId={`${this.identifier}-${name}`}
           options={options}
           value={formik.values[name]}
-          onChange={(value) => {
+          onChange={value => {
             formik.setFieldError(name, null);
 
             // split value if multiple is enabled to get an array of values
@@ -107,6 +111,7 @@ class FormPicker extends React.Component {
         />
       </Field>
     );
+    /* eslint-enable */
   }
 }
 
