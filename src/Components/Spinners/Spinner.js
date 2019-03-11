@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactLoading from 'react-loading';
 
 const propTypes = {
   variant: PropTypes.oneOf([
@@ -22,7 +21,8 @@ const defaultProps = {
 };
 
 function Spinner({ variant, delay, ...props }) {
-  return <ReactLoading type={variant} delay={delay} {...props} />;
+  // TODO
+  return <div {...props} />;
 }
 
 Spinner.propTypes = propTypes;

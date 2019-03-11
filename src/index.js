@@ -47,6 +47,9 @@ import Nav from './Components/Navs/Nav';
 import injectPopover from './Components/Popovers/injectPopover';
 import PopoverButton from './Components/Popovers/PopoverButton';
 
+/* spinner components */
+import Spinner from './Components/Spinners/Spinner';
+
 /* tabs components */
 import TabsNav from './Components/Navs/TabsNav';
 import TabsContent from './Components/Navs/TabsContent';
@@ -76,7 +79,6 @@ import Text from './Content/Typography/Text';
 /* extend components */
 import Emoji from './Extend/Emoji/Emoji';
 import Scrollbars from './Extend/Scrollbars/Scrollbars';
-import Spinner from './Extend/Spinner/Spinner';
 import Switch from './Extend/Switch/Switch';
 import Uploader from './Extend/Uploader/Uploader';
 
