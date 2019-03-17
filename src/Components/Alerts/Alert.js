@@ -1,24 +1,36 @@
-import AlertContainer from './AlertContainer';
+import React from 'react';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
+import { BaseView } from '../../utils/components';
+import { COLORS } from '../../utils/constants';
 
-class Alert {
-  container = null;
+const propTypes = {
+  children: PropTypes.node.isRequired,
+  color: PropTypes.oneOf(COLORS),
+  dismissible: PropTypes.bool,
+};
 
-  init = ref => {
-    this.container = ref;
-  };
+const defaultProps = {
+  color: 'primary',
+  dismissible: false,
+};
 
-  add = alert => {
-    this.container.add(alert);
-  };
+function Alert({ children, color, dismissible, ...elementProps }) {
+  const classes = cx(
+    // constant classes
+    'alert',
+    `alert-${color}`,
+    dismissible && 'alert-dismissible',
+  );
 
-  remove = alert => {
-    this.container.remove(alert);
-  };
-
-  Container = AlertContainer;
+  return (
+    <BaseView props={elementProps} className={classes}>
+      {children}
+    </BaseView>
+  );
 }
 
-// singleton
-const AlertInstance = new Alert();
+Alert.propTypes = propTypes;
+Alert.defaultProps = defaultProps;
 
-export default AlertInstance;
+export default Alert;
