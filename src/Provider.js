@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppContainer from 'react-native-web/dist/cjs/exports/AppRegistry/AppContainer';
-import Alert from './Components/Alerts/Alert';
 import { contextTypes } from './utils';
 
 const propTypes = {
@@ -60,7 +59,6 @@ class Provider extends React.Component {
     return (
       <React.Fragment>
         <AppContainer rootTag={root}>{children}</AppContainer>
-        <Alert.Container />
       </React.Fragment>
     );
   }

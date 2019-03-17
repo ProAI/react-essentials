@@ -78,7 +78,8 @@ import Text from './Content/Typography/Text';
 
 /* extend components */
 import Emoji from './Extend/Emoji/Emoji';
-import Scrollbars from './Extend/Scrollbars/Scrollbars';
+import StacksProvider from './Extend/Stacks/Provider';
+import useStack from './Extend/Stacks/useStack';
 import Switch from './Extend/Switch/Switch';
 import Uploader from './Extend/Uploader/Uploader';
 
@@ -135,8 +136,9 @@ export {
   Text,
   // extend
   Emoji,
-  Scrollbars,
   Spinner,
+  StacksProvider,
+  useStack,
   Switch,
   Uploader,
   // layout

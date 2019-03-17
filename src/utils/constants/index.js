@@ -12,16 +12,6 @@ export const TRIGGERS = [
   'focus click',
 ];
 
-// POSITIONS
-export const POSITIONS = [
-  'top left',
-  'top right',
-  'top center',
-  'bottom left',
-  'bottom right',
-  'bottom center',
-];
-
 // PAGE_SECTIONS prop type
 export const PAGE_SECTIONS = ['main', 'aside', 'header', 'footer'];
 
