@@ -78,8 +78,6 @@ import Text from './Content/Typography/Text';
 
 /* extend components */
 import Emoji from './Extend/Emoji/Emoji';
-import StacksProvider from './Extend/Stacks/Provider';
-import useStack from './Extend/Stacks/useStack';
 import Switch from './Extend/Switch/Switch';
 import Uploader from './Extend/Uploader/Uploader';
 
@@ -137,8 +135,6 @@ export {
   // extend
   Emoji,
   Spinner,
-  StacksProvider,
-  useStack,
   Switch,
   Uploader,
   // layout
