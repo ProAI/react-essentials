@@ -6,14 +6,14 @@ import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
 import ModalTitle from './ModalTitle';
-import { SIZES } from '../../utils/constants';
+import { MODAL_SIZES } from '../../utils/constants';
 import { BaseView } from '../../utils/components';
 import { contextTypes } from '../../utils';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   visible: PropTypes.bool.isRequired,
-  size: PropTypes.oneOf(SIZES),
+  size: PropTypes.oneOf(MODAL_SIZES),
   onToggle: PropTypes.func.isRequired,
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
@@ -207,7 +207,8 @@ class Modal extends React.Component {
 
   adjustDialog() {
     const container = this.dialog;
-    const isModalOverflowing = container.scrollHeight > document.documentElement.clientHeight;
+    const isModalOverflowing =
+      container.scrollHeight > document.documentElement.clientHeight;
 
     if (!this.isBodyOverflowing && isModalOverflowing) {
       container.style.paddingLeft = `${this.scrollbarWidth}px`;
@@ -230,7 +231,8 @@ class Modal extends React.Component {
     if (!fullWindowWidth) {
       // workaround for missing window.innerWidth in IE8
       const documentElementRect = document.documentElement.getBoundingClientRect();
-      fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
+      fullWindowWidth =
+        documentElementRect.right - Math.abs(documentElementRect.left);
     }
 
     this.isBodyOverflowing = document.body.clientWidth < fullWindowWidth;
@@ -256,10 +258,14 @@ class Modal extends React.Component {
 
   resetScrollbar() {
     if (document.getElementById('content')) {
-      document.getElementById('content').style.paddingRight = this.originalBodyPadding;
+      document.getElementById(
+        'content',
+      ).style.paddingRight = this.originalBodyPadding;
     }
     if (document.getElementById('navbar')) {
-      document.getElementById('navbar').style.paddingRight = this.originalBodyPadding;
+      document.getElementById(
+        'navbar',
+      ).style.paddingRight = this.originalBodyPadding;
     }
   }
 
@@ -337,7 +343,11 @@ class Modal extends React.Component {
   }
 
   renderReact15() {
-    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderModal(), this.container);
+    ReactDOM.unstable_renderSubtreeIntoContainer(
+      this,
+      this.renderModal(),
+      this.container,
+    );
   }
 
   render() {

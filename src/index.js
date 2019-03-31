@@ -25,6 +25,7 @@ import Dropdown from './Components/Dropdowns/Dropdown';
 
 /* form components */
 import Form from './Components/Forms/Form';
+import Switch from './Components/Forms/Switch';
 
 /* input group components */
 import InputGroup from './Components/InputGroup/InputGroup';
@@ -49,6 +50,9 @@ import PopoverButton from './Components/Popovers/PopoverButton';
 
 /* spinner components */
 import Spinner from './Components/Spinners/Spinner';
+
+/* toast components */
+import Toast from './Components/Toasts/Toast';
 
 /* tabs components */
 import TabsNav from './Components/Navs/TabsNav';
@@ -78,7 +82,6 @@ import Text from './Content/Typography/Text';
 
 /* extend components */
 import Emoji from './Extend/Emoji/Emoji';
-import Switch from './Extend/Switch/Switch';
 import Uploader from './Extend/Uploader/Uploader';
 
 /* layout components */
@@ -102,6 +105,7 @@ export {
   Card,
   Dropdown,
   Form,
+  Switch,
   InputGroup,
   Jumbotron,
   ActionListGroup,
@@ -113,6 +117,8 @@ export {
   TabsContent,
   injectPopover,
   PopoverButton,
+  Spinner,
+  Toast,
   injectTooltip,
   TooltipButton,
   // content
@@ -134,8 +140,6 @@ export {
   Text,
   // extend
   Emoji,
-  Spinner,
-  Switch,
   Uploader,
   // layout
   Container,

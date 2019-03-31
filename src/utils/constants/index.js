@@ -27,11 +27,21 @@ export const COLORS = [
   'dark',
 ];
 export const BUTTON_COLORS = ['link', ...COLORS];
-export const TEXT_COLORS = ['body', 'muted', 'white', 'black-50', 'white-50', ...COLORS];
+export const TEXT_COLORS = [
+  'body',
+  'muted',
+  'white',
+  'black-50',
+  'white-50',
+  ...COLORS,
+];
 export const BACKGROUND_COLORS = ['white', 'transparent', ...COLORS];
 
 // SIZES prop type
 export const SIZES = ['sm', 'lg'];
+
+// MODAL_SIZES prop type
+export const MODAL_SIZES = ['sm', 'lg', 'xl'];
 
 // HEADING_SIZES prop type
 export const HEADING_SIZES = [1, 2, 3, 4, 5, 6];

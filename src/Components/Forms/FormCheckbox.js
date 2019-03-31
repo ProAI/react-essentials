@@ -9,7 +9,6 @@ const propTypes = {
   title: PropTypes.string,
   label: PropTypes.string.isRequired,
   info: PropTypes.string,
-  size: PropTypes.oneOf(['sm']),
   formatError: PropTypes.func,
 };
 
@@ -22,7 +21,6 @@ const contextTypes = {
 const defaultProps = {
   title: null,
   info: null,
-  size: null,
   formatError: null,
 };
 
@@ -38,7 +36,7 @@ class FormCheckbox extends React.Component {
   }
 
   render() {
-    const { name, title, label, info, size, formatError } = this.props;
+    const { name, title, label, info, formatError } = this.props;
 
     const { formik } = this.context;
 
@@ -46,8 +44,6 @@ class FormCheckbox extends React.Component {
       // constant classes
       'custom-control',
       'custom-checkbox',
-      // variable classes
-      size === 'sm' && 'custom-control-sm',
     );
 
     const inputClasses = cx(
@@ -57,7 +53,9 @@ class FormCheckbox extends React.Component {
       formik.touched[name] && formik.errors[name] && 'is-invalid',
     );
 
-    const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
+    const error = formatError
+      ? formatError(formik.errors[name])
+      : formik.errors[name];
 
     /* eslint-disable jsx-a11y/label-has-for */
     return (
@@ -76,7 +74,10 @@ class FormCheckbox extends React.Component {
             onBlur={formik.handleBlur}
             className={inputClasses}
           />
-          <label className="custom-control-label" htmlFor={`${this.identifier}-${name}`}>
+          <label
+            className="custom-control-label"
+            htmlFor={`${this.identifier}-${name}`}
+          >
             {label}
           </label>
         </div>

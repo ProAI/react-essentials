@@ -1,28 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+import { BaseView } from '../../utils/components';
+import { TEXT_COLORS } from '../../utils/constants';
 
 const propTypes = {
-  variant: PropTypes.oneOf([
-    'balls',
-    'bars',
-    'bubbles',
-    'cubes',
-    'cylon',
-    'spin',
-    'spinningBubbles',
-    'spokes',
-  ]),
-  delay: PropTypes.number,
+  variant: PropTypes.oneOf(['border', 'grow']),
+  color: PropTypes.oneOf(TEXT_COLORS),
+  size: PropTypes.oneOf(['sm']),
 };
 
 const defaultProps = {
-  variant: 'spin',
-  delay: 0,
+  variant: 'border',
+  color: null,
+  size: null,
 };
 
-function Spinner({ variant, delay, ...props }) {
-  // TODO
-  return <div {...props} />;
+function Spinner({ variant, color, size, ...elementProps }) {
+  const classes = cx(
+    // constant classes
+    `spinner-${variant}`,
+    // variable classes
+    color && `text-${color}`,
+    size && `spinner-${variant}-sm`,
+  );
+
+  return <BaseView props={elementProps} role="alert" className={classes} />;
 }
 
 Spinner.propTypes = propTypes;

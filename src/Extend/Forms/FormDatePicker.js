@@ -12,8 +12,7 @@ const propTypes = {
   title: PropTypes.string,
   placeholder: PropTypes.string,
   info: PropTypes.string,
-  size: PropTypes.oneOf(['sm']),
-  formatDate: PropTypes.func,
+  // formatDate: PropTypes.func,
   formatError: PropTypes.func,
 };
 
@@ -27,8 +26,7 @@ const defaultProps = {
   title: null,
   placeholder: '',
   info: null,
-  size: null,
-  formatDate: null,
+  // formatDate: null,
   formatError: null,
 };
 
@@ -78,8 +76,10 @@ class FormDatePicker extends React.Component {
 
     // close and unfocus if click is outside
     if (state.isOpen) {
-      const isMenuElement = event.target === this.menu || this.menu.contains(event.target);
-      const isControlElement = event.target === this.control || this.control.contains(event.target);
+      const isMenuElement =
+        event.target === this.menu || this.menu.contains(event.target);
+      const isControlElement =
+        event.target === this.control || this.control.contains(event.target);
 
       if (!isMenuElement && !isControlElement) {
         this.updateState(false, false);
@@ -88,7 +88,8 @@ class FormDatePicker extends React.Component {
 
     // unfocus if click is outside
     if (!state.isOpen) {
-      const isControlElement = event.target === this.control || this.control.contains(event.target);
+      const isControlElement =
+        event.target === this.control || this.control.contains(event.target);
 
       if (!isControlElement) {
         this.updateState(false, false);
@@ -170,7 +171,7 @@ class FormDatePicker extends React.Component {
   render() {
     const { state } = this;
 
-    const { name, title, placeholder, info, size, formatError } = this.props;
+    const { name, title, placeholder, info, formatError } = this.props;
 
     const { formik } = this.context;
 
@@ -181,22 +182,31 @@ class FormDatePicker extends React.Component {
       'Select--single',
       // variable classes
       formik.touched[name] && formik.errors[name] && 'is-invalid',
-      size === 'sm' && 'form-datepicker-sm',
       formik.values[name] && 'has-value',
       state.isFocused && 'is-focused',
       state.isOpen && 'is-open',
     );
 
-    const pickedDate = formik.values[name] ? new Date(formik.values[name]) : new Date();
-    const initialMonth = new Date(pickedDate.getFullYear(), pickedDate.getMonth());
+    const pickedDate = formik.values[name]
+      ? new Date(formik.values[name])
+      : new Date();
+    const initialMonth = new Date(
+      pickedDate.getFullYear(),
+      pickedDate.getMonth(),
+    );
 
-    const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
+    const error = formatError
+      ? formatError(formik.errors[name])
+      : formik.errors[name];
 
     /* eslint-disable jsx-a11y/label-has-for */
     return (
       <Field error={error} touched={formik.touched[name]} info={info}>
         {title && (
-          <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
+          <label
+            htmlFor={`${this.identifier}-${name}`}
+            className="form-control-label"
+          >
             {title}
           </label>
         )}
@@ -210,11 +220,19 @@ class FormDatePicker extends React.Component {
             onKeyDown={this.onControlKeyDown}
           >
             <span className="Select-multi-value-wrapper">
-              {!formik.values[name] && <div className="Select-placeholder">{placeholder}</div>}
+              {!formik.values[name] && (
+                <div className="Select-placeholder">{placeholder}</div>
+              )}
               {formik.values[name] && (
                 <div className="Select-value">
-                  <span className="Select-value-label" role="option" aria-selected="true">
-                    {formik.values[name] ? this.formatPickedDate(pickedDate) : ''}
+                  <span
+                    className="Select-value-label"
+                    role="option"
+                    aria-selected="true"
+                  >
+                    {formik.values[name]
+                      ? this.formatPickedDate(pickedDate)
+                      : ''}
                   </span>
                 </div>
               )}

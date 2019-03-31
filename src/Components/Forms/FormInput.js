@@ -8,8 +8,17 @@ const propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string,
   placeholder: PropTypes.string,
-  type: PropTypes.oneOf(['color', 'email', 'number', 'password', 'range', 'tel', 'text', 'url']),
-  size: PropTypes.oneOf(['sm']),
+  type: PropTypes.oneOf([
+    'color',
+    'email',
+    'number',
+    'password',
+    'range',
+    'tel',
+    'text',
+    'url',
+  ]),
+  size: PropTypes.oneOf(['sm', 'lg']),
   info: PropTypes.string,
   multiline: PropTypes.bool,
   autoFocus: PropTypes.bool,
@@ -65,16 +74,22 @@ class FormInput extends React.Component {
       // variable classes
       formik.touched[name] && formik.errors[name] && 'is-invalid',
       size === 'sm' && 'form-control-sm',
+      size === 'lg' && 'form-control-lg',
     );
 
-    const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
+    const error = formatError
+      ? formatError(formik.errors[name])
+      : formik.errors[name];
 
     /* eslint-disable jsx-a11y/label-has-for */
     /* eslint-disable jsx-a11y/no-autofocus */
     return (
       <Field error={error} touched={formik.touched[name]} info={info}>
         {title && (
-          <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
+          <label
+            htmlFor={`${this.identifier}-${name}`}
+            className="form-control-label"
+          >
             {title}
           </label>
         )}

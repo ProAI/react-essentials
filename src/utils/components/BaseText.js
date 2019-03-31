@@ -135,10 +135,18 @@ class BaseText extends React.Component {
 
     // wrap children with underline, bold and italic tags
     const childrenWithU = underline ? <u>{children}</u> : children;
-    const childrenWithUB = bold ? <strong>{childrenWithU}</strong> : childrenWithU;
+    const childrenWithUB = bold ? (
+      <strong>{childrenWithU}</strong>
+    ) : (
+      childrenWithU
+    );
     const childrenWithUBI = italic ? <em>{childrenWithUB}</em> : childrenWithUB;
 
-    return <Tag {...createDOMProps({ ...otherProps, className: classes })}>{childrenWithUBI}</Tag>;
+    return (
+      <Tag {...createDOMProps({ ...otherProps, className: classes })}>
+        {childrenWithUBI}
+      </Tag>
+    );
   }
 }
 

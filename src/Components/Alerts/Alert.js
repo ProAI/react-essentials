@@ -24,7 +24,7 @@ function Alert({ children, color, dismissible, ...elementProps }) {
   );
 
   return (
-    <BaseView props={elementProps} className={classes}>
+    <BaseView props={elementProps} role="alert" className={classes}>
       {children}
     </BaseView>
   );

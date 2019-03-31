@@ -15,7 +15,6 @@ const propTypes = {
   ).isRequired,
   info: PropTypes.string,
   multiple: PropTypes.bool,
-  size: PropTypes.oneOf(['sm']),
   formatError: PropTypes.func,
 };
 
@@ -29,7 +28,6 @@ const defaultProps = {
   title: null,
   info: null,
   multiple: false,
-  size: null,
   formatError: null,
 };
 
@@ -45,7 +43,7 @@ class FormChoice extends React.Component {
   }
 
   render() {
-    const { name, title, options, info, multiple, size, formatError } = this.props;
+    const { name, title, options, info, multiple, formatError } = this.props;
 
     const { formik } = this.context;
 
@@ -63,8 +61,6 @@ class FormChoice extends React.Component {
       // constant classes
       'custom-control',
       `custom-${check}`,
-      // variable classes
-      size === 'sm' && 'custom-control-sm',
     );
 
     const inputClasses = cx(
@@ -74,7 +70,9 @@ class FormChoice extends React.Component {
       formik.touched[name] && formik.errors[name] && 'is-invalid',
     );
 
-    const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
+    const error = formatError
+      ? formatError(formik.errors[name])
+      : formik.errors[name];
 
     /* eslint-disable jsx-a11y/label-has-for */
     return (
@@ -93,7 +91,9 @@ class FormChoice extends React.Component {
                   onChange={event => {
                     formik.setFieldError(name, null);
 
-                    const value = event.target.checked ? option.value : formik.values[name];
+                    const value = event.target.checked
+                      ? option.value
+                      : formik.values[name];
                     formik.setFieldValue(name, value);
                   }}
                   onBlur={() => formik.setFieldTouched(name, true)}
@@ -107,12 +107,16 @@ class FormChoice extends React.Component {
                   name={`${name}[${getIndex()}]`}
                   value={option.value}
                   checked={
-                    formik.values[name] ? formik.values[name].indexOf(option.value) !== -1 : false
+                    formik.values[name]
+                      ? formik.values[name].indexOf(option.value) !== -1
+                      : false
                   }
                   onChange={event => {
                     formik.setFieldError(name, null);
 
-                    const newValue = formik.values[name] ? [...formik.values[name]] : [];
+                    const newValue = formik.values[name]
+                      ? [...formik.values[name]]
+                      : [];
                     if (event.target.checked) {
                       newValue.push(option.value);
                     } else {

@@ -9,7 +9,6 @@ const propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string,
   placeholder: PropTypes.string,
-  size: PropTypes.oneOf(['sm']),
   options: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
@@ -32,7 +31,6 @@ const contextTypes = {
 const defaultProps = {
   title: null,
   placeholder: '',
-  size: null,
   info: null,
   clearable: false,
   searchable: false,
@@ -56,7 +54,6 @@ class FormPicker extends React.Component {
       name,
       title,
       placeholder,
-      size,
       options,
       info,
       multiple,
@@ -72,16 +69,20 @@ class FormPicker extends React.Component {
       'form-picker',
       // variable classes
       formik.touched[name] && formik.errors[name] && 'is-invalid',
-      size === 'sm' && 'form-picker-sm',
     );
 
-    const error = formatError ? formatError(formik.errors[name]) : formik.errors[name];
+    const error = formatError
+      ? formatError(formik.errors[name])
+      : formik.errors[name];
 
     /* eslint-disable jsx-a11y/label-has-for */
     return (
       <Field error={error} touched={formik.touched[name]} info={info}>
         {title && (
-          <label htmlFor={`${this.identifier}-${name}`} className="form-control-label">
+          <label
+            htmlFor={`${this.identifier}-${name}`}
+            className="form-control-label"
+          >
             {title}
           </label>
         )}
