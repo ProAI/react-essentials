@@ -17,7 +17,6 @@ const propTypes = {
   onToggle: PropTypes.func.isRequired,
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
-  dismissible: PropTypes.bool,
 };
 
 const childContextTypes = {
@@ -28,7 +27,6 @@ const defaultProps = {
   size: null,
   onEnter: null,
   onExit: null,
-  dismissible: true,
 };
 
 // backwards compatibility for React 15
@@ -277,7 +275,6 @@ class Modal extends React.Component {
       onToggle,
       onEnter,
       onExit,
-      dismissible,
       ...elementProps
     } = this.props;
 
@@ -307,7 +304,6 @@ class Modal extends React.Component {
       // inject titleId, dismissible and onToggle props
       if (i === 0) {
         return React.cloneElement(child, {
-          dismissible,
           onToggle,
           titleId: this.identifier,
         });

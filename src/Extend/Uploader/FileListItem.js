@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../../Components/Spinners/Spinner';
 import { formatFileSize } from '../../utils';
-import { CloseButton } from '../../utils/components';
+import { BaseTouchable } from '../../utils/components';
+
+const STATUS = ['ready', 'uploading', 'completed', 'error'];
 
 const propTypes = {
-  status: PropTypes.oneOf(['ready', 'uploading', 'completed', 'error']).isRequired,
+  status: PropTypes.oneOf(STATUS).isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   file: PropTypes.object.isRequired,
-  onRemove: PropTypes.func.isRequired,
+  // onRemove: PropTypes.func.isRequired,
 };
 
 class FileListItem extends React.Component {
@@ -24,13 +26,17 @@ class FileListItem extends React.Component {
     // render method will be called quite often.
     this.fileSize = formatFileSize(props.file.size);
     this.fileIsImage = props.file.type.split('/')[0] === 'image';
-    this.filePreviewUrl = (window.URL || window.webkitURL).createObjectURL(props.file);
+    this.filePreviewUrl = (window.URL || window.webkitURL).createObjectURL(
+      props.file,
+    );
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const { props, state } = this;
 
-    return props.status !== nextProps.status || state.progress !== nextState.progress;
+    return (
+      props.status !== nextProps.status || state.progress !== nextState.progress
+    );
   }
 
   componentWillUpdate(nextProps) {
@@ -85,10 +91,14 @@ class FileListItem extends React.Component {
     const { status, file } = this.props;
     const { progress } = this.state;
 
-    const showLoadingIndicator = status === 'uploading' || (status === 'completed' && progress < 1);
+    const showLoadingIndicator =
+      status === 'uploading' || (status === 'completed' && progress < 1);
     const showProgressBar =
-      status === 'uploading' || status === 'error' || (status === 'completed' && progress < 1);
-    const showRemoveButton = status === 'error' || (status === 'completed' && progress >= 1);
+      status === 'uploading' ||
+      status === 'error' ||
+      (status === 'completed' && progress < 1);
+    const showRemoveButton =
+      status === 'error' || (status === 'completed' && progress >= 1);
 
     return (
       <div
@@ -110,15 +120,23 @@ class FileListItem extends React.Component {
           {showLoadingIndicator && <Spinner color="#444" width={16} />}
           {file.name} ({this.fileSize})
           {status === 'error' && <span className="error-message">- Error</span>}
-          {showRemoveButton && <CloseButton tabIndex={0} onClick={this.onRemove} />}
+          {showRemoveButton && (
+            <BaseTouchable tabIndex={0} onClick={this.onRemove} />
+          )}
         </div>
-        <div className={`uploader-file-progressbar ${showProgressBar ? 'active' : null}`}>
+        <div
+          className={`uploader-file-progressbar ${
+            showProgressBar ? 'active' : null
+          }`}
+        >
           {showProgressBar && (
             <div
               style={{
                 width: `${(progress * 100).toString()}%`,
               }}
-              className={`uploader-file-progressbar-status ${status === 'error' ? 'error' : null}`}
+              className={`uploader-file-progressbar-status ${
+                status === 'error' ? 'error' : null
+              }`}
             />
           )}
         </div>
