@@ -80,10 +80,6 @@ import List from './Content/Typography/List';
 import Paragraph from './Content/Typography/Paragraph';
 import Text from './Content/Typography/Text';
 
-/* extend components */
-import Emoji from './Extend/Emoji/Emoji';
-import Uploader from './Extend/Uploader/Uploader';
-
 /* layout components */
 import Container from './Layout/Container/Container';
 import Grid from './Layout/Grid/Grid';
@@ -138,9 +134,6 @@ export {
   List,
   Paragraph,
   Text,
-  // extend
-  Emoji,
-  Uploader,
   // layout
   Container,
   Grid,

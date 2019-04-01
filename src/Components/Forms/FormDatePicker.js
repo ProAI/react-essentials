@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DayPicker from 'react-day-picker/DayPicker';
-import Field from '../../Components/Forms/Field';
+import Field from './Field';
 import { contextTypes as essentialsContextTypes } from '../../utils';
 
 const propTypes = {

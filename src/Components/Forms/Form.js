@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { BaseView } from '../../utils/components';
 import FormInput from './FormInput';
-import FormPicker from '../../Extend/Forms/FormPicker';
-import FormDatePicker from '../../Extend/Forms/FormDatePicker';
+import FormPicker from './FormPicker';
+import FormDatePicker from './FormDatePicker';
 import FormChoice from './FormChoice';
 import FormCheckbox from './FormCheckbox';
 
@@ -21,7 +21,13 @@ const defaultProps = {
 };
 
 function Form(props) {
-  const { children, initialValues, validate, onSubmit, ...elementProps } = props;
+  const {
+    children,
+    initialValues,
+    validate,
+    onSubmit,
+    ...elementProps
+  } = props;
 
   return (
     <Formik
