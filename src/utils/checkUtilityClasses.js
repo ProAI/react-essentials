@@ -23,7 +23,7 @@ export default function checkUtilityClasses(value) {
 
     // check for flex classes
     if (
-      /^((f-(((sm|md|lg|xl)-)?((row|column)(-reverse)?|fill|((grow|shrink)-[0-1])|nowrap|wrap|wrap-reverse)))|(jc-((sm|md|lg|xl)-)?(start|end|center|between|around))|(a((i|s)-((sm|md|lg|xl)-)?(start|end|center|baseline|stretch)))|(order-((sm|md|lg|xl)-)?[0-12])|(ac-((sm|md|lg|xl)-)?(start|end|center|around|stretch)))$/.test(
+      /^((flex-(((sm|md|lg|xl)-)?((row|column)(-reverse)?|fill|((grow|shrink)-[0-1])|nowrap|wrap|wrap-reverse)))|(jc-((sm|md|lg|xl)-)?(start|end|center|between|around))|(a((i|s)-((sm|md|lg|xl)-)?(start|end|center|baseline|stretch)))|(order-((sm|md|lg|xl)-)?[0-12])|(ac-((sm|md|lg|xl)-)?(start|end|center|around|stretch)))$/.test(
         className,
       )
     ) {
@@ -49,7 +49,9 @@ export default function checkUtilityClasses(value) {
     // TODO: check for sizing classes
 
     // check for spacing classes
-    if (/^(p|m)(t|b|l|r|x|y)?-((sm|md|lg|xl)-)?([0-5]|auto)$/.test(className)) {
+    if (
+      /^(p|m)(t|b|l|r|x|y)?-((sm|md|lg|xl)-)?n?([0-5]|auto)$/.test(className)
+    ) {
       return;
     }
 
