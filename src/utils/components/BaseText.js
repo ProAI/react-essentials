@@ -15,7 +15,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   props: PropTypes.shape({
-    class: PropTypes.string,
+    styleName: PropTypes.string,
     className: PropTypes.string,
     color: PropTypes.oneOf(TEXT_COLORS),
     align: PropTypes.oneOf(['justify', 'left', 'center', 'right']),
@@ -41,7 +41,7 @@ const childContextTypes = {
 
 const defaultProps = {
   props: {
-    class: null,
+    styleName: null,
     align: null,
     color: null,
     mark: false,
@@ -93,7 +93,7 @@ class BaseText extends React.Component {
     const {
       children,
       props: {
-        class: utils,
+        styleName: utils,
         className: customClassName,
         align,
         color,

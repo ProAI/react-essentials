@@ -14,7 +14,7 @@ const propTypes = {
   children: PropTypes.node,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   props: PropTypes.shape({
-    class: PropTypes.string,
+    styleName: PropTypes.string,
     className: PropTypes.string,
     style: stylePropType,
   }),
@@ -29,7 +29,7 @@ const contextTypes = {
 const defaultProps = {
   children: null,
   props: {
-    class: null,
+    styleName: null,
   },
   tag: 'div',
   pseudo: false,
@@ -38,7 +38,7 @@ const defaultProps = {
 function BaseView(props, context) {
   const {
     children,
-    props: { class: utils, className: customClassName, ...otherProps },
+    props: { styleName: utils, className: customClassName, ...otherProps },
     tag: Tag,
     className,
     pseudo,
@@ -50,7 +50,10 @@ function BaseView(props, context) {
       checkUtilityClasses(utils);
     }
 
-    invariant(!context.isInAParentText, 'A view cannot be used inside of a text component');
+    invariant(
+      !context.isInAParentText,
+      'A view cannot be used inside of a text component',
+    );
 
     React.Children.toArray(children).forEach(item => {
       invariant(
@@ -71,7 +74,11 @@ function BaseView(props, context) {
     createUtilityClasses(utils),
   );
 
-  return <Tag {...createDOMProps({ ...otherProps, className: classes })}>{children}</Tag>;
+  return (
+    <Tag {...createDOMProps({ ...otherProps, className: classes })}>
+      {children}
+    </Tag>
+  );
 }
 
 BaseView.propTypes = propTypes;

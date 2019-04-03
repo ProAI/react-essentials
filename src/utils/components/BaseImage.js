@@ -9,7 +9,7 @@ const propTypes = {
   source: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   props: PropTypes.shape({
-    class: PropTypes.string,
+    styleName: PropTypes.string,
     className: PropTypes.string,
   }),
   className: PropTypes.string.isRequired,
@@ -21,7 +21,7 @@ const contextTypes = {
 
 const defaultProps = {
   props: {
-    class: null,
+    styleName: null,
   },
 };
 
@@ -29,7 +29,7 @@ function BaseImage(props, context) {
   const {
     source,
     label,
-    props: { class: utils, className: customClassName, ...otherProps },
+    props: { styleName: utils, className: customClassName, ...otherProps },
     className,
   } = props;
 
@@ -38,7 +38,10 @@ function BaseImage(props, context) {
       checkUtilityClasses(utils);
     }
 
-    invariant(!context.isInAParentText, 'An image cannot be used inside of a text component');
+    invariant(
+      !context.isInAParentText,
+      'An image cannot be used inside of a text component',
+    );
   }
 
   const classes = cx(

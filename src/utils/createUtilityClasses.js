@@ -4,7 +4,6 @@ export default function createUtilityClasses(utils) {
   }
 
   return utils
-    .replace(/f-/g, 'flex-')
     .replace(/jc-/g, 'justify-content-')
     .replace(/ai-/g, 'align-items-')
     .replace(/as-/g, 'align-self-')
