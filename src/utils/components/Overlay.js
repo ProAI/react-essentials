@@ -172,7 +172,7 @@ class Overlay extends React.Component {
     const { role, children, className, placementClassName } = this.props;
     const { placement, popperStyle, arrowStyle } = this.state;
 
-    const classes = cx(className, placementClassName[placement]);
+    const classes = cx('yv', className, placementClassName[placement]);
 
     return (
       <div
