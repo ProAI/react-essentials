@@ -3,15 +3,11 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import createHandleClick from './createHandleClick';
 
-export default function createButtonProps(props, context) {
-  const { to, external, onClick, preventToggle, keepFocus, ...elementProps } = props;
-  const { onToggle } = context;
+export default function createButtonProps(props) {
+  const { to, external, onClick, keepFocus, ...elementProps } = props;
 
   const ref = React.createRef();
-  const handleClick = createHandleClick(ref, onClick, onToggle, {
-    preventToggle,
-    keepFocus,
-  });
+  const handleClick = createHandleClick(ref, onClick, { keepFocus });
 
   // check props
   /* if (process.env.NODE_ENV !== 'production') {

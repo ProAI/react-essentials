@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BaseTouchable } from '../../utils/components';
-import { action } from '../../utils';
+import action from '../../utils/action';
 
 const propTypes = {
   // eslint-disable-next-line react/forbid-foreign-prop-types
@@ -9,18 +9,14 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const contextTypes = {
-  ...action.contextTypes,
-};
-
 const defaultProps = {
   ...action.defaultProps,
 };
 
-function BlockLink(props, context) {
+function BlockLink(props) {
   const { children, ...elementProps } = props;
 
-  const linkProps = action.createLinkProps(elementProps, context);
+  const linkProps = action.createLinkProps(elementProps);
 
   return (
     <BaseTouchable {...linkProps} className="">
@@ -30,7 +26,6 @@ function BlockLink(props, context) {
 }
 
 BlockLink.propTypes = propTypes;
-BlockLink.contextTypes = contextTypes;
 BlockLink.defaultProps = defaultProps;
 
 export default BlockLink;

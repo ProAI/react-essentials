@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseView } from '../../utils/components';
-import { contextTypes as essentialsContextTypes } from '../../utils';
+import Context from '../../Context';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
@@ -11,19 +11,17 @@ const propTypes = {
   disabled: PropTypes.bool,
 };
 
-const contextTypes = {
-  ...essentialsContextTypes,
-};
-
 const defaultProps = {
   disabled: false,
 };
 
 class Switch extends React.Component {
+  static contextType = Context;
+
   constructor(props, context) {
     super(props, context);
 
-    this.identifier = context.essentials.generateKey('re-switch-');
+    this.identifier = context.generateKey('re-switch-');
   }
 
   render() {
@@ -57,7 +55,6 @@ class Switch extends React.Component {
 }
 
 Switch.propTypes = propTypes;
-Switch.contextTypes = contextTypes;
 Switch.defaultProps = defaultProps;
 
 export default Switch;

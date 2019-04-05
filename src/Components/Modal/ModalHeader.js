@@ -5,16 +5,14 @@ import { BaseView } from '../../utils/components';
 const propTypes = {
   children: PropTypes.node.isRequired,
   titleId: PropTypes.string,
-  onToggle: PropTypes.func,
 };
 
 const defaultProps = {
   titleId: null,
-  onToggle: null,
 };
 
-function ModalHeader({ children, titleId, onToggle, ...elementProps }) {
-  // inject titleId
+function ModalHeader({ children, titleId, ...elementProps }) {
+  // inject titleId props for aria support
   const manipulatedChildren = React.Children.map(children, (child, i) => {
     if (i === 0) {
       return React.cloneElement(child, {

@@ -8,7 +8,7 @@ import ModalHeader from './ModalHeader';
 import ModalTitle from './ModalTitle';
 import { MODAL_SIZES } from '../../utils/constants';
 import { BaseView } from '../../utils/components';
-import { contextTypes } from '../../utils';
+import Context from '../../Context';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -17,10 +17,6 @@ const propTypes = {
   onToggle: PropTypes.func.isRequired,
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
-};
-
-const childContextTypes = {
-  onToggle: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -43,16 +39,12 @@ const computeScrollbarWidth = () => {
 };
 
 class Modal extends React.Component {
+  static contextType = Context;
+
   constructor(props, context) {
     super(props, context);
 
-    this.identifier = context.essentials.generateKey('re-modal-title-');
-  }
-
-  getChildContext() {
-    const { onToggle } = this.props;
-
-    return { onToggle };
+    this.identifier = context.generateKey('re-modal-');
   }
 
   componentWillMount() {
@@ -301,10 +293,9 @@ class Modal extends React.Component {
     );
 
     const manipulatedChildren = React.Children.map(children, (child, i) => {
-      // inject titleId, dismissible and onToggle props
+      // inject titleId props for aria support
       if (i === 0) {
         return React.cloneElement(child, {
-          onToggle,
           titleId: this.identifier,
         });
       }
@@ -362,8 +353,6 @@ class Modal extends React.Component {
 }
 
 Modal.propTypes = propTypes;
-Modal.contextTypes = contextTypes;
-Modal.childContextTypes = childContextTypes;
 Modal.defaultProps = defaultProps;
 
 Modal.Body = ModalBody;

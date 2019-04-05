@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Select from 'react-select';
+import { Field as FormikField } from 'formik';
 import Field from './Field';
-import { contextTypes as essentialsContextTypes } from '../../utils';
+import Context from '../../Context';
 
 const propTypes = {
   name: PropTypes.string.isRequired,
@@ -22,12 +23,6 @@ const propTypes = {
   formatError: PropTypes.func,
 };
 
-const contextTypes = {
-  ...essentialsContextTypes,
-  // eslint-disable-next-line react/forbid-prop-types
-  formik: PropTypes.object.isRequired,
-};
-
 const defaultProps = {
   title: null,
   placeholder: '',
@@ -39,17 +34,17 @@ const defaultProps = {
 };
 
 class FormPicker extends React.Component {
+  static contextType = Context;
+
   constructor(props, context) {
     super(props, context);
 
-    this.identifier = context.essentials.generateKey('re-form-');
+    this.identifier = context.generateKey('re-form-');
 
-    if (context.formik.values[props.name] === undefined) {
-      throw Error(`There is no initial value for field "${props.name}"`);
-    }
+    this.renderField = this.renderField.bind(this);
   }
 
-  render() {
+  renderField({ form: formik }) {
     const {
       name,
       title,
@@ -61,8 +56,6 @@ class FormPicker extends React.Component {
       searchable,
       formatError,
     } = this.props;
-
-    const { formik } = this.context;
 
     const classes = cx(
       // constant classes
@@ -114,10 +107,15 @@ class FormPicker extends React.Component {
     );
     /* eslint-enable */
   }
+
+  render() {
+    const { name } = this.props;
+
+    return <FormikField name={name} render={this.renderField} />;
+  }
 }
 
 FormPicker.propTypes = propTypes;
-FormPicker.contextTypes = contextTypes;
 FormPicker.defaultProps = defaultProps;
 
 export default FormPicker;

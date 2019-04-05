@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseTouchable } from '../../utils/components';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
-import { action } from '../../utils';
+import action from '../../utils/action';
 
 const propTypes = {
   // eslint-disable-next-line react/forbid-foreign-prop-types
@@ -17,10 +17,6 @@ const propTypes = {
   caret: PropTypes.bool,
 };
 
-const contextTypes = {
-  ...action.contextTypes,
-};
-
 const defaultProps = {
   ...action.defaultProps,
   color: 'primary',
@@ -31,8 +27,17 @@ const defaultProps = {
   caret: false,
 };
 
-function Button(props, context) {
-  const { children, color, size, active, disabled, block, caret, ...elementProps } = props;
+function Button(props) {
+  const {
+    children,
+    color,
+    size,
+    active,
+    disabled,
+    block,
+    caret,
+    ...elementProps
+  } = props;
 
   const classes = cx(
     // constant classes
@@ -47,7 +52,7 @@ function Button(props, context) {
     caret && 'dropdown-toggle',
   );
 
-  const buttonProps = action.createButtonProps(elementProps, context);
+  const buttonProps = action.createButtonProps(elementProps);
 
   return (
     <BaseTouchable {...buttonProps} className={classes}>
@@ -57,7 +62,6 @@ function Button(props, context) {
 }
 
 Button.propTypes = propTypes;
-Button.contextTypes = contextTypes;
 Button.defaultProps = defaultProps;
 
 export default Button;

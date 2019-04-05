@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppContainer from 'react-native-web/dist/cjs/exports/AppRegistry/AppContainer';
-import { contextTypes } from './utils';
+import Context from './Context';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -22,8 +22,6 @@ const defaultProps = {
   ssrViewport: null,
 };
 
-const childContextTypes = contextTypes;
-
 class Provider extends React.Component {
   key = 0;
 
@@ -33,15 +31,13 @@ class Provider extends React.Component {
     this.generateKey = this.generateKey.bind(this);
   }
 
-  getChildContext() {
+  getContext() {
     const { ssrViewport, breakpoints } = this.props;
 
     return {
-      essentials: {
-        ssrViewport,
-        breakpoints,
-        generateKey: this.generateKey,
-      },
+      ssrViewport,
+      breakpoints,
+      generateKey: this.generateKey,
     };
   }
 
@@ -57,15 +53,14 @@ class Provider extends React.Component {
     const { children, root } = this.props;
 
     return (
-      <React.Fragment>
+      <Context.Provider value={this.getContext()}>
         <AppContainer rootTag={root}>{children}</AppContainer>
-      </React.Fragment>
+      </Context.Provider>
     );
   }
 }
 
 Provider.propTypes = propTypes;
 Provider.defaultProps = defaultProps;
-Provider.childContextTypes = childContextTypes;
 
 export default Provider;

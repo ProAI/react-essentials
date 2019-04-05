@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseTouchable } from '../../utils/components';
-import { action } from '../../utils';
+import action from '../../utils/action';
 
 const propTypes = {
   // eslint-disable-next-line react/forbid-foreign-prop-types
@@ -12,17 +12,13 @@ const propTypes = {
   active: PropTypes.bool,
 };
 
-const contextTypes = {
-  ...action.contextTypes,
-};
-
 const defaultProps = {
   ...action.defaultProps,
   disabled: false,
   active: false,
 };
 
-function ActionListGroupItem(props, context) {
+function ActionListGroupItem(props) {
   const { children, disabled, active, ...elementProps } = props;
 
   const classes = cx(
@@ -34,7 +30,7 @@ function ActionListGroupItem(props, context) {
     active && 'active',
   );
 
-  const linkProps = action.createLinkProps(elementProps, context);
+  const linkProps = action.createLinkProps(elementProps);
 
   return (
     <BaseTouchable {...linkProps} className={classes} blockOnly>
@@ -44,7 +40,6 @@ function ActionListGroupItem(props, context) {
 }
 
 ActionListGroupItem.propTypes = propTypes;
-ActionListGroupItem.contextTypes = contextTypes;
 ActionListGroupItem.defaultProps = defaultProps;
 
 export default ActionListGroupItem;

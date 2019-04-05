@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import PopperJS from 'popper.js';
 import cx from 'classnames';
-import { contextTypes } from '..';
+import Context from '../../Context';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
+  // eslint-disable-next-line react/no-unused-prop-types
   target: PropTypes.node.isRequired,
   className: PropTypes.string.isRequired,
   placement: PropTypes.oneOf(PopperJS.placements),
+  // eslint-disable-next-line react/no-unused-prop-types
   fallbackPlacement: PropTypes.oneOf(['flip', 'clockwise', 'counterwise']),
   placementClassName: PropTypes.shape({
     top: PropTypes.string,
@@ -31,10 +33,12 @@ const canUseDOM = typeof window !== 'undefined';
 const isReact15 = ReactDOM.createPortal === undefined;
 
 class Overlay extends React.Component {
+  static contextType = Context;
+
   constructor(props, context) {
     super(props, context);
 
-    this.identifier = context.essentials.generateKey('re-overlay-');
+    this.identifier = context.generateKey('re-overlay-');
   }
 
   state = {
@@ -192,7 +196,11 @@ class Overlay extends React.Component {
   }
 
   renderReact15() {
-    ReactDOM.unstable_renderSubtreeIntoContainer(this, this.renderOverlay(), this.container);
+    ReactDOM.unstable_renderSubtreeIntoContainer(
+      this,
+      this.renderOverlay(),
+      this.container,
+    );
   }
 
   render() {
@@ -228,7 +236,6 @@ class Overlay extends React.Component {
 }
 
 Overlay.propTypes = propTypes;
-Overlay.contextTypes = contextTypes;
 Overlay.defaultProps = defaultProps;
 
 export default Overlay;

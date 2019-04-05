@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BaseTouchable } from '../../utils/components';
-import { action } from '../../utils';
+import action from '../../utils/action';
 
 const propTypes = {
   // eslint-disable-next-line react/forbid-foreign-prop-types
@@ -9,18 +9,14 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const contextTypes = {
-  ...action.contextTypes,
-};
-
 const defaultProps = {
   ...action.defaultProps,
 };
 
-function DropdownItem(props, context) {
+function DropdownItem(props) {
   const { children, ...elementProps } = props;
 
-  const linkProps = action.createLinkProps(elementProps, context);
+  const linkProps = action.createLinkProps(elementProps);
 
   return (
     <BaseTouchable {...linkProps} className="dropdown-item" blockOnly>
@@ -30,7 +26,6 @@ function DropdownItem(props, context) {
 }
 
 DropdownItem.propTypes = propTypes;
-DropdownItem.contextTypes = contextTypes;
 DropdownItem.defaultProps = defaultProps;
 
 export default DropdownItem;

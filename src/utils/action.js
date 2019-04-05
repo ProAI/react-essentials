@@ -8,17 +8,12 @@ export default {
     to: PropTypes.string,
     onClick: PropTypes.func,
     external: PropTypes.bool,
-    preventToggle: PropTypes.bool,
     keepFocus: PropTypes.bool,
-  },
-  contextTypes: {
-    onToggle: PropTypes.func,
   },
   defaultProps: {
     to: null,
     onClick: null,
     external: false,
-    preventToggle: false,
     keepFocus: false,
   },
   createHandleClick,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { Route, Link as RouterLink } from 'react-router-dom';
 import { BaseTouchable } from '../../utils/components';
-import { action } from '../../utils';
+import action from '../../utils/action';
 
 const propTypes = {
   // eslint-disable-next-line react/forbid-foreign-prop-types
@@ -18,25 +18,20 @@ const defaultProps = {
   strict: false,
 };
 
-function NavLink(props, context) {
+function NavLink(props) {
   const {
     children,
     to,
     external,
     onClick,
-    preventToggle,
     keepFocus,
     exact,
     strict,
     ...elementProps
   } = props;
-  const { onToggle } = context;
 
   const ref = React.createRef();
-  const handleClick = action.createHandleClick(ref, onClick, onToggle, {
-    preventToggle,
-    keepFocus,
-  });
+  const handleClick = action.createHandleClick(ref, onClick, { keepFocus });
 
   const path = typeof to === 'object' ? to.pathname : to;
 

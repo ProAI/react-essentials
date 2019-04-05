@@ -39,6 +39,8 @@ const childContextTypes = {
   isInAParentText: PropTypes.bool,
 };
 
+const numberOfLines = 0;
+
 const defaultProps = {
   props: {
     styleName: null,
@@ -119,7 +121,10 @@ class BaseText extends React.Component {
     const { isInAParentText } = this.context;
     const classes = cx(
       // add yoga styles
-      isInAParentText ? 'yti' : 'ytb',
+      'yt',
+      isInAParentText && 'yt-has-ancestor',
+      numberOfLines === 1 && 'yt-one-line',
+      numberOfLines > 1 && 'yt-multi-line',
       // variable classes
       color && `text-${color}`,
       align && `text-${align}`,

@@ -4,41 +4,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DayPicker from 'react-day-picker/DayPicker';
+import { Field as FormikField } from 'formik';
 import Field from './Field';
-import { contextTypes as essentialsContextTypes } from '../../utils';
+import Context from '../../Context';
 
 const propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string,
   placeholder: PropTypes.string,
   info: PropTypes.string,
-  // formatDate: PropTypes.func,
+  // eslint-disable-next-line react/no-unused-prop-types
+  formatDate: PropTypes.func,
   formatError: PropTypes.func,
-};
-
-const contextTypes = {
-  ...essentialsContextTypes,
-  // eslint-disable-next-line react/forbid-prop-types
-  formik: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
   title: null,
   placeholder: '',
   info: null,
-  // formatDate: null,
+  formatDate: null,
   formatError: null,
 };
 
 class FormDatePicker extends React.Component {
+  static contextType = Context;
+
   constructor(props, context) {
     super(props, context);
 
-    this.identifier = context.essentials.generateKey('re-form-');
+    this.identifier = context.generateKey('re-form-');
 
-    if (context.formik.values[props.name] === undefined) {
-      throw Error(`There is no initial value for field "${props.name}"`);
-    }
+    this.renderField = this.renderField.bind(this);
   }
 
   state = {
@@ -120,19 +116,6 @@ class FormDatePicker extends React.Component {
     }
   };
 
-  onDayClick = day => {
-    const { props, context } = this;
-
-    // close dropdown
-    this.updateState(false);
-
-    // reset error
-    context.formik.setFieldError(props.name, null);
-
-    // set value
-    context.formik.setFieldValue(props.name, day);
-  };
-
   updateState = (open, focus) => {
     const { state } = this;
 
@@ -168,12 +151,10 @@ class FormDatePicker extends React.Component {
     return pickedDate.toLocaleDateString('en');
   };
 
-  render() {
+  renderField({ form: formik }) {
     const { state } = this;
 
     const { name, title, placeholder, info, formatError } = this.props;
-
-    const { formik } = this.context;
 
     const classes = cx(
       // constant classes
@@ -277,7 +258,16 @@ class FormDatePicker extends React.Component {
               <DayPicker
                 initialMonth={initialMonth}
                 selectedDays={pickedDate}
-                onDayClick={this.onDayClick}
+                onDayClick={day => {
+                  // close dropdown
+                  this.updateState(false);
+
+                  // reset error
+                  formik.setFieldError(name, null);
+
+                  // set value
+                  formik.setFieldValue(name, day);
+                }}
                 firstDayOfWeek={1}
                 renderDay={day => day.getDate()}
                 onDayKeyDown={() => {}}
@@ -290,10 +280,15 @@ class FormDatePicker extends React.Component {
     );
     /* eslint-enable */
   }
+
+  render() {
+    const { name } = this.props;
+
+    return <FormikField name={name} render={this.renderField} />;
+  }
 }
 
 FormDatePicker.propTypes = propTypes;
-FormDatePicker.contextTypes = contextTypes;
 FormDatePicker.defaultProps = defaultProps;
 
 export default FormDatePicker;

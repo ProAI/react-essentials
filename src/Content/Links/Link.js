@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BaseText } from '../../utils/components';
-import { action } from '../../utils';
+import action from '../../utils/action';
 
 const propTypes = {
   // eslint-disable-next-line react/forbid-foreign-prop-types
@@ -9,18 +9,14 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const contextTypes = {
-  ...action.contextTypes,
-};
-
 const defaultProps = {
   ...action.defaultProps,
 };
 
-function Link(props, context) {
+function Link(props) {
   const { children, ...elementProps } = props;
 
-  const linkProps = action.createLinkProps(elementProps, context);
+  const linkProps = action.createLinkProps(elementProps);
 
   return (
     <BaseText {...linkProps} className="">
@@ -30,7 +26,6 @@ function Link(props, context) {
 }
 
 Link.propTypes = propTypes;
-Link.contextTypes = contextTypes;
 Link.defaultProps = defaultProps;
 
 export default Link;

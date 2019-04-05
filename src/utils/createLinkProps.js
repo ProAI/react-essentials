@@ -3,19 +3,18 @@ import invariant from 'fbjs/lib/invariant';
 import { Link as RouterLink } from 'react-router-dom';
 import createHandleClick from './createHandleClick';
 
-export default function makeLinkProps(props, context) {
-  const { to, external, onClick, preventToggle, keepFocus, ...elementProps } = props;
-  const { onToggle } = context;
+export default function createLinkProps(props) {
+  const { to, external, onClick, keepFocus, ...elementProps } = props;
 
   const ref = React.createRef();
-  const handleClick = createHandleClick(ref, onClick, onToggle, {
-    preventToggle,
-    keepFocus,
-  });
+  const handleClick = createHandleClick(ref, onClick, { keepFocus });
 
   // check props
   if (process.env.NODE_ENV !== 'production') {
-    invariant(to || onClick, "A link needs either a 'to' or an 'onClick' prop.");
+    invariant(
+      to || onClick,
+      "A link needs either a 'to' or an 'onClick' prop.",
+    );
     if (external) {
       invariant(to, "'to' prop for external link is missing.");
     }

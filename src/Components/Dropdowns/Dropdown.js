@@ -8,16 +8,12 @@ import DropdownDivider from './DropdownDivider';
 import DropdownItem from './DropdownItem';
 import DropdownTextItem from './DropdownTextItem';
 import { BaseView } from '../../utils/components';
-import { contextTypes } from '../../utils';
+import Context from '../../Context';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   onToggle: PropTypes.func,
   visible: PropTypes.bool,
-};
-
-const childContextTypes = {
-  onToggle: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -26,21 +22,17 @@ const defaultProps = {
 };
 
 class Dropdown extends React.Component {
+  static contextType = Context;
+
   constructor(props, context) {
     super(props, context);
 
-    this.identifier = context.essentials.generateKey('re-dropdown-');
+    this.identifier = context.generateKey('re-dropdown-');
   }
 
   state = {
     visible: false,
   };
-
-  getChildContext() {
-    return {
-      onToggle: this.handleToggle,
-    };
-  }
 
   componentWillUnmount() {
     if (this.visible()) {
@@ -52,7 +44,10 @@ class Dropdown extends React.Component {
     const dropdownElement = this.element;
 
     if (this.visible()) {
-      if (event.target !== dropdownElement && !dropdownElement.contains(event.target)) {
+      if (
+        event.target !== dropdownElement &&
+        !dropdownElement.contains(event.target)
+      ) {
         this.handleToggle();
       }
     }
@@ -109,7 +104,9 @@ class Dropdown extends React.Component {
       this.visible() && 'show',
     );
 
-    const identifier = children[0].props.id ? children[0].props.id : this.identifier;
+    const identifier = children[0].props.id
+      ? children[0].props.id
+      : this.identifier;
 
     const onClick = e => {
       e.preventDefault();
@@ -150,8 +147,6 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.propTypes = propTypes;
-Dropdown.contextTypes = contextTypes;
-Dropdown.childContextTypes = childContextTypes;
 Dropdown.defaultProps = defaultProps;
 
 Dropdown.Menu = DropdownMenu;

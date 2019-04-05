@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { BaseTouchable } from '../../utils/components';
 import { COLORS } from '../../utils/constants';
-import { action } from '../../utils';
+import action from '../../utils/action';
 
 const propTypes = {
   // eslint-disable-next-line react/forbid-foreign-prop-types
@@ -12,16 +12,12 @@ const propTypes = {
   color: PropTypes.oneOf(COLORS),
 };
 
-const contextTypes = {
-  ...action.contextTypes,
-};
-
 const defaultProps = {
   ...action.defaultProps,
   color: 'primary',
 };
 
-function ActionBadge(props, context) {
+function ActionBadge(props) {
   const { children, color, ...elementProps } = props;
   const classes = cx(
     // constant classes
@@ -29,7 +25,7 @@ function ActionBadge(props, context) {
     `badge-${color}`,
   );
 
-  const linkProps = action.createLinkProps(elementProps, context);
+  const linkProps = action.createLinkProps(elementProps);
 
   return (
     <BaseTouchable {...linkProps} className={classes}>
@@ -39,7 +35,6 @@ function ActionBadge(props, context) {
 }
 
 ActionBadge.propTypes = propTypes;
-ActionBadge.contextTypes = contextTypes;
 ActionBadge.defaultProps = defaultProps;
 
 export default ActionBadge;
