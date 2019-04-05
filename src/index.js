@@ -84,7 +84,9 @@ import Text from './Content/Typography/Text';
 import Container from './Layout/Container/Container';
 import Grid from './Layout/Grid/Grid';
 import View from './Layout/View/View';
-import Viewport from './Layout/Viewport/Viewport';
+
+/* hooks */
+import useMedia from './hooks/useMedia';
 
 export {
   // misc
@@ -138,5 +140,6 @@ export {
   Container,
   Grid,
   View,
-  Viewport,
+  // hooks
+  useMedia,
 };
