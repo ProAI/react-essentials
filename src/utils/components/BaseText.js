@@ -39,8 +39,6 @@ const childContextTypes = {
   isInAParentText: PropTypes.bool,
 };
 
-const numberOfLines = 0;
-
 const defaultProps = {
   props: {
     styleName: null,
@@ -97,6 +95,7 @@ class BaseText extends React.Component {
       props: {
         styleName: utils,
         className: customClassName,
+        style: customStyle,
         align,
         color,
         mark,
@@ -104,6 +103,7 @@ class BaseText extends React.Component {
         underline,
         bold,
         italic,
+        numberOfLines,
         ...otherProps
       },
       tag,
@@ -147,8 +147,13 @@ class BaseText extends React.Component {
     );
     const childrenWithUBI = italic ? <em>{childrenWithUB}</em> : childrenWithUB;
 
+    const style = [
+      customStyle,
+      numberOfLines > 1 && { WebkitLineClamp: numberOfLines },
+    ];
+
     return (
-      <Tag {...createDOMProps({ ...otherProps, className: classes })}>
+      <Tag {...createDOMProps({ ...otherProps, className: classes, style })}>
         {childrenWithUBI}
       </Tag>
     );
