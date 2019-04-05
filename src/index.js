@@ -2,6 +2,7 @@
 import StyleSheet from 'react-native-web/dist/cjs/exports/StyleSheet';
 import getStyleSheet from './getStyleSheet';
 import Provider from './Provider';
+import css from './css';
 
 /* alert components */
 import Alert from './Components/Alerts/Alert';
@@ -93,6 +94,7 @@ export {
   StyleSheet,
   getStyleSheet,
   Provider,
+  css,
   // components
   Alert,
   ActionBadge,
