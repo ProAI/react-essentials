@@ -4,6 +4,7 @@ import PopperJS from 'popper.js';
 import { BaseText, Overlay } from '../../utils/components';
 import { TRIGGERS } from '../../utils/constants';
 
+/* eslint-disable react/no-unused-prop-types */
 const propTypes = {
   title: PropTypes.node.isRequired,
   placement: PropTypes.oneOf(PopperJS.placements),
@@ -13,6 +14,7 @@ const propTypes = {
   trigger: PropTypes.oneOf(TRIGGERS),
   target: PropTypes.node.isRequired,
 };
+/* eslint-enable */
 
 const defaultProps = {
   onToggle: null,
@@ -77,7 +79,11 @@ class Tooltip extends React.Component {
     const { state } = this;
 
     // handle focus trigger
-    if (this.trigger.indexOf('focus') !== -1 && this.visible() && !state.isClicked) {
+    if (
+      this.trigger.indexOf('focus') !== -1 &&
+      this.visible() &&
+      !state.isClicked
+    ) {
       this.setState({
         isFocused: !state.isFocused,
       });
