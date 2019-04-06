@@ -19,13 +19,13 @@
     }
   },
   "dist/react-essentials.umd.min.js": {
-    "bundled": 776842,
-    "minified": 296291,
-    "gzipped": 79500
+    "bundled": 777456,
+    "minified": 296421,
+    "gzipped": 79528
   },
   "dist/react-essentials.umd.js": {
-    "bundled": 835107,
-    "minified": 320018,
-    "gzipped": 85966
+    "bundled": 835721,
+    "minified": 320165,
+    "gzipped": 85983
   }
 }
