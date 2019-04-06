@@ -29,7 +29,7 @@
     "classnames": "^2.2.6",
     "css-to-react-native": "^2.3.0",
     "fbjs": "^1.0.0",
-    "formik": "^1.5.1",
+    "formik": "^1.5.2",
     "popper.js": "^1.14.7",
     "prop-types": "^15.7.2",
     "react-day-picker": "^7.3.0",
