@@ -1,3 +1,6 @@
+/* native */
+import Switch from 'react-native-web/dist/cjs/exports/Switch';
+
 /* misc */
 import StyleSheet from 'react-native-web/dist/cjs/exports/StyleSheet';
 import getStyleSheet from './getStyleSheet';
@@ -26,7 +29,6 @@ import Dropdown from './Components/Dropdowns/Dropdown';
 
 /* form components */
 import Form from './Components/Forms/Form';
-import Switch from './Components/Forms/Switch';
 
 /* input group components */
 import InputGroup from './Components/InputGroup/InputGroup';
@@ -90,6 +92,8 @@ import View from './Layout/View/View';
 import useMedia from './hooks/useMedia';
 
 export {
+  // native
+  Switch,
   // misc
   StyleSheet,
   getStyleSheet,
@@ -105,7 +109,6 @@ export {
   Card,
   Dropdown,
   Form,
-  Switch,
   InputGroup,
   Jumbotron,
   ActionListGroup,
