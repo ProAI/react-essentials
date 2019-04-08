@@ -95,7 +95,9 @@ class FormPicker extends React.Component {
 
             formik.setFieldValue(name, value);
           }}
-          onBlur={() => formik.setFieldTouched(name, true)}
+          onBlur={() => {
+            formik.setFieldTouched(name, true);
+          }}
           placeholder={placeholder}
           className={classes}
           multi={multiple}

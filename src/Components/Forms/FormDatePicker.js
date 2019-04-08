@@ -239,7 +239,9 @@ class FormDatePicker extends React.Component {
                 onFocus={() => {
                   this.updateState(undefined, true);
                 }}
-                onBlur={() => formik.setFieldTouched(name, true)}
+                onBlur={() => {
+                  formik.setFieldTouched(name, true);
+                }}
                 style={{ border: '0px', width: '1px', display: 'inline-block' }}
               />
             </span>
@@ -266,7 +268,7 @@ class FormDatePicker extends React.Component {
                   formik.setFieldError(name, null);
 
                   // set value
-                  formik.setFieldValue(name, day);
+                  formik.setFieldValue(name, day.toString());
                 }}
                 firstDayOfWeek={1}
                 renderDay={day => day.getDate()}
