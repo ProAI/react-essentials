@@ -89,7 +89,12 @@ class FormPicker extends React.Component {
 
             // split value if multiple is enabled to get an array of values
             if (multiple) {
-              formik.setFieldValue(name, value.split(','));
+              if (value === '') {
+                formik.setFieldValue(name, []);
+              } else {
+                formik.setFieldValue(name, value.split(','));
+              }
+
               return;
             }
 
