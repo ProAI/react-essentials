@@ -1,4 +1,5 @@
 /* native */
+import ScrollView from 'react-native-web/dist/cjs/exports/ScrollView';
 import Switch from 'react-native-web/dist/cjs/exports/Switch';
 
 /* misc */
@@ -93,6 +94,7 @@ import useMedia from './hooks/useMedia';
 
 export {
   // native
+  ScrollView,
   Switch,
   // misc
   StyleSheet,
