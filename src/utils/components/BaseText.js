@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import StyleSheetPropType from 'react-native-web/dist/cjs/modules/StyleSheetPropType';
-import TextStylePropTypes from 'react-native-web/dist/cjs/exports/Text/TextStylePropTypes';
+import TextPropTypes from 'react-native-web/dist/cjs/exports/Text/TextPropTypes';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
 import createDOMProps from '../createDOMProps';
@@ -9,12 +8,11 @@ import checkUtilityClasses from '../checkUtilityClasses';
 import createUtilityClasses from '../createUtilityClasses';
 import { TEXT_COLORS } from '../constants';
 
-const stylePropType = StyleSheetPropType(TextStylePropTypes);
-
 const propTypes = {
   children: PropTypes.node.isRequired,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   props: PropTypes.shape({
+    ...TextPropTypes,
     styleName: PropTypes.string,
     className: PropTypes.string,
     color: PropTypes.oneOf(TEXT_COLORS),
@@ -24,7 +22,6 @@ const propTypes = {
     underline: PropTypes.bool,
     bold: PropTypes.bool,
     italic: PropTypes.bool,
-    style: stylePropType,
   }),
   className: PropTypes.string.isRequired,
   blockOnly: PropTypes.bool,

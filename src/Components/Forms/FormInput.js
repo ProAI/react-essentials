@@ -4,6 +4,7 @@ import cx from 'classnames';
 import { Field as FormikField } from 'formik';
 import Field from './Field';
 import Context from '../../Context';
+import { SIZES } from '../../utils/constants';
 
 const propTypes = {
   name: PropTypes.string.isRequired,
@@ -19,7 +20,7 @@ const propTypes = {
     'text',
     'url',
   ]),
-  size: PropTypes.oneOf(['sm', 'lg']),
+  size: PropTypes.oneOf(SIZES),
   info: PropTypes.string,
   multiline: PropTypes.bool,
   autoFocus: PropTypes.bool,

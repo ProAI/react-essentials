@@ -35,7 +35,6 @@ export const TEXT_COLORS = [
   'white-50',
   ...COLORS,
 ];
-export const BACKGROUND_COLORS = ['white', 'transparent', ...COLORS];
 
 // SIZES prop type
 export const SIZES = ['sm', 'lg'];

@@ -1,22 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import StyleSheetPropType from 'react-native-web/dist/cjs/modules/StyleSheetPropType';
-import ViewStylePropTypes from 'react-native-web/dist/cjs/exports/Text/TextStylePropTypes';
+import ViewPropTypes from 'react-native-web/dist/cjs/exports/View/ViewPropTypes';
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
 import createDOMProps from '../createDOMProps';
 import checkUtilityClasses from '../checkUtilityClasses';
 import createUtilityClasses from '../createUtilityClasses';
 
-const stylePropType = StyleSheetPropType(ViewStylePropTypes);
-
 const propTypes = {
   children: PropTypes.node,
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   props: PropTypes.shape({
+    ...ViewPropTypes,
     styleName: PropTypes.string,
     className: PropTypes.string,
-    style: stylePropType,
   }),
   className: PropTypes.string.isRequired,
   pseudo: PropTypes.bool,

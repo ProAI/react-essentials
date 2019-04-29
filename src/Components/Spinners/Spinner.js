@@ -22,7 +22,7 @@ function Spinner({ variant, color, size, ...elementProps }) {
     `spinner-${variant}`,
     // variable classes
     color && `text-${color}`,
-    size && `spinner-${variant}-sm`,
+    size === 'sm' && `spinner-${variant}-sm`,
   );
 
   return <BaseView props={elementProps} role="alert" className={classes} />;
