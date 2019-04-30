@@ -1,0 +1,79 @@
+/* View styles */
+.yv {
+  align-items: stretch;
+  border: 0 solid black;
+  box-sizing: border-box;
+  display: flex !important;
+  flex-basis: auto;
+  flex-direction: column;
+  flex-shrink: 0;
+  margin: 0;
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
+  position: relative;
+  /* default z-index, because =0 causes some problems with dropdowns */
+  /* z-index: 0; */
+}
+
+.yv-hit-slop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+/* Text styles */
+.yt {
+  border-width: 0;
+  box-sizing: border-box;
+  /* color: black; */
+  display: inline;
+  /* font: 14px System; */
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.yt-has-ancestor {
+  /* color: inherit; */
+  /* font: inherit; */
+  white-space: inherit;
+}
+
+.yt-one-line {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.yt-multi-line {
+  display: -webkit-box;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+}
+
+p.yt:not(.yt-has-ancestor) {
+  margin-bottom: 1rem;
+}
+
+/* Reset styles for heading, link, and list DOM elements */
+.y-reset {
+  background-color: transparent;
+  /* color: inherit; */
+  /* font: inherit; */
+  list-style: none;
+  margin: 0;
+  text-align: inherit;
+  text-decoration: none;
+}
+
+.y-cursor {
+  cursor: pointer;
+}
