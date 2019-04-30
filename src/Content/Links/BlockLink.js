@@ -1,6 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseTouchable } from '../../utils/components';
+import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
+import useActionElement from '../../hooks/useActionElement';
 import action from '../../utils/action';
 
 const propTypes = {
@@ -13,16 +13,10 @@ const defaultProps = {
   ...action.defaultProps,
 };
 
-function BlockLink(props) {
-  const { children, ...elementProps } = props;
+function BlockLink(elementProps) {
+  const createElement = useActionElement(BaseTouchable, elementProps);
 
-  const linkProps = action.createLinkProps(elementProps);
-
-  return (
-    <BaseTouchable {...linkProps} className="">
-      {children}
-    </BaseTouchable>
-  );
+  return createElement({});
 }
 
 BlockLink.propTypes = propTypes;

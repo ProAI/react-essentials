@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import ListGroupItem from './ListGroupItem';
 
 const propTypes = {
@@ -46,7 +46,7 @@ function ListGroup({
   );
 
   return (
-    <BaseView tag="ul" props={elementProps} className={classes}>
+    <BaseView {...elementProps} essentials={{ tag: 'ul', className: classes }}>
       {children}
     </BaseView>
   );

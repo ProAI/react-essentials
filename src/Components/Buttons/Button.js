@@ -1,8 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseTouchable } from '../../utils/components';
+import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
+import useActionElement from '../../hooks/useActionElement';
 import action from '../../utils/action';
 
 const propTypes = {
@@ -27,18 +27,15 @@ const defaultProps = {
   caret: false,
 };
 
-function Button(props) {
-  const {
-    children,
-    color,
-    size,
-    active,
-    disabled,
-    block,
-    caret,
-    ...elementProps
-  } = props;
-
+function Button({
+  color,
+  size,
+  active,
+  disabled,
+  block,
+  caret,
+  ...elementProps
+}) {
   const classes = cx(
     // constant classes
     'btn',
@@ -52,13 +49,13 @@ function Button(props) {
     caret && 'dropdown-toggle',
   );
 
-  const buttonProps = action.createButtonProps(elementProps);
+  const createElement = useActionElement(BaseTouchable, {
+    ...elementProps,
+  });
 
-  return (
-    <BaseTouchable {...buttonProps} className={classes}>
-      {children}
-    </BaseTouchable>
-  );
+  return createElement({
+    className: classes,
+  });
 }
 
 Button.propTypes = propTypes;

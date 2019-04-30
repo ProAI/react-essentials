@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseText } from '../../utils/components';
+import BaseText from '../../utils/rnw-compat/BaseText';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function Cite({ children, ...elementProps }) {
+function Cite(elementProps) {
   return (
-    <BaseText props={elementProps} tag="cite" className="" inlineOnly>
-      {children}
-    </BaseText>
+    <BaseText
+      {...elementProps}
+      essentials={{ tag: 'cite', inlineOnly: true }}
+    />
   );
 }
 

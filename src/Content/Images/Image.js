@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseImage } from '../../utils/components';
+import BaseImage from '../../utils/rnw-compat/BaseImage';
 
 const propTypes = {
   source: PropTypes.string.isRequired,
@@ -22,7 +22,14 @@ function Image({ source, label, fluid, thumbnail, ...elementProps }) {
     thumbnail && 'img-thumbnail',
   );
 
-  return <BaseImage source={source} label={label} props={elementProps} className={classes} />;
+  return (
+    <BaseImage
+      source={source}
+      label={label}
+      props={elementProps}
+      className={classes}
+    />
+  );
 }
 
 Image.propTypes = propTypes;

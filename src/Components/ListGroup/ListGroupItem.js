@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -12,7 +12,7 @@ const defaultProps = {
   disabled: false,
 };
 
-function ListGroupItem({ children, disabled, ...elementProps }) {
+function ListGroupItem({ disabled, ...elementProps }) {
   const classes = cx(
     // constant classes
     'list-group-item',
@@ -21,9 +21,10 @@ function ListGroupItem({ children, disabled, ...elementProps }) {
   );
 
   return (
-    <BaseView tag="li" props={elementProps} className={classes} blockOnly>
-      {children}
-    </BaseView>
+    <BaseView
+      {...elementProps}
+      essentials={{ tag: 'li', className: classes }}
+    />
   );
 }
 

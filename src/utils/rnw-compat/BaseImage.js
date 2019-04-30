@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import applyNativeMethods from 'react-native-web/dist/cjs/modules/applyNativeMethods';
 import StyleSheetPropType from 'react-native-web/dist/cjs/modules/StyleSheetPropType';
 import createElement from 'react-native-web/dist/cjs/exports/createElement';
 import ViewPropTypes from 'react-native-web/dist/cjs/exports/View/ViewPropTypes';
@@ -97,4 +98,4 @@ BaseImage.propTypes = propTypes;
 BaseImage.defaultProps = defaultProps;
 BaseImage.contextTypes = contextTypes;
 
-export default BaseImage;
+export default applyNativeMethods(BaseImage);

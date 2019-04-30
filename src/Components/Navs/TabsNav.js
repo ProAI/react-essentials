@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import TabsNavTab from './TabsNavTab';
 
 const propTypes = {
@@ -17,7 +17,14 @@ const defaultProps = {
   stacked: false,
 };
 
-function TabsNav({ children, activeKey, onChange, pills, stacked, ...elementProps }) {
+function TabsNav({
+  children,
+  activeKey,
+  onChange,
+  pills,
+  stacked,
+  ...elementProps
+}) {
   const classes = cx(
     // constant classes
     'nav',
@@ -35,7 +42,11 @@ function TabsNav({ children, activeKey, onChange, pills, stacked, ...elementProp
   );
 
   return (
-    <BaseView props={{ ...elementProps, role: 'tablist' }} tag="div" className={classes}>
+    <BaseView
+      {...elementProps}
+      accessibilityRole="tablist"
+      essentials={{ className: classes }}
+    >
       {manipulatedChildren}
     </BaseView>
   );

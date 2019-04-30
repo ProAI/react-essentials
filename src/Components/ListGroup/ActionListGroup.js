@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import ActionListGroupItem from './ActionListGroupItem';
 
 const propTypes = {
@@ -13,7 +13,7 @@ const defaultProps = {
   flush: false,
 };
 
-function ActionListGroup({ children, flush, ...elementProps }) {
+function ActionListGroup({ flush, ...elementProps }) {
   const classes = cx(
     // constant classes
     'list-group',
@@ -21,11 +21,7 @@ function ActionListGroup({ children, flush, ...elementProps }) {
     flush && 'list-group-flush',
   );
 
-  return (
-    <BaseView tag="div" props={elementProps} className={classes}>
-      {children}
-    </BaseView>
-  );
+  return <BaseView {...elementProps} essentials={{ className: classes }} />;
 }
 
 ActionListGroup.propTypes = propTypes;

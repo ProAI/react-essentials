@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import { PAGE_SECTIONS } from '../../utils/constants';
 
 const propTypes = {
@@ -13,12 +13,8 @@ const defaultProps = {
   variant: null,
 };
 
-function View({ children, variant, ...elementProps }) {
-  return (
-    <BaseView tag={variant || 'div'} props={elementProps} className="">
-      {children}
-    </BaseView>
-  );
+function View({ variant, ...elementProps }) {
+  return <BaseView {...elementProps} essentials={{ tag: variant || 'div' }} />;
 }
 
 View.propTypes = propTypes;

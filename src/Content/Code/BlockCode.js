@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -8,8 +8,8 @@ const propTypes = {
 
 function BlockCode({ children, ...elementProps }) {
   return (
-    <BaseView props={elementProps} tag="pre" className="">
-      <BaseView props={elementProps} tag="code" className="">
+    <BaseView {...elementProps} essentials={{ tag: 'pre' }}>
+      <BaseView {...elementProps} essentials={{ tag: 'code' }}>
         {children}
       </BaseView>
     </BaseView>

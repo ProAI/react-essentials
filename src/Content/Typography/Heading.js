@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseText } from '../../utils/components';
+import BaseText from '../../utils/rnw-compat/BaseText';
 import { HEADING_SIZES } from '../../utils/constants';
 
 const propTypes = {
@@ -8,11 +8,12 @@ const propTypes = {
   size: PropTypes.oneOf(HEADING_SIZES).isRequired,
 };
 
-function Heading({ children, size, ...elementProps }) {
+function Heading({ size, ...elementProps }) {
   return (
-    <BaseText props={elementProps} tag={`h${size.toString()}`} className="" blockOnly>
-      {children}
-    </BaseText>
+    <BaseText
+      {...elementProps}
+      essentials={{ tag: `h${size.toString()}`, blockOnly: true }}
+    />
   );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import TableBody from './TableBody';
 import TableData from './TableData';
 import TableFooter from './TableFooter';
@@ -33,7 +33,6 @@ const defaultProps = {
 };
 
 function Table({
-  children,
   bordered,
   striped,
   hover,
@@ -60,9 +59,10 @@ function Table({
 
   // TODO: Remove pseudo view and add react-native compatible component
   return (
-    <BaseView pseudo tag="table" props={elementProps} className={classes}>
-      {children}
-    </BaseView>
+    <BaseView
+      {...elementProps}
+      essentials={{ tag: 'table', className: classes, pseudo: true }}
+    />
   );
 }
 

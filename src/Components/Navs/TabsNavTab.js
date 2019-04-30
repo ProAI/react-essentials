@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseTouchable } from '../../utils/components';
+import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -31,9 +31,9 @@ class TabsNavTab extends React.Component {
   };
 
   render() {
-    const { children, onClick, toPane, active, ...elementProps } = this.props;
+    const { onClick, toPane, active, ...elementProps } = this.props;
 
-    const linkClasses = cx(
+    const classes = cx(
       // constant classes
       'nav-link',
       // variable classes
@@ -42,18 +42,16 @@ class TabsNavTab extends React.Component {
 
     return (
       <BaseTouchable
-        tag="a"
-        props={{
-          ...elementProps,
-          role: 'tab',
-          href: `#${toPane}`,
-          onClick: this.onClick,
-          'aria-controls': toPane,
+        {...elementProps}
+        accessibilityRole="tab"
+        href={`#${toPane}`}
+        onClick={this.onClick}
+        aria-controls={toPane}
+        essentials={{
+          tag: 'a',
+          className: classes,
         }}
-        className={linkClasses}
-      >
-        {children}
-      </BaseTouchable>
+      />
     );
   }
 }

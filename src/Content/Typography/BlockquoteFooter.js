@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function BlockquoteFooter({ children, ...elementProps }) {
+function BlockquoteFooter(elementProps) {
   return (
-    <BaseView props={elementProps} tag="footer" className="blockquote-footer">
-      {children}
-    </BaseView>
+    <BaseView
+      {...elementProps}
+      essentials={{ tag: 'footer', className: 'blockquote-footer' }}
+    />
   );
 }
 

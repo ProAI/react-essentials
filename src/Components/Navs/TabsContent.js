@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 import TabsContentPane from './TabsContentPane';
 
@@ -17,7 +17,7 @@ function TabsContent({ children, activeKey, ...elementProps }) {
   });
 
   return (
-    <BaseView props={elementProps} className="tab-content">
+    <BaseView {...elementProps} essentials={{ className: 'tab-content' }}>
       {manipulatedChildren}
     </BaseView>
   );

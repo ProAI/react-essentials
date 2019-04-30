@@ -1,7 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseTouchable } from '../../utils/components';
+import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
+import useActionElement from '../../hooks/useActionElement';
 import { COLORS } from '../../utils/constants';
 import action from '../../utils/action';
 
@@ -18,20 +18,18 @@ const defaultProps = {
 };
 
 function ActionBadge(props) {
-  const { children, color, ...elementProps } = props;
+  const { color, ...elementProps } = props;
   const classes = cx(
     // constant classes
     'badge',
     `badge-${color}`,
   );
 
-  const linkProps = action.createLinkProps(elementProps);
+  const createElement = useActionElement(BaseTouchable, elementProps);
 
-  return (
-    <BaseTouchable {...linkProps} className={classes}>
-      {children}
-    </BaseTouchable>
-  );
+  return createElement({
+    className: classes,
+  });
 }
 
 ActionBadge.propTypes = propTypes;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import { PAGE_SECTIONS } from '../../utils/constants';
 
 const propTypes = {
@@ -15,7 +15,7 @@ const defaultProps = {
   fluid: false,
 };
 
-function Container({ children, variant, fluid, ...elementProps }) {
+function Container({ variant, fluid, ...elementProps }) {
   const classes = cx(
     // constant classes
     'container',
@@ -24,9 +24,10 @@ function Container({ children, variant, fluid, ...elementProps }) {
   );
 
   return (
-    <BaseView tag={variant || 'div'} props={elementProps} className={classes}>
-      {children}
-    </BaseView>
+    <BaseView
+      {...elementProps}
+      essentials={{ tag: variant || 'div', className: classes }}
+    />
   );
 }
 

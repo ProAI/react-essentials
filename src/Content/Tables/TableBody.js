@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function TableBody({ children, ...elementProps }) {
+function TableBody(elementProps) {
   // TODO: Remove pseudo view and add react-native compatible component
   return (
-    <BaseView pseudo tag="tbody" props={elementProps} className="">
-      {children}
-    </BaseView>
+    <BaseView {...elementProps} essentials={{ tag: 'tbody', pseudo: true }} />
   );
 }
 

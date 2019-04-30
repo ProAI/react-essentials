@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import FormInput from './FormInput';
 import FormPicker from './FormPicker';
 import FormDatePicker from './FormDatePicker';
@@ -38,9 +38,9 @@ function Form(props) {
       onSubmit={onSubmit}
       render={form => (
         <BaseView
-          props={{ onSubmit: form.handleSubmit, ...elementProps }}
-          tag="form"
-          className="form"
+          {...elementProps}
+          onSubmit={form.handleSubmit}
+          essentials={{ tag: 'form', className: 'form' }}
         >
           {typeof children === 'function' ? children(form) : children}
         </BaseView>

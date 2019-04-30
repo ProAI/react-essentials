@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import InputGroupAppend from './InputGroupAppend';
 import InputGroupPrepend from './InputGroupPrepend';
 
@@ -8,11 +8,9 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function InputGroup({ children, ...elementProps }) {
+function InputGroup(elementProps) {
   return (
-    <BaseView props={elementProps} className="input-group">
-      {children}
-    </BaseView>
+    <BaseView {...elementProps} essentials={{ className: 'input-group' }} />
   );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import ToastBody from './ToastBody';
 import ToastHeader from './ToastHeader';
 
@@ -9,7 +9,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function Toast({ children, ...elementProps }) {
+function Toast(elementProps) {
   const classes = cx(
     // constant classes
     'toast',
@@ -17,9 +17,11 @@ function Toast({ children, ...elementProps }) {
   );
 
   return (
-    <BaseView props={elementProps} role="alert" className={classes}>
-      {children}
-    </BaseView>
+    <BaseView
+      {...elementProps}
+      accessibilityRole="alert"
+      essentials={{ className: classes }}
+    />
   );
 }
 

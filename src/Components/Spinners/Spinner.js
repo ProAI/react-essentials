@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import { TEXT_COLORS } from '../../utils/constants';
 
 const propTypes = {
@@ -25,7 +25,13 @@ function Spinner({ variant, color, size, ...elementProps }) {
     size === 'sm' && `spinner-${variant}-sm`,
   );
 
-  return <BaseView props={elementProps} role="alert" className={classes} />;
+  return (
+    <BaseView
+      {...elementProps}
+      accessiblityRole="alert"
+      essentials={{ className: classes }}
+    />
+  );
 }
 
 Spinner.propTypes = propTypes;

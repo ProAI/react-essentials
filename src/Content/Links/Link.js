@@ -1,6 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseText } from '../../utils/components';
+import BaseText from '../../utils/rnw-compat/BaseText';
+import useActionElement from '../../hooks/useActionElement';
 import action from '../../utils/action';
 
 const propTypes = {
@@ -13,16 +13,10 @@ const defaultProps = {
   ...action.defaultProps,
 };
 
-function Link(props) {
-  const { children, ...elementProps } = props;
+function Link(elementProps) {
+  const createElement = useActionElement(BaseText, elementProps);
 
-  const linkProps = action.createLinkProps(elementProps);
-
-  return (
-    <BaseText {...linkProps} className="">
-      {children}
-    </BaseText>
-  );
+  return createElement({ tag: 'a' });
 }
 
 Link.propTypes = propTypes;

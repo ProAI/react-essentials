@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseText } from '../../utils/components';
+import BaseText from '../../utils/rnw-compat/BaseText';
 import { DISPLAY_HEADING_SIZES } from '../../utils/constants';
 
 const propTypes = {
@@ -8,11 +8,12 @@ const propTypes = {
   size: PropTypes.oneOf(DISPLAY_HEADING_SIZES).isRequired,
 };
 
-function DisplayHeading({ children, size, ...elementProps }) {
+function DisplayHeading({ size, ...elementProps }) {
   return (
-    <BaseText props={elementProps} tag="h1" className={`display-${size}`} blockOnly>
-      {children}
-    </BaseText>
+    <BaseText
+      {...elementProps}
+      essentials={{ tag: 'h1', className: `display-${size}`, blockOnly: true }}
+    />
   );
 }
 

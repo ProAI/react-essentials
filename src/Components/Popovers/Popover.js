@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopperJS from 'popper.js';
-import { BaseText, Overlay } from '../../utils/components';
+import BaseText from '../../utils/rnw-compat/BaseText';
+import Overlay from '../../utils/Overlay';
 import { TRIGGERS } from '../../utils/constants';
 
 /* eslint-disable react/no-unused-prop-types */
@@ -164,11 +165,17 @@ class Popover extends React.Component {
         role="tooltip"
       >
         {props.title && (
-          <BaseText tag="h3" className="popover-header" blockOnly>
+          <BaseText
+            essentials={{
+              tag: 'h3',
+              className: 'popover-header',
+              blockOnly: true,
+            }}
+          >
             {props.title}
           </BaseText>
         )}
-        <BaseText className="popover-body" blockOnly>
+        <BaseText essentials={{ className: 'popover-body', blockOnly: true }}>
           {props.content}
         </BaseText>
       </Overlay>

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView, BaseText } from '../../utils/components';
+import BaseText from '../../utils/rnw-compat/BaseText';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -27,12 +28,18 @@ const defaultProps = {
 
 function Field({ children, error, touched, info }) {
   return (
-    <BaseView className="form-group">
+    <BaseView essentials={{ className: 'form-group' }}>
       {children}
       {touched && error && (
-        <BaseText className="form-text text-danger">{error}</BaseText>
+        <BaseText essentials={{ className: 'form-text text-danger' }}>
+          {error}
+        </BaseText>
       )}
-      {info && <BaseText className="form-text text-muted">{info}</BaseText>}
+      {info && (
+        <BaseText essentials={{ className: 'form-text text-muted' }}>
+          {info}
+        </BaseText>
+      )}
     </BaseView>
   );
 }

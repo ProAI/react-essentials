@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import PopperJS from 'popper.js';
 import cx from 'classnames';
-import Context from '../../Context';
+import Context from '../Context';
 
 const propTypes = {
   children: PropTypes.node.isRequired,

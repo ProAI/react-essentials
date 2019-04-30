@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import { GRID_SIZES, PAGE_SECTIONS } from '../../utils/constants';
 
 const propTypes = {
@@ -22,7 +22,16 @@ const defaultProps = {
   sizeXl: null,
 };
 
-function GridBox({ children, variant, size, sizeSm, sizeMd, sizeLg, sizeXl, ...elementProps }) {
+function GridBox({
+  children,
+  variant,
+  size,
+  sizeSm,
+  sizeMd,
+  sizeLg,
+  sizeXl,
+  ...elementProps
+}) {
   const classes = cx(
     // constant classes
     `col-${size.toString()}`,
@@ -34,7 +43,7 @@ function GridBox({ children, variant, size, sizeSm, sizeMd, sizeLg, sizeXl, ...e
   );
 
   return (
-    <BaseView tag={variant || 'div'} props={elementProps} className={classes}>
+    <BaseView {...elementProps} essentials={{ className: classes }}>
       {children}
     </BaseView>
   );

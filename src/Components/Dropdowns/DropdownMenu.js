@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -11,11 +11,13 @@ const defaultProps = {
   triggerId: null,
 };
 
-function DropdownMenu({ children, triggerId, ...elementProps }) {
+function DropdownMenu({ triggerId, ...elementProps }) {
   return (
-    <BaseView props={{ ...elementProps, 'aria-labelledby': triggerId }} className="dropdown-menu">
-      {children}
-    </BaseView>
+    <BaseView
+      {...elementProps}
+      aria-labelledby="triggerId"
+      essentials={{ className: 'dropdown-menu' }}
+    />
   );
 }
 

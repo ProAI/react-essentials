@@ -1,8 +1,13 @@
 import React from 'react';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 function DropdownDivider({ ...elementProps }) {
-  return <BaseView props={elementProps} className="dropdown-divider" />;
+  return (
+    <BaseView
+      {...elementProps}
+      essentials={{ className: 'dropdown-divider' }}
+    />
+  );
 }
 
 export default DropdownDivider;

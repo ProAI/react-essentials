@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import GridBox from './GridBox';
 
 const propTypes = {
@@ -13,7 +13,7 @@ const defaultProps = {
   noGutters: false,
 };
 
-function Grid({ children, noGutters, ...elementProps }) {
+function Grid({ noGutters, ...elementProps }) {
   const classes = cx(
     // constant classes
     'row',
@@ -22,11 +22,7 @@ function Grid({ children, noGutters, ...elementProps }) {
     noGutters && 'no-gutters',
   );
 
-  return (
-    <BaseView props={elementProps} className={classes}>
-      {children}
-    </BaseView>
-  );
+  return <BaseView {...elementProps} essentials={{ className: classes }} />;
 }
 
 Grid.propTypes = propTypes;

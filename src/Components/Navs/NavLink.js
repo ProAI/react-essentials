@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { Route, Link as RouterLink } from 'react-router-dom';
-import { BaseTouchable } from '../../utils/components';
+import { Route } from 'react-router';
+import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
+import useActionElement from '../../hooks/useActionElement';
 import action from '../../utils/action';
 
 const propTypes = {
@@ -19,29 +20,16 @@ const defaultProps = {
 };
 
 function NavLink(props) {
-  const {
-    children,
-    to,
-    external,
-    onClick,
-    keepFocus,
-    exact,
-    strict,
-    ...elementProps
-  } = props;
+  const { exact, strict, ...elementProps } = props;
+  const { to } = props;
 
-  const ref = React.createRef();
-  const handleClick = action.createHandleClick(ref, onClick, { keepFocus });
+  const createElement = useActionElement(BaseTouchable, elementProps);
 
   const path = typeof to === 'object' ? to.pathname : to;
 
   return (
-    /* eslint-disable react/no-children-prop */
-    <Route
-      path={path}
-      exact={exact}
-      strict={strict}
-      children={({ match }) => {
+    <Route path={path} exact={exact} strict={strict}>
+      {({ match }) => {
         const classes = cx(
           // constant classes
           'nav-link',
@@ -49,25 +37,11 @@ function NavLink(props) {
           match && 'active',
         );
 
-        return (
-          <BaseTouchable
-            tag={RouterLink}
-            props={{
-              ...elementProps,
-              to,
-              innerRef: c => {
-                ref.current = c;
-              },
-              onClick: handleClick,
-            }}
-            className={classes}
-          >
-            {children}
-          </BaseTouchable>
-        );
+        return createElement({
+          className: classes,
+        });
       }}
-    />
-    /* eslint-enable */
+    </Route>
   );
 }
 

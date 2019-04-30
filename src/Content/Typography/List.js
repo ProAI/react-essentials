@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import ListItem from './ListItem';
 
 const propTypes = {
@@ -17,7 +17,7 @@ const defaultProps = {
   inline: false,
 };
 
-function List({ children, variant, unstyled, inline, ...elementProps }) {
+function List({ variant, unstyled, inline, ...elementProps }) {
   const classes = cx(
     // variable classes
     unstyled && 'list-unstyled',
@@ -27,13 +27,13 @@ function List({ children, variant, unstyled, inline, ...elementProps }) {
   // TODO: Remove pseudo view and add react-native compatible component
   return (
     <BaseView
-      pseudo
-      tag={variant === 'unordered' ? 'ul' : 'ol'}
-      props={elementProps}
-      className={classes}
-    >
-      {children}
-    </BaseView>
+      {...elementProps}
+      essentials={{
+        tag: variant === 'unordered' ? 'ul' : 'ol',
+        className: classes,
+        pseudo: true,
+      }}
+    />
   );
 }
 

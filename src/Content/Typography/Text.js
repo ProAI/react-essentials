@@ -1,19 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseText } from '../../utils/components';
+import cx from 'classnames';
+import BaseText from '../../utils/rnw-compat/BaseText';
+import { TEXT_COLORS } from '../../utils/constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
+  color: PropTypes.oneOf(TEXT_COLORS),
+  align: PropTypes.oneOf(['justify', 'left', 'center', 'right']),
+  mark: PropTypes.bool,
+  small: PropTypes.bool,
+  bold: PropTypes.bool,
+  italic: PropTypes.bool,
 };
 
-function Text({ children, ...elementProps }) {
-  return (
-    <BaseText props={elementProps} className="">
-      {children}
-    </BaseText>
+const defaultProps = {
+  align: null,
+  color: null,
+  mark: false,
+  small: false,
+  bold: false,
+  italic: false,
+};
+
+function Text({ align, color, mark, small, bold, italic, ...elementProps }) {
+  const classes = cx(
+    // variable classes
+    color && `text-${color}`,
+    align && `text-${align}`,
+    mark && 'mark',
+    small && 'small',
+    bold && 'font-weight-bold',
+    italic && 'font-italic',
   );
+
+  return <BaseText {...elementProps} essentials={{ className: classes }} />;
 }
 
 Text.propTypes = propTypes;
+Text.defaultProps = defaultProps;
 
 export default Text;

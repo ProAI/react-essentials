@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseText } from '../../utils/components';
+import BaseText from '../../utils/rnw-compat/BaseText';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -14,7 +14,7 @@ const defaultProps = {
   last: false,
 };
 
-function Paragraph({ children, lead, last, ...elementProps }) {
+function Paragraph({ lead, last, ...elementProps }) {
   const classes = cx(
     // variable classes
     lead && 'lead',
@@ -22,9 +22,10 @@ function Paragraph({ children, lead, last, ...elementProps }) {
   );
 
   return (
-    <BaseText props={elementProps} tag="p" className={classes} blockOnly>
-      {children}
-    </BaseText>
+    <BaseText
+      {...elementProps}
+      essentials={{ tag: 'p', className: classes, blockOnly: true }}
+    />
   );
 }
 

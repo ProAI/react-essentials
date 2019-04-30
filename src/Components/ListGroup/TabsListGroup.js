@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import TabsListGroupTab from './TabsListGroupTab';
 
 const propTypes = {
@@ -15,7 +15,13 @@ const defaultProps = {
   flush: false,
 };
 
-function TabsListGroup({ children, activeKey, onChange, flush, ...elementProps }) {
+function TabsListGroup({
+  children,
+  activeKey,
+  onChange,
+  flush,
+  ...elementProps
+}) {
   const classes = cx(
     // constant classes
     'list-group',
@@ -31,7 +37,11 @@ function TabsListGroup({ children, activeKey, onChange, flush, ...elementProps }
   );
 
   return (
-    <BaseView tag="div" props={{ ...elementProps, role: 'tablist' }} className={classes}>
+    <BaseView
+      {...elementProps}
+      accessibilityRole="tablist"
+      essentials={{ className: classes }}
+    >
       {manipulatedChildren}
     </BaseView>
   );

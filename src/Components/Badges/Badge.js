@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import { COLORS } from '../../utils/constants';
 
 const propTypes = {
@@ -13,18 +13,14 @@ const defaultProps = {
   color: 'primary',
 };
 
-function Badge({ children, color, ...elementProps }) {
+function Badge({ color, ...elementProps }) {
   const classes = cx(
     // constant classes
     'badge',
     `badge-${color}`,
   );
 
-  return (
-    <BaseView props={elementProps} className={classes}>
-      {children}
-    </BaseView>
-  );
+  return <BaseView {...elementProps} essentials={{ className: classes }} />;
 }
 
 Badge.propTypes = propTypes;

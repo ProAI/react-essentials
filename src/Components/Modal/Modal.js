@@ -7,7 +7,7 @@ import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
 import ModalTitle from './ModalTitle';
 import { MODAL_SIZES } from '../../utils/constants';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import Context from '../../Context';
 
 const propTypes = {
@@ -319,7 +319,10 @@ class Modal extends React.Component {
               this.dialog = c;
             }}
           >
-            <BaseView props={elementProps} className="modal-content">
+            <BaseView
+              {...elementProps}
+              essentials={{ className: 'modal-content' }}
+            >
               {manipulatedChildren}
             </BaseView>
           </div>

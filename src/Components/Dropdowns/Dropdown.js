@@ -7,7 +7,7 @@ import DropdownHeader from './DropdownHeader';
 import DropdownDivider from './DropdownDivider';
 import DropdownItem from './DropdownItem';
 import DropdownTextItem from './DropdownTextItem';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import Context from '../../Context';
 
 const propTypes = {
@@ -42,6 +42,7 @@ class Dropdown extends React.Component {
 
   handleDocumentClick = event => {
     const dropdownElement = this.element;
+    console.log(dropdownElement);
 
     if (this.visible()) {
       if (
@@ -131,13 +132,11 @@ class Dropdown extends React.Component {
 
     return (
       <BaseView
-        props={{
-          ...elementProps,
-          ref: element => {
-            this.element = element;
-          },
+        {...elementProps}
+        ref={element => {
+          this.element = element;
         }}
-        className={classes}
+        essentials={{ className: classes }}
       >
         {toggleChild}
         {this.visible() && menuChild}

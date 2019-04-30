@@ -1,6 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseTouchable } from '../../utils/components';
+import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
+import useActionElement from '../../hooks/useActionElement';
 import action from '../../utils/action';
 
 const propTypes = {
@@ -13,16 +13,12 @@ const defaultProps = {
   ...action.defaultProps,
 };
 
-function DropdownItem(props) {
-  const { children, ...elementProps } = props;
+function DropdownItem(elementProps) {
+  const createElement = useActionElement(BaseTouchable, elementProps);
 
-  const linkProps = action.createLinkProps(elementProps);
-
-  return (
-    <BaseTouchable {...linkProps} className="dropdown-item" blockOnly>
-      {children}
-    </BaseTouchable>
-  );
+  return createElement({
+    className: 'dropdown-item',
+  });
 }
 
 DropdownItem.propTypes = propTypes;

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopperJS from 'popper.js';
-import { BaseText, Overlay } from '../../utils/components';
+import BaseText from '../../utils/rnw-compat/BaseText';
+import Overlay from '../../utils/Overlay';
 import { TRIGGERS } from '../../utils/constants';
 
 /* eslint-disable react/no-unused-prop-types */
@@ -163,7 +164,7 @@ class Tooltip extends React.Component {
         onToggle={this.onToggle}
         role="tooltip"
       >
-        <BaseText className="tooltip-inner" blockOnly>
+        <BaseText essentials={{ className: 'tooltip-inner', blockOnly: true }}>
           {props.title}
         </BaseText>
       </Overlay>

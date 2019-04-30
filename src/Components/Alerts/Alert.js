@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import { COLORS } from '../../utils/constants';
 
 const propTypes = {
@@ -15,7 +15,7 @@ const defaultProps = {
   dismissible: false,
 };
 
-function Alert({ children, color, dismissible, ...elementProps }) {
+function Alert({ color, dismissible, ...elementProps }) {
   const classes = cx(
     // constant classes
     'alert',
@@ -24,9 +24,11 @@ function Alert({ children, color, dismissible, ...elementProps }) {
   );
 
   return (
-    <BaseView props={elementProps} role="alert" className={classes}>
-      {children}
-    </BaseView>
+    <BaseView
+      {...elementProps}
+      accessibilityRole="alert"
+      essentials={{ className: classes }}
+    />
   );
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -11,16 +11,13 @@ const defaultProps = {
   titleId: null,
 };
 
-function ModalTitle({ children, titleId, ...elementProps }) {
+function ModalTitle({ titleId, ...elementProps }) {
   return (
     <BaseView
-      tag="h5"
-      props={{ id: titleId, ...elementProps }}
-      className="modal-title"
+      {...elementProps}
       id={titleId}
-    >
-      {children}
-    </BaseView>
+      essentials={{ tag: 'h5', className: 'modal-title' }}
+    />
   );
 }
 

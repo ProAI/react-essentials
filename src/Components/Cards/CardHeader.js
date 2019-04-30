@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function CardHeader({ children, ...elementProps }) {
+function CardHeader(elementProps) {
   return (
-    <BaseView props={elementProps} className="card-header">
-      {children}
-    </BaseView>
+    <BaseView {...elementProps} essentials={{ className: 'card-header' }} />
   );
 }
 

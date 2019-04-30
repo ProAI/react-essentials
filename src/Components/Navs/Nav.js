@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import NavLink from './NavLink';
 
 const propTypes = {
@@ -15,7 +15,7 @@ const defaultProps = {
   stacked: false,
 };
 
-function Nav({ children, pills, stacked, ...elementProps }) {
+function Nav({ pills, stacked, ...elementProps }) {
   const classes = cx(
     // constant classes
     'nav',
@@ -26,9 +26,10 @@ function Nav({ children, pills, stacked, ...elementProps }) {
   );
 
   return (
-    <BaseView tag="nav" props={elementProps} className={classes}>
-      {children}
-    </BaseView>
+    <BaseView
+      {...elementProps}
+      essentials={{ tag: 'nav', className: classes }}
+    />
   );
 }
 

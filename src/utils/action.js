@@ -1,22 +1,18 @@
 import PropTypes from 'prop-types';
-import createHandleClick from './createHandleClick';
-import createButtonProps from './createButtonProps';
-import createLinkProps from './createLinkProps';
 
 export default {
   propTypes: {
     to: PropTypes.string,
-    onClick: PropTypes.func,
+    replace: PropTypes.bool,
     external: PropTypes.bool,
+    onClick: PropTypes.func,
     keepFocus: PropTypes.bool,
   },
   defaultProps: {
     to: null,
-    onClick: null,
+    replace: false,
     external: false,
+    onClick: null,
     keepFocus: false,
   },
-  createHandleClick,
-  createButtonProps,
-  createLinkProps,
 };

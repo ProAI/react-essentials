@@ -3,18 +3,14 @@ import PropTypes from 'prop-types';
 import CardBody from './CardBody';
 import CardFooter from './CardFooter';
 import CardHeader from './CardHeader';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function Card({ children, ...elementProps }) {
-  return (
-    <BaseView props={elementProps} className="card">
-      {children}
-    </BaseView>
-  );
+function Card(elementProps) {
+  return <BaseView {...elementProps} essentials={{ className: 'card' }} />;
 }
 
 Card.propTypes = propTypes;

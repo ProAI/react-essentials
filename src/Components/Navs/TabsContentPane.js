@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BaseView } from '../../utils/components';
+import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -11,11 +11,13 @@ const defaultProps = {
   active: false,
 };
 
-function TabsContentPane({ children, active, ...elementProps }) {
+function TabsContentPane({ active, ...elementProps }) {
   return (
-    <BaseView props={{ ...elementProps, role: 'tabpanel' }} className="tab-pane">
-      {children}
-    </BaseView>
+    <BaseView
+      {...elementProps}
+      accessibilityRole="tabpanel"
+      essentials={{ className: 'tab-pane' }}
+    />
   );
 }
 

@@ -1,7 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { BaseTouchable } from '../../utils/components';
+import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
+import useActionElement from '../../hooks/useActionElement';
 import action from '../../utils/action';
 
 const propTypes = {
@@ -19,7 +19,7 @@ const defaultProps = {
 };
 
 function ActionListGroupItem(props) {
-  const { children, disabled, active, ...elementProps } = props;
+  const { disabled, active, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -30,13 +30,11 @@ function ActionListGroupItem(props) {
     active && 'active',
   );
 
-  const linkProps = action.createLinkProps(elementProps);
+  const createElement = useActionElement(BaseTouchable, elementProps);
 
-  return (
-    <BaseTouchable {...linkProps} className={classes} blockOnly>
-      {children}
-    </BaseTouchable>
-  );
+  return createElement({
+    className: classes,
+  });
 }
 
 ActionListGroupItem.propTypes = propTypes;
