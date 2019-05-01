@@ -1,7 +1,3 @@
-/* native */
-import ScrollView from 'react-native-web/dist/cjs/exports/ScrollView';
-import Switch from 'react-native-web/dist/cjs/exports/Switch';
-
 /* misc */
 import StyleSheet from 'react-native-web/dist/cjs/exports/StyleSheet';
 import getStyleSheet from './getStyleSheet';
@@ -93,9 +89,6 @@ import View from './Layout/View/View';
 import useMedia from './hooks/useMedia';
 
 export {
-  // native
-  ScrollView,
-  Switch,
   // misc
   StyleSheet,
   getStyleSheet,
