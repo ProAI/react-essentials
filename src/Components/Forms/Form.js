@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import BaseView from '../../utils/rnw-compat/BaseView';
+import FormButton from './FormButton';
 import FormInput from './FormInput';
 import FormPicker from './FormPicker';
 import FormDatePicker from './FormDatePicker';
@@ -40,7 +41,6 @@ function Form(props) {
         <BaseView
           {...elementProps}
           accessibilityRole="form"
-          onSubmit={form.handleSubmit}
           essentials={{ className: 'form' }}
         >
           {typeof children === 'function' ? children(form) : children}
@@ -53,6 +53,7 @@ function Form(props) {
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;
 
+Form.Button = FormButton;
 Form.Input = FormInput;
 Form.Picker = FormPicker;
 Form.DatePicker = FormDatePicker;
