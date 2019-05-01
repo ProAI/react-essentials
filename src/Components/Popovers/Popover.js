@@ -166,8 +166,9 @@ class Popover extends React.Component {
       >
         {props.title && (
           <BaseText
+            accessibilityRole="heading"
+            aria-level={3}
             essentials={{
-              tag: 'h3',
               className: 'popover-header',
               blockOnly: true,
             }}

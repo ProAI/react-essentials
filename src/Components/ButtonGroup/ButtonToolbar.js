@@ -7,7 +7,13 @@ const propTypes = {
 };
 
 function ButtonToolbar(elementProps) {
-  return <BaseView {...elementProps} accessibilityRole="toolbar" />;
+  return (
+    <BaseView
+      {...elementProps}
+      accessibilityRole="toolbar"
+      essentials={{ className: 'btn-toolbar' }}
+    />
+  );
 }
 
 ButtonToolbar.propTypes = propTypes;

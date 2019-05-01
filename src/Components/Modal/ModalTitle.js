@@ -15,8 +15,10 @@ function ModalTitle({ titleId, ...elementProps }) {
   return (
     <BaseView
       {...elementProps}
+      accessibilityRole="heading"
+      aria-level={5}
       id={titleId}
-      essentials={{ tag: 'h5', className: 'modal-title' }}
+      essentials={{ className: 'modal-title' }}
     />
   );
 }

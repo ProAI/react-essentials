@@ -12,7 +12,9 @@ function Heading({ size, ...elementProps }) {
   return (
     <BaseText
       {...elementProps}
-      essentials={{ tag: `h${size.toString()}`, blockOnly: true }}
+      accessibilityRole="heading"
+      aria-level={size}
+      essentials={{ blockOnly: true }}
     />
   );
 }

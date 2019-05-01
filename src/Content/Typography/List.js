@@ -28,6 +28,7 @@ function List({ variant, unstyled, inline, ...elementProps }) {
   return (
     <BaseView
       {...elementProps}
+      accessibilityRole="list"
       essentials={{
         tag: variant === 'unordered' ? 'ul' : 'ol',
         className: classes,

@@ -23,7 +23,8 @@ function ListGroupItem({ disabled, ...elementProps }) {
   return (
     <BaseView
       {...elementProps}
-      essentials={{ tag: 'li', className: classes }}
+      accessibilityRole="listitem"
+      essentials={{ className: classes }}
     />
   );
 }

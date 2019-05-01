@@ -39,8 +39,9 @@ function Form(props) {
       render={form => (
         <BaseView
           {...elementProps}
+          accessibilityRole="form"
           onSubmit={form.handleSubmit}
-          essentials={{ tag: 'form', className: 'form' }}
+          essentials={{ className: 'form' }}
         >
           {typeof children === 'function' ? children(form) : children}
         </BaseView>

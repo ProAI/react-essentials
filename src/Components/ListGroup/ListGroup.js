@@ -46,7 +46,11 @@ function ListGroup({
   );
 
   return (
-    <BaseView {...elementProps} essentials={{ tag: 'ul', className: classes }}>
+    <BaseView
+      {...elementProps}
+      accessibilityRole="list"
+      essentials={{ className: classes }}
+    >
       {children}
     </BaseView>
   );

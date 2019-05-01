@@ -28,7 +28,8 @@ function Nav({ pills, stacked, ...elementProps }) {
   return (
     <BaseView
       {...elementProps}
-      essentials={{ tag: 'nav', className: classes }}
+      accessibilityRole="navigation"
+      essentials={{ className: classes }}
     />
   );
 }

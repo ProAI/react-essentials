@@ -89,7 +89,7 @@ export default function useActionElement(Component, props) {
         target="_blank"
         rel="noopener noreferrer"
         ref={ref}
-        essentials={{ ...essentials, tag: 'a' }}
+        essentials={essentials}
       />
     );
   }
@@ -109,7 +109,7 @@ export default function useActionElement(Component, props) {
         handleRouting(event, history, props);
       }}
       ref={ref}
-      essentials={{ ...essentials, tag: 'a' }}
+      essentials={essentials}
     />
   );
 }

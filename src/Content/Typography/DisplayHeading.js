@@ -12,7 +12,8 @@ function DisplayHeading({ size, ...elementProps }) {
   return (
     <BaseText
       {...elementProps}
-      essentials={{ tag: 'h1', className: `display-${size}`, blockOnly: true }}
+      accessibilityRole="heading"
+      essentials={{ className: `display-${size.toString()}`, blockOnly: true }}
     />
   );
 }

@@ -2,20 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import { PAGE_SECTIONS } from '../../utils/constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  variant: PropTypes.oneOf(PAGE_SECTIONS),
   fluid: PropTypes.bool,
 };
 
 const defaultProps = {
-  variant: null,
   fluid: false,
 };
 
-function Container({ variant, fluid, ...elementProps }) {
+function Container({ fluid, ...elementProps }) {
   const classes = cx(
     // constant classes
     'container',
@@ -23,12 +20,7 @@ function Container({ variant, fluid, ...elementProps }) {
     fluid ? 'container-fluid' : null,
   );
 
-  return (
-    <BaseView
-      {...elementProps}
-      essentials={{ tag: variant || 'div', className: classes }}
-    />
-  );
+  return <BaseView {...elementProps} essentials={{ className: classes }} />;
 }
 
 Container.propTypes = propTypes;

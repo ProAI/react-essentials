@@ -10,7 +10,9 @@ function DropdownHeader(elementProps) {
   return (
     <BaseView
       {...elementProps}
-      essentials={{ tag: 'h6', className: 'dropdown-header' }}
+      accessibilityRole="heading"
+      aria-level={6}
+      essentials={{ className: 'dropdown-header' }}
     />
   );
 }

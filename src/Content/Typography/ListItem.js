@@ -9,7 +9,11 @@ const propTypes = {
 function List(elementProps) {
   // TODO: Remove pseudo view and add react-native compatible component
   return (
-    <BaseView {...elementProps} essentials={{ tag: 'li', pseudo: true }} />
+    <BaseView
+      {...elementProps}
+      accessibilityRole="listitem"
+      essentials={{ pseudo: true }}
+    />
   );
 }
 
