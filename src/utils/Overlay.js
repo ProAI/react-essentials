@@ -1,4 +1,6 @@
 import React from 'react';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import { findNodeHandle } from 'react-native-web';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import PopperJS from 'popper.js';
@@ -7,11 +9,9 @@ import Context from '../Context';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  // eslint-disable-next-line react/no-unused-prop-types
   target: PropTypes.node.isRequired,
   className: PropTypes.string.isRequired,
   placement: PropTypes.oneOf(PopperJS.placements),
-  // eslint-disable-next-line react/no-unused-prop-types
   fallbackPlacement: PropTypes.oneOf(['flip', 'clockwise', 'counterwise']),
   placementClassName: PropTypes.shape({
     top: PropTypes.string,
@@ -28,10 +28,6 @@ const defaultProps = {
   fallbackPlacement: null,
 };
 
-// backwards compatibility for React 15
-const canUseDOM = typeof window !== 'undefined';
-const isReact15 = ReactDOM.createPortal === undefined;
-
 class Overlay extends React.Component {
   static contextType = Context;
 
@@ -39,70 +35,54 @@ class Overlay extends React.Component {
     super(props, context);
 
     this.identifier = context.generateKey('re-overlay-');
+
+    this.state = {
+      placement: props.placement,
+      arrowStyle: null,
+      popperStyle: null,
+    };
   }
 
-  state = {
-    // eslint-disable-next-line react/destructuring-assignment
-    placement: this.props.placement,
-    arrowStyle: null,
-    popperStyle: null,
-  };
-
   componentWillMount() {
-    const { props } = this;
+    const { visible } = this.props;
 
     // prevent modal on the server, because ssr does not support portals yet
     if (!canUseDOM) return;
 
     // create overlay if visibility is visible
-    if (props.visible) {
+    if (visible) {
       this.beforeCreate();
     }
   }
 
   componentDidMount() {
-    const { props } = this;
+    const { visible } = this.props;
 
     // create overlay if visibility is visible
-    if (props.visible) {
-      // render modal in React 15
-      if (isReact15) this.renderReact15();
-
+    if (visible) {
       this.afterCreate();
     }
   }
 
   componentWillUpdate(nextProps) {
-    const { props } = this;
+    const { visible } = this.props;
 
     // create overlay if visibility changed to visible
-    if (nextProps.visible && props.visible !== nextProps.visible) {
-      // render modal in React 15
-      if (isReact15) this.renderReact15();
-
+    if (nextProps.visible && visible !== nextProps.visible) {
       this.beforeCreate();
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { props } = this;
+    const { visible } = this.props;
 
     // create overlay if visibility changed to visible
-    if (props.visible && props.visible !== prevProps.visible) {
-      // render modal in React 15
-      if (isReact15) this.renderReact15();
-
+    if (visible && visible !== prevProps.visible) {
       this.afterCreate();
     }
 
-    // update overlay if visibility is still visible
-    if (props.visible && props.visible === prevProps.visible) {
-      // rerender modal in React 15
-      if (isReact15) this.renderReact15();
-    }
-
     // destroy overlay if visibility changed to invisible
-    if (!props.visible && props.visible !== prevProps.visible) {
+    if (!visible && visible !== prevProps.visible) {
       this.afterDestroy();
     }
   }
@@ -121,35 +101,39 @@ class Overlay extends React.Component {
   }
 
   afterCreate() {
-    const { props } = this;
+    const { placement, fallbackPlacement } = this.props;
 
     // create PopperJS instance
-    this.instance = new PopperJS(this.target, this.popper, {
-      placement: props.placement,
-      modifiers: {
-        arrow: {
-          element: this.arrow,
-        },
-        flip: {
-          enabled: props.fallbackPlacement !== null,
-          behavior: props.fallbackPlacement,
-        },
-        applyStyle: { enabled: false },
-        applyReactStyle: {
-          enabled: true,
-          fn: data => {
-            this.setState({
-              placement: data.placement,
-              arrowStyle: data.offsets.arrow,
-              popperStyle: data.styles,
-            });
-
-            return data;
+    this.instance = new PopperJS(
+      findNodeHandle(this.target),
+      findNodeHandle(this.popper),
+      {
+        placement,
+        modifiers: {
+          arrow: {
+            element: findNodeHandle(this.arrow),
           },
-          order: 900,
+          flip: {
+            enabled: fallbackPlacement !== null,
+            behavior: fallbackPlacement,
+          },
+          applyStyle: { enabled: false },
+          applyReactStyle: {
+            enabled: true,
+            fn: data => {
+              this.setState({
+                placement: data.placement,
+                arrowStyle: data.offsets.arrow,
+                popperStyle: data.styles,
+              });
+
+              return data;
+            },
+            order: 900,
+          },
         },
       },
-    });
+    );
 
     this.instance.scheduleUpdate();
   }
@@ -157,7 +141,6 @@ class Overlay extends React.Component {
   afterDestroy() {
     // destroy overlay container
     if (this.container) {
-      if (isReact15) ReactDOM.unmountComponentAtNode(this.container);
       document.body.removeChild(this.container);
       this.container = null;
     }
@@ -195,27 +178,19 @@ class Overlay extends React.Component {
     );
   }
 
-  renderReact15() {
-    ReactDOM.unstable_renderSubtreeIntoContainer(
-      this,
-      this.renderOverlay(),
-      this.container,
-    );
-  }
-
   render() {
-    const { props } = this;
+    const { target, visible } = this.props;
 
     // TODO: For some reason a ref that is defined on a cloned element does not
     // work, so we use a wrapping <span> element, on which we can define the
     // ref. This is just a workaround, so it would be better to solve the
     // original cloned element issue.
 
-    const target = React.cloneElement(props.target, {
+    const targetElement = React.cloneElement(target, {
       /* ref: (element) => {
         this.target = element;
       }, */
-      'aria-describedby': props.visible ? this.identifier : null,
+      'aria-describedby': visible ? this.identifier : null,
     });
 
     return (
@@ -225,10 +200,9 @@ class Overlay extends React.Component {
         }}
         style={{ display: 'inline-block' }}
       >
-        {target}
-        {!isReact15 &&
-          canUseDOM &&
-          props.visible &&
+        {targetElement}
+        {canUseDOM &&
+          visible &&
           ReactDOM.createPortal(this.renderOverlay(), this.container)}
       </span>
     );

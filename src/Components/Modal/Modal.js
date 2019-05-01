@@ -1,4 +1,6 @@
 import React from 'react';
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import { findNodeHandle } from 'react-native-web';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
@@ -24,10 +26,6 @@ const defaultProps = {
   onEnter: null,
   onExit: null,
 };
-
-// backwards compatibility for React 15
-const canUseDOM = typeof window !== 'undefined';
-const isReact15 = ReactDOM.createPortal === undefined;
 
 const computeScrollbarWidth = () => {
   const scrollDiv = document.createElement('div');
@@ -64,9 +62,6 @@ class Modal extends React.Component {
     const { props } = this;
 
     if (props.visible) {
-      // render modal in React 15
-      if (isReact15) this.renderReact15();
-
       this.afterShow();
     }
   }
@@ -87,9 +82,6 @@ class Modal extends React.Component {
     const { props } = this;
 
     if (props.visible !== prevProps.visible) {
-      // render modal in React 15
-      if (isReact15) this.renderReact15();
-
       if (props.visible) {
         this.afterShow();
       } else {
@@ -134,11 +126,11 @@ class Modal extends React.Component {
   };
 
   onBackdropClick = ev => {
-    const container = this.dialog;
-    const { props } = this;
+    const container = findNodeHandle(this.dialog);
+    const { onToggle } = this.props;
 
     if (ev.target && !container.contains(ev.target)) {
-      props.onToggle();
+      onToggle();
     }
   };
 
@@ -147,7 +139,6 @@ class Modal extends React.Component {
     this.removeEvents();
 
     if (this.container) {
-      if (isReact15) ReactDOM.unmountComponentAtNode(this.container);
       document.body.removeChild(this.container);
       this.container = null;
     }
@@ -196,7 +187,7 @@ class Modal extends React.Component {
   }
 
   adjustDialog() {
-    const container = this.dialog;
+    const container = findNodeHandle(this.dialog);
     const isModalOverflowing =
       container.scrollHeight > document.documentElement.clientHeight;
 
@@ -210,7 +201,7 @@ class Modal extends React.Component {
   }
 
   resetAdjustments() {
-    const container = this.dialog;
+    const container = findNodeHandle(this.dialog);
 
     container.style.paddingLeft = '';
     container.style.paddingRight = '';
@@ -332,14 +323,6 @@ class Modal extends React.Component {
     );
   }
 
-  renderReact15() {
-    ReactDOM.unstable_renderSubtreeIntoContainer(
-      this,
-      this.renderModal(),
-      this.container,
-    );
-  }
-
   render() {
     const { props } = this;
 
@@ -347,7 +330,7 @@ class Modal extends React.Component {
     if (!canUseDOM) return null;
 
     // see componentDidMount and componentDidUpdate for React 15 rendering
-    if (isReact15 || !props.visible) {
+    if (!props.visible) {
       return null;
     }
 

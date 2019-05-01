@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import invariant from 'fbjs/lib/invariant';
+import { findNodeHandle } from 'react-native-web';
 import DropdownMenu from './DropdownMenu';
 import DropdownHeader from './DropdownHeader';
 import DropdownDivider from './DropdownDivider';
@@ -41,8 +42,7 @@ class Dropdown extends React.Component {
   }
 
   handleDocumentClick = event => {
-    const dropdownElement = this.element;
-    console.log(dropdownElement);
+    const dropdownElement = findNodeHandle(this.element);
 
     if (this.visible()) {
       if (
