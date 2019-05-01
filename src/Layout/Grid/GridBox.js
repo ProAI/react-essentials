@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import { GRID_SIZES, PAGE_SECTIONS } from '../../utils/constants';
+import { GRID_SIZES } from '../../utils/constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  variant: PropTypes.oneOf(PAGE_SECTIONS),
   size: PropTypes.oneOf(GRID_SIZES).isRequired,
   sizeSm: PropTypes.oneOf(GRID_SIZES),
   sizeMd: PropTypes.oneOf(GRID_SIZES),
@@ -15,7 +14,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-  variant: null,
   sizeSm: null,
   sizeMd: null,
   sizeLg: null,
@@ -24,7 +22,6 @@ const defaultProps = {
 
 function GridBox({
   children,
-  variant,
   size,
   sizeSm,
   sizeMd,
