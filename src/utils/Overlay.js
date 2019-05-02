@@ -1,11 +1,13 @@
 import React from 'react';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import { findNodeHandle } from 'react-native-web';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import PopperJS from 'popper.js';
 import cx from 'classnames';
 import Context from '../Context';
+
+const { canUseDOM } = ExecutionEnvironment;
 
 const propTypes = {
   children: PropTypes.node.isRequired,

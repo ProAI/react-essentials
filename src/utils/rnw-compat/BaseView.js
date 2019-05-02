@@ -11,7 +11,7 @@
 
 import applyLayout from 'react-native-web/dist/cjs/modules/applyLayout';
 import applyNativeMethods from 'react-native-web/dist/cjs/modules/applyNativeMethods';
-import { bool, string, shape } from 'prop-types';
+import PropTypes from 'prop-types';
 // eslint-disable-next-line import/order
 import createElement from './createElement';
 import filterSupportedProps from 'react-native-web/dist/cjs/exports/View/filterSupportedProps';
@@ -51,16 +51,16 @@ class BaseView extends Component {
   static displayName = 'View';
 
   static contextTypes = {
-    isInAParentText: bool,
+    isInAParentText: PropTypes.bool,
   };
 
   static propTypes = {
     ...ViewPropTypes,
-    styleName: string,
-    essentials: shape({
-      tag: string,
-      className: string,
-      pseudo: bool,
+    styleName: PropTypes.string,
+    essentials: PropTypes.shape({
+      tag: PropTypes.string,
+      className: PropTypes.string,
+      pseudo: PropTypes.bool,
     }).isRequired,
   };
 

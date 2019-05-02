@@ -1,5 +1,5 @@
 import React from 'react';
-import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import { findNodeHandle } from 'react-native-web';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
@@ -11,6 +11,8 @@ import ModalTitle from './ModalTitle';
 import { MODAL_SIZES } from '../../utils/constants';
 import BaseView from '../../utils/rnw-compat/BaseView';
 import Context from '../../Context';
+
+const { canUseDOM } = ExecutionEnvironment;
 
 const propTypes = {
   children: PropTypes.node.isRequired,

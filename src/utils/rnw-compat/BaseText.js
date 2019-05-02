@@ -12,7 +12,7 @@
 
 import applyLayout from 'react-native-web/dist/cjs/modules/applyLayout';
 import applyNativeMethods from 'react-native-web/dist/cjs/modules/applyNativeMethods';
-import { bool, string, shape } from 'prop-types';
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 // eslint-disable-next-line import/order
 import createElement from './createElement';
@@ -54,12 +54,12 @@ class BaseText extends Component {
 
   static propTypes = {
     ...TextPropTypes,
-    styleName: string,
-    essentials: shape({
-      tag: string,
-      className: string,
-      blockOnly: bool,
-      inlineOnly: bool,
+    styleName: PropTypes.string,
+    essentials: PropTypes.shape({
+      tag: PropTypes.string,
+      className: PropTypes.string,
+      blockOnly: PropTypes.bool,
+      inlineOnly: PropTypes.bool,
     }).isRequired,
   };
 
@@ -68,11 +68,11 @@ class BaseText extends Component {
   };
 
   static childContextTypes = {
-    isInAParentText: bool,
+    isInAParentText: PropTypes.bool,
   };
 
   static contextTypes = {
-    isInAParentText: bool,
+    isInAParentText: PropTypes.bool,
   };
 
   constructor(props, context) {

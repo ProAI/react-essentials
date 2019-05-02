@@ -23,7 +23,7 @@ import StyleSheetPropType from 'react-native-web/dist/cjs/modules/StyleSheetProp
 // eslint-disable-next-line import/order
 import View from './BaseView';
 import ViewPropTypes from 'react-native-web/dist/cjs/exports/ViewPropTypes';
-import { bool, func, number, oneOf, shape } from 'prop-types';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 const emptyObject = {};
@@ -108,30 +108,30 @@ class BaseImage extends Component {
   static displayName = 'Image';
 
   static contextTypes = {
-    isInAParentText: bool,
+    isInAParentText: PropTypes.bool,
   };
 
   static propTypes = {
     ...ViewPropTypes,
-    blurRadius: number,
+    blurRadius: PropTypes.number,
     defaultSource: ImageSourcePropType,
-    draggable: bool,
-    onError: func,
-    onLayout: func,
-    onLoad: func,
-    onLoadEnd: func,
-    onLoadStart: func,
-    resizeMode: oneOf(Object.keys(ImageResizeMode)),
+    draggable: PropTypes.bool,
+    onError: PropTypes.func,
+    onLayout: PropTypes.func,
+    onLoad: PropTypes.func,
+    onLoadEnd: PropTypes.func,
+    onLoadStart: PropTypes.func,
+    resizeMode: PropTypes.oneOf(Object.keys(ImageResizeMode)),
     source: ImageSourcePropType,
     style: StyleSheetPropType(ImageStylePropTypes),
     // compatibility with React Native
-    capInsets: shape({
-      top: number,
-      left: number,
-      bottom: number,
-      right: number,
+    capInsets: PropTypes.shape({
+      top: PropTypes.number,
+      left: PropTypes.number,
+      bottom: PropTypes.number,
+      right: PropTypes.number,
     }),
-    resizeMethod: oneOf(['auto', 'resize', 'scale']),
+    resizeMethod: PropTypes.oneOf(['auto', 'resize', 'scale']),
   };
 
   static defaultProps = {

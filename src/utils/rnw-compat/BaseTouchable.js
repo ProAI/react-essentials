@@ -11,7 +11,7 @@
 import applyNativeMethods from 'react-native-web/dist/cjs/modules/applyNativeMethods';
 import createReactClass from 'create-react-class';
 import ensurePositiveDelayProps from 'react-native-web/dist/cjs/exports/Touchable/ensurePositiveDelayProps';
-import { number } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import StyleSheet from 'react-native-web/dist/cjs/exports/StyleSheet';
 import Touchable from 'react-native-web/dist/cjs/exports/Touchable';
@@ -58,8 +58,8 @@ const TouchableOpacity = createReactClass({
      * Determines what the opacity of the wrapped view should be when touch is
      * active.
      */
-    activeOpacity: number,
-    focusedOpacity: number,
+    activeOpacity: PropTypes.number,
+    focusedOpacity: PropTypes.number,
   },
 
   getDefaultProps: function() {
@@ -84,7 +84,7 @@ const TouchableOpacity = createReactClass({
   /**
    * Animate the touchable to a new opacity.
    */
-  setOpacityTo: function(value: number, duration: ?number) {
+  setOpacityTo: function(value: PropTypes.number, duration: ?number) {
     this.setNativeProps({
       style: {
         opacity: value,
