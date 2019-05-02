@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseImage from '../../utils/rnw-compat/BaseImage';
+// import { Image as BaseImage } from 'react-native-web';
 
 const propTypes = {
-  source: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
   fluid: PropTypes.bool,
   thumbnail: PropTypes.bool,
 };
@@ -15,21 +14,14 @@ const defaultProps = {
   thumbnail: false,
 };
 
-function Image({ source, label, fluid, thumbnail, ...elementProps }) {
+function Image({ fluid, thumbnail, ...elementProps }) {
   const classes = cx(
     // variable classes
     fluid && 'img-fluid',
     thumbnail && 'img-thumbnail',
   );
 
-  return (
-    <BaseImage
-      source={source}
-      label={label}
-      props={elementProps}
-      className={classes}
-    />
-  );
+  return <BaseImage {...elementProps} essentials={{ className: classes }} />;
 }
 
 Image.propTypes = propTypes;

@@ -63,6 +63,19 @@ p.yt:not(.yt-has-ancestor) {
   margin-bottom: 1rem;
 }
 
+/* Image styles */
+.yi-a11y {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  opacity: 0;
+  width: 100%;
+  z-index: -1;
+}
+
 /* Reset styles for heading, link, and list DOM elements */
 .y-reset {
   background-color: transparent;
