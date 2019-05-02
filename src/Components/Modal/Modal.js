@@ -230,9 +230,10 @@ class Modal extends React.Component {
         document.getElementById('content').style.paddingRight = `${bodyPadding +
           this.scrollbarWidth}px`;
       }
-      if (document.getElementById('navbar')) {
-        document.getElementById('navbar').style.paddingRight = `${bodyPadding +
-          this.scrollbarWidth}px`;
+      if (document.getElementsByClassName('navbar')[0]) {
+        document.getElementsByClassName(
+          'navbar',
+        )[0].style.paddingRight = `${bodyPadding + this.scrollbarWidth}px`;
       }
     }
   }
@@ -243,10 +244,10 @@ class Modal extends React.Component {
         'content',
       ).style.paddingRight = this.originalBodyPadding;
     }
-    if (document.getElementById('navbar')) {
-      document.getElementById(
+    if (document.getElementsByClassName('navbar')[0]) {
+      document.getElementsByClassName(
         'navbar',
-      ).style.paddingRight = this.originalBodyPadding;
+      )[0].style.paddingRight = this.originalBodyPadding;
     }
   }
 
@@ -324,13 +325,13 @@ class Modal extends React.Component {
   }
 
   render() {
-    const { props } = this;
+    const { visible } = this.props;
 
     // prevent modal on the server, because ssr does not support portals yet
     if (!canUseDOM) return null;
 
     // see componentDidMount and componentDidUpdate for React 15 rendering
-    if (!props.visible) {
+    if (!visible) {
       return null;
     }
 
