@@ -5,14 +5,14 @@ export default {
     to: PropTypes.string,
     replace: PropTypes.bool,
     external: PropTypes.bool,
-    onClick: PropTypes.func,
+    onPress: PropTypes.func,
     keepFocus: PropTypes.bool,
   },
   defaultProps: {
     to: null,
     replace: false,
     external: false,
-    onClick: null,
+    onPress: null,
     keepFocus: false,
   },
 };

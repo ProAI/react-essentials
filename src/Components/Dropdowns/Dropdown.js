@@ -109,11 +109,11 @@ class Dropdown extends React.Component {
       ? children[0].props.id
       : this.identifier;
 
-    const onClick = e => {
+    const onPress = e => {
       e.preventDefault();
 
-      if (children[0].props.onClick) {
-        children[0].props.onClick(e);
+      if (children[0].props.onPress) {
+        children[0].props.onPress(e);
       }
 
       this.handleToggle();
@@ -121,7 +121,7 @@ class Dropdown extends React.Component {
 
     const toggleChild = React.cloneElement(children[0], {
       id: identifier,
-      onClick,
+      onPress,
       'aria-haspopup': true,
       'aria-expanded': this.visible(),
     });

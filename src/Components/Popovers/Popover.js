@@ -29,7 +29,7 @@ const defaultProps = {
 class Popover extends React.Component {
   state = {
     visible: false,
-    isClicked: false,
+    isPressed: false,
     isFocused: false,
   };
 
@@ -39,21 +39,21 @@ class Popover extends React.Component {
     this.trigger = props.trigger.split(' ');
   }
 
-  onTargetClick = () => {
+  onTargetPress = () => {
     const { state } = this;
 
     // handle click trigger
     if (this.trigger.indexOf('click') !== -1) {
-      if (!state.isClicked) {
+      if (!state.isPressed) {
         this.setState({
-          isClicked: !state.isClicked,
+          isPressed: !state.isPressed,
         });
         if (!this.visible()) {
           this.onToggle();
         }
       } else {
         this.setState({
-          isClicked: !state.isClicked,
+          isPressed: !state.isPressed,
         });
         if (this.trigger.indexOf('hover') === -1 && !state.isFocused) {
           this.onToggle();
@@ -83,7 +83,7 @@ class Popover extends React.Component {
     if (
       this.trigger.indexOf('focus') !== -1 &&
       this.visible() &&
-      !state.isClicked
+      !state.isPressed
     ) {
       this.setState({
         isFocused: !state.isFocused,
@@ -106,7 +106,7 @@ class Popover extends React.Component {
     if (
       this.trigger.indexOf('hover') !== -1 &&
       this.visible() &&
-      !state.isClicked &&
+      !state.isPressed &&
       !state.isFocused
     ) {
       this.onToggle();
@@ -141,7 +141,7 @@ class Popover extends React.Component {
     const { props } = this;
 
     const target = React.cloneElement(props.target, {
-      onClick: this.onTargetClick,
+      onPress: this.onTargetPress,
       onFocus: this.onTargetFocus,
       onBlur: this.onTargetBlur,
       onMouseOver: this.onTargetMouseOver,

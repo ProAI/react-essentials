@@ -48,7 +48,7 @@ const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
  */
 
 /* eslint-disable */
-const TouchableOpacity = createReactClass({
+const BaseTouchable = createReactClass({
   displayName: 'TouchableOpacity',
   mixins: [Touchable.Mixin],
 
@@ -216,4 +216,4 @@ const styles = StyleSheet.create({
 });
 /* eslint-enable */
 
-export default applyNativeMethods(TouchableOpacity);
+export default applyNativeMethods(BaseTouchable);

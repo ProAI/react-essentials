@@ -6,32 +6,32 @@ import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 const propTypes = {
   children: PropTypes.node.isRequired,
   toPane: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
+  onPress: PropTypes.func,
   onChange: PropTypes.func,
   active: PropTypes.bool,
 };
 
 const defaultProps = {
-  onClick: null,
+  onPress: null,
   onChange: null,
   active: null,
 };
 
 class TabsNavTab extends React.Component {
-  onClick = event => {
+  onPress = event => {
     event.preventDefault();
 
     const { props } = this;
 
-    if (props.onClick) {
-      props.onClick(event);
+    if (props.onPress) {
+      props.onPress(event);
     }
 
     props.onChange(props.toPane, event);
   };
 
   render() {
-    const { onClick, toPane, active, ...elementProps } = this.props;
+    const { onPress, toPane, active, ...elementProps } = this.props;
 
     const classes = cx(
       // constant classes
@@ -45,7 +45,7 @@ class TabsNavTab extends React.Component {
         {...elementProps}
         accessibilityRole="tab"
         href={`#${toPane}`}
-        onClick={this.onClick}
+        onPress={this.onPress}
         aria-controls={toPane}
         essentials={{
           tag: 'a',

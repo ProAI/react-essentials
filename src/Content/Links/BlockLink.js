@@ -16,7 +16,7 @@ const defaultProps = {
 function BlockLink(elementProps) {
   const createElement = useActionElement(BaseTouchable, elementProps);
 
-  return createElement({});
+  return createElement({ tag: 'a' });
 }
 
 BlockLink.propTypes = propTypes;

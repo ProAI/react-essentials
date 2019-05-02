@@ -36,7 +36,7 @@ function FormButton({
   active,
   disabled,
   block,
-  onClick,
+  onPress,
   formik,
   ...elementProps
 }) {
@@ -52,9 +52,9 @@ function FormButton({
     block && 'btn-block',
   );
 
-  const handleClick = event => {
-    if (onClick) {
-      onClick(event);
+  const handlePress = event => {
+    if (onPress) {
+      onPress(event);
     }
 
     if (type === 'submit') {
@@ -68,7 +68,7 @@ function FormButton({
 
   const createElement = useActionElement(BaseTouchable, {
     ...elementProps,
-    onClick: handleClick,
+    onPress: handlePress,
   });
 
   return createElement({
