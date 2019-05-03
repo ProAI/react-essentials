@@ -5,6 +5,7 @@
  * - Usage of custom tags
  * - Internally usage of deprecated className prop for bootstrap styles
  * - Usage of styleName shorthand styles
+ * - Warn about View inside of a text component
  *
  * This file can be removed once all bootstrap styles are converted to css-in-js.
  */
@@ -79,10 +80,17 @@ class BaseView extends Component {
     } = this.props;
     const supportedProps = filterSupportedProps(this.props);
 
+    const { isInAParentText } = this.context;
+
     if (process.env.NODE_ENV !== 'production') {
       if (styleName) {
         checkUtilityClasses(styleName);
       }
+
+      warning(
+        !isInAParentText,
+        'A view should not be used inside of a text component.',
+      );
 
       warning(
         customClassName == null,
@@ -96,8 +104,6 @@ class BaseView extends Component {
         );
       });
     }
-
-    const { isInAParentText } = this.context;
 
     supportedProps.className = cx(
       // add yoga layout styles
