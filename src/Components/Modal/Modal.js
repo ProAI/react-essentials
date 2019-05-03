@@ -33,183 +33,83 @@ const computeScrollbarWidth = () => {
   const scrollDiv = document.createElement('div');
   scrollDiv.className = 'modal-scrollbar-measure';
   document.body.appendChild(scrollDiv);
+
   const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+
   document.body.removeChild(scrollDiv);
+
   return scrollbarWidth;
 };
 
+/* eslint-disable react/sort-comp */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 class Modal extends React.Component {
   static contextType = Context;
 
   constructor(props, context) {
     super(props, context);
 
+    this.container = canUseDOM ? document.createElement('div') : null;
+
     this.identifier = context.generateKey('re-modal-');
   }
 
-  componentWillMount() {
-    // prevent modal on the server, because ssr does not support portals yet
-    if (!canUseDOM) return;
-
-    this.onEnter();
-
-    const { props } = this;
-
-    if (props.visible) {
-      this.beforeShow();
-    }
-  }
-
   componentDidMount() {
-    const { props } = this;
+    const { visible } = this.props;
 
-    if (props.visible) {
-      this.afterShow();
-    }
-  }
-
-  componentWillUpdate(nextProps) {
-    const { props } = this;
-
-    if (props.visible !== nextProps.visible) {
-      if (nextProps.visible) {
-        this.beforeShow();
-      } else {
-        this.beforeHide();
-      }
+    if (visible) {
+      this.show();
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { props } = this;
+    const { visible } = this.props;
 
-    if (props.visible !== prevProps.visible) {
-      if (props.visible) {
-        this.afterShow();
+    if (visible !== prevProps.visible) {
+      if (visible) {
+        this.show();
       } else {
-        this.afterHide();
+        this.hide();
       }
     }
   }
 
   componentWillUnmount() {
-    const { props } = this;
+    const { visible } = this.props;
 
-    if (props.visible) {
-      this.beforeHide();
-      this.afterHide();
+    if (visible) {
+      this.hide();
     }
   }
 
-  onEnter = () => {
-    const { props } = this;
+  show() {
+    const { onEnter } = this.props;
+    if (onEnter) onEnter();
 
-    if (props.onEnter) {
-      props.onEnter();
-    }
-  };
+    this._analyzeScrollbar();
 
-  onExit = () => {
-    this.destroy();
+    this._setScrollbar();
 
-    const { props } = this;
-
-    if (props.onExit) {
-      props.onExit();
-    }
-  };
-
-  onEscape = ev => {
-    const { props } = this;
-
-    if (ev.key === 'Escape') {
-      props.onToggle();
-    }
-  };
-
-  onBackdropClick = ev => {
-    const container = findNodeHandle(this.dialog);
-    const { onToggle } = this.props;
-
-    if (ev.target && !container.contains(ev.target)) {
-      onToggle();
-    }
-  };
-
-  destroy = () => {
-    const classes = document.body.className.replace('modal-open', '');
-    this.removeEvents();
-
-    if (this.container) {
-      document.body.removeChild(this.container);
-      this.container = null;
-    }
-
-    document.body.className = cx(classes).trim();
-  };
-
-  removeEvents() {
-    document.removeEventListener('click', this.onBackdropClick, false);
-    document.removeEventListener('keyup', this.onEscape, false);
-  }
-
-  beforeShow() {
-    this.checkScrollbar();
-    this.handleScrollbar();
-
-    const classes = document.body.className;
-    this.container = document.createElement('div');
-
+    // append container to body
     document.body.appendChild(this.container);
-    document.addEventListener('click', this.onBackdropClick, false);
-    document.addEventListener('keyup', this.onEscape, false);
 
+    // add modal-open class to body tag
+    const classes = document.body.className;
     document.body.className = cx(classes, 'modal-open');
-  }
 
-  afterShow() {
+    // focus container
     this.container.focus();
-    window.scrollTo(window.scrollX, window.scrollY);
+    window.scrollTo(window.scrollX, window.scrollY); // ???
 
-    this.handleUpdate();
+    this._addScrollbarReplacement();
+
+    // add keyup event listener to support ESC key
+    document.addEventListener('keyup', this.handleKeyUp);
   }
 
-  beforeHide() {
-    this.resetAdjustments();
-    this.resetScrollbar();
-  }
-
-  afterHide() {
-    this.removeEvents();
-    this.onExit();
-  }
-
-  handleUpdate() {
-    this.adjustDialog();
-  }
-
-  adjustDialog() {
-    const container = findNodeHandle(this.dialog);
-    const isModalOverflowing =
-      container.scrollHeight > document.documentElement.clientHeight;
-
-    if (!this.isBodyOverflowing && isModalOverflowing) {
-      container.style.paddingLeft = `${this.scrollbarWidth}px`;
-    }
-
-    if (this.isBodyOverflowing && !isModalOverflowing) {
-      container.style.paddingRight = `${this.scrollbarWidth}px`;
-    }
-  }
-
-  resetAdjustments() {
-    const container = findNodeHandle(this.dialog);
-
-    container.style.paddingLeft = '';
-    container.style.paddingRight = '';
-  }
-
-  checkScrollbar() {
+  _analyzeScrollbar() {
     let fullWindowWidth = window.innerWidth;
     if (!fullWindowWidth) {
       // workaround for missing window.innerWidth in IE8
@@ -222,7 +122,7 @@ class Modal extends React.Component {
     this.scrollbarWidth = computeScrollbarWidth();
   }
 
-  handleScrollbar() {
+  _setScrollbar() {
     const bodyPadding = 0;
 
     this.originalBodyPadding = document.body.style.paddingRight || '';
@@ -240,7 +140,39 @@ class Modal extends React.Component {
     }
   }
 
-  resetScrollbar() {
+  _addScrollbarReplacement() {
+    const dialog = findNodeHandle(this.dialog);
+
+    const isModalOverflowing =
+      dialog.scrollHeight > document.documentElement.clientHeight;
+
+    if (!this.isBodyOverflowing && isModalOverflowing) {
+      dialog.style.paddingLeft = `${this.scrollbarWidth}px`;
+    }
+
+    if (this.isBodyOverflowing && !isModalOverflowing) {
+      dialog.style.paddingRight = `${this.scrollbarWidth}px`;
+    }
+  }
+
+  hide() {
+    const { onExit } = this.props;
+    if (onExit) onExit();
+
+    // remove keyup event listener
+    document.removeEventListener('keyup', this.handleKeyUp);
+
+    this._unsetScrollbar();
+
+    document.body.removeChild(this.container);
+    // this.container = null;
+
+    // remove modal-open class from body tag
+    const classes = document.body.className.replace('modal-open', '');
+    document.body.className = cx(classes).trim();
+  }
+
+  _unsetScrollbar() {
     if (document.getElementById('content')) {
       document.getElementById(
         'content',
@@ -305,12 +237,13 @@ class Modal extends React.Component {
           role="dialog"
           aria-labelledby={this.identifier}
           aria-hidden={!visible}
+          onClick={this.handleBackdropClick}
         >
           <div
             className={modalDialogClasses}
             role="document"
-            ref={c => {
-              this.dialog = c;
+            ref={element => {
+              this.dialog = element;
             }}
           >
             <BaseView
@@ -326,20 +259,36 @@ class Modal extends React.Component {
     );
   }
 
+  handleKeyUp = event => {
+    const { onToggle } = this.props;
+
+    if (event.key === 'Escape') {
+      onToggle();
+    }
+  };
+
+  handleBackdropClick = event => {
+    const { onToggle } = this.props;
+
+    const dialog = findNodeHandle(this.dialog);
+
+    if (event.target && !dialog.contains(event.target)) {
+      onToggle();
+    }
+  };
+
   render() {
     const { visible } = this.props;
 
     // prevent modal on the server, because ssr does not support portals yet
-    if (!canUseDOM) return null;
-
-    // see componentDidMount and componentDidUpdate for React 15 rendering
-    if (!visible) {
+    if (!canUseDOM || !visible) {
       return null;
     }
 
     return ReactDOM.createPortal(this.renderModal(), this.container);
   }
 }
+/* eslint-enable */
 
 Modal.propTypes = propTypes;
 Modal.defaultProps = defaultProps;
