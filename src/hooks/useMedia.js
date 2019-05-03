@@ -1,44 +1,8 @@
-import { useContext, useState, useEffect } from 'react';
-import Dimensions from 'react-native-web/dist/cjs/exports/Dimensions';
+import { useContext } from 'react';
 import Context from '../Context';
 
-const calculateViewport = (width, breakpoints) => {
-  if (width < breakpoints.sm) {
-    return 'xs';
-  }
-  if (width < breakpoints.md) {
-    return 'sm';
-  }
-  if (width < breakpoints.lg) {
-    return 'md';
-  }
-  if (width < breakpoints.xl) {
-    return 'lg';
-  }
-  return 'xl';
-};
-
 export default function useMedia() {
-  const { ssrViewport, breakpoints } = useContext(Context);
-  const [viewport, setViewport] = useState(ssrViewport);
-
-  useEffect(() => {
-    const handleChange = dimensions => {
-      const nextViewport = calculateViewport(
-        dimensions.window.width,
-        breakpoints,
-      );
-
-      if (viewport !== nextViewport) {
-        setViewport(nextViewport);
-      }
-    };
-    Dimensions.addEventListener('change', handleChange);
-
-    return () => {
-      Dimensions.removeEventListener('change', handleChange);
-    };
-  });
+  const { viewport, breakpoints } = useContext(Context);
 
   const breakpointKeys = Object.keys(breakpoints);
 
