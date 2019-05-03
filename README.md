@@ -1,5 +1,5 @@
-# React Redux Essentials
+# 🎨 React Essentials
 
-React Redux UI collection with file upload/dropzone, form elements/validation and a lot more components.
+React UI components collection based on Twitter Bootstrap.
 
 This project is not production ready yet.
