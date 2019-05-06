@@ -30,7 +30,10 @@ function ActionListGroupItem(props) {
     active && 'active',
   );
 
-  const createElement = useActionElement(BaseTouchable, elementProps);
+  const createElement = useActionElement(BaseTouchable, {
+    disabled,
+    ...elementProps,
+  });
 
   return createElement({
     className: classes,

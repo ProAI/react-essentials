@@ -50,6 +50,7 @@ function Button({
   );
 
   const createElement = useActionElement(BaseTouchable, {
+    disabled,
     ...elementProps,
   });
 

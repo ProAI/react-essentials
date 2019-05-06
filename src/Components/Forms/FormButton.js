@@ -67,6 +67,7 @@ function FormButton({
   };
 
   const createElement = useActionElement(BaseTouchable, {
+    disabled,
     ...elementProps,
     onPress: handlePress,
   });
