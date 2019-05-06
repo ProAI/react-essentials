@@ -14,7 +14,6 @@ const propTypes = {
   color: PropTypes.oneOf(BUTTON_COLORS),
   size: PropTypes.oneOf(SIZES),
   active: PropTypes.bool,
-  disabled: PropTypes.bool,
   block: PropTypes.bool,
   // eslint-disable-next-line react/forbid-prop-types
   formik: PropTypes.any.isRequired,
@@ -25,7 +24,6 @@ const defaultProps = {
   color: 'primary',
   size: null,
   active: false,
-  disabled: false,
   block: false,
 };
 
@@ -34,12 +32,13 @@ function FormButton({
   color,
   size,
   active,
-  disabled,
   block,
   onPress,
   formik,
   ...elementProps
 }) {
+  const disabled = formik.isSubmitting;
+
   const classes = cx(
     // constant classes
     'btn',
@@ -67,8 +66,8 @@ function FormButton({
   };
 
   const createElement = useActionElement(BaseTouchable, {
-    disabled,
     ...elementProps,
+    disabled,
     onPress: handlePress,
   });
 
