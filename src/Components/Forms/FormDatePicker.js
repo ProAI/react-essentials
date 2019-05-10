@@ -4,25 +4,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DayPicker from 'react-day-picker/DayPicker';
-import { Field as FormikField } from 'formik';
 import Field from './Field';
 import Context from '../../Context';
+import withFormField from './withFormField';
 
+/* eslint-disable react/forbid-prop-types */
 const propTypes = {
-  name: PropTypes.string.isRequired,
   title: PropTypes.string,
   placeholder: PropTypes.string,
   info: PropTypes.string,
-  // eslint-disable-next-line react/no-unused-prop-types
-  formatDate: PropTypes.func,
+  // formatDate: PropTypes.func,
   formatError: PropTypes.func,
+  field: PropTypes.any.isRequired,
+  form: PropTypes.any.isRequired,
 };
+/* eslint-enable */
 
 const defaultProps = {
   title: null,
   placeholder: '',
   info: null,
-  formatDate: null,
+  // formatDate: null,
   formatError: null,
 };
 
@@ -33,8 +35,6 @@ class FormDatePicker extends React.Component {
     super(props, context);
 
     this.identifier = context.generateKey('re-form-');
-
-    this.renderField = this.renderField.bind(this);
   }
 
   state = {
@@ -151,10 +151,19 @@ class FormDatePicker extends React.Component {
     return pickedDate.toLocaleDateString('en');
   };
 
-  renderField({ form: formik }) {
-    const { state } = this;
+  render() {
+    // TODO: Forward ref to some DOM tag.
 
-    const { name, title, placeholder, info, formatError } = this.props;
+    const {
+      title,
+      placeholder,
+      info,
+      formatError,
+      field: { name, value },
+      form,
+    } = this.props;
+
+    const { isFocused, isOpen } = this.state;
 
     const classes = cx(
       // constant classes
@@ -162,27 +171,26 @@ class FormDatePicker extends React.Component {
       'Select',
       'Select--single',
       // variable classes
-      formik.touched[name] && formik.errors[name] && 'is-invalid',
-      formik.values[name] && 'has-value',
-      state.isFocused && 'is-focused',
-      state.isOpen && 'is-open',
+      form.touched[name] && form.errors[name] && 'is-invalid',
+      value && 'has-value',
+      isFocused && 'is-focused',
+      isOpen && 'is-open',
     );
 
-    const pickedDate = formik.values[name]
-      ? new Date(formik.values[name])
-      : new Date();
+    const pickedDate = value ? new Date(value) : new Date();
     const initialMonth = new Date(
       pickedDate.getFullYear(),
       pickedDate.getMonth(),
     );
 
     const error = formatError
-      ? formatError(formik.errors[name])
-      : formik.errors[name];
+      ? formatError(form.errors[name])
+      : form.errors[name];
 
     /* eslint-disable jsx-a11y/label-has-for */
+    /* eslint-disable jsx-a11y/no-static-element-interactions */
     return (
-      <Field error={error} touched={formik.touched[name]} info={info}>
+      <Field error={error} touched={form.touched[name]} info={info}>
         {title && (
           <label
             htmlFor={`${this.identifier}-${name}`}
@@ -201,23 +209,22 @@ class FormDatePicker extends React.Component {
             onKeyDown={this.onControlKeyDown}
           >
             <span className="Select-multi-value-wrapper">
-              {!formik.values[name] && (
+              {!value && (
                 <div className="Select-placeholder">{placeholder}</div>
               )}
-              {formik.values[name] && (
+              {value && (
                 <div className="Select-value">
                   <span
                     className="Select-value-label"
                     role="option"
                     aria-selected="true"
                   >
-                    {formik.values[name]
-                      ? this.formatPickedDate(pickedDate)
-                      : ''}
+                    {value ? this.formatPickedDate(pickedDate) : ''}
                   </span>
                 </div>
               )}
               {/* TODO
+                * aria-controls ...
                 * aria-owns should be the id of the date list element
                 * aria-activedescendant should be the id of the currently selected day element
                 * aria-readonly should be true if datepicker is disabled
@@ -232,7 +239,8 @@ class FormDatePicker extends React.Component {
                 role="combobox"
                 tabIndex="0"
                 className="Select-input"
-                aria-expanded={state.isOpen}
+                aria-controls=""
+                aria-expanded={isOpen}
                 aria-owns=""
                 aria-activedescendant=""
                 aria-readonly="false"
@@ -240,13 +248,13 @@ class FormDatePicker extends React.Component {
                   this.updateState(undefined, true);
                 }}
                 onBlur={() => {
-                  formik.setFieldTouched(name, true);
+                  form.setFieldTouched(name, true);
                 }}
                 style={{ border: '0px', width: '1px', display: 'inline-block' }}
               />
             </span>
           </div>
-          {state.isOpen && (
+          {isOpen && (
             <div
               ref={menu => {
                 this.menu = menu;
@@ -265,10 +273,10 @@ class FormDatePicker extends React.Component {
                   this.updateState(false);
 
                   // reset error
-                  formik.setFieldError(name, null);
+                  form.setFieldError(name, null);
 
                   // set value
-                  formik.setFieldValue(name, day.toString());
+                  form.setFieldValue(name, day.toString());
                 }}
                 firstDayOfWeek={1}
                 renderDay={day => day.getDate()}
@@ -282,15 +290,9 @@ class FormDatePicker extends React.Component {
     );
     /* eslint-enable */
   }
-
-  render() {
-    const { name } = this.props;
-
-    return <FormikField name={name} render={this.renderField} />;
-  }
 }
 
 FormDatePicker.propTypes = propTypes;
 FormDatePicker.defaultProps = defaultProps;
 
-export default FormDatePicker;
+export default withFormField(FormDatePicker);

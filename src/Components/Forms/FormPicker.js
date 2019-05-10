@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Select from 'react-select';
-import { Field as FormikField } from 'formik';
 import Field from './Field';
 import Context from '../../Context';
+import withFormField from './withFormField';
 
+/* eslint-disable react/forbid-prop-types */
 const propTypes = {
-  name: PropTypes.string.isRequired,
   title: PropTypes.string,
   placeholder: PropTypes.string,
   options: PropTypes.arrayOf(
@@ -21,7 +21,10 @@ const propTypes = {
   searchable: PropTypes.bool,
   multiple: PropTypes.bool,
   formatError: PropTypes.func,
+  field: PropTypes.any.isRequired,
+  form: PropTypes.any.isRequired,
 };
+/* eslint-enable */
 
 const defaultProps = {
   title: null,
@@ -40,13 +43,12 @@ class FormPicker extends React.Component {
     super(props, context);
 
     this.identifier = context.generateKey('re-form-');
-
-    this.renderField = this.renderField.bind(this);
   }
 
-  renderField({ form: formik }) {
+  render() {
+    // TODO: Forward ref to <select> DOM tag.
+
     const {
-      name,
       title,
       placeholder,
       options,
@@ -55,22 +57,24 @@ class FormPicker extends React.Component {
       clearable,
       searchable,
       formatError,
+      field: { name, value },
+      form,
     } = this.props;
 
     const classes = cx(
       // constant classes
       'form-picker',
       // variable classes
-      formik.touched[name] && formik.errors[name] && 'is-invalid',
+      form.touched[name] && form.errors[name] && 'is-invalid',
     );
 
     const error = formatError
-      ? formatError(formik.errors[name])
-      : formik.errors[name];
+      ? formatError(form.errors[name])
+      : form.errors[name];
 
     /* eslint-disable jsx-a11y/label-has-for */
     return (
-      <Field error={error} touched={formik.touched[name]} info={info}>
+      <Field error={error} touched={form.touched[name]} info={info}>
         {title && (
           <label
             htmlFor={`${this.identifier}-${name}`}
@@ -83,25 +87,25 @@ class FormPicker extends React.Component {
           inputProps={{ id: `${this.identifier}-${name}` }}
           instanceId={`${this.identifier}-${name}`}
           options={options}
-          value={formik.values[name]}
-          onChange={value => {
-            formik.setFieldError(name, null);
+          value={value}
+          onChange={nextValue => {
+            form.setFieldError(name, null);
 
             // split value if multiple is enabled to get an array of values
             if (multiple) {
-              if (value === '') {
-                formik.setFieldValue(name, []);
+              if (nextValue === '') {
+                form.setFieldValue(name, []);
               } else {
-                formik.setFieldValue(name, value.split(','));
+                form.setFieldValue(name, nextValue.split(','));
               }
 
               return;
             }
 
-            formik.setFieldValue(name, value);
+            form.setFieldValue(name, nextValue);
           }}
           onBlur={() => {
-            formik.setFieldTouched(name, true);
+            form.setFieldTouched(name, true);
           }}
           placeholder={placeholder}
           className={classes}
@@ -114,15 +118,9 @@ class FormPicker extends React.Component {
     );
     /* eslint-enable */
   }
-
-  render() {
-    const { name } = this.props;
-
-    return <FormikField name={name} render={this.renderField} />;
-  }
 }
 
 FormPicker.propTypes = propTypes;
 FormPicker.defaultProps = defaultProps;
 
-export default FormPicker;
+export default withFormField(FormPicker);

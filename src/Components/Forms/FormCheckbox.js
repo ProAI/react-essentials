@@ -1,22 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { Field as FormikField } from 'formik';
 import Field from './Field';
 import Context from '../../Context';
+import withFormField from './withFormField';
 
+/* eslint-disable react/forbid-prop-types */
 const propTypes = {
-  name: PropTypes.string.isRequired,
   title: PropTypes.string,
   label: PropTypes.string.isRequired,
   info: PropTypes.string,
   formatError: PropTypes.func,
+  fieldRef: PropTypes.any,
+  field: PropTypes.any.isRequired,
+  form: PropTypes.any.isRequired,
 };
+/* eslint-enable */
 
 const defaultProps = {
   title: null,
   info: null,
   formatError: null,
+  fieldRef: null,
 };
 
 class FormCheckbox extends React.Component {
@@ -26,12 +31,18 @@ class FormCheckbox extends React.Component {
     super(props, context);
 
     this.identifier = context.generateKey('re-form-');
-
-    this.renderField = this.renderField.bind(this);
   }
 
-  renderField({ form: formik }) {
-    const { name, title, label, info, formatError } = this.props;
+  render() {
+    const {
+      title,
+      label,
+      info,
+      formatError,
+      fieldRef,
+      field: { name, value },
+      form,
+    } = this.props;
 
     const classes = cx(
       // constant classes
@@ -43,28 +54,29 @@ class FormCheckbox extends React.Component {
       // constant classes
       'custom-control-input',
       // variable classes
-      formik.touched[name] && formik.errors[name] && 'is-invalid',
+      form.touched[name] && form.errors[name] && 'is-invalid',
     );
 
     const error = formatError
-      ? formatError(formik.errors[name])
-      : formik.errors[name];
+      ? formatError(form.errors[name])
+      : form.errors[name];
 
     /* eslint-disable jsx-a11y/label-has-for */
     return (
-      <Field error={error} touched={formik.touched[name]} info={info}>
+      <Field error={error} touched={form.touched[name]} info={info}>
         {title && <legend className="form-group-legend">{title}</legend>}
         <div className={classes}>
           <input
+            ref={fieldRef}
             type="checkbox"
             id={`${this.identifier}-${name}`}
             name={name}
-            checked={formik.values[name] || false}
+            checked={value || false}
             onChange={event => {
-              formik.setFieldError(name, null);
-              formik.handleChange(event);
+              form.setFieldError(name, null);
+              form.handleChange(event);
             }}
-            onBlur={formik.handleBlur}
+            onBlur={form.handleBlur}
             className={inputClasses}
           />
           <label
@@ -78,15 +90,9 @@ class FormCheckbox extends React.Component {
     );
     /* eslint-enable */
   }
-
-  render() {
-    const { name } = this.props;
-
-    return <FormikField name={name} render={this.renderField} />;
-  }
 }
 
 FormCheckbox.propTypes = propTypes;
 FormCheckbox.defaultProps = defaultProps;
 
-export default FormCheckbox;
+export default withFormField(FormCheckbox);
