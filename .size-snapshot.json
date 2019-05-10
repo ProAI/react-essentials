@@ -7,7 +7,7 @@
   "dist/react-essentials.esm.js": {
     "bundled": 156399,
     "minified": 89217,
-    "gzipped": 20209,
+    "gzipped": 20210,
     "treeshaked": {
       "rollup": {
         "code": 66797,
