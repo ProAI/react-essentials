@@ -6,7 +6,6 @@ import withFormField from './withFormField';
 import Context from '../../Context';
 import { SIZES } from '../../utils/constants';
 
-/* eslint-disable react/forbid-prop-types */
 const propTypes = {
   title: PropTypes.string,
   placeholder: PropTypes.string,
@@ -25,11 +24,12 @@ const propTypes = {
   multiline: PropTypes.bool,
   autoFocus: PropTypes.bool,
   formatError: PropTypes.func,
-  fieldRef: PropTypes.any,
+  fieldRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  /* eslint-disable react/forbid-prop-types */
   field: PropTypes.any.isRequired,
   form: PropTypes.any.isRequired,
+  /* eslint-enable */
 };
-/* eslint-enable */
 
 const defaultProps = {
   title: null,

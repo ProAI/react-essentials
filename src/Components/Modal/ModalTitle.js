@@ -17,8 +17,8 @@ function ModalTitle(props) {
   const title = useRef();
 
   useEffect(() => {
-    title.setNativeProps({ id: titleId });
-  }, []);
+    title.current.setNativeProps({ id: titleId });
+  }, [titleId]);
 
   return (
     <BaseView

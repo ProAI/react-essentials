@@ -5,17 +5,17 @@ import Field from './Field';
 import Context from '../../Context';
 import withFormField from './withFormField';
 
-/* eslint-disable react/forbid-prop-types */
 const propTypes = {
   title: PropTypes.string,
   label: PropTypes.string.isRequired,
   info: PropTypes.string,
   formatError: PropTypes.func,
-  fieldRef: PropTypes.any,
+  fieldRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  /* eslint-disable react/forbid-prop-types */
   field: PropTypes.any.isRequired,
   form: PropTypes.any.isRequired,
+  /* eslint-enable */
 };
-/* eslint-enable */
 
 const defaultProps = {
   title: null,

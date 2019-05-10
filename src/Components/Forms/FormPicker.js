@@ -6,7 +6,6 @@ import Field from './Field';
 import Context from '../../Context';
 import withFormField from './withFormField';
 
-/* eslint-disable react/forbid-prop-types */
 const propTypes = {
   title: PropTypes.string,
   placeholder: PropTypes.string,
@@ -21,10 +20,11 @@ const propTypes = {
   searchable: PropTypes.bool,
   multiple: PropTypes.bool,
   formatError: PropTypes.func,
+  /* eslint-disable react/forbid-prop-types */
   field: PropTypes.any.isRequired,
   form: PropTypes.any.isRequired,
+  /* eslint-enable */
 };
-/* eslint-enable */
 
 const defaultProps = {
   title: null,

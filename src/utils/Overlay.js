@@ -183,18 +183,12 @@ class Overlay extends React.Component {
   render() {
     const { target, visible } = this.props;
 
-    // TODO: For some reason a ref that is defined on a cloned element does not
-    // work, so we use a wrapping <span> element, on which we can define the
-    // ref. This is just a workaround, so it would be better to solve the
-    // original cloned element issue.
-
     const targetElement = React.cloneElement(target, {
-      /* ref: (element) => {
-        this.target = element;
-      }, */
       'aria-describedby': visible ? this.identifier : null,
     });
 
+    // It is not possible to define a ref on a cloned element, so we use a
+    // wrapping <span> element, on which we can define the ref.
     return (
       <span
         ref={element => {

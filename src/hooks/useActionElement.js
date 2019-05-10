@@ -3,20 +3,17 @@ import invariant from 'fbjs/lib/invariant';
 import warning from 'fbjs/lib/warning';
 import { __RouterContext as RouterContext } from 'react-router';
 import { createLocation } from 'history';
+import setRef from '../utils/setRef';
 
-const updateFocus = (ref, keepFocus) => {
+const handlePress = (event, { onPress, keepFocus }, ref) => {
+  if (onPress) onPress(event);
+
   if (!keepFocus) {
     ref.current.blur();
   }
 };
 
-const handlePress = (event, ref, { onPress, keepFocus }) => {
-  if (onPress) onPress(event);
-
-  updateFocus(ref, keepFocus);
-};
-
-const handleRouting = (event, history, { replace, to }) => {
+const handleRouting = (event, { replace, to }, history) => {
   if (!event.defaultPrevented) {
     event.preventDefault();
 
@@ -28,12 +25,17 @@ const handleRouting = (event, history, { replace, to }) => {
   }
 };
 
-export default function useActionElement(Component, props) {
+export default function useActionElement(Component, props, ref) {
   // eslint-disable-next-line react/prop-types
   const { to, replace, external, onPress, keepFocus, ...elementProps } = props;
 
-  const ref = useRef();
   const { history, location } = useContext(RouterContext);
+
+  const internalRef = useRef();
+  const handleRef = value => {
+    internalRef.current = value;
+    setRef(ref, value);
+  };
 
   // check props
   if (process.env.NODE_ENV !== 'production') {
@@ -55,12 +57,12 @@ export default function useActionElement(Component, props) {
     return essentials => (
       <Component
         {...elementProps}
+        ref={handleRef}
         accessibilityRole="button"
         onPress={event => {
-          handlePress(event, ref, props);
+          handlePress(event, props, internalRef);
         }}
         tabIndex={0}
-        ref={ref}
         essentials={essentials}
       />
     );
@@ -71,14 +73,14 @@ export default function useActionElement(Component, props) {
     return essentials => (
       <Component
         {...elementProps}
+        ref={handleRef}
         accessibilityRole="link"
         href={to}
         onPress={event => {
-          handlePress(event, ref, props);
+          handlePress(event, props, internalRef);
         }}
         target="_blank"
         rel="noopener noreferrer"
-        ref={ref}
         essentials={essentials}
       />
     );
@@ -92,13 +94,13 @@ export default function useActionElement(Component, props) {
   return essentials => (
     <Component
       {...elementProps}
+      ref={handleRef}
       accessibilityRole="link"
       href={href}
       onPress={event => {
-        handlePress(event, ref, props);
-        handleRouting(event, history, props);
+        handlePress(event, props, internalRef);
+        handleRouting(event, props, history);
       }}
-      ref={ref}
       essentials={essentials}
     />
   );

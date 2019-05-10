@@ -4,8 +4,8 @@ import PopperJS from 'popper.js';
 import BaseText from '../../utils/rnw-compat/BaseText';
 import Overlay from '../../utils/Overlay';
 import { TRIGGERS } from '../../utils/constants';
+import withForwardedRef from '../../utils/withForwardedRef';
 
-/* eslint-disable react/no-unused-prop-types */
 const propTypes = {
   title: PropTypes.node.isRequired,
   content: PropTypes.node.isRequired,
@@ -16,7 +16,6 @@ const propTypes = {
   trigger: PropTypes.oneOf(TRIGGERS),
   target: PropTypes.node.isRequired,
 };
-/* eslint-enable */
 
 const defaultProps = {
   onToggle: null,
@@ -34,9 +33,9 @@ class Popover extends React.Component {
   };
 
   componentDidMount() {
-    const { props } = this;
+    const { trigger } = this.props;
 
-    this.trigger = props.trigger.split(' ');
+    this.trigger = trigger.split(' ');
   }
 
   onTargetPress = () => {
@@ -114,13 +113,14 @@ class Popover extends React.Component {
   };
 
   onToggle = () => {
-    const { props, state } = this;
+    const { onToggle, visible } = this.props;
+    const { state } = this;
 
-    if (props.onToggle !== null) {
-      props.onToggle();
+    if (onToggle !== null) {
+      onToggle();
     }
 
-    if (props.visible === null) {
+    if (visible === null) {
       this.setState({
         visible: !state.visible,
       });
@@ -138,9 +138,9 @@ class Popover extends React.Component {
   };
 
   render() {
-    const { props } = this;
+    const { target, placement, fallbackPlacement, title, content } = this.props;
 
-    const target = React.cloneElement(props.target, {
+    const clonedTarget = React.cloneElement(target, {
       onPress: this.onTargetPress,
       onFocus: this.onTargetFocus,
       onBlur: this.onTargetBlur,
@@ -150,10 +150,10 @@ class Popover extends React.Component {
 
     return (
       <Overlay
-        target={target}
+        target={clonedTarget}
         className="popover show"
-        placement={props.placement}
-        fallbackPlacement={props.fallbackPlacement}
+        placement={placement}
+        fallbackPlacement={fallbackPlacement}
         placementClassName={{
           top: 'bs-popover-top',
           bottom: 'bs-popover-bottom',
@@ -164,7 +164,7 @@ class Popover extends React.Component {
         onToggle={this.onToggle}
         role="tooltip"
       >
-        {props.title && (
+        {title && (
           <BaseText
             accessibilityRole="heading"
             aria-level={3}
@@ -173,11 +173,11 @@ class Popover extends React.Component {
               blockOnly: true,
             }}
           >
-            {props.title}
+            {title}
           </BaseText>
         )}
         <BaseText essentials={{ className: 'popover-body', blockOnly: true }}>
-          {props.content}
+          {content}
         </BaseText>
       </Overlay>
     );
@@ -187,4 +187,4 @@ class Popover extends React.Component {
 Popover.propTypes = propTypes;
 Popover.defaultProps = defaultProps;
 
-export default Popover;
+export default withForwardedRef(Popover);

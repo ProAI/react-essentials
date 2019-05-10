@@ -4,8 +4,8 @@ import PopperJS from 'popper.js';
 import BaseText from '../../utils/rnw-compat/BaseText';
 import Overlay from '../../utils/Overlay';
 import { TRIGGERS } from '../../utils/constants';
+import withForwardedRef from '../../utils/withForwardedRef';
 
-/* eslint-disable react/no-unused-prop-types */
 const propTypes = {
   title: PropTypes.node.isRequired,
   placement: PropTypes.oneOf(PopperJS.placements),
@@ -15,7 +15,6 @@ const propTypes = {
   trigger: PropTypes.oneOf(TRIGGERS),
   target: PropTypes.node.isRequired,
 };
-/* eslint-enable */
 
 const defaultProps = {
   onToggle: null,
@@ -33,10 +32,10 @@ class Tooltip extends React.Component {
   };
 
   componentDidMount() {
-    const { props } = this;
+    const { trigger } = this.props;
 
     // this.target = document.querySelector(`[aria-describedby="${this.identifier}"]`);
-    this.trigger = props.trigger.split(' ');
+    this.trigger = trigger.split(' ');
   }
 
   onTargetPress = () => {
@@ -114,13 +113,14 @@ class Tooltip extends React.Component {
   };
 
   onToggle = () => {
-    const { props, state } = this;
+    const { onToggle, visible } = this.props;
+    const { state } = this;
 
-    if (props.onToggle !== null) {
-      props.onToggle();
+    if (onToggle !== null) {
+      onToggle();
     }
 
-    if (props.visible === null) {
+    if (visible === null) {
       this.setState({
         visible: !state.visible,
       });
@@ -138,9 +138,9 @@ class Tooltip extends React.Component {
   };
 
   render() {
-    const { props } = this;
+    const { target, placement, fallbackPlacement, title } = this.props;
 
-    const target = React.cloneElement(props.target, {
+    const clonedTarget = React.cloneElement(target, {
       onPress: this.onTargetPress,
       onFocus: this.onTargetFocus,
       onBlur: this.onTargetBlur,
@@ -150,10 +150,10 @@ class Tooltip extends React.Component {
 
     return (
       <Overlay
-        target={target}
+        target={clonedTarget}
         className="tooltip show"
-        placement={props.placement}
-        fallbackPlacement={props.fallbackPlacement}
+        placement={placement}
+        fallbackPlacement={fallbackPlacement}
         placementClassName={{
           top: 'bs-tooltip-top',
           bottom: 'bs-tooltip-bottom',
@@ -165,7 +165,7 @@ class Tooltip extends React.Component {
         role="tooltip"
       >
         <BaseText essentials={{ className: 'tooltip-inner', blockOnly: true }}>
-          {props.title}
+          {title}
         </BaseText>
       </Overlay>
     );
@@ -175,4 +175,4 @@ class Tooltip extends React.Component {
 Tooltip.propTypes = propTypes;
 Tooltip.defaultProps = defaultProps;
 
-export default Tooltip;
+export default withForwardedRef(Tooltip);
