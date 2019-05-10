@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import BaseView from '../../utils/rnw-compat/BaseView';
 
@@ -11,28 +11,24 @@ const defaultProps = {
   titleId: null,
 };
 
-class ModalTitle extends React.Component {
-  componentDidMount() {
-    const { titleId } = this.props;
+function ModalTitle(props) {
+  const { titleId, ...elementProps } = props;
 
-    this.title.setNativeProps({ id: titleId });
-  }
+  const title = useRef();
 
-  render() {
-    const { titleId, ...elementProps } = this.props;
+  useEffect(() => {
+    title.setNativeProps({ id: titleId });
+  }, []);
 
-    return (
-      <BaseView
-        {...elementProps}
-        accessibilityRole="heading"
-        aria-level={5}
-        ref={element => {
-          this.title = element;
-        }}
-        essentials={{ className: 'modal-title' }}
-      />
-    );
-  }
+  return (
+    <BaseView
+      {...elementProps}
+      accessibilityRole="heading"
+      aria-level={5}
+      ref={title}
+      essentials={{ className: 'modal-title' }}
+    />
+  );
 }
 
 ModalTitle.propTypes = propTypes;

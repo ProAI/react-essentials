@@ -17,41 +17,37 @@ const defaultProps = {
   active: null,
 };
 
-class TabsListGroupTab extends React.Component {
-  onPress = event => {
+function TabsListGroupTab(props) {
+  const { onPress, onChange, toPane, active, ...elementProps } = props;
+
+  const handlePress = event => {
     event.preventDefault();
 
-    const { props } = this;
-
-    if (props.onPress) {
-      props.onPress(event);
+    if (onPress) {
+      onPress(event);
     }
 
-    props.onChange(props.toPane, event);
+    onChange(toPane, event);
   };
 
-  render() {
-    const { onPress, toPane, active, ...elementProps } = this.props;
+  const classes = cx(
+    // constant classes
+    'list-group-item',
+    'list-group-item-action',
+    // variable classes
+    active && 'active',
+  );
 
-    const classes = cx(
-      // constant classes
-      'list-group-item',
-      'list-group-item-action',
-      // variable classes
-      active && 'active',
-    );
-
-    return (
-      <BaseTouchable
-        {...elementProps}
-        accessibilityRole="tab"
-        href={`#${toPane}`}
-        onPress={this.onPress}
-        aria-controls={toPane}
-        essentials={{ tag: 'a', className: classes }}
-      />
-    );
-  }
+  return (
+    <BaseTouchable
+      {...elementProps}
+      accessibilityRole="tab"
+      href={`#${toPane}`}
+      onPress={handlePress}
+      aria-controls={toPane}
+      essentials={{ tag: 'a', className: classes }}
+    />
+  );
 }
 
 TabsListGroupTab.propTypes = propTypes;
