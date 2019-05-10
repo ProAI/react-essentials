@@ -9,6 +9,7 @@ import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
 import ModalTitle from './ModalTitle';
 import { MODAL_SIZES } from '../../utils/constants';
+import withForwardedRef from '../../utils/withForwardedRef';
 import BaseView from '../../utils/rnw-compat/BaseView';
 import Context from '../../Context';
 
@@ -21,12 +22,14 @@ const propTypes = {
   onToggle: PropTypes.func.isRequired,
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
 
 const defaultProps = {
   size: null,
   onEnter: null,
   onExit: null,
+  innerRef: null,
 };
 
 const computeScrollbarWidth = () => {
@@ -193,6 +196,7 @@ class Modal extends React.Component {
       onToggle,
       onEnter,
       onExit,
+      innerRef,
       ...elementProps
     } = this.props;
 
@@ -231,30 +235,31 @@ class Modal extends React.Component {
 
     return (
       <React.Fragment>
-        <div
-          className={modalClasses}
+        <BaseView
           tabIndex="-1"
-          role="dialog"
+          accessibilityRole="dialog"
           aria-labelledby={this.identifier}
           aria-hidden={!visible}
           onClick={this.handleBackdropClick}
+          essentials={{ className: modalClasses }}
         >
-          <div
-            className={modalDialogClasses}
+          <BaseView
             role="document"
-            ref={element => {
-              this.dialog = element;
+            ref={dialog => {
+              this.dialog = dialog;
             }}
+            essentials={{ className: modalDialogClasses }}
           >
             <BaseView
               {...elementProps}
+              ref={innerRef}
               essentials={{ className: 'modal-content' }}
             >
               {manipulatedChildren}
             </BaseView>
-          </div>
-        </div>
-        <div key="modal-backdrop" className={modalBackdropClasses} />
+          </BaseView>
+        </BaseView>
+        <BaseView essentials={{ className: modalBackdropClasses }} />
       </React.Fragment>
     );
   }
@@ -298,4 +303,4 @@ Modal.Footer = ModalFooter;
 Modal.Header = ModalHeader;
 Modal.Title = ModalTitle;
 
-export default Modal;
+export default withForwardedRef(Modal, ['Body', 'Footer', 'Header', 'Title']);

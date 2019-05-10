@@ -9,17 +9,21 @@ import DropdownDivider from './DropdownDivider';
 import DropdownItem from './DropdownItem';
 import DropdownTextItem from './DropdownTextItem';
 import BaseView from '../../utils/rnw-compat/BaseView';
+import withForwardedRef from '../../utils/withForwardedRef';
 import Context from '../../Context';
+import setRef from '../../utils/setRef';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   onToggle: PropTypes.func,
   visible: PropTypes.bool,
+  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
 
 const defaultProps = {
   onToggle: null,
   visible: null,
+  innerRef: null,
 };
 
 class Dropdown extends React.Component {
@@ -87,7 +91,13 @@ class Dropdown extends React.Component {
   };
 
   render() {
-    const { children, visible, onToggle, ...elementProps } = this.props;
+    const {
+      children,
+      visible,
+      onToggle,
+      innerRef,
+      ...elementProps
+    } = this.props;
 
     // check if dropdown has a dropdown trigger and menu
     if (process.env.NODE_ENV !== 'production') {
@@ -135,6 +145,7 @@ class Dropdown extends React.Component {
         {...elementProps}
         ref={element => {
           this.element = element;
+          setRef(innerRef, element);
         }}
         essentials={{ className: classes }}
       >
@@ -154,4 +165,10 @@ Dropdown.Header = DropdownHeader;
 Dropdown.Item = DropdownItem;
 Dropdown.TextItem = DropdownTextItem;
 
-export default Dropdown;
+export default withForwardedRef(Dropdown, [
+  'Menu',
+  'Divider',
+  'Header',
+  'Item',
+  'TextItem',
+]);
