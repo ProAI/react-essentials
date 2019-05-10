@@ -6,14 +6,18 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function BlockquoteFooter(elementProps) {
+const BlockquoteFooter = React.forwardRef(function BlockquoteFooter(
+  props,
+  ref,
+) {
   return (
     <BaseView
-      {...elementProps}
+      {...props}
+      ref={ref}
       essentials={{ tag: 'footer', className: 'blockquote-footer' }}
     />
   );
-}
+});
 
 BlockquoteFooter.propTypes = propTypes;
 

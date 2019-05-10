@@ -7,14 +7,15 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function Blockquote(elementProps) {
+const Blockquote = React.forwardRef(function Blockquote(props, ref) {
   return (
     <BaseView
-      {...elementProps}
+      {...props}
+      ref={ref}
       essentials={{ tag: 'blockquote', className: 'blockquote' }}
     />
   );
-}
+});
 
 Blockquote.propTypes = propTypes;
 

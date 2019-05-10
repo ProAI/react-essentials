@@ -32,17 +32,19 @@ const defaultProps = {
   responsiveXl: false,
 };
 
-function Table({
-  bordered,
-  striped,
-  hover,
-  responsive,
-  responsiveSm,
-  responsiveMd,
-  responsiveLg,
-  responsiveXl,
-  ...elementProps
-}) {
+const Table = React.forwardRef(function Table(props, ref) {
+  const {
+    bordered,
+    striped,
+    hover,
+    responsive,
+    responsiveSm,
+    responsiveMd,
+    responsiveLg,
+    responsiveXl,
+    ...elementProps
+  } = props;
+
   const classes = cx(
     // constant classes
     'table',
@@ -61,10 +63,11 @@ function Table({
   return (
     <BaseView
       {...elementProps}
+      ref={ref}
       essentials={{ tag: 'table', className: classes, pseudo: true }}
     />
   );
-}
+});
 
 Table.propTypes = propTypes;
 Table.defaultProps = defaultProps;

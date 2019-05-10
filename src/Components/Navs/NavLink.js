@@ -19,13 +19,12 @@ const defaultProps = {
   strict: false,
 };
 
-function NavLink(props) {
+const NavLink = React.forwardRef(function NavLink(props, ref) {
   const { exact, strict, ...elementProps } = props;
-  const { to } = props;
 
-  const createElement = useActionElement(BaseTouchable, elementProps);
+  const createElement = useActionElement(BaseTouchable, elementProps, ref);
 
-  const path = typeof to === 'object' ? to.pathname : to;
+  const path = typeof props.to === 'object' ? props.to.pathname : props.to;
 
   return (
     <Route path={path} exact={exact} strict={strict}>
@@ -43,7 +42,7 @@ function NavLink(props) {
       }}
     </Route>
   );
-}
+});
 
 NavLink.propTypes = propTypes;
 NavLink.defaultProps = defaultProps;

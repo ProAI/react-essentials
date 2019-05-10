@@ -17,7 +17,7 @@ const defaultProps = {
   active: null,
 };
 
-function TabsNavTab(props) {
+const TabsNavTab = React.forwardRef(function TabsNavTab(props, ref) {
   const { onPress, onChange, toPane, active, ...elementProps } = props;
 
   const handlePress = event => {
@@ -40,6 +40,7 @@ function TabsNavTab(props) {
   return (
     <BaseTouchable
       {...elementProps}
+      ref={ref}
       accessibilityRole="tab"
       href={`#${toPane}`}
       onPress={handlePress}
@@ -50,7 +51,7 @@ function TabsNavTab(props) {
       }}
     />
   );
-}
+});
 
 TabsNavTab.propTypes = propTypes;
 TabsNavTab.defaultProps = defaultProps;

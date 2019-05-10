@@ -1,13 +1,14 @@
 import React from 'react';
 import BaseView from '../../utils/rnw-compat/BaseView';
 
-function DropdownDivider({ ...elementProps }) {
+const DropdownDivider = React.forwardRef(function DropdownDivider(props, ref) {
   return (
     <BaseView
-      {...elementProps}
+      {...props}
+      ref={ref}
       essentials={{ className: 'dropdown-divider' }}
     />
   );
-}
+});
 
 export default DropdownDivider;

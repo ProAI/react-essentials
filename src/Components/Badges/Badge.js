@@ -13,15 +13,19 @@ const defaultProps = {
   color: 'primary',
 };
 
-function Badge({ color, ...elementProps }) {
+const Badge = React.forwardRef(function Badge(props, ref) {
+  const { color, ...elementProps } = props;
+
   const classes = cx(
     // constant classes
     'badge',
     `badge-${color}`,
   );
 
-  return <BaseView {...elementProps} essentials={{ className: classes }} />;
-}
+  return (
+    <BaseView {...elementProps} ref={ref} essentials={{ className: classes }} />
+  );
+});
 
 Badge.propTypes = propTypes;
 Badge.defaultProps = defaultProps;

@@ -1,5 +1,6 @@
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'formik';
+import { FormikConsumer } from 'formik';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
@@ -13,30 +14,22 @@ const propTypes = {
   type: PropTypes.oneOf(['submit', 'reset']).isRequired,
   color: PropTypes.oneOf(BUTTON_COLORS),
   size: PropTypes.oneOf(SIZES),
-  active: PropTypes.bool,
   block: PropTypes.bool,
-  // eslint-disable-next-line react/forbid-prop-types
-  formik: PropTypes.any.isRequired,
 };
 
 const defaultProps = {
   ...action.defaultProps,
   color: 'primary',
   size: null,
-  active: false,
   block: false,
 };
 
-function FormButton({
-  type,
-  color,
-  size,
-  active,
-  block,
-  onPress,
-  formik,
-  ...elementProps
-}) {
+const FormButton = React.forwardRef(function FormButton(props, ref) {
+  const { type, color, size, active, block, onPress, ...elementProps } = props;
+
+  // eslint-disable-next-line no-underscore-dangle
+  const formik = useContext(FormikConsumer._context);
+
   const disabled = formik.isSubmitting;
 
   const classes = cx(
@@ -65,18 +58,22 @@ function FormButton({
     }
   };
 
-  const createElement = useActionElement(BaseTouchable, {
-    ...elementProps,
-    disabled,
-    onPress: handlePress,
-  });
+  const createElement = useActionElement(
+    BaseTouchable,
+    {
+      ...elementProps,
+      disabled,
+      onPress: handlePress,
+    },
+    ref,
+  );
 
   return createElement({
     className: classes,
   });
-}
+});
 
 FormButton.propTypes = propTypes;
 FormButton.defaultProps = defaultProps;
 
-export default connect(FormButton);
+export default FormButton;

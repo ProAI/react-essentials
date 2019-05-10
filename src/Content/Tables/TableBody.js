@@ -6,12 +6,16 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function TableBody(elementProps) {
+const TableBody = React.forwardRef(function TableBody(props, ref) {
   // TODO: Remove pseudo view and add react-native compatible component
   return (
-    <BaseView {...elementProps} essentials={{ tag: 'tbody', pseudo: true }} />
+    <BaseView
+      {...props}
+      ref={ref}
+      essentials={{ tag: 'tbody', pseudo: true }}
+    />
   );
-}
+});
 
 TableBody.propTypes = propTypes;
 

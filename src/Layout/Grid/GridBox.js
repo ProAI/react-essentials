@@ -20,15 +20,17 @@ const defaultProps = {
   sizeXl: null,
 };
 
-function GridBox({
-  children,
-  size,
-  sizeSm,
-  sizeMd,
-  sizeLg,
-  sizeXl,
-  ...elementProps
-}) {
+const GridBox = React.forwardRef(function GridBox(props, ref) {
+  const {
+    children,
+    size,
+    sizeSm,
+    sizeMd,
+    sizeLg,
+    sizeXl,
+    ...elementProps
+  } = props;
+
   const classes = cx(
     // constant classes
     `col-${size.toString()}`,
@@ -40,11 +42,11 @@ function GridBox({
   );
 
   return (
-    <BaseView {...elementProps} essentials={{ className: classes }}>
+    <BaseView {...elementProps} ref={ref} essentials={{ className: classes }}>
       {children}
     </BaseView>
   );
-}
+});
 
 GridBox.propTypes = propTypes;
 GridBox.defaultProps = defaultProps;

@@ -15,13 +15,9 @@ const defaultProps = {
   flush: false,
 };
 
-function TabsListGroup({
-  children,
-  activeKey,
-  onChange,
-  flush,
-  ...elementProps
-}) {
+const TabsListGroup = React.forwardRef(function TabsListGroup(props, ref) {
+  const { children, activeKey, onChange, flush, ...elementProps } = props;
+
   const classes = cx(
     // constant classes
     'list-group',
@@ -39,13 +35,14 @@ function TabsListGroup({
   return (
     <BaseView
       {...elementProps}
+      ref={ref}
       accessibilityRole="tablist"
       essentials={{ className: classes }}
     >
       {manipulatedChildren}
     </BaseView>
   );
-}
+});
 
 TabsListGroup.propTypes = propTypes;
 TabsListGroup.defaultProps = defaultProps;

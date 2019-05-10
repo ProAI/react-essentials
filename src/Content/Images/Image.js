@@ -14,15 +14,23 @@ const defaultProps = {
   thumbnail: false,
 };
 
-function Image({ fluid, thumbnail, ...elementProps }) {
+const Image = React.forwardRef(function Image(props, ref) {
+  const { fluid, thumbnail, ...elementProps } = props;
+
   const classes = cx(
     // variable classes
     fluid && 'img-fluid',
     thumbnail && 'img-thumbnail',
   );
 
-  return <BaseImage {...elementProps} essentials={{ className: classes }} />;
-}
+  return (
+    <BaseImage
+      {...elementProps}
+      ref={ref}
+      essentials={{ className: classes }}
+    />
+  );
+});
 
 Image.propTypes = propTypes;
 Image.defaultProps = defaultProps;

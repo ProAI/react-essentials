@@ -21,7 +21,7 @@ const defaultProps = {
   validate: null,
 };
 
-function Form(props) {
+const Form = React.forwardRef(function Form(props, ref) {
   const {
     children,
     initialValues,
@@ -40,6 +40,7 @@ function Form(props) {
       render={form => (
         <BaseView
           {...elementProps}
+          ref={ref}
           accessibilityRole="form"
           essentials={{ className: 'form' }}
         >
@@ -48,7 +49,7 @@ function Form(props) {
       )}
     />
   );
-}
+});
 
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;

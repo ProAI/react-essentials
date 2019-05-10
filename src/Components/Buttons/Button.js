@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
@@ -27,15 +28,17 @@ const defaultProps = {
   caret: false,
 };
 
-function Button({
-  color,
-  size,
-  active,
-  disabled,
-  block,
-  caret,
-  ...elementProps
-}) {
+const Button = React.forwardRef(function Button(props, ref) {
+  const {
+    color,
+    size,
+    active,
+    disabled,
+    block,
+    caret,
+    ...elementProps
+  } = props;
+
   const classes = cx(
     // constant classes
     'btn',
@@ -49,15 +52,19 @@ function Button({
     caret && 'dropdown-toggle',
   );
 
-  const createElement = useActionElement(BaseTouchable, {
-    disabled,
-    ...elementProps,
-  });
+  const createElement = useActionElement(
+    BaseTouchable,
+    {
+      disabled,
+      ...elementProps,
+    },
+    ref,
+  );
 
   return createElement({
     className: classes,
   });
-}
+});
 
 Button.propTypes = propTypes;
 Button.defaultProps = defaultProps;

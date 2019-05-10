@@ -14,7 +14,9 @@ const defaultProps = {
   last: false,
 };
 
-function Paragraph({ lead, last, ...elementProps }) {
+const Paragraph = React.forwardRef(function Paragraph(props, ref) {
+  const { lead, last, ...elementProps } = props;
+
   const classes = cx(
     // variable classes
     lead && 'lead',
@@ -24,10 +26,11 @@ function Paragraph({ lead, last, ...elementProps }) {
   return (
     <BaseText
       {...elementProps}
+      ref={ref}
       essentials={{ tag: 'p', className: classes, blockOnly: true }}
     />
   );
-}
+});
 
 Paragraph.propTypes = propTypes;
 Paragraph.defaultProps = defaultProps;

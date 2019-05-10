@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
@@ -18,7 +19,10 @@ const defaultProps = {
   active: false,
 };
 
-function ActionListGroupItem(props) {
+const ActionListGroupItem = React.forwardRef(function ActionListGroupItem(
+  props,
+  ref,
+) {
   const { disabled, active, ...elementProps } = props;
 
   const classes = cx(
@@ -32,13 +36,14 @@ function ActionListGroupItem(props) {
 
   const createElement = useActionElement(BaseTouchable, {
     disabled,
-    ...elementProps,
+    elementProps,
+    ref,
   });
 
   return createElement({
     className: classes,
   });
-}
+});
 
 ActionListGroupItem.propTypes = propTypes;
 ActionListGroupItem.defaultProps = defaultProps;

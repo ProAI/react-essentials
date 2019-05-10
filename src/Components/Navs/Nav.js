@@ -15,7 +15,9 @@ const defaultProps = {
   stacked: false,
 };
 
-function Nav({ pills, stacked, ...elementProps }) {
+const Nav = React.forwardRef(function Nav(props, ref) {
+  const { pills, stacked, ...elementProps } = props;
+
   const classes = cx(
     // constant classes
     'nav',
@@ -28,11 +30,12 @@ function Nav({ pills, stacked, ...elementProps }) {
   return (
     <BaseView
       {...elementProps}
+      ref={ref}
       accessibilityRole="navigation"
       essentials={{ className: classes }}
     />
   );
-}
+});
 
 Nav.propTypes = propTypes;
 Nav.defaultProps = defaultProps;

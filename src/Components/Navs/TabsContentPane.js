@@ -11,15 +11,18 @@ const defaultProps = {
   active: false,
 };
 
-function TabsContentPane({ active, ...elementProps }) {
+const TabsContentPane = React.forwardRef(function TabsContentPane(props, ref) {
+  const { active, ...elementProps } = props;
+
   return (
     <BaseView
       {...elementProps}
+      ref={ref}
       accessibilityRole="tabpanel"
       essentials={{ className: 'tab-pane' }}
     />
   );
-}
+});
 
 TabsContentPane.propTypes = propTypes;
 TabsContentPane.defaultProps = defaultProps;

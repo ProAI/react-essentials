@@ -15,7 +15,9 @@ const defaultProps = {
   dismissible: false,
 };
 
-function Alert({ color, dismissible, ...elementProps }) {
+const Alert = React.forwardRef(function Alert(props, ref) {
+  const { color, dismissible, ...elementProps } = props;
+
   const classes = cx(
     // constant classes
     'alert',
@@ -26,11 +28,12 @@ function Alert({ color, dismissible, ...elementProps }) {
   return (
     <BaseView
       {...elementProps}
+      ref={ref}
       accessibilityRole="alert"
       essentials={{ className: classes }}
     />
   );
-}
+});
 
 Alert.propTypes = propTypes;
 Alert.defaultProps = defaultProps;

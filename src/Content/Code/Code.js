@@ -6,14 +6,15 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function Code(elementProps) {
+const Code = React.forwardRef(function Code(props, ref) {
   return (
     <BaseText
-      {...elementProps}
+      {...props}
+      ref={ref}
       essentials={{ tag: 'code', inlineOnly: true }}
     />
   );
-}
+});
 
 Code.propTypes = propTypes;
 

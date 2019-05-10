@@ -23,16 +23,18 @@ const defaultProps = {
   horizontalXl: false,
 };
 
-function ListGroup({
-  children,
-  flush,
-  horizontal,
-  horizontalSm,
-  horizontalMd,
-  horizontalLg,
-  horizontalXl,
-  ...elementProps
-}) {
+const ListGroup = React.forwardRef(function ListGroup(props, ref) {
+  const {
+    children,
+    flush,
+    horizontal,
+    horizontalSm,
+    horizontalMd,
+    horizontalLg,
+    horizontalXl,
+    ...elementProps
+  } = props;
+
   const classes = cx(
     // constant classes
     'list-group',
@@ -48,13 +50,14 @@ function ListGroup({
   return (
     <BaseView
       {...elementProps}
+      ref={ref}
       accessibilityRole="list"
       essentials={{ className: classes }}
     >
       {children}
     </BaseView>
   );
-}
+});
 
 ListGroup.propTypes = propTypes;
 ListGroup.defaultProps = defaultProps;

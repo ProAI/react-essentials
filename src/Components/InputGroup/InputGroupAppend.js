@@ -6,14 +6,18 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function InputGroupAppend(elementProps) {
+const InputGroupAppend = React.forwardRef(function InputGroupAppend(
+  props,
+  ref,
+) {
   return (
     <BaseView
-      {...elementProps}
+      {...props}
+      ref={ref}
       essentials={{ className: 'input-group-append' }}
     />
   );
-}
+});
 
 InputGroupAppend.propTypes = propTypes;
 

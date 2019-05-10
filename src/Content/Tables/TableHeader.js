@@ -6,12 +6,16 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function TableHeader(elementProps) {
+const TableHeader = React.forwardRef(function TableHeader(props, ref) {
   // TODO: Remove pseudo view and add react-native compatible component
   return (
-    <BaseView {...elementProps} essentials={{ tag: 'thead', pseudo: true }} />
+    <BaseView
+      {...props}
+      ref={ref}
+      essentials={{ tag: 'thead', pseudo: true }}
+    />
   );
-}
+});
 
 TableHeader.propTypes = propTypes;
 

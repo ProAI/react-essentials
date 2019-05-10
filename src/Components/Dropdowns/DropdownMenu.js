@@ -11,15 +11,18 @@ const defaultProps = {
   triggerId: null,
 };
 
-function DropdownMenu({ triggerId, ...elementProps }) {
+const DropdownMenu = React.forwardRef(function DropdownMenu(props, ref) {
+  const { triggerId, ...elementProps } = props;
+
   return (
     <BaseView
       {...elementProps}
-      aria-labelledby="triggerId"
+      ref={ref}
+      aria-labelledby={triggerId}
       essentials={{ className: 'dropdown-menu' }}
     />
   );
-}
+});
 
 DropdownMenu.propTypes = propTypes;
 DropdownMenu.defaultProps = defaultProps;

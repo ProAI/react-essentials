@@ -12,7 +12,9 @@ const defaultProps = {
   disabled: false,
 };
 
-function ListGroupItem({ disabled, ...elementProps }) {
+const ListGroupItem = React.forwardRef(function ListGroupItem(props, ref) {
+  const { disabled, ...elementProps } = props;
+
   const classes = cx(
     // constant classes
     'list-group-item',
@@ -23,11 +25,12 @@ function ListGroupItem({ disabled, ...elementProps }) {
   return (
     <BaseView
       {...elementProps}
+      ref={ref}
       accessibilityRole="listitem"
       essentials={{ className: classes }}
     />
   );
-}
+});
 
 ListGroupItem.propTypes = propTypes;
 ListGroupItem.defaultProps = defaultProps;

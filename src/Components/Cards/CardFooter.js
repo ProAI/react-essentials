@@ -6,11 +6,11 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function CardFooter(elementProps) {
+const CardFooter = React.forwardRef(function CardFooter(props, ref) {
   return (
-    <BaseView {...elementProps} essentials={{ className: 'card-footer' }} />
+    <BaseView {...props} ref={ref} essentials={{ className: 'card-footer' }} />
   );
-}
+});
 
 CardFooter.propTypes = propTypes;
 

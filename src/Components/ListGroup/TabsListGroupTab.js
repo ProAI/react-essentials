@@ -17,7 +17,10 @@ const defaultProps = {
   active: null,
 };
 
-function TabsListGroupTab(props) {
+const TabsListGroupTab = React.forwardRef(function TabsListGroupTab(
+  props,
+  ref,
+) {
   const { onPress, onChange, toPane, active, ...elementProps } = props;
 
   const handlePress = event => {
@@ -41,6 +44,7 @@ function TabsListGroupTab(props) {
   return (
     <BaseTouchable
       {...elementProps}
+      ref={ref}
       accessibilityRole="tab"
       href={`#${toPane}`}
       onPress={handlePress}
@@ -48,7 +52,7 @@ function TabsListGroupTab(props) {
       essentials={{ tag: 'a', className: classes }}
     />
   );
-}
+});
 
 TabsListGroupTab.propTypes = propTypes;
 TabsListGroupTab.defaultProps = defaultProps;

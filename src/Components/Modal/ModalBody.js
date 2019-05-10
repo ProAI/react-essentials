@@ -6,11 +6,11 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function ModalBody(elementProps) {
+const ModalBody = React.forwardRef(function ModalBody(props, ref) {
   return (
-    <BaseView {...elementProps} essentials={{ className: 'modal-body' }} />
+    <BaseView {...props} ref={ref} essentials={{ className: 'modal-body' }} />
   );
-}
+});
 
 ModalBody.propTypes = propTypes;
 

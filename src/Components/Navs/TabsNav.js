@@ -17,14 +17,16 @@ const defaultProps = {
   stacked: false,
 };
 
-function TabsNav({
-  children,
-  activeKey,
-  onChange,
-  pills,
-  stacked,
-  ...elementProps
-}) {
+const TabsNav = React.forwardRef(function TabsNav(props, ref) {
+  const {
+    children,
+    activeKey,
+    onChange,
+    pills,
+    stacked,
+    ...elementProps
+  } = props;
+
   const classes = cx(
     // constant classes
     'nav',
@@ -34,7 +36,7 @@ function TabsNav({
     stacked && 'flex-column',
   );
 
-  const manipulatedChildren = React.Children.map(children, child =>
+  const clonedChildren = React.Children.map(children, child =>
     React.cloneElement(child, {
       active: activeKey === child.props.toPane,
       onChange,
@@ -44,13 +46,14 @@ function TabsNav({
   return (
     <BaseView
       {...elementProps}
+      ref={ref}
       accessibilityRole="tablist"
       essentials={{ className: classes }}
     >
-      {manipulatedChildren}
+      {clonedChildren}
     </BaseView>
   );
-}
+});
 
 TabsNav.propTypes = propTypes;
 TabsNav.defaultProps = defaultProps;

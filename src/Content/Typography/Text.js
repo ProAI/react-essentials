@@ -23,7 +23,9 @@ const defaultProps = {
   italic: false,
 };
 
-function Text({ align, color, mark, small, bold, italic, ...elementProps }) {
+const Text = React.forwardRef(function Text(props, ref) {
+  const { align, color, mark, small, bold, italic, ...elementProps } = props;
+
   const classes = cx(
     // variable classes
     color && `text-${color}`,
@@ -34,8 +36,10 @@ function Text({ align, color, mark, small, bold, italic, ...elementProps }) {
     italic && 'font-italic',
   );
 
-  return <BaseText {...elementProps} essentials={{ className: classes }} />;
-}
+  return (
+    <BaseText {...elementProps} ref={ref} essentials={{ className: classes }} />
+  );
+});
 
 Text.propTypes = propTypes;
 Text.defaultProps = defaultProps;

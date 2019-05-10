@@ -11,9 +11,11 @@ const defaultProps = {
   titleId: null,
 };
 
-function ModalHeader({ children, titleId, ...elementProps }) {
+const ModalHeader = React.forwardRef(function ModalHeader(props, ref) {
+  const { children, titleId, ...elementProps } = props;
+
   // inject titleId props for aria support
-  const manipulatedChildren = React.Children.map(children, (child, i) => {
+  const clonedChildren = React.Children.map(children, (child, i) => {
     if (i === 0) {
       return React.cloneElement(child, {
         titleId,
@@ -24,11 +26,15 @@ function ModalHeader({ children, titleId, ...elementProps }) {
   });
 
   return (
-    <BaseView {...elementProps} essentials={{ className: 'modal-header' }}>
-      {manipulatedChildren}
+    <BaseView
+      {...elementProps}
+      ref={ref}
+      essentials={{ className: 'modal-header' }}
+    >
+      {clonedChildren}
     </BaseView>
   );
-}
+});
 
 ModalHeader.propTypes = propTypes;
 ModalHeader.defaultProps = defaultProps;

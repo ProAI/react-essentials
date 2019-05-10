@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
@@ -17,7 +18,7 @@ const defaultProps = {
   color: 'primary',
 };
 
-function ActionBadge(props) {
+const ActionBadge = React.forwardRef(function ActionBadge(props, ref) {
   const { color, ...elementProps } = props;
   const classes = cx(
     // constant classes
@@ -25,12 +26,12 @@ function ActionBadge(props) {
     `badge-${color}`,
   );
 
-  const createElement = useActionElement(BaseTouchable, elementProps);
+  const createElement = useActionElement(BaseTouchable, elementProps, ref);
 
   return createElement({
     className: classes,
   });
-}
+});
 
 ActionBadge.propTypes = propTypes;
 ActionBadge.defaultProps = defaultProps;

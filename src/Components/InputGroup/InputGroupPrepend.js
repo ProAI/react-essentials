@@ -6,14 +6,18 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function InputGroupPrepend(elementProps) {
+const InputGroupPrepend = React.forwardRef(function InputGroupPrepend(
+  props,
+  ref,
+) {
   return (
     <BaseView
-      {...elementProps}
+      {...props}
+      ref={ref}
       essentials={{ className: 'input-group-prepend' }}
     />
   );
-}
+});
 
 InputGroupPrepend.propTypes = propTypes;
 

@@ -13,7 +13,9 @@ const defaultProps = {
   flush: false,
 };
 
-function ActionListGroup({ flush, ...elementProps }) {
+const ActionListGroup = React.forwardRef(function ActionListGroup(props, ref) {
+  const { flush, ...elementProps } = props;
+
   const classes = cx(
     // constant classes
     'list-group',
@@ -21,8 +23,10 @@ function ActionListGroup({ flush, ...elementProps }) {
     flush && 'list-group-flush',
   );
 
-  return <BaseView {...elementProps} essentials={{ className: classes }} />;
-}
+  return (
+    <BaseView {...elementProps} ref={ref} essentials={{ className: classes }} />
+  );
+});
 
 ActionListGroup.propTypes = propTypes;
 ActionListGroup.defaultProps = defaultProps;

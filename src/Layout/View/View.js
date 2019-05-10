@@ -10,9 +10,9 @@ const defaultProps = {
   children: null,
 };
 
-function View(elementProps) {
-  return <BaseView {...elementProps} essentials={{}} />;
-}
+const View = React.forwardRef(function View(elementProps, ref) {
+  return <BaseView {...elementProps} ref={ref} essentials={{}} />;
+});
 
 View.propTypes = propTypes;
 View.defaultProps = defaultProps;

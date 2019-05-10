@@ -6,16 +6,17 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function List(elementProps) {
+const List = React.forwardRef(function List(props, ref) {
   // TODO: Remove pseudo view and add react-native compatible component
   return (
     <BaseView
-      {...elementProps}
+      {...props}
+      ref={ref}
       accessibilityRole="listitem"
       essentials={{ pseudo: true }}
     />
   );
-}
+});
 
 List.propTypes = propTypes;
 

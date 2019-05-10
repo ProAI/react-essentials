@@ -13,7 +13,9 @@ const defaultProps = {
   noGutters: false,
 };
 
-function Grid({ noGutters, ...elementProps }) {
+const Grid = React.forwardRef(function Grid(props, ref) {
+  const { noGutters, ...elementProps } = props;
+
   const classes = cx(
     // constant classes
     'row',
@@ -22,8 +24,10 @@ function Grid({ noGutters, ...elementProps }) {
     noGutters && 'no-gutters',
   );
 
-  return <BaseView {...elementProps} essentials={{ className: classes }} />;
-}
+  return (
+    <BaseView {...elementProps} ref={ref} essentials={{ className: classes }} />
+  );
+});
 
 Grid.propTypes = propTypes;
 Grid.defaultProps = defaultProps;

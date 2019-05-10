@@ -6,16 +6,17 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function DropdownHeader(elementProps) {
+const DropdownHeader = React.forwardRef(function DropdownHeader(props, ref) {
   return (
     <BaseView
-      {...elementProps}
+      {...props}
+      ref={ref}
       accessibilityRole="heading"
       aria-level={6}
       essentials={{ className: 'dropdown-header' }}
     />
   );
-}
+});
 
 DropdownHeader.propTypes = propTypes;
 

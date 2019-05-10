@@ -6,14 +6,15 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function Cite(elementProps) {
+const Cite = React.forwardRef(function Cite(props, ref) {
   return (
     <BaseText
-      {...elementProps}
+      {...props}
+      ref={ref}
       essentials={{ tag: 'cite', inlineOnly: true }}
     />
   );
-}
+});
 
 Cite.propTypes = propTypes;
 

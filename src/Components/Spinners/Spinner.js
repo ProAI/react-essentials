@@ -16,7 +16,9 @@ const defaultProps = {
   size: null,
 };
 
-function Spinner({ variant, color, size, ...elementProps }) {
+const Spinner = React.forwardRef(function Spinner(props, ref) {
+  const { variant, color, size, ...elementProps } = props;
+
   const classes = cx(
     // constant classes
     `spinner-${variant}`,
@@ -25,8 +27,10 @@ function Spinner({ variant, color, size, ...elementProps }) {
     size === 'sm' && `spinner-${variant}-sm`,
   );
 
-  return <BaseText {...elementProps} essentials={{ className: classes }} />;
-}
+  return (
+    <BaseText {...elementProps} ref={ref} essentials={{ className: classes }} />
+  );
+});
 
 Spinner.propTypes = propTypes;
 Spinner.defaultProps = defaultProps;

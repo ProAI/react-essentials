@@ -12,7 +12,9 @@ const defaultProps = {
   fluid: false,
 };
 
-function Jumbotron({ fluid, ...elementProps }) {
+const Jumbotron = React.forwardRef(function Jumbotron(props, ref) {
+  const { fluid, ...elementProps } = props;
+
   const classes = cx(
     // constant classes
     'jumbotron',
@@ -20,8 +22,10 @@ function Jumbotron({ fluid, ...elementProps }) {
     fluid && 'jumbotron-fluid',
   );
 
-  return <BaseView {...elementProps} essentials={{ className: classes }} />;
-}
+  return (
+    <BaseView {...elementProps} ref={ref} essentials={{ className: classes }} />
+  );
+});
 
 Jumbotron.propTypes = propTypes;
 Jumbotron.defaultProps = defaultProps;

@@ -12,7 +12,9 @@ const defaultProps = {
   fluid: false,
 };
 
-function Container({ fluid, ...elementProps }) {
+const Container = React.forwardRef(function Container(props, ref) {
+  const { fluid, ...elementProps } = props;
+
   const classes = cx(
     // constant classes
     'container',
@@ -20,8 +22,10 @@ function Container({ fluid, ...elementProps }) {
     fluid ? 'container-fluid' : null,
   );
 
-  return <BaseView {...elementProps} essentials={{ className: classes }} />;
-}
+  return (
+    <BaseView {...elementProps} ref={ref} essentials={{ className: classes }} />
+  );
+});
 
 Container.propTypes = propTypes;
 Container.defaultProps = defaultProps;

@@ -8,15 +8,18 @@ const propTypes = {
   size: PropTypes.oneOf(DISPLAY_HEADING_SIZES).isRequired,
 };
 
-function DisplayHeading({ size, ...elementProps }) {
+const DisplayHeading = React.forwardRef(function DisplayHeading(props, ref) {
+  const { size, ...elementProps } = props;
+
   return (
     <BaseText
       {...elementProps}
+      ref={ref}
       accessibilityRole="heading"
       essentials={{ className: `display-${size.toString()}`, blockOnly: true }}
     />
   );
-}
+});
 
 DisplayHeading.propTypes = propTypes;
 

@@ -17,7 +17,9 @@ const defaultProps = {
   inline: false,
 };
 
-function List({ variant, unstyled, inline, ...elementProps }) {
+const List = React.forwardRef(function List(props, ref) {
+  const { variant, unstyled, inline, ...elementProps } = props;
+
   const classes = cx(
     // variable classes
     unstyled && 'list-unstyled',
@@ -28,6 +30,7 @@ function List({ variant, unstyled, inline, ...elementProps }) {
   return (
     <BaseView
       {...elementProps}
+      ref={ref}
       accessibilityRole="list"
       essentials={{
         tag: variant === 'unordered' ? 'ul' : 'ol',
@@ -36,7 +39,7 @@ function List({ variant, unstyled, inline, ...elementProps }) {
       }}
     />
   );
-}
+});
 
 List.propTypes = propTypes;
 List.defaultProps = defaultProps;

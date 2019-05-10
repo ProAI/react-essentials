@@ -6,12 +6,12 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function TableRow(elementProps) {
+const TableRow = React.forwardRef(function TableRow(props, ref) {
   // TODO: Remove pseudo view and add react-native compatible component
   return (
-    <BaseView {...elementProps} essentials={{ tag: 'tr', pseudo: true }} />
+    <BaseView {...props} ref={ref} essentials={{ tag: 'tr', pseudo: true }} />
   );
-}
+});
 
 TableRow.propTypes = propTypes;
 

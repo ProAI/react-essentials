@@ -8,16 +8,19 @@ const propTypes = {
   size: PropTypes.oneOf(HEADING_SIZES).isRequired,
 };
 
-function Heading({ size, ...elementProps }) {
+const Heading = React.forwardRef(function Heading(props, ref) {
+  const { size, ...elementProps } = props;
+
   return (
     <BaseText
       {...elementProps}
+      ref={ref}
       accessibilityRole="heading"
       aria-level={size}
       essentials={{ blockOnly: true }}
     />
   );
-}
+});
 
 Heading.propTypes = propTypes;
 

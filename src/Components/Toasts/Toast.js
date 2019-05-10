@@ -9,7 +9,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-function Toast(elementProps) {
+const Toast = React.forwardRef(function Toast(props, ref) {
   const classes = cx(
     // constant classes
     'toast',
@@ -18,12 +18,13 @@ function Toast(elementProps) {
 
   return (
     <BaseView
-      {...elementProps}
+      {...props}
+      ref={ref}
       accessibilityRole="alert"
       essentials={{ className: classes }}
     />
   );
-}
+});
 
 Toast.propTypes = propTypes;
 
