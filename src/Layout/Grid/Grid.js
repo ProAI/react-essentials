@@ -29,6 +29,7 @@ const Grid = React.forwardRef(function Grid(props, ref) {
   );
 });
 
+Grid.displayName = 'Grid';
 Grid.propTypes = propTypes;
 Grid.defaultProps = defaultProps;
 

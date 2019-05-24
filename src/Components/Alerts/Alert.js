@@ -35,6 +35,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   );
 });
 
+Alert.displayName = 'Alert';
 Alert.propTypes = propTypes;
 Alert.defaultProps = defaultProps;
 

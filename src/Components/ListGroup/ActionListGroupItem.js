@@ -45,6 +45,7 @@ const ActionListGroupItem = React.forwardRef(function ActionListGroupItem(
   });
 });
 
+ActionListGroupItem.displayName = 'ActionListGroupItem';
 ActionListGroupItem.propTypes = propTypes;
 ActionListGroupItem.defaultProps = defaultProps;
 

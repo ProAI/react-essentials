@@ -59,6 +59,7 @@ const ListGroup = React.forwardRef(function ListGroup(props, ref) {
   );
 });
 
+ListGroup.displayName = 'ListGroup';
 ListGroup.propTypes = propTypes;
 ListGroup.defaultProps = defaultProps;
 

@@ -27,6 +27,7 @@ const Badge = React.forwardRef(function Badge(props, ref) {
   );
 });
 
+Badge.displayName = 'Badge';
 Badge.propTypes = propTypes;
 Badge.defaultProps = defaultProps;
 

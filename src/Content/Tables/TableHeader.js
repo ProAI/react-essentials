@@ -17,6 +17,7 @@ const TableHeader = React.forwardRef(function TableHeader(props, ref) {
   );
 });
 
+TableHeader.displayName = 'TableHeader';
 TableHeader.propTypes = propTypes;
 
 export default TableHeader;

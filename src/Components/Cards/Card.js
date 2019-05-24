@@ -13,6 +13,7 @@ const Card = React.forwardRef(function Card(props, ref) {
   return <BaseView {...props} ref={ref} essentials={{ className: 'card' }} />;
 });
 
+Card.displayName = 'Card';
 Card.propTypes = propTypes;
 
 Card.Body = CardBody;

@@ -33,6 +33,7 @@ const ActionBadge = React.forwardRef(function ActionBadge(props, ref) {
   });
 });
 
+ActionBadge.displayName = 'ActionBadge';
 ActionBadge.propTypes = propTypes;
 ActionBadge.defaultProps = defaultProps;
 

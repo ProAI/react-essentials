@@ -13,6 +13,7 @@ const TableData = React.forwardRef(function TableData(props, ref) {
   );
 });
 
+TableData.displayName = 'TableData';
 TableData.propTypes = propTypes;
 
 export default TableData;

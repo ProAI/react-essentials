@@ -12,6 +12,7 @@ const ModalFooter = React.forwardRef(function ModalFooter(props, ref) {
   );
 });
 
+ModalFooter.displayName = 'ModalFooter';
 ModalFooter.propTypes = propTypes;
 
 export default ModalFooter;

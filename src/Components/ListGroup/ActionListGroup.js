@@ -28,6 +28,7 @@ const ActionListGroup = React.forwardRef(function ActionListGroup(props, ref) {
   );
 });
 
+ActionListGroup.displayName = 'ActionListGroup';
 ActionListGroup.propTypes = propTypes;
 ActionListGroup.defaultProps = defaultProps;
 

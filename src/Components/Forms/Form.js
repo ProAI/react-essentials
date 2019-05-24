@@ -51,6 +51,7 @@ const Form = React.forwardRef(function Form(props, ref) {
   );
 });
 
+Form.displayName = 'Form';
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;
 

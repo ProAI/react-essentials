@@ -21,6 +21,7 @@ const BlockLink = React.forwardRef(function BlockLink(props, ref) {
   return createElement({ tag: 'a' });
 });
 
+BlockLink.displayName = 'BlockLink';
 BlockLink.propTypes = propTypes;
 BlockLink.defaultProps = defaultProps;
 

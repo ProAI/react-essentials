@@ -16,6 +16,7 @@ const Code = React.forwardRef(function Code(props, ref) {
   );
 });
 
+Code.displayName = 'Code';
 Code.propTypes = propTypes;
 
 export default Code;

@@ -17,6 +17,7 @@ const TableFooter = React.forwardRef(function TableFooter(props, ref) {
   );
 });
 
+TableFooter.displayName = 'TableFooter';
 TableFooter.propTypes = propTypes;
 
 export default TableFooter;

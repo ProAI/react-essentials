@@ -32,6 +32,7 @@ const Paragraph = React.forwardRef(function Paragraph(props, ref) {
   );
 });
 
+Paragraph.displayName = 'Paragraph';
 Paragraph.propTypes = propTypes;
 Paragraph.defaultProps = defaultProps;
 

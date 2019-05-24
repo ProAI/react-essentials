@@ -32,6 +32,7 @@ const Spinner = React.forwardRef(function Spinner(props, ref) {
   );
 });
 
+Spinner.displayName = 'Spinner';
 Spinner.propTypes = propTypes;
 Spinner.defaultProps = defaultProps;
 

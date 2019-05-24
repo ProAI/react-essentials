@@ -22,6 +22,7 @@ const DropdownTextItem = React.forwardRef(function DropdownTextItem(
   );
 });
 
+DropdownTextItem.displayName = 'DropdownTextItem';
 DropdownTextItem.propTypes = propTypes;
 
 export default DropdownTextItem;

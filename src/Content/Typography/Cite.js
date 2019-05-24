@@ -16,6 +16,7 @@ const Cite = React.forwardRef(function Cite(props, ref) {
   );
 });
 
+Cite.displayName = 'Cite';
 Cite.propTypes = propTypes;
 
 export default Cite;

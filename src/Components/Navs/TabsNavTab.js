@@ -53,6 +53,7 @@ const TabsNavTab = React.forwardRef(function TabsNavTab(props, ref) {
   );
 });
 
+TabsNavTab.displayName = 'TabsNavTab';
 TabsNavTab.propTypes = propTypes;
 TabsNavTab.defaultProps = defaultProps;
 

@@ -18,6 +18,7 @@ const DropdownHeader = React.forwardRef(function DropdownHeader(props, ref) {
   );
 });
 
+DropdownHeader.displayName = 'DropdownHeader';
 DropdownHeader.propTypes = propTypes;
 
 export default DropdownHeader;

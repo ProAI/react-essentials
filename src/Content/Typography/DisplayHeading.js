@@ -21,6 +21,7 @@ const DisplayHeading = React.forwardRef(function DisplayHeading(props, ref) {
   );
 });
 
+DisplayHeading.displayName = 'DisplayHeading';
 DisplayHeading.propTypes = propTypes;
 
 export default DisplayHeading;

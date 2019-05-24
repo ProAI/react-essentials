@@ -44,6 +44,7 @@ const NavLink = React.forwardRef(function NavLink(props, ref) {
   );
 });
 
+NavLink.displayName = 'NavLink';
 NavLink.propTypes = propTypes;
 NavLink.defaultProps = defaultProps;
 

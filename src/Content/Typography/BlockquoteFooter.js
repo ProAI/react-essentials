@@ -19,6 +19,7 @@ const BlockquoteFooter = React.forwardRef(function BlockquoteFooter(
   );
 });
 
+BlockquoteFooter.displayName = 'BlockquoteFooter';
 BlockquoteFooter.propTypes = propTypes;
 
 export default BlockquoteFooter;

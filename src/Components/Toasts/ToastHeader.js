@@ -12,6 +12,7 @@ const ToastHeader = React.forwardRef(function ToastHeader(props, ref) {
   );
 });
 
+ToastHeader.displayName = 'ToastHeader';
 ToastHeader.propTypes = propTypes;
 
 export default ToastHeader;

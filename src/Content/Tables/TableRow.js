@@ -13,6 +13,7 @@ const TableRow = React.forwardRef(function TableRow(props, ref) {
   );
 });
 
+TableRow.displayName = 'TableRow';
 TableRow.propTypes = propTypes;
 
 export default TableRow;

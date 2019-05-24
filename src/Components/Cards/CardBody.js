@@ -12,6 +12,7 @@ const CardBody = React.forwardRef(function CardBody(props, ref) {
   );
 });
 
+CardBody.displayName = 'CardBody';
 CardBody.propTypes = propTypes;
 
 export default CardBody;

@@ -27,6 +27,7 @@ const Container = React.forwardRef(function Container(props, ref) {
   );
 });
 
+Container.displayName = 'Container';
 Container.propTypes = propTypes;
 Container.defaultProps = defaultProps;
 

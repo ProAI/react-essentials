@@ -17,6 +17,7 @@ const TableBody = React.forwardRef(function TableBody(props, ref) {
   );
 });
 
+TableBody.displayName = 'TableBody';
 TableBody.propTypes = propTypes;
 
 export default TableBody;

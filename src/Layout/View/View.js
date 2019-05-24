@@ -14,6 +14,7 @@ const View = React.forwardRef(function View(elementProps, ref) {
   return <BaseView {...elementProps} ref={ref} essentials={{}} />;
 });
 
+View.displayName = 'View';
 View.propTypes = propTypes;
 View.defaultProps = defaultProps;
 

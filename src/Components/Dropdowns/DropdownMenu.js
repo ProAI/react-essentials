@@ -24,6 +24,7 @@ const DropdownMenu = React.forwardRef(function DropdownMenu(props, ref) {
   );
 });
 
+DropdownMenu.displayName = 'DropdownMenu';
 DropdownMenu.propTypes = propTypes;
 DropdownMenu.defaultProps = defaultProps;
 

@@ -41,6 +41,7 @@ const List = React.forwardRef(function List(props, ref) {
   );
 });
 
+List.displayName = 'List';
 List.propTypes = propTypes;
 List.defaultProps = defaultProps;
 

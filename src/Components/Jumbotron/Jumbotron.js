@@ -27,6 +27,7 @@ const Jumbotron = React.forwardRef(function Jumbotron(props, ref) {
   );
 });
 
+Jumbotron.displayName = 'Jumbotron';
 Jumbotron.propTypes = propTypes;
 Jumbotron.defaultProps = defaultProps;
 

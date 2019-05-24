@@ -11,4 +11,6 @@ const DropdownDivider = React.forwardRef(function DropdownDivider(props, ref) {
   );
 });
 
+DropdownDivider.displayName = 'DropdownDivider';
+
 export default DropdownDivider;

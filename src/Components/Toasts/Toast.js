@@ -26,6 +26,7 @@ const Toast = React.forwardRef(function Toast(props, ref) {
   );
 });
 
+Toast.displayName = 'Toast';
 Toast.propTypes = propTypes;
 
 Toast.Body = ToastBody;

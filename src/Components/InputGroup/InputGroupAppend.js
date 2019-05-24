@@ -19,6 +19,7 @@ const InputGroupAppend = React.forwardRef(function InputGroupAppend(
   );
 });
 
+InputGroupAppend.displayName = 'InputGroupAppend';
 InputGroupAppend.propTypes = propTypes;
 
 export default InputGroupAppend;

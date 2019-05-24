@@ -12,6 +12,7 @@ const CardFooter = React.forwardRef(function CardFooter(props, ref) {
   );
 });
 
+CardFooter.displayName = 'CardFooter';
 CardFooter.propTypes = propTypes;
 
 export default CardFooter;

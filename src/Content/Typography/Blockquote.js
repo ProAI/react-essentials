@@ -17,6 +17,7 @@ const Blockquote = React.forwardRef(function Blockquote(props, ref) {
   );
 });
 
+Blockquote.displayName = 'Blockquote';
 Blockquote.propTypes = propTypes;
 
 Blockquote.Footer = BlockquoteFooter;

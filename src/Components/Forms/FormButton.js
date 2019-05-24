@@ -73,6 +73,7 @@ const FormButton = React.forwardRef(function FormButton(props, ref) {
   });
 });
 
+FormButton.displayName = 'FormButton';
 FormButton.propTypes = propTypes;
 FormButton.defaultProps = defaultProps;
 

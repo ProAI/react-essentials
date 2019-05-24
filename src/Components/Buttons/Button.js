@@ -66,6 +66,7 @@ const Button = React.forwardRef(function Button(props, ref) {
   });
 });
 
+Button.displayName = 'Button';
 Button.propTypes = propTypes;
 Button.defaultProps = defaultProps;
 

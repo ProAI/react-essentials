@@ -17,6 +17,7 @@ const ButtonToolbar = React.forwardRef(function ButtonToolbar(props, ref) {
   );
 });
 
+ButtonToolbar.displayName = 'ButtonToolbar';
 ButtonToolbar.propTypes = propTypes;
 
 export default ButtonToolbar;

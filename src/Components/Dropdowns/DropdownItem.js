@@ -23,6 +23,7 @@ const DropdownItem = React.forwardRef(function DropdownItem(props, ref) {
   });
 });
 
+DropdownItem.displayName = 'DropdownItem';
 DropdownItem.propTypes = propTypes;
 DropdownItem.defaultProps = defaultProps;
 

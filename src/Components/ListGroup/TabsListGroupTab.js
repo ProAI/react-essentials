@@ -54,6 +54,7 @@ const TabsListGroupTab = React.forwardRef(function TabsListGroupTab(
   );
 });
 
+TabsListGroupTab.displayName = 'TabsListGroupTab';
 TabsListGroupTab.propTypes = propTypes;
 TabsListGroupTab.defaultProps = defaultProps;
 

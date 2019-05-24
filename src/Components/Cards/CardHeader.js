@@ -12,6 +12,7 @@ const CardHeader = React.forwardRef(function CardHeader(props, ref) {
   );
 });
 
+CardHeader.displayName = 'CardHeader';
 CardHeader.propTypes = propTypes;
 
 export default CardHeader;

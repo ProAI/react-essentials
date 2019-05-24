@@ -17,6 +17,7 @@ const ButtonGroup = React.forwardRef(function ButtonGroup(props, ref) {
   );
 });
 
+ButtonGroup.displayName = 'ButtonGroup';
 ButtonGroup.propTypes = propTypes;
 
 export default ButtonGroup;

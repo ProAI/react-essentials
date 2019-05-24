@@ -22,6 +22,7 @@ const Heading = React.forwardRef(function Heading(props, ref) {
   );
 });
 
+Heading.displayName = 'Heading';
 Heading.propTypes = propTypes;
 
 export default Heading;

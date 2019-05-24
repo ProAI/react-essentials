@@ -21,6 +21,7 @@ const Link = React.forwardRef(function Link(props, ref) {
   return createElement({ tag: 'a' });
 });
 
+Link.displayName = 'Link';
 Link.propTypes = propTypes;
 Link.defaultProps = defaultProps;
 

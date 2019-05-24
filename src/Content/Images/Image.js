@@ -32,6 +32,7 @@ const Image = React.forwardRef(function Image(props, ref) {
   );
 });
 
+Image.displayName = 'Image';
 Image.propTypes = propTypes;
 Image.defaultProps = defaultProps;
 

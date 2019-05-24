@@ -13,6 +13,7 @@ const TableHeading = React.forwardRef(function TableHeading(props, ref) {
   );
 });
 
+TableHeading.displayName = 'TableHeading';
 TableHeading.propTypes = propTypes;
 
 export default TableHeading;

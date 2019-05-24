@@ -48,6 +48,7 @@ const GridBox = React.forwardRef(function GridBox(props, ref) {
   );
 });
 
+GridBox.displayName = 'GridBox';
 GridBox.propTypes = propTypes;
 GridBox.defaultProps = defaultProps;
 

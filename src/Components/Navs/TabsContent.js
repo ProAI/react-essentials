@@ -28,6 +28,7 @@ const TabsContent = React.forwardRef(function TabsContent(props, ref) {
   );
 });
 
+TabsContent.displayName = 'TabsContent';
 TabsContent.propTypes = propTypes;
 
 TabsContent.Pane = TabsContentPane;

@@ -12,6 +12,7 @@ const ModalBody = React.forwardRef(function ModalBody(props, ref) {
   );
 });
 
+ModalBody.displayName = 'ModalBody';
 ModalBody.propTypes = propTypes;
 
 export default ModalBody;

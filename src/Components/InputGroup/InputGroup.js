@@ -14,6 +14,7 @@ const InputGroup = React.forwardRef(function InputGroup(props, ref) {
   );
 });
 
+InputGroup.displayName = 'InputGroup';
 InputGroup.propTypes = propTypes;
 
 InputGroup.Append = InputGroupAppend;

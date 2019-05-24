@@ -12,6 +12,7 @@ const ToastBody = React.forwardRef(function ToastBody(props, ref) {
   );
 });
 
+ToastBody.displayName = 'ToastBody';
 ToastBody.propTypes = propTypes;
 
 export default ToastBody;

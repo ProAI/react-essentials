@@ -41,6 +41,7 @@ const Text = React.forwardRef(function Text(props, ref) {
   );
 });
 
+Text.displayName = 'Text';
 Text.propTypes = propTypes;
 Text.defaultProps = defaultProps;
 

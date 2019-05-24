@@ -19,6 +19,7 @@ const InputGroupPrepend = React.forwardRef(function InputGroupPrepend(
   );
 });
 
+InputGroupPrepend.displayName = 'InputGroupPrepend';
 InputGroupPrepend.propTypes = propTypes;
 
 export default InputGroupPrepend;

@@ -37,6 +37,7 @@ const Nav = React.forwardRef(function Nav(props, ref) {
   );
 });
 
+Nav.displayName = 'Nav';
 Nav.propTypes = propTypes;
 Nav.defaultProps = defaultProps;
 
