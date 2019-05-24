@@ -18,7 +18,7 @@ const defaultProps = {
   color: 'primary',
 };
 
-const ActionBadge = React.forwardRef(function ActionBadge(props, ref) {
+const TouchableBadge = React.forwardRef(function TouchableBadge(props, ref) {
   const { color, ...elementProps } = props;
   const classes = cx(
     // constant classes
@@ -33,8 +33,8 @@ const ActionBadge = React.forwardRef(function ActionBadge(props, ref) {
   });
 });
 
-ActionBadge.displayName = 'ActionBadge';
-ActionBadge.propTypes = propTypes;
-ActionBadge.defaultProps = defaultProps;
+TouchableBadge.displayName = 'TouchableBadge';
+TouchableBadge.propTypes = propTypes;
+TouchableBadge.defaultProps = defaultProps;
 
-export default ActionBadge;
+export default TouchableBadge;

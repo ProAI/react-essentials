@@ -8,7 +8,7 @@ import css from './css';
 import Alert from './Components/Alerts/Alert';
 
 /* badge components */
-import ActionBadge from './Components/Badges/ActionBadge';
+import TouchableBadge from './Components/Badges/TouchableBadge';
 import Badge from './Components/Badges/Badge';
 
 /* button group components */
@@ -34,7 +34,7 @@ import InputGroup from './Components/InputGroup/InputGroup';
 import Jumbotron from './Components/Jumbotron/Jumbotron';
 
 /* list group components */
-import ActionListGroup from './Components/ListGroup/ActionListGroup';
+import TouchableListGroup from './Components/ListGroup/TouchableListGroup';
 import ListGroup from './Components/ListGroup/ListGroup';
 import TabsListGroup from './Components/ListGroup/TabsListGroup';
 
@@ -95,7 +95,7 @@ export {
   css,
   // components
   Alert,
-  ActionBadge,
+  TouchableBadge,
   Badge,
   ButtonGroup,
   ButtonToolbar,
@@ -105,7 +105,7 @@ export {
   Form,
   InputGroup,
   Jumbotron,
-  ActionListGroup,
+  TouchableListGroup,
   ListGroup,
   TabsListGroup,
   Modal,

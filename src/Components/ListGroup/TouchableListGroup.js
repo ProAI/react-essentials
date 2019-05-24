@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import ActionListGroupItem from './ActionListGroupItem';
+import TouchableListGroupItem from './TouchableListGroupItem';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -13,7 +13,10 @@ const defaultProps = {
   flush: false,
 };
 
-const ActionListGroup = React.forwardRef(function ActionListGroup(props, ref) {
+const TouchableListGroup = React.forwardRef(function TouchableListGroup(
+  props,
+  ref,
+) {
   const { flush, ...elementProps } = props;
 
   const classes = cx(
@@ -28,10 +31,10 @@ const ActionListGroup = React.forwardRef(function ActionListGroup(props, ref) {
   );
 });
 
-ActionListGroup.displayName = 'ActionListGroup';
-ActionListGroup.propTypes = propTypes;
-ActionListGroup.defaultProps = defaultProps;
+TouchableListGroup.displayName = 'TouchableListGroup';
+TouchableListGroup.propTypes = propTypes;
+TouchableListGroup.defaultProps = defaultProps;
 
-ActionListGroup.Item = ActionListGroupItem;
+TouchableListGroup.Item = TouchableListGroupItem;
 
-export default ActionListGroup;
+export default TouchableListGroup;
