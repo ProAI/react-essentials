@@ -55,6 +55,8 @@ class Provider extends React.Component {
   }
 
   componentDidMount() {
+    this.handleChange({ window: Dimensions.get('window') });
+
     Dimensions.addEventListener('change', this.handleChange);
   }
 
