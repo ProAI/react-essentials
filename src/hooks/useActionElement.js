@@ -27,7 +27,15 @@ const handleRouting = (event, { replace, to }, history) => {
 
 export default function useActionElement(Component, props, ref) {
   // eslint-disable-next-line react/prop-types
-  const { to, replace, external, onPress, keepFocus, ...elementProps } = props;
+  const {
+    to,
+    replace,
+    external,
+    onPress,
+    onClick,
+    keepFocus,
+    ...elementProps
+  } = props;
 
   const { history, location } = useContext(RouterContext);
 
@@ -59,8 +67,13 @@ export default function useActionElement(Component, props, ref) {
         {...elementProps}
         ref={handleRef}
         accessibilityRole="button"
-        onPress={event => {
-          handlePress(event, props, internalRef);
+        onClick={event => {
+          // We use the onClick event for buttons instead of onPress, because
+          // if the mouse moves while clicking the click is not detected.
+          // See https://github.com/necolas/react-native-web/issues/1219
+          handlePress({}, props, internalRef);
+
+          if (onClick) onClick(event);
         }}
         tabIndex={0}
         essentials={essentials}
@@ -79,6 +92,7 @@ export default function useActionElement(Component, props, ref) {
         onPress={event => {
           handlePress(event, props, internalRef);
         }}
+        onClick={onClick}
         target="_blank"
         rel="noopener noreferrer"
         essentials={essentials}
@@ -101,6 +115,7 @@ export default function useActionElement(Component, props, ref) {
         handlePress(event, props, internalRef);
         handleRouting(event, props, history);
       }}
+      onClick={onClick}
       essentials={essentials}
     />
   );
