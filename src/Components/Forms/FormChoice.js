@@ -103,6 +103,12 @@ class FormChoice extends React.Component {
                     );
                   }}
                   onBlur={() => form.setFieldTouched(name, true)}
+                  onKeyDown={event => {
+                    // Submit form on enter
+                    if (event.keyCode === 13) {
+                      form.submitForm();
+                    }
+                  }}
                   className={inputClasses}
                 />
               )}
@@ -127,6 +133,12 @@ class FormChoice extends React.Component {
                     form.setFieldValue(name, newValue);
                   }}
                   onBlur={() => form.setFieldTouched(name, true)}
+                  onKeyDown={event => {
+                    // Submit form on enter
+                    if (event.keyCode === 13) {
+                      form.submitForm();
+                    }
+                  }}
                   className={inputClasses}
                 />
               )}

@@ -105,6 +105,12 @@ class FormInput extends React.Component {
               form.handleChange(event);
             }}
             onBlur={form.handleBlur}
+            onKeyDown={event => {
+              // Submit form on enter
+              if (event.keyCode === 13) {
+                form.submitForm();
+              }
+            }}
             placeholder={placeholder}
             className={inputClasses}
             autoFocus={autoFocus}

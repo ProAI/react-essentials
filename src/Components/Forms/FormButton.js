@@ -28,9 +28,9 @@ const FormButton = React.forwardRef(function FormButton(props, ref) {
   const { type, color, size, active, block, onPress, ...elementProps } = props;
 
   // eslint-disable-next-line no-underscore-dangle
-  const formik = useContext(FormikProvider._context);
+  const form = useContext(FormikProvider._context);
 
-  const disabled = formik.isSubmitting;
+  const disabled = form.isSubmitting;
 
   const classes = cx(
     // constant classes
@@ -50,11 +50,11 @@ const FormButton = React.forwardRef(function FormButton(props, ref) {
     }
 
     if (type === 'submit') {
-      formik.handleSubmit(event);
+      form.submitForm();
     }
 
     if (type === 'reset') {
-      formik.handleReset();
+      form.resetForm();
     }
   };
 
