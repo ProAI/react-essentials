@@ -120,8 +120,6 @@ class Dropdown extends React.Component {
       : this.identifier;
 
     const onPress = e => {
-      e.preventDefault();
-
       if (children[0].props.onPress) {
         children[0].props.onPress(e);
       }
