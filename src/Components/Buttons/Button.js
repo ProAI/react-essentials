@@ -12,6 +12,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(BUTTON_COLORS),
   size: PropTypes.oneOf(SIZES),
+  outline: PropTypes.bool,
   active: PropTypes.bool,
   disabled: PropTypes.bool,
   block: PropTypes.bool,
@@ -22,6 +23,7 @@ const defaultProps = {
   ...action.defaultProps,
   color: 'primary',
   size: null,
+  outline: false,
   active: false,
   disabled: false,
   block: false,
@@ -32,6 +34,7 @@ const Button = React.forwardRef(function Button(props, ref) {
   const {
     color,
     size,
+    outline,
     active,
     disabled,
     block,
@@ -42,7 +45,7 @@ const Button = React.forwardRef(function Button(props, ref) {
   const classes = cx(
     // constant classes
     'btn',
-    `btn-${color}`,
+    outline ? `btn-outline-${color}` : `btn-${color}`,
     // variable classes
     size === 'sm' && 'btn-sm',
     size === 'lg' && 'btn-lg',
