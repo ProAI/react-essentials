@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PopperJS from 'popper.js';
 import BaseView from '../../utils/rnw-compat/BaseView';
+import BaseText from '../../utils/rnw-compat/BaseText';
 import Overlay from '../../utils/Overlay';
 import { TRIGGERS } from '../../utils/constants';
 import withForwardedRef from '../../utils/withForwardedRef';
@@ -165,13 +166,16 @@ class Popover extends React.Component {
         role="tooltip"
       >
         {title && (
-          <BaseView
+          <BaseText
+            accessibilityRole="heading"
+            aria-level={3}
             essentials={{
               className: 'popover-header',
+              blockOnly: true,
             }}
           >
             {title}
-          </BaseView>
+          </BaseText>
         )}
         <BaseView essentials={{ className: 'popover-body' }}>
           {content}
