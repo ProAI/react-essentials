@@ -28,10 +28,10 @@
     "camelize": "^1.0.0",
     "classnames": "^2.2.6",
     "create-react-class": "^15.6.3",
-    "css-to-react-native": "^2.3.1",
+    "css-to-react-native": "2.3.1",
     "fbjs": "^1.0.0",
     "formik": "^1.5.4",
-    "history": "^4.9.0",
+    "history": "^4.10.1",
     "popper.js": "^1.14.7",
     "prop-types": "^15.7.2",
     "react-day-picker": "^7.3.0",
@@ -39,10 +39,10 @@
   },
   "devDependencies": {
     "packsy": "0.1.8",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
-    "react-native-web": "0.11.2",
-    "react-router": "5.0.0"
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-native-web": "0.11.7",
+    "react-router": "5.0.1"
   },
   "peerDependencies": {
     "react": ">=16.8",
