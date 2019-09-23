@@ -39,8 +39,16 @@ class Popover extends React.Component {
     this.trigger = trigger.split(' ');
   }
 
-  onTargetPress = () => {
-    const { state } = this;
+  onTargetPress = event => {
+    const {
+      state,
+      props: { target },
+    } = this;
+
+    // handle target onPress
+    if (target.props.onPress) {
+      target.props.onPress(event);
+    }
 
     // handle click trigger
     if (this.trigger.indexOf('click') !== -1) {
@@ -62,8 +70,16 @@ class Popover extends React.Component {
     }
   };
 
-  onTargetFocus = () => {
-    const { state } = this;
+  onTargetFocus = event => {
+    const {
+      state,
+      props: { target },
+    } = this;
+
+    // handle target onFocus
+    if (target.props.onFocus) {
+      target.props.onFocus(event);
+    }
 
     // handle focus trigger
     if (this.trigger.indexOf('focus') !== -1 && !state.isFocused) {
@@ -76,8 +92,16 @@ class Popover extends React.Component {
     }
   };
 
-  onTargetBlur = () => {
-    const { state } = this;
+  onTargetBlur = event => {
+    const {
+      state,
+      props: { target },
+    } = this;
+
+    // handle target onBlur
+    if (target.props.onBlur) {
+      target.props.onBlur(event);
+    }
 
     // handle focus trigger
     if (
@@ -92,15 +116,32 @@ class Popover extends React.Component {
     }
   };
 
-  onTargetMouseOver = () => {
+  onTargetMouseOver = event => {
+    const {
+      props: { target },
+    } = this;
+
+    // handle target onMouseOver
+    if (target.props.onMouseOver) {
+      target.props.onMouseOver(event);
+    }
+
     // handle hover trigger
     if (this.trigger.indexOf('hover') !== -1 && !this.visible()) {
       this.onToggle();
     }
   };
 
-  onTargetMouseLeave = () => {
-    const { state } = this;
+  onTargetMouseLeave = event => {
+    const {
+      state,
+      props: { target },
+    } = this;
+
+    // handle target onMouseLeave
+    if (target.props.onMouseLeave) {
+      target.props.onMouseLeave(event);
+    }
 
     // handle hover trigger
     if (
