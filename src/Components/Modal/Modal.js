@@ -19,6 +19,8 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   visible: PropTypes.bool.isRequired,
   size: PropTypes.oneOf(MODAL_SIZES),
+  scrollable: PropTypes.bool,
+  centered: PropTypes.bool,
   onToggle: PropTypes.func.isRequired,
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
@@ -27,6 +29,8 @@ const propTypes = {
 
 const defaultProps = {
   size: null,
+  scrollable: false,
+  centered: false,
   onEnter: null,
   onExit: null,
   innerRef: null,
@@ -193,6 +197,8 @@ class Modal extends React.Component {
       children,
       visible,
       size,
+      scrollable,
+      centered,
       onToggle,
       onEnter,
       onExit,
@@ -213,6 +219,8 @@ class Modal extends React.Component {
       // variable classes
       size === 'sm' && 'modal-sm',
       size === 'lg' && 'modal-lg',
+      scrollable && 'modal-dialog-scrollable',
+      centered && 'modal-dialog-centered',
     );
 
     const modalBackdropClasses = cx(
