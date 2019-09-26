@@ -34,11 +34,14 @@ const ActionListGroupItem = React.forwardRef(function ActionListGroupItem(
     active && 'active',
   );
 
-  const createElement = useActionElement(BaseTouchable, {
-    disabled,
-    elementProps,
+  const createElement = useActionElement(
+    BaseTouchable,
+    {
+      disabled,
+      ...elementProps,
+    },
     ref,
-  });
+  );
 
   return createElement({
     className: classes,
