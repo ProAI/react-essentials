@@ -219,6 +219,7 @@ class Modal extends React.Component {
       // variable classes
       size === 'sm' && 'modal-sm',
       size === 'lg' && 'modal-lg',
+      size === 'xl' && 'modal-xl',
       scrollable && 'modal-dialog-scrollable',
       centered && 'modal-dialog-centered',
     );
