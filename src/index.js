@@ -1,8 +1,10 @@
 /* misc */
-import StyleSheet from 'react-native-web/dist/cjs/exports/StyleSheet';
-import getStyleSheet from './getStyleSheet';
 import Provider from './Provider';
-import css from './css';
+
+/* styling */
+import StyleSheet from './styling/StyleSheet';
+import getStyleSheet from './styling/getStyleSheet';
+import css from './styling/css';
 
 /* alert components */
 import Alert from './Components/Alerts/Alert';
@@ -89,9 +91,10 @@ import useMedia from './hooks/useMedia';
 
 export {
   // misc
+  Provider,
+  // styling
   StyleSheet,
   getStyleSheet,
-  Provider,
   css,
   // components
   Alert,

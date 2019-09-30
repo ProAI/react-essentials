@@ -3,15 +3,22 @@ import styleResolver from 'react-native-web/dist/cjs/exports/StyleSheet/styleRes
 
 export default function getStyleSheet() {
   return {
-    getStyleTag: () => {
+    getStyleTag() {
       const sheet = styleResolver.getStyleSheet();
+
       return `<style id="${sheet.id}">${sheet.textContent}</style>`;
     },
-    /* eslint-disable react/no-danger */
-    getStyleElement: () => {
+    getStyleElement() {
       const sheet = styleResolver.getStyleSheet();
-      return <style dangerouslySetInnerHTML={{ __html: sheet.textContent }} id={sheet.id} />;
+
+      /* eslint-disable react/no-danger */
+      return (
+        <style
+          dangerouslySetInnerHTML={{ __html: sheet.textContent }}
+          id={sheet.id}
+        />
+      );
+      /* eslint-enable */
     },
-    /* eslint-enable */
   };
 }
