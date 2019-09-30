@@ -8,13 +8,9 @@ function makeStyle(source) {
   const preparedSource = source;
   const theme = Theme.get();
 
-  Object.entries(source).forEach(([key, props]) => {
-    if (typeof props === 'object') {
-      Object.entries({ ...props }).forEach(([propKey, propValue]) => {
-        if (typeof propValue === 'string' && propValue.charAt(0) === '$') {
-          preparedSource[key][propKey] = theme[propValue.substr(1)];
-        }
-      });
+  Object.entries(source).forEach(([key, value]) => {
+    if (typeof value === 'function') {
+      preparedSource[key] = value(theme);
     }
   });
 

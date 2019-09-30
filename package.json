@@ -28,7 +28,7 @@
     "camelize": "^1.0.0",
     "classnames": "^2.2.6",
     "create-react-class": "^15.6.3",
-    "css-to-react-native": "2.3.1",
+    "css-to-react-native": "^2.3.2",
     "fbjs": "^1.0.0",
     "formik": "^1.5.4",
     "history": "^4.10.1",
