@@ -37,7 +37,8 @@ const Form = React.forwardRef(function Form(props, ref) {
       validateOnChange={false}
       validate={validate}
       onSubmit={onSubmit}
-      render={form => (
+    >
+      {form => (
         <BaseView
           {...elementProps}
           ref={ref}
@@ -47,7 +48,7 @@ const Form = React.forwardRef(function Form(props, ref) {
           {typeof children === 'function' ? children(form) : children}
         </BaseView>
       )}
-    />
+    </Formik>
   );
 });
 
