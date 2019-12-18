@@ -22,6 +22,7 @@ const propTypes = {
   size: PropTypes.oneOf(SIZES),
   info: PropTypes.string,
   multiline: PropTypes.bool,
+  autoComplete: PropTypes.oneOf(['on', 'off']),
   autoFocus: PropTypes.bool,
   formatError: PropTypes.func,
   fieldRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
@@ -38,6 +39,7 @@ const defaultProps = {
   size: null,
   info: null,
   multiline: false,
+  autoComplete: 'on',
   autoFocus: false,
   formatError: null,
   fieldRef: null,
@@ -60,6 +62,7 @@ class FormInput extends React.Component {
       size,
       info,
       multiline,
+      autoComplete,
       autoFocus,
       formatError,
       fieldRef,
@@ -108,11 +111,14 @@ class FormInput extends React.Component {
             onKeyDown={event => {
               // Submit form on enter
               if (event.keyCode === 13) {
+                event.preventDefault();
+
                 form.submitForm();
               }
             }}
             placeholder={placeholder}
             className={inputClasses}
+            autoComplete={autoComplete === 'on' ? null : autoComplete}
             autoFocus={autoFocus}
           />
         )}

@@ -106,6 +106,8 @@ class FormChoice extends React.Component {
                   onKeyDown={event => {
                     // Submit form on enter
                     if (event.keyCode === 13) {
+                      event.preventDefault();
+
                       form.submitForm();
                     }
                   }}
@@ -136,6 +138,8 @@ class FormChoice extends React.Component {
                   onKeyDown={event => {
                     // Submit form on enter
                     if (event.keyCode === 13) {
+                      event.preventDefault();
+
                       form.submitForm();
                     }
                   }}
