@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useFormikContext } from 'formik';
 import cx from 'classnames';
 import Field from './Field';
-import withFormField from './withFormField';
-import Context from '../../Context';
+import useIdentifier from '../../hooks/useIdentifier';
 import { SIZES } from '../../utils/constants';
 
 const propTypes = {
+  name: PropTypes.string.isRequired,
   title: PropTypes.string,
   placeholder: PropTypes.string,
   type: PropTypes.oneOf([
@@ -24,12 +25,9 @@ const propTypes = {
   multiline: PropTypes.bool,
   autoComplete: PropTypes.oneOf(['on', 'off']),
   autoFocus: PropTypes.bool,
+  trimValue: PropTypes.bool,
+  convertEmptyValueToNull: PropTypes.bool,
   formatError: PropTypes.func,
-  fieldRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  /* eslint-disable react/forbid-prop-types */
-  field: PropTypes.any.isRequired,
-  form: PropTypes.any.isRequired,
-  /* eslint-enable */
 };
 
 const defaultProps = {
@@ -41,112 +39,116 @@ const defaultProps = {
   multiline: false,
   autoComplete: 'on',
   autoFocus: false,
+  trimValue: false,
+  convertEmptyValueToNull: false,
   formatError: null,
-  fieldRef: null,
 };
 
-class FormInput extends React.Component {
-  static contextType = Context;
+const FormInput = React.forwardRef(function FormInput(props, ref) {
+  const {
+    name,
+    title,
+    placeholder,
+    type,
+    size,
+    info,
+    multiline,
+    autoComplete,
+    autoFocus,
+    trimValue,
+    convertEmptyValueToNull,
+    formatError,
+  } = props;
 
-  constructor(props, context) {
-    super(props, context);
+  const identifier = useIdentifier('re-form-');
+  const form = useFormikContext();
 
-    this.identifier = context.generateKey('re-form-');
-  }
+  const inputClasses = cx(
+    // constant classes
+    'form-control',
+    // variable classes
+    form.touched[name] && form.errors[name] && 'is-invalid',
+    size === 'sm' && 'form-control-sm',
+    size === 'lg' && 'form-control-lg',
+  );
 
-  render() {
-    const {
-      title,
-      placeholder,
-      type,
-      size,
-      info,
-      multiline,
-      autoComplete,
-      autoFocus,
-      formatError,
-      fieldRef,
-      field: { name, value },
-      form,
-    } = this.props;
+  const error = formatError
+    ? formatError(form.errors[name])
+    : form.errors[name];
 
-    const inputClasses = cx(
-      // constant classes
-      'form-control',
-      // variable classes
-      form.touched[name] && form.errors[name] && 'is-invalid',
-      size === 'sm' && 'form-control-sm',
-      size === 'lg' && 'form-control-lg',
-    );
+  /* eslint-disable jsx-a11y/label-has-for */
+  /* eslint-disable jsx-a11y/no-autofocus */
+  return (
+    <Field error={error} touched={form.touched[name]} info={info}>
+      {title && (
+        <label htmlFor={`${identifier}-${name}`} className="form-control-label">
+          {title}
+        </label>
+      )}
+      {!multiline && (
+        <input
+          ref={ref}
+          type={type}
+          id={`${identifier}-${name}`}
+          name={name}
+          value={form.values[name] || ''}
+          onChange={event => {
+            form.setFieldError(name, null);
 
-    const error = formatError
-      ? formatError(form.errors[name])
-      : form.errors[name];
+            const { value } = event.target;
 
-    /* eslint-disable jsx-a11y/label-has-for */
-    /* eslint-disable jsx-a11y/no-autofocus */
-    return (
-      <Field error={error} touched={form.touched[name]} info={info}>
-        {title && (
-          <label
-            htmlFor={`${this.identifier}-${name}`}
-            className="form-control-label"
-          >
-            {title}
-          </label>
-        )}
-        {!multiline && (
-          <input
-            ref={fieldRef}
-            type={type}
-            id={`${this.identifier}-${name}`}
-            name={name}
-            value={value || ''}
-            onChange={event => {
-              form.setFieldError(name, null);
+            // Trim value if type is not password
+            const trimmedValue =
+              trimValue && type !== 'password' ? value.trim() : value;
 
-              form.handleChange(event);
-            }}
-            onBlur={form.handleBlur}
-            onKeyDown={event => {
-              // Submit form on enter
-              if (event.keyCode === 13) {
-                event.preventDefault();
+            // Handle empty string as null
+            const nextValue =
+              convertEmptyValueToNull && trimmedValue === ''
+                ? null
+                : trimmedValue;
 
-                form.submitForm();
-              }
-            }}
-            placeholder={placeholder}
-            className={inputClasses}
-            autoComplete={autoComplete === 'on' ? null : autoComplete}
-            autoFocus={autoFocus}
-          />
-        )}
-        {multiline && (
-          <textarea
-            ref={fieldRef}
-            id={`${this.identifier}-${name}`}
-            name={name}
-            value={value || ''}
-            onChange={event => {
-              form.setFieldError(name, null);
+            form.setFieldValue(name, nextValue);
+          }}
+          onBlur={form.handleBlur}
+          onKeyDown={event => {
+            // Submit form on enter
+            if (event.keyCode === 13) {
+              event.preventDefault();
 
-              form.handleChange(event);
-            }}
-            onBlur={form.handleBlur}
-            placeholder={placeholder}
-            rows="7"
-            className={inputClasses}
-            autoFocus={autoFocus}
-          />
-        )}
-      </Field>
-    );
-    /* eslint-enable */
-  }
-}
+              form.submitForm();
+            }
+          }}
+          placeholder={placeholder}
+          className={inputClasses}
+          autoComplete={autoComplete === 'on' ? null : autoComplete}
+          autoFocus={autoFocus}
+        />
+      )}
+      {multiline && (
+        <textarea
+          ref={ref}
+          id={`${identifier}-${name}`}
+          name={name}
+          value={form.values[name] || ''}
+          onChange={event => {
+            form.setFieldError(name, null);
 
+            form.handleChange(event);
+          }}
+          onBlur={form.handleBlur}
+          placeholder={placeholder}
+          rows="7"
+          className={inputClasses}
+          autoFocus={autoFocus}
+        />
+      )}
+    </Field>
+  );
+  /* eslint-enable */
+});
+
+FormInput.displayName = 'FormInput';
 FormInput.propTypes = propTypes;
 FormInput.defaultProps = defaultProps;
 
-export default withFormField(FormInput);
+export default FormInput;

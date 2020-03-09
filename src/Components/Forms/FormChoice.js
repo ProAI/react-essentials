@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useFormikContext } from 'formik';
 import cx from 'classnames';
 import Field from './Field';
-import Context from '../../Context';
-import withFormField from './withFormField';
+import useIdentifier from '../../hooks/useIdentifier';
 
 const propTypes = {
+  name: PropTypes.string.isRequired,
   title: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
@@ -16,11 +17,6 @@ const propTypes = {
   info: PropTypes.string,
   multiple: PropTypes.bool,
   formatError: PropTypes.func,
-  fieldRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  /* eslint-disable react/forbid-prop-types */
-  field: PropTypes.any.isRequired,
-  form: PropTypes.any.isRequired,
-  /* eslint-enable */
 };
 
 const defaultProps = {
@@ -28,141 +24,119 @@ const defaultProps = {
   info: null,
   multiple: false,
   formatError: null,
-  fieldRef: null,
 };
 
-class FormChoice extends React.Component {
-  static contextType = Context;
+const FormChoice = React.forwardRef(function FormChoice(props, ref) {
+  const { name, title, options, info, multiple, formatError } = props;
 
-  constructor(props, context) {
-    super(props, context);
+  const identifier = useIdentifier('re-form-');
+  const form = useFormikContext();
 
-    this.identifier = context.generateKey('re-form-');
-  }
+  const classes = cx(
+    // constant classes
+    'custom-control',
+    `custom-${multiple ? 'checkbox' : 'radio'}`,
+  );
 
-  render() {
-    const {
-      title,
-      options,
-      info,
-      multiple,
-      formatError,
-      fieldRef,
-      field: { name, value },
-      form,
-    } = this.props;
+  const inputClasses = cx(
+    // constant classes
+    'custom-control-input',
+    // variable classes
+    form.touched[name] && form.errors[name] && 'is-invalid',
+  );
 
-    let index = 0;
+  const error = formatError
+    ? formatError(form.errors[name])
+    : form.errors[name];
 
-    const getIndex = () => index;
+  /* eslint-disable jsx-a11y/label-has-for */
+  return (
+    <Field error={error} touched={form.touched[name]} info={info}>
+      {title && <legend className="form-group-legend">{title}</legend>}
+      <div className="custom-controls-stacked">
+        {options.map((option, key) => (
+          <div key={option.value} className={classes}>
+            {!multiple && (
+              <input
+                ref={ref}
+                type="radio"
+                id={`${identifier}-${name}-${key}`}
+                name={name}
+                value={option.value}
+                checked={form.values[name] === option.value}
+                onChange={event => {
+                  form.setFieldError(name, null);
 
-    const increaseIndex = () => {
-      index += 1;
-    };
+                  form.setFieldValue(
+                    name,
+                    event.target.checked ? option.value : form.values[name],
+                  );
+                }}
+                onBlur={() => {
+                  form.setFieldTouched(name, true);
+                }}
+                onKeyDown={event => {
+                  // Submit form on enter
+                  if (event.keyCode === 13) {
+                    event.preventDefault();
 
-    const check = multiple ? 'checkbox' : 'radio';
+                    form.submitForm();
+                  }
+                }}
+                className={inputClasses}
+              />
+            )}
+            {multiple && (
+              <input
+                ref={ref}
+                type="checkbox"
+                id={`${identifier}-${name}-${key}`}
+                name={`${name}[${key}]`}
+                value={option.value}
+                checked={form.values[name].indexOf(option.value) !== -1}
+                onChange={event => {
+                  form.setFieldError(name, null);
 
-    const classes = cx(
-      // constant classes
-      'custom-control',
-      `custom-${check}`,
-    );
+                  const nextValue = [...form.values[name]];
 
-    const inputClasses = cx(
-      // constant classes
-      'custom-control-input',
-      // variable classes
-      form.touched[name] && form.errors[name] && 'is-invalid',
-    );
+                  if (event.target.checked) {
+                    nextValue.push(option.value);
+                  } else {
+                    nextValue.splice(nextValue.indexOf(option.value), 1);
+                  }
 
-    const error = formatError
-      ? formatError(form.errors[name])
-      : form.errors[name];
+                  form.setFieldValue(name, nextValue);
+                }}
+                onBlur={() => {
+                  form.setFieldTouched(name, true);
+                }}
+                onKeyDown={event => {
+                  // Submit form on enter
+                  if (event.keyCode === 13) {
+                    event.preventDefault();
 
-    /* eslint-disable jsx-a11y/label-has-for */
-    return (
-      <Field error={error} touched={form.touched[name]} info={info}>
-        {title && <legend className="form-group-legend">{title}</legend>}
-        <div className="custom-controls-stacked">
-          {options.map(option => (
-            <div key={getIndex()} className={classes}>
-              {!multiple && (
-                <input
-                  ref={fieldRef}
-                  type="radio"
-                  id={`${this.identifier}-${name}-${getIndex()}`}
-                  name={name}
-                  value={option.value}
-                  checked={value === option.value}
-                  onChange={event => {
-                    form.setFieldError(name, null);
+                    form.submitForm();
+                  }
+                }}
+                className={inputClasses}
+              />
+            )}
+            <label
+              className="custom-control-label"
+              htmlFor={`${identifier}-${name}-${key}`}
+            >
+              {option.label}
+            </label>
+          </div>
+        ))}
+      </div>
+    </Field>
+  );
+  /* eslint-enable */
+});
 
-                    form.setFieldValue(
-                      name,
-                      event.target.checked ? option.value : value,
-                    );
-                  }}
-                  onBlur={() => form.setFieldTouched(name, true)}
-                  onKeyDown={event => {
-                    // Submit form on enter
-                    if (event.keyCode === 13) {
-                      event.preventDefault();
-
-                      form.submitForm();
-                    }
-                  }}
-                  className={inputClasses}
-                />
-              )}
-              {multiple && (
-                <input
-                  ref={fieldRef}
-                  type="checkbox"
-                  id={`${this.identifier}-${name}-${getIndex()}`}
-                  name={`${name}[${getIndex()}]`}
-                  value={option.value}
-                  checked={value ? value.indexOf(option.value) !== -1 : false}
-                  onChange={event => {
-                    form.setFieldError(name, null);
-
-                    const newValue = value ? [...value] : [];
-                    if (event.target.checked) {
-                      newValue.push(option.value);
-                    } else {
-                      newValue.splice(newValue.indexOf(option.value), 1);
-                    }
-
-                    form.setFieldValue(name, newValue);
-                  }}
-                  onBlur={() => form.setFieldTouched(name, true)}
-                  onKeyDown={event => {
-                    // Submit form on enter
-                    if (event.keyCode === 13) {
-                      event.preventDefault();
-
-                      form.submitForm();
-                    }
-                  }}
-                  className={inputClasses}
-                />
-              )}
-              <label
-                className="custom-control-label"
-                htmlFor={`${this.identifier}-${name}-${getIndex()}`}
-              >
-                {option.label}
-              </label>
-              {increaseIndex()}
-            </div>
-          ))}
-        </div>
-      </Field>
-    );
-    /* eslint-enable */
-  }
-}
-
+FormChoice.displayName = 'FormChoice';
 FormChoice.propTypes = propTypes;
 FormChoice.defaultProps = defaultProps;
 
-export default withFormField(FormChoice);
+export default FormChoice;

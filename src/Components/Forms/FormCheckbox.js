@@ -1,106 +1,89 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useFormikContext } from 'formik';
 import cx from 'classnames';
 import Field from './Field';
-import Context from '../../Context';
-import withFormField from './withFormField';
+import useIdentifier from '../../hooks/useIdentifier';
 
 const propTypes = {
+  name: PropTypes.string.isRequired,
   title: PropTypes.string,
   label: PropTypes.string.isRequired,
   info: PropTypes.string,
   formatError: PropTypes.func,
-  fieldRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
-  /* eslint-disable react/forbid-prop-types */
-  field: PropTypes.any.isRequired,
-  form: PropTypes.any.isRequired,
-  /* eslint-enable */
 };
 
 const defaultProps = {
   title: null,
   info: null,
   formatError: null,
-  fieldRef: null,
 };
 
-class FormCheckbox extends React.Component {
-  static contextType = Context;
+const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
+  const { name, title, label, info, formatError } = props;
 
-  constructor(props, context) {
-    super(props, context);
+  const identifier = useIdentifier('re-form-');
+  const form = useFormikContext();
 
-    this.identifier = context.generateKey('re-form-');
-  }
+  const classes = cx(
+    // constant classes
+    'custom-control',
+    'custom-checkbox',
+  );
 
-  render() {
-    const {
-      title,
-      label,
-      info,
-      formatError,
-      fieldRef,
-      field: { name, value },
-      form,
-    } = this.props;
+  const inputClasses = cx(
+    // constant classes
+    'custom-control-input',
+    // variable classes
+    form.touched[name] && form.errors[name] && 'is-invalid',
+  );
 
-    const classes = cx(
-      // constant classes
-      'custom-control',
-      'custom-checkbox',
-    );
+  const error = formatError
+    ? formatError(form.errors[name])
+    : form.errors[name];
 
-    const inputClasses = cx(
-      // constant classes
-      'custom-control-input',
-      // variable classes
-      form.touched[name] && form.errors[name] && 'is-invalid',
-    );
+  /* eslint-disable jsx-a11y/label-has-for */
+  return (
+    <Field error={error} touched={form.touched[name]} info={info}>
+      {title && <legend className="form-group-legend">{title}</legend>}
+      <div className={classes}>
+        <input
+          ref={ref}
+          type="checkbox"
+          id={`${identifier}-${name}`}
+          name={name}
+          checked={form.values[name]}
+          value={form.values[name]}
+          onChange={event => {
+            form.setFieldError(name, null);
 
-    const error = formatError
-      ? formatError(form.errors[name])
-      : form.errors[name];
+            form.setFieldValue(name, event.target.checked);
+          }}
+          onBlur={form.handleBlur}
+          onKeyDown={event => {
+            // Submit form on enter
+            if (event.keyCode === 13) {
+              event.preventDefault();
 
-    /* eslint-disable jsx-a11y/label-has-for */
-    return (
-      <Field error={error} touched={form.touched[name]} info={info}>
-        {title && <legend className="form-group-legend">{title}</legend>}
-        <div className={classes}>
-          <input
-            ref={fieldRef}
-            type="checkbox"
-            id={`${this.identifier}-${name}`}
-            name={name}
-            checked={value || false}
-            onChange={event => {
-              form.setFieldError(name, null);
-              form.handleChange(event);
-            }}
-            onBlur={form.handleBlur}
-            onKeyDown={event => {
-              // Submit form on enter
-              if (event.keyCode === 13) {
-                event.preventDefault();
+              form.submitForm();
+            }
+          }}
+          className={inputClasses}
+        />
+        <label
+          className="custom-control-label"
+          htmlFor={`${identifier}-${name}`}
+        >
+          {label}
+        </label>
+      </div>
+    </Field>
+  );
+  /* eslint-enable */
+});
 
-                form.submitForm();
-              }
-            }}
-            className={inputClasses}
-          />
-          <label
-            className="custom-control-label"
-            htmlFor={`${this.identifier}-${name}`}
-          >
-            {label}
-          </label>
-        </div>
-      </Field>
-    );
-    /* eslint-enable */
-  }
-}
-
+FormCheckbox.displayName = 'FormCheckbox';
 FormCheckbox.propTypes = propTypes;
 FormCheckbox.defaultProps = defaultProps;
 
-export default withFormField(FormCheckbox);
+export default FormCheckbox;

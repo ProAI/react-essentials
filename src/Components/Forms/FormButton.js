@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { FormikProvider } from 'formik';
+import { useFormikContext } from 'formik';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
@@ -27,8 +27,7 @@ const defaultProps = {
 const FormButton = React.forwardRef(function FormButton(props, ref) {
   const { type, color, size, active, block, onPress, ...elementProps } = props;
 
-  // eslint-disable-next-line no-underscore-dangle
-  const form = useContext(FormikProvider._context);
+  const form = useFormikContext();
 
   const disabled = form.isSubmitting;
 
