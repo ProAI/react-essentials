@@ -40,9 +40,9 @@ export default function useActionElement(Component, props, ref) {
   const { history, location } = useContext(RouterContext);
 
   const internalRef = useRef();
-  const handleRef = value => {
-    internalRef.current = value;
-    setRef(ref, value);
+  const handleRef = element => {
+    internalRef.current = element;
+    setRef(ref, element);
   };
 
   // check props

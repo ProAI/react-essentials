@@ -1,8 +1,8 @@
-export default function setRef(ref, value) {
+export default function setRef(ref, element) {
   if (typeof ref === 'function') {
-    ref(value);
+    ref(element);
   } else if (ref) {
     // eslint-disable-next-line no-param-reassign
-    ref.current = value;
+    ref.current = element;
   }
 }

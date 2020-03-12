@@ -24,9 +24,9 @@ const ModalTitle = React.forwardRef(function ModalTitle(props, ref) {
   return (
     <BaseView
       {...elementProps}
-      ref={value => {
-        title.current = value;
-        setRef(ref, value);
+      ref={element => {
+        title.current = element;
+        setRef(ref, element);
       }}
       accessibilityRole="heading"
       aria-level={5}
