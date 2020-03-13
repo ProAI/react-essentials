@@ -4,17 +4,16 @@ import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import useActionElement from '../../hooks/useActionElement';
 import { COLORS } from '../../utils/constants';
-import action from '../../utils/action';
+import { actionPropTypes, actionDefaultProps } from '../../utils/props';
 
 const propTypes = {
-  // eslint-disable-next-line react/forbid-foreign-prop-types
-  ...action.propTypes,
+  ...actionPropTypes,
   children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(COLORS),
 };
 
 const defaultProps = {
-  ...action.defaultProps,
+  ...actionDefaultProps,
   color: 'primary',
 };
 

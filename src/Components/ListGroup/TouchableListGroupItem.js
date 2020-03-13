@@ -3,18 +3,17 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import useActionElement from '../../hooks/useActionElement';
-import action from '../../utils/action';
+import { actionPropTypes, actionDefaultProps } from '../../utils/props';
 
 const propTypes = {
-  // eslint-disable-next-line react/forbid-foreign-prop-types
-  ...action.propTypes,
+  ...actionPropTypes,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   active: PropTypes.bool,
 };
 
 const defaultProps = {
-  ...action.defaultProps,
+  ...actionDefaultProps,
   disabled: false,
   active: false,
 };

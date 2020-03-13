@@ -4,11 +4,10 @@ import cx from 'classnames';
 import { __RouterContext as RouterContext, matchPath } from 'react-router';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import useActionElement from '../../hooks/useActionElement';
-import action from '../../utils/action';
+import { actionPropTypes, actionDefaultProps } from '../../utils/props';
 
 const propTypes = {
-  // eslint-disable-next-line react/forbid-foreign-prop-types
-  ...action.propTypes,
+  ...actionPropTypes,
   children: PropTypes.node.isRequired,
   exact: PropTypes.bool,
   strict: PropTypes.bool,
@@ -17,7 +16,7 @@ const propTypes = {
   location: PropTypes.object,
 };
 const defaultProps = {
-  ...action.defaultProps,
+  ...actionDefaultProps,
   exact: false,
   strict: false,
 };

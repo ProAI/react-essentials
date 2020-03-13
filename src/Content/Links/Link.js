@@ -2,17 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BaseText from '../../utils/rnw-compat/BaseText';
 import useActionElement from '../../hooks/useActionElement';
-import action from '../../utils/action';
+import { actionPropTypes, actionDefaultProps } from '../../utils/props';
 
 const propTypes = {
-  // eslint-disable-next-line react/forbid-foreign-prop-types
-  ...action.propTypes,
+  ...actionPropTypes,
   // eslint-disable-next-line react/no-unused-prop-types
   children: PropTypes.node.isRequired,
 };
 
 const defaultProps = {
-  ...action.defaultProps,
+  ...actionDefaultProps,
 };
 
 const Link = React.forwardRef(function Link(props, ref) {
