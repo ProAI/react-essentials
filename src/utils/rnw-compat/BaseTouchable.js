@@ -20,8 +20,6 @@ import View from './BaseView';
 
 const flattenStyle = StyleSheet.flatten;
 
-type Event = Object;
-
 const PRESS_RETENTION_OFFSET = { top: 20, left: 20, right: 20, bottom: 30 };
 
 /**
@@ -84,7 +82,7 @@ const BaseTouchable = createReactClass({
   /**
    * Animate the touchable to a new opacity.
    */
-  setOpacityTo: function(value: PropTypes.number, duration: ?number) {
+  setOpacityTo: function(value, duration) {
     this.setNativeProps({
       style: {
         opacity: value,
@@ -97,7 +95,7 @@ const BaseTouchable = createReactClass({
    * `Touchable.Mixin` self callbacks. The mixin will invoke these if they are
    * defined on your component.
    */
-  touchableHandleActivePressIn: function(e: Event) {
+  touchableHandleActivePressIn: function(e) {
     if (e.dispatchConfig.registrationName === 'onResponderGrant') {
       this._opacityActive(0);
     } else {
@@ -106,16 +104,16 @@ const BaseTouchable = createReactClass({
     this.props.onPressIn && this.props.onPressIn(e);
   },
 
-  touchableHandleActivePressOut: function(e: Event) {
+  touchableHandleActivePressOut: function(e) {
     this._opacityInactive(250);
     this.props.onPressOut && this.props.onPressOut(e);
   },
 
-  touchableHandlePress: function(e: Event) {
+  touchableHandlePress: function(e) {
     this.props.onPress && this.props.onPress(e);
   },
 
-  touchableHandleLongPress: function(e: Event) {
+  touchableHandleLongPress: function(e) {
     this.props.onLongPress && this.props.onLongPress(e);
   },
 
@@ -141,11 +139,11 @@ const BaseTouchable = createReactClass({
     return this.props.delayPressOut;
   },
 
-  _opacityActive: function(duration: number) {
+  _opacityActive: function(duration) {
     this.setOpacityTo(this.props.activeOpacity, duration);
   },
 
-  _opacityInactive: function(duration: number) {
+  _opacityInactive: function(duration) {
     this.setOpacityTo(this._getChildStyleOpacityWithDefault(), duration);
   },
 
