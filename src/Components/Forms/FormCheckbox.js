@@ -4,19 +4,22 @@ import cx from 'classnames';
 import Field from './Field';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
-import { formFieldPropTypes, formFieldDefaultProps } from './props';
+import { formFieldPropTypes } from './props';
 
 const propTypes = {
   ...formFieldPropTypes,
   label: PropTypes.string.isRequired,
 };
 
-const defaultProps = {
-  ...formFieldDefaultProps,
-};
-
 const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
-  const { name, title, label, info, onValueChange, formatError } = props;
+  const {
+    name,
+    title,
+    label,
+    info,
+    onValueChange,
+    formatError = error => error,
+  } = props;
 
   const identifier = useIdentifier('re-form-');
   const field = useFormField(name);
@@ -69,6 +72,5 @@ const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
 
 FormCheckbox.displayName = 'FormCheckbox';
 FormCheckbox.propTypes = propTypes;
-FormCheckbox.defaultProps = defaultProps;
 
 export default FormCheckbox;

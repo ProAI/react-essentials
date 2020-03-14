@@ -28,8 +28,8 @@ const handleRouting = (event, { replace, to }, history) => {
 export default function useActionElement(Component, props, ref) {
   const {
     to,
-    replace,
-    external,
+    replace = false,
+    external = false,
     onPress,
     onClick,
     keepFocus,

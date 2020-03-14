@@ -5,7 +5,7 @@ import Field from './Field';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
 import setRef from '../../utils/setRef';
-import { formFieldPropTypes, formFieldDefaultProps } from './props';
+import { formFieldPropTypes } from './props';
 
 const propTypes = {
   ...formFieldPropTypes,
@@ -18,20 +18,15 @@ const propTypes = {
   ).isRequired,
 };
 
-const defaultProps = {
-  ...formFieldDefaultProps,
-  placeholder: '',
-};
-
 const FormPicker = React.forwardRef(function FormPicker(props, ref) {
   const {
     name,
     title,
-    placeholder,
+    placeholder = '',
     options,
     info,
     onValueChange,
-    formatError,
+    formatError = error => error,
   } = props;
 
   const identifier = useIdentifier('re-form-');
@@ -87,6 +82,5 @@ const FormPicker = React.forwardRef(function FormPicker(props, ref) {
 
 FormPicker.displayName = 'FormPicker';
 FormPicker.propTypes = propTypes;
-FormPicker.defaultProps = defaultProps;
 
 export default FormPicker;

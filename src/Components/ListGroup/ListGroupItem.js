@@ -8,12 +8,8 @@ const propTypes = {
   disabled: PropTypes.bool,
 };
 
-const defaultProps = {
-  disabled: false,
-};
-
 const ListGroupItem = React.forwardRef(function ListGroupItem(props, ref) {
-  const { disabled, ...elementProps } = props;
+  const { disabled = false, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -34,6 +30,5 @@ const ListGroupItem = React.forwardRef(function ListGroupItem(props, ref) {
 
 ListGroupItem.displayName = 'ListGroupItem';
 ListGroupItem.propTypes = propTypes;
-ListGroupItem.defaultProps = defaultProps;
 
 export default ListGroupItem;

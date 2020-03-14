@@ -9,13 +9,8 @@ const propTypes = {
   triggerId: PropTypes.string,
 };
 
-const defaultProps = {
-  right: false,
-  triggerId: null,
-};
-
 const DropdownMenu = React.forwardRef(function DropdownMenu(props, ref) {
-  const { right, triggerId, ...elementProps } = props;
+  const { right = false, triggerId, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -36,6 +31,5 @@ const DropdownMenu = React.forwardRef(function DropdownMenu(props, ref) {
 
 DropdownMenu.displayName = 'DropdownMenu';
 DropdownMenu.propTypes = propTypes;
-DropdownMenu.defaultProps = defaultProps;
 
 export default DropdownMenu;

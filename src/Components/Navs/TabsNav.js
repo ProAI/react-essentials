@@ -12,18 +12,13 @@ const propTypes = {
   stacked: PropTypes.bool,
 };
 
-const defaultProps = {
-  pills: false,
-  stacked: false,
-};
-
 const TabsNav = React.forwardRef(function TabsNav(props, ref) {
   const {
     children,
     activeKey,
     onChange,
-    pills,
-    stacked,
+    pills = false,
+    stacked = false,
     ...elementProps
   } = props;
 
@@ -57,7 +52,6 @@ const TabsNav = React.forwardRef(function TabsNav(props, ref) {
 
 TabsNav.displayName = 'TabsNav';
 TabsNav.propTypes = propTypes;
-TabsNav.defaultProps = defaultProps;
 
 TabsNav.Tab = TabsNavTab;
 

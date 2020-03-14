@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import useActionElement from '../../hooks/useActionElement';
-import { actionPropTypes, actionDefaultProps } from '../../utils/props';
+import { actionPropTypes } from '../../utils/props';
 
 const propTypes = {
   ...actionPropTypes,
@@ -12,17 +12,11 @@ const propTypes = {
   active: PropTypes.bool,
 };
 
-const defaultProps = {
-  ...actionDefaultProps,
-  disabled: false,
-  active: false,
-};
-
 const ActionListGroupItem = React.forwardRef(function ActionListGroupItem(
   props,
   ref,
 ) {
-  const { disabled, active, ...elementProps } = props;
+  const { disabled = false, active = false, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -49,6 +43,5 @@ const ActionListGroupItem = React.forwardRef(function ActionListGroupItem(
 
 ActionListGroupItem.displayName = 'ActionListGroupItem';
 ActionListGroupItem.propTypes = propTypes;
-ActionListGroupItem.defaultProps = defaultProps;
 
 export default ActionListGroupItem;

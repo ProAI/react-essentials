@@ -11,12 +11,6 @@ const propTypes = {
   active: PropTypes.bool,
 };
 
-const defaultProps = {
-  onPress: null,
-  onChange: null,
-  active: null,
-};
-
 const TabsNavTab = React.forwardRef(function TabsNavTab(props, ref) {
   const { onPress, onChange, toPane, active, ...elementProps } = props;
 
@@ -55,6 +49,5 @@ const TabsNavTab = React.forwardRef(function TabsNavTab(props, ref) {
 
 TabsNavTab.displayName = 'TabsNavTab';
 TabsNavTab.propTypes = propTypes;
-TabsNavTab.defaultProps = defaultProps;
 
 export default TabsNavTab;

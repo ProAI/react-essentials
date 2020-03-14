@@ -17,10 +17,6 @@ const propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const defaultProps = {
-  validate: null,
-};
-
 const Form = React.forwardRef(function Form(props, ref) {
   const {
     children,
@@ -54,7 +50,6 @@ const Form = React.forwardRef(function Form(props, ref) {
 
 Form.displayName = 'Form';
 Form.propTypes = propTypes;
-Form.defaultProps = defaultProps;
 
 Form.Button = FormButton;
 Form.Input = FormInput;

@@ -8,12 +8,8 @@ const propTypes = {
   fluid: PropTypes.bool,
 };
 
-const defaultProps = {
-  fluid: false,
-};
-
 const Jumbotron = React.forwardRef(function Jumbotron(props, ref) {
-  const { fluid, ...elementProps } = props;
+  const { fluid = false, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -29,6 +25,5 @@ const Jumbotron = React.forwardRef(function Jumbotron(props, ref) {
 
 Jumbotron.displayName = 'Jumbotron';
 Jumbotron.propTypes = propTypes;
-Jumbotron.defaultProps = defaultProps;
 
 export default Jumbotron;

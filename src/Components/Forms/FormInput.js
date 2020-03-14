@@ -5,7 +5,7 @@ import Field from './Field';
 import { SIZES } from '../../utils/constants';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
-import { formFieldPropTypes, formFieldDefaultProps } from './props';
+import { formFieldPropTypes } from './props';
 
 const propTypes = {
   ...formFieldPropTypes,
@@ -28,33 +28,21 @@ const propTypes = {
   convertEmptyValueToNull: PropTypes.bool,
 };
 
-const defaultProps = {
-  ...formFieldDefaultProps,
-  placeholder: '',
-  type: 'text',
-  size: null,
-  multiline: false,
-  autoComplete: 'on',
-  autoFocus: false,
-  trimValue: false,
-  convertEmptyValueToNull: false,
-};
-
 const FormInput = React.forwardRef(function FormInput(props, ref) {
   const {
     name,
     title,
-    placeholder,
-    type,
+    placeholder = '',
+    type = 'text',
     size,
     info,
-    multiline,
-    autoComplete,
-    autoFocus,
-    trimValue,
-    convertEmptyValueToNull,
+    multiline = false,
+    autoComplete = 'on',
+    autoFocus = false,
+    trimValue = false,
+    convertEmptyValueToNull = false,
     onValueChange,
-    formatError,
+    formatError = error => error,
   } = props;
 
   const identifier = useIdentifier('re-form-');
@@ -135,6 +123,5 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
 
 FormInput.displayName = 'FormInput';
 FormInput.propTypes = propTypes;
-FormInput.defaultProps = defaultProps;
 
 export default FormInput;

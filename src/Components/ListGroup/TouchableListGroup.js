@@ -9,15 +9,11 @@ const propTypes = {
   flush: PropTypes.bool,
 };
 
-const defaultProps = {
-  flush: false,
-};
-
 const TouchableListGroup = React.forwardRef(function TouchableListGroup(
   props,
   ref,
 ) {
-  const { flush, ...elementProps } = props;
+  const { flush = false, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -33,7 +29,6 @@ const TouchableListGroup = React.forwardRef(function TouchableListGroup(
 
 TouchableListGroup.displayName = 'TouchableListGroup';
 TouchableListGroup.propTypes = propTypes;
-TouchableListGroup.defaultProps = defaultProps;
 
 TouchableListGroup.Item = TouchableListGroupItem;
 

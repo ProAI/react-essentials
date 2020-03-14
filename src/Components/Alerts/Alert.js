@@ -10,13 +10,8 @@ const propTypes = {
   dismissible: PropTypes.bool,
 };
 
-const defaultProps = {
-  color: 'primary',
-  dismissible: false,
-};
-
 const Alert = React.forwardRef(function Alert(props, ref) {
-  const { color, dismissible, ...elementProps } = props;
+  const { color = 'primary', dismissible = false, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -37,6 +32,5 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 Alert.displayName = 'Alert';
 Alert.propTypes = propTypes;
-Alert.defaultProps = defaultProps;
 
 export default Alert;

@@ -4,7 +4,7 @@ import cx from 'classnames';
 import Field from './Field';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
-import { formFieldPropTypes, formFieldDefaultProps } from './props';
+import { formFieldPropTypes } from './props';
 
 const propTypes = {
   ...formFieldPropTypes,
@@ -17,20 +17,15 @@ const propTypes = {
   multiple: PropTypes.bool,
 };
 
-const defaultProps = {
-  ...formFieldDefaultProps,
-  multiple: false,
-};
-
 const FormChoice = React.forwardRef(function FormChoice(props, ref) {
   const {
     name,
     title,
     options,
     info,
-    multiple,
+    multiple = false,
     onValueChange,
-    formatError,
+    formatError = error => error,
   } = props;
 
   const identifier = useIdentifier('re-form-');
@@ -120,6 +115,5 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
 
 FormChoice.displayName = 'FormChoice';
 FormChoice.propTypes = propTypes;
-FormChoice.defaultProps = defaultProps;
 
 export default FormChoice;

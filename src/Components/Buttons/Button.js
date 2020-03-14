@@ -4,7 +4,7 @@ import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
 import useActionElement from '../../hooks/useActionElement';
-import { actionPropTypes, actionDefaultProps } from '../../utils/props';
+import { actionPropTypes } from '../../utils/props';
 
 const propTypes = {
   ...actionPropTypes,
@@ -18,26 +18,15 @@ const propTypes = {
   caret: PropTypes.bool,
 };
 
-const defaultProps = {
-  ...actionDefaultProps,
-  color: 'primary',
-  size: null,
-  outline: false,
-  active: false,
-  disabled: false,
-  block: false,
-  caret: false,
-};
-
 const Button = React.forwardRef(function Button(props, ref) {
   const {
-    color,
+    color = 'primary',
     size,
-    outline,
-    active,
-    disabled,
-    block,
-    caret,
+    outline = false,
+    active = false,
+    disabled = false,
+    block = false,
+    caret = false,
     ...elementProps
   } = props;
 
@@ -70,6 +59,5 @@ const Button = React.forwardRef(function Button(props, ref) {
 
 Button.displayName = 'Button';
 Button.propTypes = propTypes;
-Button.defaultProps = defaultProps;
 
 export default Button;

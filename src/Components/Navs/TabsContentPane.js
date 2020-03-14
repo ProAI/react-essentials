@@ -4,15 +4,10 @@ import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  active: PropTypes.bool,
-};
-
-const defaultProps = {
-  active: false,
 };
 
 const TabsContentPane = React.forwardRef(function TabsContentPane(props, ref) {
-  const { active, ...elementProps } = props;
+  const { ...elementProps } = props;
 
   return (
     <BaseView
@@ -26,6 +21,5 @@ const TabsContentPane = React.forwardRef(function TabsContentPane(props, ref) {
 
 TabsContentPane.displayName = 'TabsContentPane';
 TabsContentPane.propTypes = propTypes;
-TabsContentPane.defaultProps = defaultProps;
 
 export default TabsContentPane;

@@ -10,13 +10,8 @@ const propTypes = {
   stacked: PropTypes.bool,
 };
 
-const defaultProps = {
-  pills: false,
-  stacked: false,
-};
-
 const Nav = React.forwardRef(function Nav(props, ref) {
-  const { pills, stacked, ...elementProps } = props;
+  const { pills = false, stacked = false, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -39,7 +34,6 @@ const Nav = React.forwardRef(function Nav(props, ref) {
 
 Nav.displayName = 'Nav';
 Nav.propTypes = propTypes;
-Nav.defaultProps = defaultProps;
 
 Nav.Link = NavLink;
 

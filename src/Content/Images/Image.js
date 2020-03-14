@@ -9,13 +9,8 @@ const propTypes = {
   thumbnail: PropTypes.bool,
 };
 
-const defaultProps = {
-  fluid: false,
-  thumbnail: false,
-};
-
 const Image = React.forwardRef(function Image(props, ref) {
-  const { fluid, thumbnail, ...elementProps } = props;
+  const { fluid = false, thumbnail = false, ...elementProps } = props;
 
   const classes = cx(
     // variable classes
@@ -34,6 +29,5 @@ const Image = React.forwardRef(function Image(props, ref) {
 
 Image.displayName = 'Image';
 Image.propTypes = propTypes;
-Image.defaultProps = defaultProps;
 
 export default Image;

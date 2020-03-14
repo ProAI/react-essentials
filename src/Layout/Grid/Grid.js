@@ -9,12 +9,8 @@ const propTypes = {
   noGutters: PropTypes.bool,
 };
 
-const defaultProps = {
-  noGutters: false,
-};
-
 const Grid = React.forwardRef(function Grid(props, ref) {
-  const { noGutters, ...elementProps } = props;
+  const { noGutters = false, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -31,7 +27,6 @@ const Grid = React.forwardRef(function Grid(props, ref) {
 
 Grid.displayName = 'Grid';
 Grid.propTypes = propTypes;
-Grid.defaultProps = defaultProps;
 
 Grid.Box = GridBox;
 

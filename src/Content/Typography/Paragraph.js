@@ -9,13 +9,8 @@ const propTypes = {
   last: PropTypes.bool,
 };
 
-const defaultProps = {
-  lead: false,
-  last: false,
-};
-
 const Paragraph = React.forwardRef(function Paragraph(props, ref) {
-  const { lead, last, ...elementProps } = props;
+  const { lead = false, last = false, ...elementProps } = props;
 
   const classes = cx(
     // variable classes
@@ -34,6 +29,5 @@ const Paragraph = React.forwardRef(function Paragraph(props, ref) {
 
 Paragraph.displayName = 'Paragraph';
 Paragraph.propTypes = propTypes;
-Paragraph.defaultProps = defaultProps;
 
 export default Paragraph;

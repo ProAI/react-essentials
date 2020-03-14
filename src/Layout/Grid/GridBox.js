@@ -13,13 +13,6 @@ const propTypes = {
   sizeXl: PropTypes.oneOf(GRID_SIZES),
 };
 
-const defaultProps = {
-  sizeSm: null,
-  sizeMd: null,
-  sizeLg: null,
-  sizeXl: null,
-};
-
 const GridBox = React.forwardRef(function GridBox(props, ref) {
   const {
     children,
@@ -50,6 +43,5 @@ const GridBox = React.forwardRef(function GridBox(props, ref) {
 
 GridBox.displayName = 'GridBox';
 GridBox.propTypes = propTypes;
-GridBox.defaultProps = defaultProps;
 
 export default GridBox;

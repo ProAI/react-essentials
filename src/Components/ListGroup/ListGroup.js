@@ -14,24 +14,15 @@ const propTypes = {
   horizontalXl: PropTypes.bool,
 };
 
-const defaultProps = {
-  flush: false,
-  horizontal: false,
-  horizontalSm: false,
-  horizontalMd: false,
-  horizontalLg: false,
-  horizontalXl: false,
-};
-
 const ListGroup = React.forwardRef(function ListGroup(props, ref) {
   const {
     children,
-    flush,
-    horizontal,
-    horizontalSm,
-    horizontalMd,
-    horizontalLg,
-    horizontalXl,
+    flush = false,
+    horizontal = false,
+    horizontalSm = false,
+    horizontalMd = false,
+    horizontalLg = false,
+    horizontalXl = false,
     ...elementProps
   } = props;
 
@@ -61,7 +52,6 @@ const ListGroup = React.forwardRef(function ListGroup(props, ref) {
 
 ListGroup.displayName = 'ListGroup';
 ListGroup.propTypes = propTypes;
-ListGroup.defaultProps = defaultProps;
 
 ListGroup.Item = ListGroupItem;
 

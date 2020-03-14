@@ -4,7 +4,7 @@ import cx from 'classnames';
 import { __RouterContext as RouterContext, matchPath } from 'react-router';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import useActionElement from '../../hooks/useActionElement';
-import { actionPropTypes, actionDefaultProps } from '../../utils/props';
+import { actionPropTypes } from '../../utils/props';
 
 const propTypes = {
   ...actionPropTypes,
@@ -15,16 +15,11 @@ const propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   location: PropTypes.object,
 };
-const defaultProps = {
-  ...actionDefaultProps,
-  exact: false,
-  strict: false,
-};
 
 const NavLink = React.forwardRef(function NavLink(props, ref) {
   const {
-    exact,
-    strict,
+    exact = false,
+    strict = false,
     isActive: isActiveProp,
     location: locationProp,
     ...elementProps
@@ -64,6 +59,5 @@ const NavLink = React.forwardRef(function NavLink(props, ref) {
 
 NavLink.displayName = 'NavLink';
 NavLink.propTypes = propTypes;
-NavLink.defaultProps = defaultProps;
 
 export default NavLink;

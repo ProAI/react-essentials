@@ -5,7 +5,7 @@ import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
 import useActionElement from '../../hooks/useActionElement';
-import { actionPropTypes, actionDefaultProps } from '../../utils/props';
+import { actionPropTypes } from '../../utils/props';
 
 const propTypes = {
   ...actionPropTypes,
@@ -16,15 +16,16 @@ const propTypes = {
   block: PropTypes.bool,
 };
 
-const defaultProps = {
-  ...actionDefaultProps,
-  color: 'primary',
-  size: null,
-  block: false,
-};
-
 const FormButton = React.forwardRef(function FormButton(props, ref) {
-  const { type, color, size, active, block, onPress, ...elementProps } = props;
+  const {
+    type,
+    color = 'primary',
+    size,
+    active,
+    block = false,
+    onPress,
+    ...elementProps
+  } = props;
 
   const form = useFormikContext();
 
@@ -73,6 +74,5 @@ const FormButton = React.forwardRef(function FormButton(props, ref) {
 
 FormButton.displayName = 'FormButton';
 FormButton.propTypes = propTypes;
-FormButton.defaultProps = defaultProps;
 
 export default FormButton;

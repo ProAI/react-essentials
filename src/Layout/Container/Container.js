@@ -8,12 +8,8 @@ const propTypes = {
   fluid: PropTypes.bool,
 };
 
-const defaultProps = {
-  fluid: false,
-};
-
 const Container = React.forwardRef(function Container(props, ref) {
-  const { fluid, ...elementProps } = props;
+  const { fluid = false, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -29,6 +25,5 @@ const Container = React.forwardRef(function Container(props, ref) {
 
 Container.displayName = 'Container';
 Container.propTypes = propTypes;
-Container.defaultProps = defaultProps;
 
 export default Container;

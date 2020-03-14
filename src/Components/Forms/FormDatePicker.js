@@ -7,7 +7,7 @@ import { SIZES } from '../../utils/constants';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
 import setRef from '../../utils/setRef';
-import { formFieldPropTypes, formFieldDefaultProps } from './props';
+import { formFieldPropTypes } from './props';
 
 const propTypes = {
   ...formFieldPropTypes,
@@ -17,25 +17,17 @@ const propTypes = {
   formatValue: PropTypes.func,
 };
 
-const defaultProps = {
-  ...formFieldDefaultProps,
-  placeholder: '',
-  size: null,
-  autoFocus: false,
-  formatValue: value => (value ? value.toLocaleDateString('en') : ''),
-};
-
 const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
   const {
     name,
     title,
-    placeholder,
+    placeholder = '',
     size,
     info,
-    autoFocus,
+    autoFocus = false,
     onValueChange,
-    formatValue,
-    formatError,
+    formatValue = value => (value ? value.toLocaleDateString('en') : ''),
+    formatError = error => error,
   } = props;
 
   const identifier = useIdentifier('re-form-');
@@ -178,6 +170,5 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
 
 FormDatePicker.displayName = 'FormDatePicker';
 FormDatePicker.propTypes = propTypes;
-FormDatePicker.defaultProps = defaultProps;
 
 export default FormDatePicker;

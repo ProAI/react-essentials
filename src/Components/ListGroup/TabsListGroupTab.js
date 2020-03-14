@@ -11,12 +11,6 @@ const propTypes = {
   active: PropTypes.bool,
 };
 
-const defaultProps = {
-  onPress: null,
-  onChange: null,
-  active: null,
-};
-
 const TabsListGroupTab = React.forwardRef(function TabsListGroupTab(
   props,
   ref,
@@ -56,6 +50,5 @@ const TabsListGroupTab = React.forwardRef(function TabsListGroupTab(
 
 TabsListGroupTab.displayName = 'TabsListGroupTab';
 TabsListGroupTab.propTypes = propTypes;
-TabsListGroupTab.defaultProps = defaultProps;
 
 export default TabsListGroupTab;

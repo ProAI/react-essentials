@@ -10,14 +10,8 @@ const propTypes = {
   size: PropTypes.oneOf(['sm']),
 };
 
-const defaultProps = {
-  variant: 'border',
-  color: null,
-  size: null,
-};
-
 const Spinner = React.forwardRef(function Spinner(props, ref) {
-  const { variant, color, size, ...elementProps } = props;
+  const { variant = 'border', color, size, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -34,6 +28,5 @@ const Spinner = React.forwardRef(function Spinner(props, ref) {
 
 Spinner.displayName = 'Spinner';
 Spinner.propTypes = propTypes;
-Spinner.defaultProps = defaultProps;
 
 export default Spinner;

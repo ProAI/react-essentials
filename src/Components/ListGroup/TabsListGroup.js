@@ -11,12 +11,14 @@ const propTypes = {
   flush: PropTypes.bool,
 };
 
-const defaultProps = {
-  flush: false,
-};
-
 const TabsListGroup = React.forwardRef(function TabsListGroup(props, ref) {
-  const { children, activeKey, onChange, flush, ...elementProps } = props;
+  const {
+    children,
+    activeKey,
+    onChange,
+    flush = false,
+    ...elementProps
+  } = props;
 
   const classes = cx(
     // constant classes
@@ -46,7 +48,6 @@ const TabsListGroup = React.forwardRef(function TabsListGroup(props, ref) {
 
 TabsListGroup.displayName = 'TabsListGroup';
 TabsListGroup.propTypes = propTypes;
-TabsListGroup.defaultProps = defaultProps;
 
 TabsListGroup.Tab = TabsListGroupTab;
 

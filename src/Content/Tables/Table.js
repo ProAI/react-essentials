@@ -21,27 +21,16 @@ const propTypes = {
   responsiveXl: PropTypes.bool,
 };
 
-const defaultProps = {
-  bordered: false,
-  striped: false,
-  hover: false,
-  responsive: false,
-  responsiveSm: false,
-  responsiveMd: false,
-  responsiveLg: false,
-  responsiveXl: false,
-};
-
 const Table = React.forwardRef(function Table(props, ref) {
   const {
-    bordered,
-    striped,
-    hover,
-    responsive,
-    responsiveSm,
-    responsiveMd,
-    responsiveLg,
-    responsiveXl,
+    bordered = false,
+    striped = false,
+    hover = false,
+    responsive = false,
+    responsiveSm = false,
+    responsiveMd = false,
+    responsiveLg = false,
+    responsiveXl = false,
     ...elementProps
   } = props;
 
@@ -71,7 +60,6 @@ const Table = React.forwardRef(function Table(props, ref) {
 
 Table.displayName = 'Table';
 Table.propTypes = propTypes;
-Table.defaultProps = defaultProps;
 
 Table.Body = TableBody;
 Table.Data = TableData;

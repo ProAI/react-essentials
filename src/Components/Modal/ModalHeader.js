@@ -7,10 +7,6 @@ const propTypes = {
   titleId: PropTypes.string,
 };
 
-const defaultProps = {
-  titleId: null,
-};
-
 const ModalHeader = React.forwardRef(function ModalHeader(props, ref) {
   const { children, titleId, ...elementProps } = props;
 
@@ -38,6 +34,5 @@ const ModalHeader = React.forwardRef(function ModalHeader(props, ref) {
 
 ModalHeader.displayName = 'ModalHeader';
 ModalHeader.propTypes = propTypes;
-ModalHeader.defaultProps = defaultProps;
 
 export default ModalHeader;

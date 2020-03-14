@@ -8,10 +8,6 @@ const propTypes = {
   titleId: PropTypes.string,
 };
 
-const defaultProps = {
-  titleId: null,
-};
-
 const ModalTitle = React.forwardRef(function ModalTitle(props, ref) {
   const { titleId, ...elementProps } = props;
 
@@ -37,6 +33,5 @@ const ModalTitle = React.forwardRef(function ModalTitle(props, ref) {
 
 ModalTitle.displayName = 'ModalTitle';
 ModalTitle.propTypes = propTypes;
-ModalTitle.defaultProps = defaultProps;
 
 export default ModalTitle;

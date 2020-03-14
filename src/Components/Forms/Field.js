@@ -20,13 +20,9 @@ const propTypes = {
   info: PropTypes.string,
 };
 
-const defaultProps = {
-  error: null,
-  touched: false,
-  info: null,
-};
+function Field(props) {
+  const { children, error, touched = false, info } = props;
 
-function Field({ children, error, touched, info }) {
   return (
     <BaseView essentials={{ className: 'form-group' }}>
       {children}
@@ -45,6 +41,5 @@ function Field({ children, error, touched, info }) {
 }
 
 Field.propTypes = propTypes;
-Field.defaultProps = defaultProps;
 
 export default Field;

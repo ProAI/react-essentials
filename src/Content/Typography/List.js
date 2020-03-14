@@ -11,14 +11,13 @@ const propTypes = {
   inline: PropTypes.bool,
 };
 
-const defaultProps = {
-  variant: 'unordered',
-  unstyled: false,
-  inline: false,
-};
-
 const List = React.forwardRef(function List(props, ref) {
-  const { variant, unstyled, inline, ...elementProps } = props;
+  const {
+    variant = 'unordered',
+    unstyled = false,
+    inline = false,
+    ...elementProps
+  } = props;
 
   const classes = cx(
     // variable classes
@@ -43,7 +42,6 @@ const List = React.forwardRef(function List(props, ref) {
 
 List.displayName = 'List';
 List.propTypes = propTypes;
-List.defaultProps = defaultProps;
 
 List.Item = ListItem;
 

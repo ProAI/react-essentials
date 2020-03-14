@@ -9,12 +9,8 @@ const propTypes = {
   color: PropTypes.oneOf(COLORS),
 };
 
-const defaultProps = {
-  color: 'primary',
-};
-
 const Badge = React.forwardRef(function Badge(props, ref) {
-  const { color, ...elementProps } = props;
+  const { color = 'primary', ...elementProps } = props;
 
   const classes = cx(
     // constant classes
@@ -29,6 +25,5 @@ const Badge = React.forwardRef(function Badge(props, ref) {
 
 Badge.displayName = 'Badge';
 Badge.propTypes = propTypes;
-Badge.defaultProps = defaultProps;
 
 export default Badge;
