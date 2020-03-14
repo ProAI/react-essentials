@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useFormikContext } from 'formik';
 import cx from 'classnames';
 import Field from './Field';
-import useIdentifier from '../../hooks/useIdentifier';
 import { SIZES } from '../../utils/constants';
+import useIdentifier from '../../hooks/useIdentifier';
+import useFormField from './useFormField';
+import { formFieldPropTypes, formFieldDefaultProps } from './props';
 
 const propTypes = {
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string,
+  ...formFieldPropTypes,
   placeholder: PropTypes.string,
   type: PropTypes.oneOf([
     'color',
@@ -21,27 +21,23 @@ const propTypes = {
     'url',
   ]),
   size: PropTypes.oneOf(SIZES),
-  info: PropTypes.string,
   multiline: PropTypes.bool,
   autoComplete: PropTypes.oneOf(['on', 'off']),
   autoFocus: PropTypes.bool,
   trimValue: PropTypes.bool,
   convertEmptyValueToNull: PropTypes.bool,
-  formatError: PropTypes.func,
 };
 
 const defaultProps = {
-  title: null,
+  ...formFieldDefaultProps,
   placeholder: '',
   type: 'text',
   size: null,
-  info: null,
   multiline: false,
   autoComplete: 'on',
   autoFocus: false,
   trimValue: false,
   convertEmptyValueToNull: false,
-  formatError: null,
 };
 
 const FormInput = React.forwardRef(function FormInput(props, ref) {
@@ -57,29 +53,34 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
     autoFocus,
     trimValue,
     convertEmptyValueToNull,
+    onValueChange,
     formatError,
   } = props;
 
   const identifier = useIdentifier('re-form-');
-  const form = useFormikContext();
+  const field = useFormField(name);
+
+  const sanitizeValue = rawValue => {
+    // Trim value if type is not password
+    const trimmedValue =
+      trimValue && type !== 'password' ? rawValue.trim() : rawValue;
+
+    // Handle empty string as null and return
+    return convertEmptyValueToNull && trimmedValue === '' ? null : trimmedValue;
+  };
 
   const inputClasses = cx(
     // constant classes
     'form-control',
     // variable classes
-    form.touched[name] && form.errors[name] && 'is-invalid',
+    field.touched && field.error && 'is-invalid',
     size === 'sm' && 'form-control-sm',
     size === 'lg' && 'form-control-lg',
   );
 
-  const error = formatError
-    ? formatError(form.errors[name])
-    : form.errors[name];
-
-  /* eslint-disable jsx-a11y/label-has-for */
-  /* eslint-disable jsx-a11y/no-autofocus */
+  /* eslint-disable jsx-a11y/label-has-for, jsx-a11y/no-autofocus */
   return (
-    <Field error={error} touched={form.touched[name]} info={info}>
+    <Field error={formatError(field.error)} touched={field.touched} info={info}>
       {title && (
         <label htmlFor={`${identifier}-${name}`} className="form-control-label">
           {title}
@@ -91,33 +92,16 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
           type={type}
           id={`${identifier}-${name}`}
           name={name}
-          value={form.values[name] || ''}
+          value={field.value || ''}
           onChange={event => {
-            form.setFieldError(name, null);
+            const nextValue = sanitizeValue(event.target.value);
 
-            const { value } = event.target;
-
-            // Trim value if type is not password
-            const trimmedValue =
-              trimValue && type !== 'password' ? value.trim() : value;
-
-            // Handle empty string as null
-            const nextValue =
-              convertEmptyValueToNull && trimmedValue === ''
-                ? null
-                : trimmedValue;
-
-            form.setFieldValue(name, nextValue);
+            field.setValue(nextValue, onValueChange);
           }}
-          onBlur={form.handleBlur}
-          onKeyDown={event => {
-            // Submit form on enter
-            if (event.keyCode === 13) {
-              event.preventDefault();
-
-              form.submitForm();
-            }
+          onBlur={() => {
+            field.setTouched();
           }}
+          onKeyDown={field.handleSubmitOnEnter}
           placeholder={placeholder}
           className={inputClasses}
           autoComplete={autoComplete === 'on' ? null : autoComplete}
@@ -129,13 +113,15 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
           ref={ref}
           id={`${identifier}-${name}`}
           name={name}
-          value={form.values[name] || ''}
+          value={field.value || ''}
           onChange={event => {
-            form.setFieldError(name, null);
+            const nextValue = sanitizeValue(event.target.value);
 
-            form.handleChange(event);
+            field.setValue(nextValue, onValueChange);
           }}
-          onBlur={form.handleBlur}
+          onBlur={() => {
+            field.setTouched();
+          }}
           placeholder={placeholder}
           rows="7"
           className={inputClasses}

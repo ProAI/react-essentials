@@ -1,29 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useFormikContext } from 'formik';
 import cx from 'classnames';
 import Field from './Field';
 import useIdentifier from '../../hooks/useIdentifier';
+import useFormField from './useFormField';
+import { formFieldPropTypes, formFieldDefaultProps } from './props';
 
 const propTypes = {
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string,
+  ...formFieldPropTypes,
   label: PropTypes.string.isRequired,
-  info: PropTypes.string,
-  formatError: PropTypes.func,
 };
 
 const defaultProps = {
-  title: null,
-  info: null,
-  formatError: null,
+  ...formFieldDefaultProps,
 };
 
 const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
-  const { name, title, label, info, formatError } = props;
+  const { name, title, label, info, onValueChange, formatError } = props;
 
   const identifier = useIdentifier('re-form-');
-  const form = useFormikContext();
+  const field = useFormField(name);
 
   const classes = cx(
     // constant classes
@@ -35,16 +31,12 @@ const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
     // constant classes
     'custom-control-input',
     // variable classes
-    form.touched[name] && form.errors[name] && 'is-invalid',
+    field.touched && field.error && 'is-invalid',
   );
-
-  const error = formatError
-    ? formatError(form.errors[name])
-    : form.errors[name];
 
   /* eslint-disable jsx-a11y/label-has-for */
   return (
-    <Field error={error} touched={form.touched[name]} info={info}>
+    <Field error={formatError(field.error)} touched={field.touched} info={info}>
       {title && <legend className="form-group-legend">{title}</legend>}
       <div className={classes}>
         <input
@@ -52,22 +44,15 @@ const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
           type="checkbox"
           id={`${identifier}-${name}`}
           name={name}
-          checked={form.values[name]}
-          value={form.values[name]}
+          checked={field.value}
+          value={field.value}
           onChange={event => {
-            form.setFieldError(name, null);
-
-            form.setFieldValue(name, event.target.checked);
+            field.setValue(event.target.checked, onValueChange);
           }}
-          onBlur={form.handleBlur}
-          onKeyDown={event => {
-            // Submit form on enter
-            if (event.keyCode === 13) {
-              event.preventDefault();
-
-              form.submitForm();
-            }
+          onBlur={() => {
+            field.setTouched();
           }}
+          onKeyDown={field.handleSubmitOnEnter}
           className={inputClasses}
         />
         <label

@@ -1,36 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useFormikContext } from 'formik';
 import cx from 'classnames';
 import Field from './Field';
 import useIdentifier from '../../hooks/useIdentifier';
+import useFormField from './useFormField';
+import { formFieldPropTypes, formFieldDefaultProps } from './props';
 
 const propTypes = {
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string,
+  ...formFieldPropTypes,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
       label: PropTypes.node,
     }),
   ).isRequired,
-  info: PropTypes.string,
   multiple: PropTypes.bool,
-  formatError: PropTypes.func,
 };
 
 const defaultProps = {
-  title: null,
-  info: null,
+  ...formFieldDefaultProps,
   multiple: false,
-  formatError: null,
 };
 
 const FormChoice = React.forwardRef(function FormChoice(props, ref) {
-  const { name, title, options, info, multiple, formatError } = props;
+  const {
+    name,
+    title,
+    options,
+    info,
+    multiple,
+    onValueChange,
+    formatError,
+  } = props;
 
   const identifier = useIdentifier('re-form-');
-  const form = useFormikContext();
+  const field = useFormField(name);
 
   const classes = cx(
     // constant classes
@@ -42,16 +46,12 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
     // constant classes
     'custom-control-input',
     // variable classes
-    form.touched[name] && form.errors[name] && 'is-invalid',
+    field.touched && field.error && 'is-invalid',
   );
-
-  const error = formatError
-    ? formatError(form.errors[name])
-    : form.errors[name];
 
   /* eslint-disable jsx-a11y/label-has-for */
   return (
-    <Field error={error} touched={form.touched[name]} info={info}>
+    <Field error={formatError(field.error)} touched={field.touched} info={info}>
       {title && <legend className="form-group-legend">{title}</legend>}
       <div className="custom-controls-stacked">
         {options.map((option, key) => (
@@ -63,26 +63,18 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
                 id={`${identifier}-${name}-${key}`}
                 name={name}
                 value={option.value}
-                checked={form.values[name] === option.value}
+                checked={field.value === option.value}
                 onChange={event => {
-                  form.setFieldError(name, null);
+                  const nextValue = event.target.checked
+                    ? option.value
+                    : field.value;
 
-                  form.setFieldValue(
-                    name,
-                    event.target.checked ? option.value : form.values[name],
-                  );
+                  field.setValue(nextValue, onValueChange);
                 }}
                 onBlur={() => {
-                  form.setFieldTouched(name, true);
+                  field.setTouched();
                 }}
-                onKeyDown={event => {
-                  // Submit form on enter
-                  if (event.keyCode === 13) {
-                    event.preventDefault();
-
-                    form.submitForm();
-                  }
-                }}
+                onKeyDown={field.handleSubmitOnEnter}
                 className={inputClasses}
               />
             )}
@@ -93,11 +85,9 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
                 id={`${identifier}-${name}-${key}`}
                 name={`${name}[${key}]`}
                 value={option.value}
-                checked={form.values[name].indexOf(option.value) !== -1}
+                checked={field.value.indexOf(option.value) !== -1}
                 onChange={event => {
-                  form.setFieldError(name, null);
-
-                  const nextValue = [...form.values[name]];
+                  const nextValue = [...field.value];
 
                   if (event.target.checked) {
                     nextValue.push(option.value);
@@ -105,19 +95,12 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
                     nextValue.splice(nextValue.indexOf(option.value), 1);
                   }
 
-                  form.setFieldValue(name, nextValue);
+                  field.setValue(nextValue, onValueChange);
                 }}
                 onBlur={() => {
-                  form.setFieldTouched(name, true);
+                  field.setTouched();
                 }}
-                onKeyDown={event => {
-                  // Submit form on enter
-                  if (event.keyCode === 13) {
-                    event.preventDefault();
-
-                    form.submitForm();
-                  }
-                }}
+                onKeyDown={field.handleSubmitOnEnter}
                 className={inputClasses}
               />
             )}

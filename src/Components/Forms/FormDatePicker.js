@@ -1,225 +1,172 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useFormikContext } from 'formik';
 import cx from 'classnames';
 import DayPicker from 'react-day-picker/DayPicker';
 import Field from './Field';
+import { SIZES } from '../../utils/constants';
 import useIdentifier from '../../hooks/useIdentifier';
+import useFormField from './useFormField';
+import setRef from '../../utils/setRef';
+import { formFieldPropTypes, formFieldDefaultProps } from './props';
 
 const propTypes = {
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string,
+  ...formFieldPropTypes,
   placeholder: PropTypes.string,
-  info: PropTypes.string,
-  formatDate: PropTypes.func,
-  formatError: PropTypes.func,
+  size: PropTypes.oneOf(SIZES),
+  autoFocus: PropTypes.bool,
+  formatValue: PropTypes.func,
 };
 
 const defaultProps = {
-  title: null,
+  ...formFieldDefaultProps,
   placeholder: '',
-  info: null,
-  formatDate: null,
-  formatError: null,
+  size: null,
+  autoFocus: false,
+  formatValue: value => (value ? value.toLocaleDateString('en') : ''),
 };
 
-// eslint-disable-next-line no-unused-vars
 const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
-  // TODO: Forward ref to some DOM tag.
-
-  const { name, title, placeholder, info, formatError } = props;
+  const {
+    name,
+    title,
+    placeholder,
+    size,
+    info,
+    autoFocus,
+    onValueChange,
+    formatValue,
+    formatError,
+  } = props;
 
   const identifier = useIdentifier('re-form-');
-  const form = useFormikContext();
+  const field = useFormField(name);
 
-  const input = useRef();
-  const menu = useRef();
   const control = useRef();
+  const menu = useRef();
 
-  const [isOpen, setOpen] = useState(false);
-  const [isFocused, setFocused] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+  const openMenu = useCallback(() => {
+    setMenuOpen(true);
+  }, []);
+
+  const closeMenu = useCallback(() => {
+    field.setTouched();
+
+    setMenuOpen(false);
+  }, []);
 
   useEffect(() => {
+    if (!isMenuOpen) {
+      return undefined;
+    }
+
+    // Set tabindex of wrapper element to -1, so that nav buttons are
+    // selected directly.
+    document.getElementsByClassName('DayPicker-wrapper')[0].tabIndex = -1;
+
+    // Scroll to bottom of menu for better usability.
+    const menuRect = menu.current.getBoundingClientRect();
+    if (window.innerHeight < menuRect.bottom) {
+      window.scrollBy(0, menuRect.bottom - window.innerHeight);
+    }
+
+    // Blur on month change
     const onDocumentClick = event => {
+      if (event.target.className.includes('DayPicker-NavButton')) {
+        event.target.blur();
+      }
+    };
+
+    // Close dropdown if user clicks on document
+    const onDocumentMouseDown = event => {
       const isControlElement =
         event.target === control.current ||
         control.current.contains(event.target);
 
-      // close and unfocus if click is outside
-      if (isOpen) {
-        const isMenuElement =
-          event.target === menu.current || menu.current.contains(event.target);
+      const isMenuElement =
+        event.target === menu.current || menu.current.contains(event.target);
 
-        if (!isMenuElement && !isControlElement) {
-          setOpen(false);
-          setFocused(false);
-        }
-      }
-
-      // unfocus if click is outside
-      if (!isOpen && !isControlElement) {
-        setOpen(false);
-        setFocused(false);
+      if (!isMenuElement && !isControlElement) {
+        closeMenu();
       }
     };
 
-    // if field is active, set focus on tabIndex element
-    if (isFocused) {
-      input.current.focus();
-    }
-
-    // scroll to bottom of menu
-    if (isOpen) {
-      const menuRect = menu.current.getBoundingClientRect();
-
-      if (window.innerHeight < menuRect.bottom) {
-        window.scrollBy(0, menuRect.bottom - window.innerHeight);
-      }
-    }
-
-    document.addEventListener('mousedown', onDocumentClick);
+    document.addEventListener('click', onDocumentClick);
+    document.addEventListener('mousedown', onDocumentMouseDown);
 
     return () => {
-      document.removeEventListener('mousedown', onDocumentClick);
+      document.removeEventListener('click', onDocumentClick);
+      document.removeEventListener('mousedown', onDocumentMouseDown);
     };
-  }, [isOpen]);
+  }, [isMenuOpen]);
 
-  const classes = cx(
+  const inputClasses = cx(
     // constant classes
-    'form-datepicker',
-    'Select',
-    'Select--single',
+    'form-control',
+    'form-datepicker-control',
     // variable classes
-    form.touched[name] && form.errors[name] && 'is-invalid',
-    form.values[name] && 'has-value',
-    isFocused && 'is-focused',
-    isOpen && 'is-open',
+    isMenuOpen && 'focus',
+    field.touched && field.error && 'is-invalid',
+    size === 'sm' && 'form-control-sm',
+    size === 'lg' && 'form-control-lg',
   );
 
-  const error = formatError
-    ? formatError(form.errors[name])
-    : form.errors[name];
-
-  const formatPickedDate = pickedDate => {
-    if (props.formatDate) {
-      return props.formatDate(pickedDate);
-    }
-
-    return pickedDate.toLocaleDateString('en');
-  };
-
-  const pickedDate = form.values[name]
-    ? new Date(form.values[name])
-    : new Date();
-
-  const initialMonth = new Date(
-    pickedDate.getFullYear(),
-    pickedDate.getMonth(),
-  );
-
-  /* eslint-disable jsx-a11y/role-has-required-aria-props */
-  /* eslint-disable jsx-a11y/label-has-for */
-  /* eslint-disable jsx-a11y/no-static-element-interactions */
+  /* eslint-disable jsx-a11y/label-has-for, jsx-a11y/no-autofocus */
   return (
-    <Field error={error} touched={form.touched[name]} info={info}>
+    <Field error={formatError(field.error)} touched={field.touched} info={info}>
       {title && (
         <label htmlFor={`${identifier}-${name}`} className="form-control-label">
           {title}
         </label>
       )}
-      <div className={classes}>
-        <div
-          ref={control}
-          className="form-datepicker-control Select-control"
-          onClick={event => {
-            event.preventDefault();
-
-            // open/close dropdown
-            setOpen(!isOpen);
-            setFocused(true);
+      <div className="form-datepicker">
+        <input
+          ref={element => {
+            control.current = element;
+            setRef(ref, element);
+          }}
+          type="text"
+          id={`${identifier}-${name}`}
+          name={name}
+          value={formatValue(field.value)}
+          onFocus={() => {
+            openMenu();
           }}
           onKeyDown={event => {
-            if (!isOpen && event.key === 'ArrowDown') {
-              // open/close dropdown
-              setOpen(true);
-              setFocused(true);
-            }
-
-            // Destroy datepicker dropdown by calling the onBlur() function, so that
-            // the next tab element can be selected.
-            if (event.key === 'Tab') {
-              setOpen(false);
-              setFocused(false);
+            // prevent native submitting on enter
+            if (event.keyCode === 13) {
+              event.preventDefault();
             }
           }}
-        >
-          <span className="Select-multi-value-wrapper">
-            {!form.values[name] && (
-              <div className="Select-placeholder">{placeholder}</div>
-            )}
-            {form.values[name] && (
-              <div className="Select-value">
-                <span
-                  className="Select-value-label"
-                  role="option"
-                  aria-selected="true"
-                >
-                  {form.values[name] ? formatPickedDate(pickedDate) : ''}
-                </span>
-              </div>
-            )}
-            {/* TODO
-                * aria-controls ...
-                * aria-owns should be the id of the date list element
-                * aria-activedescendant should be the id of the currently selected day element
-                * aria-readonly should be true if datepicker is disabled
-
-                * see react-select for an example
-              */}
-            <div
-              ref={input}
-              id={`${identifier}-${name}`}
-              role="combobox"
-              tabIndex="0"
-              className="Select-input"
-              aria-controls=""
-              aria-expanded={isOpen}
-              aria-owns=""
-              aria-activedescendant=""
-              aria-readonly="false"
-              onFocus={() => {
-                setFocused(true);
-              }}
-              onBlur={() => {
-                form.setFieldTouched(name, true);
-              }}
-              style={{ border: '0px', width: '1px', display: 'inline-block' }}
-            />
-          </span>
-        </div>
-        {isOpen && (
-          <div ref={menu} className="form-datepicker-menu">
-            {/* TODO
-             * renderDay should be used to highlight the currently selected day
-             * onDayKeyDown should be used to navigate with arrow keys
-             */}
+          placeholder={placeholder}
+          className={inputClasses}
+          autoFocus={autoFocus}
+          readOnly
+        />
+        {isMenuOpen && (
+          <div
+            ref={menu}
+            className="form-datepicker-menu"
+            aria-labelledby={`${identifier}-${name}`}
+          >
             <DayPicker
-              initialMonth={initialMonth}
-              selectedDays={pickedDate}
-              onDayClick={day => {
-                // reset error
-                form.setFieldError(name, null);
-
+              firstDayOfWeek={1}
+              selectedDays={field.value}
+              initialMonth={field.value || undefined}
+              onDayKeyDown={(nextValue, modifiers, event) => {
+                // close dropdown on tab press
+                if (event.keyCode === 9) {
+                  closeMenu();
+                }
+              }}
+              onDayClick={nextValue => {
                 // set value
-                form.setFieldValue(name, day.toString());
+                field.setValue(nextValue, onValueChange);
 
                 // close dropdown
-                setOpen(false);
+                closeMenu();
               }}
-              firstDayOfWeek={1}
-              renderDay={day => day.getDate()}
-              onDayKeyDown={() => {}}
-              enableOutsideDays
             />
           </div>
         )}
