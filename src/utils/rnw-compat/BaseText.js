@@ -25,6 +25,21 @@ import cx from 'classnames';
 import checkUtilityClasses from '../checkUtilityClasses';
 import createUtilityClasses from '../createUtilityClasses';
 
+const propTypes = {
+  ...TextPropTypes,
+  styleName: PropTypes.string,
+  essentials: PropTypes.shape({
+    tag: PropTypes.string,
+    className: PropTypes.string,
+    blockOnly: PropTypes.bool,
+    inlineOnly: PropTypes.bool,
+  }).isRequired,
+};
+
+const defaultProps = {
+  styleName: null,
+};
+
 const styles = StyleSheet.create({
   notSelectable: {
     userSelect: 'none',
@@ -50,31 +65,6 @@ const createPressHandler = fn => {
 };
 
 class BaseText extends Component {
-  static displayName = 'Text';
-
-  static propTypes = {
-    ...TextPropTypes,
-    styleName: PropTypes.string,
-    essentials: PropTypes.shape({
-      tag: PropTypes.string,
-      className: PropTypes.string,
-      blockOnly: PropTypes.bool,
-      inlineOnly: PropTypes.bool,
-    }).isRequired,
-  };
-
-  static defaultProps = {
-    styleName: null,
-  };
-
-  static childContextTypes = {
-    isInAParentText: PropTypes.bool,
-  };
-
-  static contextTypes = {
-    isInAParentText: PropTypes.bool,
-  };
-
   constructor(props, context) {
     super(props, context);
 
@@ -172,5 +162,15 @@ class BaseText extends Component {
     return createElement(component, otherProps);
   }
 }
+
+BaseText.displayName = 'Text';
+BaseText.propTypes = propTypes;
+BaseText.defaultProps = defaultProps;
+BaseText.childContextTypes = {
+  isInAParentText: PropTypes.bool,
+};
+BaseText.contextTypes = {
+  isInAParentText: PropTypes.bool,
+};
 
 export default applyLayout(applyNativeMethods(BaseText));

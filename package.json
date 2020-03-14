@@ -31,13 +31,13 @@
     "css-to-react-native": "^3.0.0",
     "fbjs": "^1.0.0",
     "history": "^4.10.1",
-    "popper.js": "^1.16.0",
+    "popper.js": "^1.16.1",
     "prop-types": "^15.7.2",
     "react-day-picker": "^7.4.0"
   },
   "devDependencies": {
     "formik": "2.1.4",
-    "packsy": "0.1.8",
+    "packsy": "0.2.1",
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-native-web": "0.11.7",

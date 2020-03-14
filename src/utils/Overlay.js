@@ -31,8 +31,6 @@ const defaultProps = {
 };
 
 class Overlay extends React.Component {
-  static contextType = Context;
-
   constructor(props, context) {
     super(props, context);
 
@@ -45,6 +43,7 @@ class Overlay extends React.Component {
     };
   }
 
+  // eslint-disable-next-line react/no-deprecated
   componentWillMount() {
     const { visible } = this.props;
 
@@ -66,6 +65,7 @@ class Overlay extends React.Component {
     }
   }
 
+  // eslint-disable-next-line react/no-deprecated
   componentWillUpdate(nextProps) {
     const { visible } = this.props;
 
@@ -207,5 +207,6 @@ class Overlay extends React.Component {
 
 Overlay.propTypes = propTypes;
 Overlay.defaultProps = defaultProps;
+Overlay.contextType = Context;
 
 export default Overlay;

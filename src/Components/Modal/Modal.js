@@ -53,8 +53,6 @@ const computeScrollbarWidth = () => {
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 class Modal extends React.Component {
-  static contextType = Context;
-
   constructor(props, context) {
     super(props, context);
 
@@ -243,7 +241,7 @@ class Modal extends React.Component {
     });
 
     return (
-      <React.Fragment>
+      <>
         <BaseView
           tabIndex="-1"
           accessibilityRole="dialog"
@@ -269,7 +267,7 @@ class Modal extends React.Component {
           </BaseView>
         </BaseView>
         <BaseView essentials={{ className: modalBackdropClasses }} />
-      </React.Fragment>
+      </>
     );
   }
 
@@ -306,6 +304,7 @@ class Modal extends React.Component {
 
 Modal.propTypes = propTypes;
 Modal.defaultProps = defaultProps;
+Modal.contextType = Context;
 
 Modal.Body = ModalBody;
 Modal.Footer = ModalFooter;

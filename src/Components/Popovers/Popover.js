@@ -27,11 +27,15 @@ const defaultProps = {
 };
 
 class Popover extends React.Component {
-  state = {
-    visible: false,
-    isPressed: false,
-    isFocused: false,
-  };
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      visible: false,
+      isPressed: false,
+      isFocused: false,
+    };
+  }
 
   componentDidMount() {
     const { trigger } = this.props;

@@ -26,7 +26,6 @@ const handleRouting = (event, { replace, to }, history) => {
 };
 
 export default function useActionElement(Component, props, ref) {
-  // eslint-disable-next-line react/prop-types
   const {
     to,
     replace,

@@ -26,6 +26,20 @@ import cx from 'classnames';
 import checkUtilityClasses from '../checkUtilityClasses';
 import createUtilityClasses from '../createUtilityClasses';
 
+const propTypes = {
+  ...ViewPropTypes,
+  styleName: PropTypes.string,
+  essentials: PropTypes.shape({
+    tag: PropTypes.string,
+    className: PropTypes.string,
+    pseudo: PropTypes.bool,
+  }).isRequired,
+};
+
+const defaultProps = {
+  styleName: null,
+};
+
 const styles = StyleSheet.create({
   inline: {
     display: 'inline-flex',
@@ -49,26 +63,6 @@ const calculateHitSlopStyle = hitSlop => {
 
 // eslint-disable-next-line react/prefer-stateless-function
 class BaseView extends Component {
-  static displayName = 'View';
-
-  static contextTypes = {
-    isInAParentText: PropTypes.bool,
-  };
-
-  static propTypes = {
-    ...ViewPropTypes,
-    styleName: PropTypes.string,
-    essentials: PropTypes.shape({
-      tag: PropTypes.string,
-      className: PropTypes.string,
-      pseudo: PropTypes.bool,
-    }).isRequired,
-  };
-
-  static defaultProps = {
-    styleName: null,
-  };
-
   render() {
     const {
       hitSlop,
@@ -135,5 +129,12 @@ class BaseView extends Component {
     return createElement(tag || 'div', supportedProps);
   }
 }
+
+BaseView.displayName = 'View';
+BaseView.propTypes = propTypes;
+BaseView.defaultProps = defaultProps;
+BaseView.contextTypes = {
+  isInAParentText: PropTypes.bool,
+};
 
 export default applyLayout(applyNativeMethods(BaseView));

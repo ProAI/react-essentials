@@ -27,17 +27,15 @@ const defaultProps = {
 };
 
 class Dropdown extends React.Component {
-  static contextType = Context;
-
   constructor(props, context) {
     super(props, context);
 
+    this.state = {
+      visible: false,
+    };
+
     this.identifier = context.generateKey('re-dropdown-');
   }
-
-  state = {
-    visible: false,
-  };
 
   componentWillUnmount() {
     if (this.visible()) {
@@ -156,6 +154,7 @@ class Dropdown extends React.Component {
 
 Dropdown.propTypes = propTypes;
 Dropdown.defaultProps = defaultProps;
+Dropdown.contextType = Context;
 
 Dropdown.Menu = DropdownMenu;
 Dropdown.Divider = DropdownDivider;
