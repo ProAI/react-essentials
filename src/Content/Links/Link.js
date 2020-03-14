@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BaseText from '../../utils/rnw-compat/BaseText';
 import useActionElement from '../../hooks/useActionElement';
-import { actionPropTypes } from '../../utils/props';
+import ActionPropTypes from '../../utils/ActionPropTypes';
 
 const propTypes = {
-  ...actionPropTypes,
+  ...ActionPropTypes,
   // eslint-disable-next-line react/no-unused-prop-types
   children: PropTypes.node.isRequired,
 };

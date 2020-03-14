@@ -5,10 +5,10 @@ import Field from './Field';
 import { SIZES } from '../../utils/constants';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
-import { formFieldPropTypes } from './props';
+import FieldPropTypes from './FieldPropTypes';
 
 const propTypes = {
-  ...formFieldPropTypes,
+  ...FieldPropTypes,
   placeholder: PropTypes.string,
   type: PropTypes.oneOf([
     'color',

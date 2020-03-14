@@ -23,8 +23,8 @@ import ViewPropTypes from 'react-native-web/dist/cjs/exports/View/ViewPropTypes'
 import React, { Component } from 'react';
 
 import cx from 'classnames';
-import checkUtilityClasses from '../checkUtilityClasses';
-import createUtilityClasses from '../createUtilityClasses';
+import checkUtilityClasses from './checkUtilityClasses';
+import createUtilityClasses from './createUtilityClasses';
 
 const propTypes = {
   ...ViewPropTypes,

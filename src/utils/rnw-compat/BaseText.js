@@ -22,8 +22,8 @@ import TextPropTypes from 'react-native-web/dist/cjs/exports/Text/TextPropTypes'
 
 import invariant from 'fbjs/lib/invariant';
 import cx from 'classnames';
-import checkUtilityClasses from '../checkUtilityClasses';
-import createUtilityClasses from '../createUtilityClasses';
+import checkUtilityClasses from './checkUtilityClasses';
+import createUtilityClasses from './createUtilityClasses';
 
 const propTypes = {
   ...TextPropTypes,

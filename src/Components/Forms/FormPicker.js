@@ -5,10 +5,10 @@ import Field from './Field';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
 import setRef from '../../utils/setRef';
-import { formFieldPropTypes } from './props';
+import FieldPropTypes from './FieldPropTypes';
 
 const propTypes = {
-  ...formFieldPropTypes,
+  ...FieldPropTypes,
   placeholder: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({

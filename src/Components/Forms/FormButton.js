@@ -5,10 +5,10 @@ import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
 import useActionElement from '../../hooks/useActionElement';
-import { actionPropTypes } from '../../utils/props';
+import ActionPropTypes from '../../utils/ActionPropTypes';
 
 const propTypes = {
-  ...actionPropTypes,
+  ...ActionPropTypes,
   children: PropTypes.node.isRequired,
   type: PropTypes.oneOf(['submit', 'reset']).isRequired,
   color: PropTypes.oneOf(BUTTON_COLORS),

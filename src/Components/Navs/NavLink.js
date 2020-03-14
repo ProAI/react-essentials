@@ -4,10 +4,10 @@ import cx from 'classnames';
 import { __RouterContext as RouterContext, matchPath } from 'react-router';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import useActionElement from '../../hooks/useActionElement';
-import { actionPropTypes } from '../../utils/props';
+import ActionPropTypes from '../../utils/ActionPropTypes';
 
 const propTypes = {
-  ...actionPropTypes,
+  ...ActionPropTypes,
   children: PropTypes.node.isRequired,
   exact: PropTypes.bool,
   strict: PropTypes.bool,

@@ -7,10 +7,10 @@ import { SIZES } from '../../utils/constants';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
 import setRef from '../../utils/setRef';
-import { formFieldPropTypes } from './props';
+import FieldPropTypes from './FieldPropTypes';
 
 const propTypes = {
-  ...formFieldPropTypes,
+  ...FieldPropTypes,
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(SIZES),
   autoFocus: PropTypes.bool,

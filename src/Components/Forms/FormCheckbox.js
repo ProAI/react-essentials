@@ -4,10 +4,10 @@ import cx from 'classnames';
 import Field from './Field';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
-import { formFieldPropTypes } from './props';
+import FieldPropTypes from './FieldPropTypes';
 
 const propTypes = {
-  ...formFieldPropTypes,
+  ...FieldPropTypes,
   label: PropTypes.string.isRequired,
 };
 

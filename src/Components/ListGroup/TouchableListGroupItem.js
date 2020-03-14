@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import useActionElement from '../../hooks/useActionElement';
-import { actionPropTypes } from '../../utils/props';
+import ActionPropTypes from '../../utils/ActionPropTypes';
 
 const propTypes = {
-  ...actionPropTypes,
+  ...ActionPropTypes,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool,
   active: PropTypes.bool,

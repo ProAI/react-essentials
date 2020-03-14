@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const actionPropTypes = {
+const ActionPropTypes = {
   to: PropTypes.string,
   replace: PropTypes.bool,
   external: PropTypes.bool,
@@ -8,10 +8,4 @@ export const actionPropTypes = {
   keepFocus: PropTypes.bool,
 };
 
-export const actionDefaultProps = {
-  to: null,
-  replace: false,
-  external: false,
-  onPress: null,
-  keepFocus: false,
-};
+export default ActionPropTypes;

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const formFieldPropTypes = {
+const FieldPropTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string,
   info: PropTypes.string,
@@ -8,9 +8,4 @@ export const formFieldPropTypes = {
   formatError: PropTypes.func,
 };
 
-export const formFieldDefaultProps = {
-  title: null,
-  info: null,
-  onValueChange: null,
-  formatError: error => error,
-};
+export default FieldPropTypes;

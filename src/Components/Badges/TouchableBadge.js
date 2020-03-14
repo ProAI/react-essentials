@@ -4,10 +4,10 @@ import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import useActionElement from '../../hooks/useActionElement';
 import { COLORS } from '../../utils/constants';
-import { actionPropTypes } from '../../utils/props';
+import ActionPropTypes from '../../utils/ActionPropTypes';
 
 const propTypes = {
-  ...actionPropTypes,
+  ...ActionPropTypes,
   children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(COLORS),
 };

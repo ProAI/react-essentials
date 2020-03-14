@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PopperJS from 'popper.js';
 import BaseView from '../../utils/rnw-compat/BaseView';
 import BaseText from '../../utils/rnw-compat/BaseText';
-import Overlay from '../../utils/Overlay';
+import Overlay from '../Overlay/Overlay';
 import { TRIGGERS } from '../../utils/constants';
 import withForwardedRef from '../../utils/withForwardedRef';
 
