@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BaseText from '../../utils/rnw-compat/BaseText';
-import useActionElement from '../../hooks/useActionElement';
-import ActionPropTypes from '../../utils/ActionPropTypes';
+import BaseText from '../utils/rnw-compat/BaseText';
+import useActionElement from '../hooks/useActionElement';
+import ActionPropTypes from '../utils/ActionPropTypes';
 
 const propTypes = {
   ...ActionPropTypes,

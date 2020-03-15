@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import BaseText from '../../utils/rnw-compat/BaseText';
-import { TEXT_COLORS } from '../../utils/constants';
+import BaseText from '../utils/rnw-compat/BaseText';
+import { TEXT_COLORS } from '../utils/constants';
 
 const propTypes = {
   children: PropTypes.node.isRequired,

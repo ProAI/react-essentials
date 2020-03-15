@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PopperJS from 'popper.js';
+import BaseView from '../../utils/rnw-compat/BaseView';
 import BaseText from '../../utils/rnw-compat/BaseText';
-import Overlay from '../Overlay/Overlay';
+import Overlay from '../Overlay';
 import { TRIGGERS } from '../../utils/constants';
 import withForwardedRef from '../../utils/withForwardedRef';
 
 const propTypes = {
   title: PropTypes.node.isRequired,
+  content: PropTypes.node.isRequired,
   placement: PropTypes.oneOf(PopperJS.placements),
   fallbackPlacement: PropTypes.oneOf(['flip', 'clockwise', 'counterwise']),
   onToggle: PropTypes.func,
@@ -21,10 +23,10 @@ const defaultProps = {
   visible: null,
   placement: 'bottom',
   fallbackPlacement: null,
-  trigger: 'hover focus',
+  trigger: 'click',
 };
 
-class Tooltip extends React.Component {
+class Popover extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -38,7 +40,6 @@ class Tooltip extends React.Component {
   componentDidMount() {
     const { trigger } = this.props;
 
-    // this.target = document.querySelector(`[aria-describedby="${this.identifier}"]`);
     this.trigger = trigger.split(' ');
   }
 
@@ -183,7 +184,7 @@ class Tooltip extends React.Component {
   };
 
   render() {
-    const { target, placement, fallbackPlacement, title } = this.props;
+    const { target, placement, fallbackPlacement, title, content } = this.props;
 
     const clonedTarget = React.cloneElement(target, {
       onPress: this.onTargetPress,
@@ -196,28 +197,40 @@ class Tooltip extends React.Component {
     return (
       <Overlay
         target={clonedTarget}
-        className="tooltip show"
+        className="popover show"
         placement={placement}
         fallbackPlacement={fallbackPlacement}
         placementClassName={{
-          top: 'bs-tooltip-top',
-          bottom: 'bs-tooltip-bottom',
-          left: 'bs-tooltip-left',
-          right: 'bs-tooltip-right',
+          top: 'bs-popover-top',
+          bottom: 'bs-popover-bottom',
+          left: 'bs-popover-left',
+          right: 'bs-popover-right',
         }}
         visible={this.visible()}
         onToggle={this.onToggle}
         role="tooltip"
       >
-        <BaseText essentials={{ className: 'tooltip-inner', blockOnly: true }}>
-          {title}
-        </BaseText>
+        {title && (
+          <BaseText
+            accessibilityRole="heading"
+            aria-level={3}
+            essentials={{
+              className: 'popover-header',
+              blockOnly: true,
+            }}
+          >
+            {title}
+          </BaseText>
+        )}
+        <BaseView essentials={{ className: 'popover-body' }}>
+          {content}
+        </BaseView>
       </Overlay>
     );
   }
 }
 
-Tooltip.propTypes = propTypes;
-Tooltip.defaultProps = defaultProps;
+Popover.propTypes = propTypes;
+Popover.defaultProps = defaultProps;
 
-export default withForwardedRef(Tooltip);
+export default withForwardedRef(Popover);
