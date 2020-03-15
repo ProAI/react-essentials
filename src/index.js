@@ -7,88 +7,88 @@ import getStyleSheet from './styling/getStyleSheet';
 import css from './styling/css';
 
 /* alert components */
-import Alert from './elements/alert/Alert';
+import Alert from './components/alert/Alert';
 
 /* badge components */
-import TouchableBadge from './elements/badge/TouchableBadge';
-import Badge from './elements/badge/Badge';
+import TouchableBadge from './components/badge/TouchableBadge';
+import Badge from './components/badge/Badge';
 
 /* button group components */
-import ButtonGroup from './elements/button-group/ButtonGroup';
-import ButtonToolbar from './elements/button-group/ButtonToolbar';
+import ButtonGroup from './components/button-group/ButtonGroup';
+import ButtonToolbar from './components/button-group/ButtonToolbar';
 
 /* button components */
-import Button from './elements/buttons/Button';
+import Button from './components/buttons/Button';
 
 /* card components */
-import Card from './elements/cards/Card';
+import Card from './components/cards/Card';
 
 /* code components */
-import Code from './elements/code/Code';
+import Code from './components/code/Code';
 
 /* dropdown components */
-import Dropdown from './elements/dropdowns/Dropdown';
+import Dropdown from './components/dropdowns/Dropdown';
 
 /* form components */
-import Form from './elements/forms/Form';
+import Form from './components/forms/Form';
 
 /* grid components */
-import Container from './elements/grid/Container';
-import Grid from './elements/grid/Grid';
+import Container from './components/grid/Container';
+import Grid from './components/grid/Grid';
 
 /* input group components */
-import InputGroup from './elements/input-group/InputGroup';
+import InputGroup from './components/input-group/InputGroup';
 
 /* jumbotron components */
-import Jumbotron from './elements/jumbotron/Jumbotron';
+import Jumbotron from './components/jumbotron/Jumbotron';
 
 /* list group components */
-import TouchableListGroup from './elements/list-group/TouchableListGroup';
-import ListGroup from './elements/list-group/ListGroup';
-import TabsListGroup from './elements/list-group/TabsListGroup';
+import TouchableListGroup from './components/list-group/TouchableListGroup';
+import ListGroup from './components/list-group/ListGroup';
+import TabsListGroup from './components/list-group/TabsListGroup';
 
 /* modal components */
-import Modal from './elements/modal/Modal';
+import Modal from './components/modal/Modal';
 
 /* nav components */
-import Nav from './elements/nav/Nav';
-import TabsNav from './elements/nav/TabsNav';
-import TabsContent from './elements/nav/TabsContent';
+import Nav from './components/nav/Nav';
+import TabsNav from './components/nav/TabsNav';
+import TabsContent from './components/nav/TabsContent';
 
 /* popover components */
-import injectPopover from './elements/popover/injectPopover';
-import PopoverButton from './elements/popover/PopoverButton';
+import injectPopover from './components/popover/injectPopover';
+import PopoverButton from './components/popover/PopoverButton';
 
 /* spinners components */
-import Spinner from './elements/spinners/Spinner';
+import Spinner from './components/spinners/Spinner';
 
 /* tables components */
-import Table from './elements/tables/Table';
-import TD from './elements/tables/TableData';
-import TH from './elements/tables/TableHeading';
-import TR from './elements/tables/TableRow';
+import Table from './components/tables/Table';
+import TD from './components/tables/TableData';
+import TH from './components/tables/TableHeading';
+import TR from './components/tables/TableRow';
 
 /* toasts components */
-import Toast from './elements/toasts/Toast';
+import Toast from './components/toasts/Toast';
 
 /* tooltip components */
-import injectTooltip from './elements/tooltip/injectTooltip';
-import TooltipButton from './elements/tooltip/TooltipButton';
+import injectTooltip from './components/tooltip/injectTooltip';
+import TooltipButton from './components/tooltip/TooltipButton';
 
 /* type components */
-import Blockquote from './elements/type/Blockquote';
-import Cite from './elements/type/Cite';
-import DisplayHeading from './elements/type/DisplayHeading';
-import Heading from './elements/type/Heading';
-import List from './elements/type/List';
-import Paragraph from './elements/type/Paragraph';
+import Blockquote from './components/type/Blockquote';
+import Cite from './components/type/Cite';
+import DisplayHeading from './components/type/DisplayHeading';
+import Heading from './components/type/Heading';
+import List from './components/type/List';
+import Paragraph from './components/type/Paragraph';
 
 /* primitive components */
-import Image from './elements/Image';
-import BlockLink from './elements/BlockLink';
-import Link from './elements/Link';
-import Text from './elements/Text';
-import View from './elements/View';
+import Image from './components/Image';
+import BlockLink from './components/BlockLink';
+import Link from './components/Link';
+import Text from './components/Text';
+import View from './components/View';
 
 /* hooks */
 import useMedia from './hooks/useMedia';
