@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
-import useActionElement from '../../hooks/useActionElement';
+import useAction from '../../hooks/useAction';
 import { COLORS } from '../../utils/constants';
 import ActionPropTypes from '../../utils/ActionPropTypes';
 
@@ -15,17 +15,15 @@ const propTypes = {
 const TouchableBadge = React.forwardRef(function TouchableBadge(props, ref) {
   const { color = 'primary', ...elementProps } = props;
 
+  const actionProps = useAction(elementProps, ref);
+
   const classes = cx(
     // constant classes
     'badge',
     `badge-${color}`,
   );
 
-  const createElement = useActionElement(BaseTouchable, elementProps, ref);
-
-  return createElement({
-    className: classes,
-  });
+  return <BaseTouchable {...actionProps} essentials={{ className: classes }} />;
 });
 
 TouchableBadge.displayName = 'TouchableBadge';

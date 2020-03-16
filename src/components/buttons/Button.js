@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
-import useActionElement from '../../hooks/useActionElement';
+import useAction from '../../hooks/useAction';
 import ActionPropTypes from '../../utils/ActionPropTypes';
 
 const propTypes = {
@@ -30,6 +30,8 @@ const Button = React.forwardRef(function Button(props, ref) {
     ...elementProps
   } = props;
 
+  const actionProps = useAction({ ...elementProps, disabled }, ref);
+
   const classes = cx(
     // constant classes
     'btn',
@@ -43,18 +45,7 @@ const Button = React.forwardRef(function Button(props, ref) {
     caret && 'dropdown-toggle',
   );
 
-  const createElement = useActionElement(
-    BaseTouchable,
-    {
-      disabled,
-      ...elementProps,
-    },
-    ref,
-  );
-
-  return createElement({
-    className: classes,
-  });
+  return <BaseTouchable {...actionProps} essentials={{ className: classes }} />;
 });
 
 Button.displayName = 'Button';

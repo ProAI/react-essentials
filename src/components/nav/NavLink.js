@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { __RouterContext as RouterContext, matchPath } from 'react-router';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
-import useActionElement from '../../hooks/useActionElement';
+import useAction from '../../hooks/useAction';
 import ActionPropTypes from '../../utils/ActionPropTypes';
 
 const propTypes = {
@@ -25,8 +25,9 @@ const NavLink = React.forwardRef(function NavLink(props, ref) {
     ...elementProps
   } = props;
 
+  const actionProps = useAction(elementProps, ref);
+
   const context = useContext(RouterContext);
-  const createElement = useActionElement(BaseTouchable, elementProps, ref);
 
   const path = typeof props.to === 'object' ? props.to.pathname : props.to;
 
@@ -52,9 +53,7 @@ const NavLink = React.forwardRef(function NavLink(props, ref) {
     isActive && 'active',
   );
 
-  return createElement({
-    className: classes,
-  });
+  return <BaseTouchable {...actionProps} essentials={{ className: classes }} />;
 });
 
 NavLink.displayName = 'NavLink';

@@ -1,21 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
-import useActionElement from '../../hooks/useActionElement';
+import useAction from '../../hooks/useAction';
 import ActionPropTypes from '../../utils/ActionPropTypes';
 
 const propTypes = {
   ...ActionPropTypes,
-  // eslint-disable-next-line react/no-unused-prop-types
   children: PropTypes.node.isRequired,
 };
 
 const DropdownItem = React.forwardRef(function DropdownItem(props, ref) {
-  const createElement = useActionElement(BaseTouchable, props, ref);
+  const { ...elementProps } = props;
 
-  return createElement({
-    className: 'dropdown-item',
-  });
+  const actionProps = useAction(elementProps, ref);
+
+  return (
+    <BaseTouchable
+      {...actionProps}
+      essentials={{ className: 'dropdown-item' }}
+    />
+  );
 });
 
 DropdownItem.displayName = 'DropdownItem';

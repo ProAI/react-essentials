@@ -4,7 +4,7 @@ import { useFormikContext } from 'formik';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
-import useActionElement from '../../hooks/useActionElement';
+import useAction from '../../hooks/useAction';
 import ActionPropTypes from '../../utils/ActionPropTypes';
 
 const propTypes = {
@@ -31,18 +31,6 @@ const FormButton = React.forwardRef(function FormButton(props, ref) {
 
   const disabled = form.isSubmitting;
 
-  const classes = cx(
-    // constant classes
-    'btn',
-    `btn-${color}`,
-    // variable classes
-    size === 'sm' && 'btn-sm',
-    size === 'lg' && 'btn-lg',
-    active && 'active',
-    disabled && 'disabled',
-    block && 'btn-block',
-  );
-
   const handlePress = event => {
     if (onPress) {
       onPress(event);
@@ -57,8 +45,7 @@ const FormButton = React.forwardRef(function FormButton(props, ref) {
     }
   };
 
-  const createElement = useActionElement(
-    BaseTouchable,
+  const actionProps = useAction(
     {
       ...elementProps,
       disabled,
@@ -67,9 +54,19 @@ const FormButton = React.forwardRef(function FormButton(props, ref) {
     ref,
   );
 
-  return createElement({
-    className: classes,
-  });
+  const classes = cx(
+    // constant classes
+    'btn',
+    `btn-${color}`,
+    // variable classes
+    size === 'sm' && 'btn-sm',
+    size === 'lg' && 'btn-lg',
+    active && 'active',
+    disabled && 'disabled',
+    block && 'btn-block',
+  );
+
+  return <BaseTouchable {...actionProps} essentials={{ className: classes }} />;
 });
 
 FormButton.displayName = 'FormButton';

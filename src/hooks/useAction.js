@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import { useRef, useContext } from 'react';
 import invariant from 'fbjs/lib/invariant';
 import warning from 'fbjs/lib/warning';
 import { __RouterContext as RouterContext } from 'react-router';
@@ -25,7 +25,7 @@ const handleRouting = (event, { replace, to }, history) => {
   }
 };
 
-export default function useActionElement(Component, props, ref) {
+export default function useAction(props, ref) {
   const {
     to,
     replace = false,
@@ -39,6 +39,7 @@ export default function useActionElement(Component, props, ref) {
   const { history, location } = useContext(RouterContext);
 
   const internalRef = useRef();
+
   const handleRef = element => {
     internalRef.current = element;
     setRef(ref, element);
@@ -61,42 +62,36 @@ export default function useActionElement(Component, props, ref) {
   // action
   if (!to) {
     // TODO onKeyPress: () => {},
-    return essentials => (
-      <Component
-        {...elementProps}
-        ref={handleRef}
-        accessibilityRole="button"
-        onClick={event => {
-          // We use the onClick event for buttons instead of onPress, because
-          // if the mouse moves while clicking the click is not detected.
-          // See https://github.com/necolas/react-native-web/issues/1219
-          handlePress({}, props, internalRef);
+    return {
+      ...elementProps,
+      ref: handleRef,
+      accessibilityRole: 'button',
+      onClick: event => {
+        // We use the onClick event for buttons instead of onPress, because
+        // if the mouse moves while clicking the click is not detected.
+        // See https://github.com/necolas/react-native-web/issues/1219
+        handlePress({}, props, internalRef);
 
-          if (onClick) onClick(event);
-        }}
-        tabIndex={0}
-        essentials={essentials}
-      />
-    );
+        if (onClick) onClick(event);
+      },
+      tabIndex: 0,
+    };
   }
 
   // external link
   if (external) {
-    return essentials => (
-      <Component
-        {...elementProps}
-        ref={handleRef}
-        accessibilityRole="link"
-        href={to}
-        onPress={event => {
-          handlePress(event, props, internalRef);
-        }}
-        onClick={onClick}
-        target="_blank"
-        rel="noopener noreferrer"
-        essentials={essentials}
-      />
-    );
+    return {
+      ...elementProps,
+      ref: handleRef,
+      accessibilityRole: 'link',
+      href: to,
+      onPress: event => {
+        handlePress(event, props, internalRef);
+      },
+      onClick,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    };
   }
 
   // router link
@@ -104,18 +99,15 @@ export default function useActionElement(Component, props, ref) {
     typeof to === 'string' ? createLocation(to, null, null, location) : to;
   const href = linkLocation ? history.createHref(linkLocation) : '';
 
-  return essentials => (
-    <Component
-      {...elementProps}
-      ref={handleRef}
-      accessibilityRole="link"
-      href={href}
-      onPress={event => {
-        handlePress(event, props, internalRef);
-        handleRouting(event, props, history);
-      }}
-      onClick={onClick}
-      essentials={essentials}
-    />
-  );
+  return {
+    ...elementProps,
+    ref: handleRef,
+    accessibilityRole: 'link',
+    href,
+    onPress: event => {
+      handlePress(event, props, internalRef);
+      handleRouting(event, props, history);
+    },
+    onClick,
+  };
 }

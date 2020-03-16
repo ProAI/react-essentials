@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
-import useActionElement from '../../hooks/useActionElement';
+import useAction from '../../hooks/useAction';
 import ActionPropTypes from '../../utils/ActionPropTypes';
 
 const propTypes = {
@@ -18,6 +18,8 @@ const ActionListGroupItem = React.forwardRef(function ActionListGroupItem(
 ) {
   const { disabled = false, active = false, ...elementProps } = props;
 
+  const actionProps = useAction({ ...elementProps, disabled }, ref);
+
   const classes = cx(
     // constant classes
     'list-group-item',
@@ -27,18 +29,7 @@ const ActionListGroupItem = React.forwardRef(function ActionListGroupItem(
     active && 'active',
   );
 
-  const createElement = useActionElement(
-    BaseTouchable,
-    {
-      disabled,
-      ...elementProps,
-    },
-    ref,
-  );
-
-  return createElement({
-    className: classes,
-  });
+  return <BaseTouchable {...actionProps} essentials={{ className: classes }} />;
 });
 
 ActionListGroupItem.displayName = 'ActionListGroupItem';

@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BaseText from '../utils/rnw-compat/BaseText';
-import useActionElement from '../hooks/useActionElement';
+import useAction from '../hooks/useAction';
 import ActionPropTypes from '../utils/ActionPropTypes';
 
 const propTypes = {
   ...ActionPropTypes,
-  // eslint-disable-next-line react/no-unused-prop-types
   children: PropTypes.node.isRequired,
 };
 
 const Link = React.forwardRef(function Link(props, ref) {
-  const createElement = useActionElement(BaseText, props, ref);
+  const { ...elementProps } = props;
 
-  return createElement({ tag: 'a' });
+  const actionProps = useAction(elementProps, ref);
+
+  return <BaseText {...actionProps} essentials={{ tag: 'a' }} />;
 });
 
 Link.displayName = 'Link';
