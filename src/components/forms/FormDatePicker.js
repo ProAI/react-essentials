@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DayPicker from 'react-day-picker/DayPicker';
@@ -7,6 +7,7 @@ import { SIZES } from '../../utils/constants';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
 import setRef from '../../utils/setRef';
+import useOutsidePress from '../../hooks/useOutsidePress';
 import FieldPropTypes from './FieldPropTypes';
 
 const propTypes = {
@@ -15,6 +16,38 @@ const propTypes = {
   size: PropTypes.oneOf(SIZES),
   autoFocus: PropTypes.bool,
   formatValue: PropTypes.func,
+};
+
+const useMenuConvenienceEffects = ({ ref: menu, active }) => {
+  useEffect(() => {
+    if (!active) {
+      return undefined;
+    }
+
+    // Set tabindex of wrapper element to -1, so that nav buttons are
+    // selected directly.
+    const wrapper = menu.current.getElementsByClassName('DayPicker-wrapper')[0];
+    wrapper.tabIndex = -1;
+
+    // Scroll to bottom of menu for better usability.
+    const menuRect = menu.current.getBoundingClientRect();
+    if (window.innerHeight < menuRect.bottom) {
+      window.scrollBy(0, menuRect.bottom - window.innerHeight);
+    }
+
+    // Blur on month change
+    const onDocumentClick = event => {
+      if (event.target.className.includes('DayPicker-NavButton')) {
+        event.target.blur();
+      }
+    };
+
+    document.addEventListener('click', onDocumentClick);
+
+    return () => {
+      document.removeEventListener('click', onDocumentClick);
+    };
+  }, [active]);
 };
 
 const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
@@ -38,67 +71,31 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
 
   const [isMenuOpen, setMenuOpen] = useState(false);
 
-  const openMenu = useCallback(() => {
-    setMenuOpen(true);
-  }, []);
+  useOutsidePress({
+    insideRefs: [control, menu],
+    active: isMenuOpen,
+    onPress: () => {
+      setMenuOpen(false);
+    },
+  });
 
-  const closeMenu = useCallback(() => {
-    field.setTouched();
+  useMenuConvenienceEffects({
+    ref: menu,
+    active: isMenuOpen,
+  });
 
-    setMenuOpen(false);
-  }, []);
-
-  useEffect(() => {
-    if (!isMenuOpen) {
-      return undefined;
-    }
-
-    // Set tabindex of wrapper element to -1, so that nav buttons are
-    // selected directly.
-    document.getElementsByClassName('DayPicker-wrapper')[0].tabIndex = -1;
-
-    // Scroll to bottom of menu for better usability.
-    const menuRect = menu.current.getBoundingClientRect();
-    if (window.innerHeight < menuRect.bottom) {
-      window.scrollBy(0, menuRect.bottom - window.innerHeight);
-    }
-
-    // Blur on month change
-    const onDocumentClick = event => {
-      if (event.target.className.includes('DayPicker-NavButton')) {
-        event.target.blur();
-      }
-    };
-
-    // Close dropdown if user clicks on document
-    const onDocumentMouseDown = event => {
-      const isControlElement =
-        event.target === control.current ||
-        control.current.contains(event.target);
-
-      const isMenuElement =
-        event.target === menu.current || menu.current.contains(event.target);
-
-      if (!isMenuElement && !isControlElement) {
-        closeMenu();
-      }
-    };
-
-    document.addEventListener('click', onDocumentClick);
-    document.addEventListener('mousedown', onDocumentMouseDown);
-
-    return () => {
-      document.removeEventListener('click', onDocumentClick);
-      document.removeEventListener('mousedown', onDocumentMouseDown);
-    };
-  }, [isMenuOpen]);
+  const classes = cx(
+    // constant classes
+    'form-datepicker',
+    // variable classes
+    isMenuOpen && 'show',
+  );
 
   const inputClasses = cx(
     // constant classes
     'form-control',
     'form-datepicker-control',
     // variable classes
-    isMenuOpen && 'focus',
     field.touched && field.error && 'is-invalid',
     size === 'sm' && 'form-control-sm',
     size === 'lg' && 'form-control-lg',
@@ -112,7 +109,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
           {title}
         </label>
       )}
-      <div className="form-datepicker">
+      <div className={classes}>
         <input
           ref={element => {
             control.current = element;
@@ -123,7 +120,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
           name={name}
           value={formatValue(field.value)}
           onFocus={() => {
-            openMenu();
+            setMenuOpen(true);
           }}
           onKeyDown={event => {
             // prevent native submitting on enter
@@ -149,7 +146,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
               onDayKeyDown={(nextValue, modifiers, event) => {
                 // close dropdown on tab press
                 if (event.keyCode === 9) {
-                  closeMenu();
+                  setMenuOpen(false);
                 }
               }}
               onDayClick={nextValue => {
@@ -157,7 +154,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
                 field.setValue(nextValue, onValueChange);
 
                 // close dropdown
-                closeMenu();
+                setMenuOpen(false);
               }}
             />
           </div>
