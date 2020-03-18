@@ -1,314 +1,138 @@
-import React from 'react';
-import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
-import { findNodeHandle } from 'react-native-web';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
+import findNodeHandle from 'react-native-web/dist/cjs/exports/findNodeHandle';
 import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
 import ModalTitle from './ModalTitle';
 import { MODAL_SIZES } from '../../utils/constants';
-import withForwardedRef from '../../utils/withForwardedRef';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import Context from '../../Context';
-
-const { canUseDOM } = ExecutionEnvironment;
+import useIdentifier from '../../hooks/useIdentifier';
+import useModalEffects from './useModalEffects';
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element.isRequired),
   visible: PropTypes.bool.isRequired,
   size: PropTypes.oneOf(MODAL_SIZES),
   scrollable: PropTypes.bool,
   centered: PropTypes.bool,
   onToggle: PropTypes.func.isRequired,
-  onEnter: PropTypes.func,
-  onExit: PropTypes.func,
-  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
 
-const defaultProps = {
-  size: null,
-  scrollable: false,
-  centered: false,
-  onEnter: null,
-  onExit: null,
-  innerRef: null,
-};
+const Modal = React.forwardRef(function Modal(props, ref) {
+  const {
+    children: [headChild, ...bodyChildren],
+    visible: isModalOpen,
+    size,
+    scrollable = false,
+    centered = false,
+    onToggle = () => {},
+    ...elementProps
+  } = props;
 
-const computeScrollbarWidth = () => {
-  const scrollDiv = document.createElement('div');
-  scrollDiv.className = 'modal-scrollbar-measure';
-  document.body.appendChild(scrollDiv);
+  const identifier = useIdentifier('modal');
+  const [isMounted, setMounted] = useState();
 
-  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  const modal = useRef();
 
-  document.body.removeChild(scrollDiv);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  return scrollbarWidth;
-};
+  useModalEffects({
+    ref: modal,
+    active: isModalOpen,
+  });
 
-/* eslint-disable react/sort-comp */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-class Modal extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.container = canUseDOM ? document.createElement('div') : null;
-
-    this.identifier = context.generateKey('re-modal-');
+  // Return null if not mounted or not open.
+  if (!isMounted || !isModalOpen) {
+    return null;
   }
 
-  componentDidMount() {
-    const { visible } = this.props;
+  const modalClasses = cx(
+    // constant classes
+    'modal',
+    // variable classes
+    isModalOpen && 'show',
+  );
 
-    if (visible) {
-      this.show();
-    }
-  }
+  const modalDialogClasses = cx(
+    // constant classes
+    'modal-dialog',
+    // variable classes
+    size === 'sm' && 'modal-sm',
+    size === 'lg' && 'modal-lg',
+    size === 'xl' && 'modal-xl',
+    scrollable && 'modal-dialog-scrollable',
+    centered && 'modal-dialog-centered',
+  );
 
-  componentDidUpdate(prevProps) {
-    const { visible } = this.props;
+  const modalBackdropClasses = cx(
+    // constant classes
+    'modal-backdrop',
+    // variable classes
+    isModalOpen && 'show',
+  );
 
-    if (visible !== prevProps.visible) {
-      if (visible) {
-        this.show();
-      } else {
-        this.hide();
-      }
-    }
-  }
+  const headElement = React.cloneElement(headChild, {
+    titleId: identifier,
+  });
 
-  componentWillUnmount() {
-    const { visible } = this.props;
+  return ReactDOM.createPortal(
+    <>
+      <BaseView
+        key="modal"
+        ref={element => {
+          modal.current = findNodeHandle(element);
+        }}
+        accessible
+        accessibilityRole="dialog"
+        aria-labelledby={identifier}
+        aria-hidden={!isModalOpen}
+        onClick={event => {
+          if (event.target === modal.current) {
+            onToggle();
+          }
+        }}
+        onKeyUp={event => {
+          if (event.key === 'Escape') {
+            event.preventDefault();
 
-    if (visible) {
-      this.hide();
-    }
-  }
-
-  show() {
-    const { onEnter } = this.props;
-    if (onEnter) onEnter();
-
-    this._analyzeScrollbar();
-
-    this._setScrollbar();
-
-    // append container to body
-    document.body.appendChild(this.container);
-
-    // add modal-open class to body tag
-    const classes = document.body.className;
-    document.body.className = cx(classes, 'modal-open');
-
-    // focus container
-    this.container.focus();
-    window.scrollTo(window.scrollX, window.scrollY); // ???
-
-    this._addScrollbarReplacement();
-
-    // add keyup event listener to support ESC key
-    document.addEventListener('keyup', this.handleKeyUp);
-  }
-
-  _analyzeScrollbar() {
-    let fullWindowWidth = window.innerWidth;
-    if (!fullWindowWidth) {
-      // workaround for missing window.innerWidth in IE8
-      const documentElementRect = document.documentElement.getBoundingClientRect();
-      fullWindowWidth =
-        documentElementRect.right - Math.abs(documentElementRect.left);
-    }
-
-    this.isBodyOverflowing = document.body.clientWidth < fullWindowWidth;
-    this.scrollbarWidth = computeScrollbarWidth();
-  }
-
-  _setScrollbar() {
-    const bodyPadding = 0;
-
-    this.originalBodyPadding = document.body.style.paddingRight || '';
-
-    if (this.isBodyOverflowing) {
-      if (document.getElementById('content')) {
-        document.getElementById('content').style.paddingRight = `${bodyPadding +
-          this.scrollbarWidth}px`;
-      }
-      if (document.getElementsByClassName('navbar')[0]) {
-        document.getElementsByClassName(
-          'navbar',
-        )[0].style.paddingRight = `${bodyPadding + this.scrollbarWidth}px`;
-      }
-    }
-  }
-
-  _addScrollbarReplacement() {
-    const dialog = findNodeHandle(this.dialog);
-
-    const isModalOverflowing =
-      dialog.scrollHeight > document.documentElement.clientHeight;
-
-    if (!this.isBodyOverflowing && isModalOverflowing) {
-      dialog.style.paddingLeft = `${this.scrollbarWidth}px`;
-    }
-
-    if (this.isBodyOverflowing && !isModalOverflowing) {
-      dialog.style.paddingRight = `${this.scrollbarWidth}px`;
-    }
-  }
-
-  hide() {
-    const { onExit } = this.props;
-    if (onExit) onExit();
-
-    // remove keyup event listener
-    document.removeEventListener('keyup', this.handleKeyUp);
-
-    this._unsetScrollbar();
-
-    document.body.removeChild(this.container);
-    // this.container = null;
-
-    // remove modal-open class from body tag
-    const classes = document.body.className.replace('modal-open', '');
-    document.body.className = cx(classes).trim();
-  }
-
-  _unsetScrollbar() {
-    if (document.getElementById('content')) {
-      document.getElementById(
-        'content',
-      ).style.paddingRight = this.originalBodyPadding;
-    }
-    if (document.getElementsByClassName('navbar')[0]) {
-      document.getElementsByClassName(
-        'navbar',
-      )[0].style.paddingRight = this.originalBodyPadding;
-    }
-  }
-
-  renderModal() {
-    const {
-      children,
-      visible,
-      size,
-      scrollable,
-      centered,
-      onToggle,
-      onEnter,
-      onExit,
-      innerRef,
-      ...elementProps
-    } = this.props;
-
-    const modalClasses = cx(
-      // constant classes
-      'modal',
-      // variable classes
-      visible && 'show',
-    );
-
-    const modalDialogClasses = cx(
-      // constant classes
-      'modal-dialog',
-      // variable classes
-      size === 'sm' && 'modal-sm',
-      size === 'lg' && 'modal-lg',
-      size === 'xl' && 'modal-xl',
-      scrollable && 'modal-dialog-scrollable',
-      centered && 'modal-dialog-centered',
-    );
-
-    const modalBackdropClasses = cx(
-      // constant classes
-      'modal-backdrop',
-      // variable classes
-      visible && 'show',
-    );
-
-    const manipulatedChildren = React.Children.map(children, (child, i) => {
-      // inject titleId props for aria support
-      if (i === 0) {
-        return React.cloneElement(child, {
-          titleId: this.identifier,
-        });
-      }
-
-      return child;
-    });
-
-    return (
-      <>
+            onToggle();
+          }
+        }}
+        essentials={{ className: modalClasses }}
+      >
         <BaseView
-          tabIndex="-1"
-          accessibilityRole="dialog"
-          aria-labelledby={this.identifier}
-          aria-hidden={!visible}
-          onClick={this.handleBackdropClick}
-          essentials={{ className: modalClasses }}
+          accessibilityRole="document"
+          essentials={{ className: modalDialogClasses }}
         >
           <BaseView
-            role="document"
-            ref={dialog => {
-              this.dialog = dialog;
-            }}
-            essentials={{ className: modalDialogClasses }}
+            {...elementProps}
+            ref={ref}
+            essentials={{ className: 'modal-content' }}
           >
-            <BaseView
-              {...elementProps}
-              ref={innerRef}
-              essentials={{ className: 'modal-content' }}
-            >
-              {manipulatedChildren}
-            </BaseView>
+            {headElement}
+            {bodyChildren}
           </BaseView>
         </BaseView>
-        <BaseView essentials={{ className: modalBackdropClasses }} />
-      </>
-    );
-  }
-
-  handleKeyUp = event => {
-    const { onToggle } = this.props;
-
-    if (event.key === 'Escape') {
-      onToggle();
-    }
-  };
-
-  handleBackdropClick = event => {
-    const { onToggle } = this.props;
-
-    const dialog = findNodeHandle(this.dialog);
-
-    if (event.target && !dialog.contains(event.target)) {
-      onToggle();
-    }
-  };
-
-  render() {
-    const { visible } = this.props;
-
-    // prevent modal on the server, because ssr does not support portals yet
-    if (!canUseDOM || !visible) {
-      return null;
-    }
-
-    return ReactDOM.createPortal(this.renderModal(), this.container);
-  }
-}
-/* eslint-enable */
+      </BaseView>
+      <BaseView
+        key="modal-backdrop"
+        essentials={{ className: modalBackdropClasses }}
+      />
+    </>,
+    document.body,
+  );
+});
 
 Modal.propTypes = propTypes;
-Modal.defaultProps = defaultProps;
-Modal.contextType = Context;
 
 Modal.Body = ModalBody;
 Modal.Footer = ModalFooter;
 Modal.Header = ModalHeader;
 Modal.Title = ModalTitle;
 
-export default withForwardedRef(Modal, ['Body', 'Footer', 'Header', 'Title']);
+export default Modal;
