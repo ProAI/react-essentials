@@ -28,7 +28,7 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
     formatError = error => error,
   } = props;
 
-  const identifier = useIdentifier('re-form-');
+  const identifier = useIdentifier('form');
   const field = useFormField(name);
 
   const classes = cx(

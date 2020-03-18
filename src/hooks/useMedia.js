@@ -2,7 +2,10 @@ import { useContext } from 'react';
 import Context from '../Context';
 
 export default function useMedia() {
-  const { viewport, breakpoints } = useContext(Context);
+  const context = useContext(Context);
+
+  const viewport = context.getViewport();
+  const breakpoints = context.getBreakpoints();
 
   const breakpointKeys = Object.keys(breakpoints);
 

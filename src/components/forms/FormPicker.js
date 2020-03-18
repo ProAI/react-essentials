@@ -29,7 +29,7 @@ const FormPicker = React.forwardRef(function FormPicker(props, ref) {
     formatError = error => error,
   } = props;
 
-  const identifier = useIdentifier('re-form-');
+  const identifier = useIdentifier('form');
   const field = useFormField(name);
 
   const control = useRef();

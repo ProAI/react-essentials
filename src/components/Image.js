@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseImage from '../utils/rnw-compat/BaseImage';
-// import { Image as BaseImage } from 'react-native-web';
 
 const propTypes = {
   fluid: PropTypes.bool,

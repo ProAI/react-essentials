@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import invariant from 'fbjs/lib/invariant';
-import { findNodeHandle } from 'react-native-web';
+import findNodeHandle from 'react-native-web/dist/cjs/exports/findNodeHandle';
 import BaseView from '../../utils/rnw-compat/BaseView';
 import setRef from '../../utils/setRef';
 import useIdentifier from '../../hooks/useIdentifier';
@@ -22,7 +22,7 @@ const propTypes = {
 };
 
 const Dropdown = React.forwardRef(function Dropdown(props, ref) {
-  const { children, visible, onToggle, ...elementProps } = props;
+  const { children, visible, onToggle = () => {}, ...elementProps } = props;
 
   // check if dropdown has a dropdown trigger and menu
   if (process.env.NODE_ENV !== 'production') {
@@ -32,11 +32,13 @@ const Dropdown = React.forwardRef(function Dropdown(props, ref) {
     );
   }
 
-  const identifier = useIdentifier('re-dropdown-');
+  const identifier = useIdentifier('dropdown');
   const [isMenuOpen, setMenuOpen] = useControlledState({
     defaultValue: false,
     value: visible,
-    onChange: onToggle,
+    onChange: () => {
+      onToggle();
+    },
   });
 
   const control = useRef();

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DayPicker from 'react-day-picker/DayPicker';
@@ -8,6 +8,7 @@ import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
 import setRef from '../../utils/setRef';
 import useOutsidePress from '../../hooks/useOutsidePress';
+import useDatePickerEffects from './useDatePickerEffects';
 import FieldPropTypes from './FieldPropTypes';
 
 const propTypes = {
@@ -16,38 +17,6 @@ const propTypes = {
   size: PropTypes.oneOf(SIZES),
   autoFocus: PropTypes.bool,
   formatValue: PropTypes.func,
-};
-
-const useMenuConvenienceEffects = ({ ref: menu, active }) => {
-  useEffect(() => {
-    if (!active) {
-      return undefined;
-    }
-
-    // Set tabindex of wrapper element to -1, so that nav buttons are
-    // selected directly.
-    const wrapper = menu.current.getElementsByClassName('DayPicker-wrapper')[0];
-    wrapper.tabIndex = -1;
-
-    // Scroll to bottom of menu for better usability.
-    const menuRect = menu.current.getBoundingClientRect();
-    if (window.innerHeight < menuRect.bottom) {
-      window.scrollBy(0, menuRect.bottom - window.innerHeight);
-    }
-
-    // Blur on month change
-    const onDocumentClick = event => {
-      if (event.target.className.includes('DayPicker-NavButton')) {
-        event.target.blur();
-      }
-    };
-
-    document.addEventListener('click', onDocumentClick);
-
-    return () => {
-      document.removeEventListener('click', onDocumentClick);
-    };
-  }, [active]);
 };
 
 const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
@@ -63,7 +32,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
     formatError = error => error,
   } = props;
 
-  const identifier = useIdentifier('re-form-');
+  const identifier = useIdentifier('form');
   const field = useFormField(name);
 
   const control = useRef();
@@ -79,7 +48,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
     },
   });
 
-  useMenuConvenienceEffects({
+  useDatePickerEffects({
     ref: menu,
     active: isMenuOpen,
   });

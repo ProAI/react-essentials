@@ -12,8 +12,6 @@ export default function useControlledState({
   const value = isControlled ? propValue : stateValue;
 
   const setValue = nextValue => {
-    // console.log(value, nextValue);
-
     if (value === nextValue) {
       return;
     }

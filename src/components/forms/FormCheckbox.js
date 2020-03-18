@@ -21,14 +21,8 @@ const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
     formatError = error => error,
   } = props;
 
-  const identifier = useIdentifier('re-form-');
+  const identifier = useIdentifier('form');
   const field = useFormField(name);
-
-  const classes = cx(
-    // constant classes
-    'custom-control',
-    'custom-checkbox',
-  );
 
   const inputClasses = cx(
     // constant classes
@@ -41,7 +35,7 @@ const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
   return (
     <Field error={formatError(field.error)} touched={field.touched} info={info}>
       {title && <legend className="form-group-legend">{title}</legend>}
-      <div className={classes}>
+      <div className="custom-control custom-checkbox">
         <input
           ref={ref}
           type="checkbox"

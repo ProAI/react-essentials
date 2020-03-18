@@ -1,29 +1,13 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppContainer from 'react-native-web/dist/cjs/exports/AppRegistry/AppContainer';
 import Dimensions from 'react-native-web/dist/cjs/exports/Dimensions';
 import Context from './Context';
 
-const calculateViewport = (width, breakpoints) => {
-  if (width < breakpoints.sm) {
-    return 'xs';
-  }
-  if (width < breakpoints.md) {
-    return 'sm';
-  }
-  if (width < breakpoints.lg) {
-    return 'md';
-  }
-  if (width < breakpoints.xl) {
-    return 'lg';
-  }
-  return 'xl';
-};
-
 const propTypes = {
   children: PropTypes.node.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  root: PropTypes.any,
+  rootTag: PropTypes.any,
   ssrViewport: PropTypes.string,
   breakpoints: PropTypes.shape({
     xs: PropTypes.number,
@@ -34,81 +18,73 @@ const propTypes = {
   }).isRequired,
 };
 
-const defaultProps = {
-  root: {},
-  ssrViewport: null,
+const useViewport = ({ initialViewport, breakpoints }) => {
+  const [viewport, setViewport] = useState(initialViewport);
+
+  useEffect(() => {
+    const calculateViewport = width => {
+      if (width < breakpoints.sm) {
+        return 'xs';
+      }
+      if (width < breakpoints.md) {
+        return 'sm';
+      }
+      if (width < breakpoints.lg) {
+        return 'md';
+      }
+      if (width < breakpoints.xl) {
+        return 'lg';
+      }
+      return 'xl';
+    };
+
+    const handleChange = dimensions => {
+      const nextViewport = calculateViewport(dimensions.window.width);
+
+      if (viewport !== nextViewport) {
+        setViewport(nextViewport);
+      }
+    };
+
+    // Initially determine viewport after mounting.
+    handleChange({ window: Dimensions.get('window') });
+
+    Dimensions.addEventListener('change', handleChange);
+
+    return () => {
+      Dimensions.removeEventListener('change', handleChange);
+    };
+  }, []);
 };
 
-class Provider extends React.Component {
-  key = 0;
+function Provider(props) {
+  const { children, rootTag = {}, ssrViewport, breakpoints } = props;
 
-  constructor(props) {
-    super(props);
+  const viewport = useViewport({ initialViewport: ssrViewport, breakpoints });
 
-    this.state = {
-      viewport: props.ssrViewport,
-    };
+  const counter = useRef(0);
 
-    this.getContext = this.getContext.bind(this);
-    this.generateKey = this.generateKey.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
+  const context = {
+    getBreakpoints() {
+      return breakpoints;
+    },
+    getViewport() {
+      return viewport;
+    },
+    generateKey(prefix) {
+      counter.current += 1;
 
-  componentDidMount() {
-    this.handleChange({ window: Dimensions.get('window') });
+      return `ui-${prefix}-${counter.current}`;
+    },
+  };
 
-    Dimensions.addEventListener('change', this.handleChange);
-  }
-
-  componentWillUnmount() {
-    Dimensions.removeEventListener('change', this.handleChange);
-  }
-
-  getContext() {
-    const { breakpoints } = this.props;
-    const { viewport } = this.state;
-
-    return {
-      breakpoints,
-      viewport,
-      generateKey: this.generateKey,
-    };
-  }
-
-  handleChange(dimensions) {
-    const { breakpoints } = this.props;
-    const { viewport } = this.state;
-
-    const nextViewport = calculateViewport(
-      dimensions.window.width,
-      breakpoints,
-    );
-
-    if (viewport !== nextViewport) {
-      this.setState({ viewport: nextViewport });
-    }
-  }
-
-  generateKey(prefix) {
-    const { key } = this;
-
-    this.key = key + 1;
-
-    return `${prefix}${key}`;
-  }
-
-  render() {
-    const { children, root } = this.props;
-
-    return (
-      <Context.Provider value={this.getContext()}>
-        <AppContainer rootTag={root}>{children}</AppContainer>
-      </Context.Provider>
-    );
-  }
+  return (
+    <Context.Provider value={context}>
+      <AppContainer rootTag={rootTag}>{children}</AppContainer>
+    </Context.Provider>
+  );
 }
 
 Provider.propTypes = propTypes;
-Provider.defaultProps = defaultProps;
 
 export default Provider;
