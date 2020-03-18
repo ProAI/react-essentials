@@ -51,14 +51,7 @@ const Modal = React.forwardRef(function Modal(props, ref) {
     return null;
   }
 
-  const modalClasses = cx(
-    // constant classes
-    'modal',
-    // variable classes
-    isModalOpen && 'show',
-  );
-
-  const modalDialogClasses = cx(
+  const dialogClasses = cx(
     // constant classes
     'modal-dialog',
     // variable classes
@@ -67,13 +60,6 @@ const Modal = React.forwardRef(function Modal(props, ref) {
     size === 'xl' && 'modal-xl',
     scrollable && 'modal-dialog-scrollable',
     centered && 'modal-dialog-centered',
-  );
-
-  const modalBackdropClasses = cx(
-    // constant classes
-    'modal-backdrop',
-    // variable classes
-    isModalOpen && 'show',
   );
 
   const headElement = React.cloneElement(headChild, {
@@ -90,7 +76,7 @@ const Modal = React.forwardRef(function Modal(props, ref) {
         accessible
         accessibilityRole="dialog"
         aria-labelledby={identifier}
-        aria-hidden={!isModalOpen}
+        aria-modal="true"
         onClick={event => {
           if (event.target === modal.current) {
             onToggle();
@@ -103,11 +89,11 @@ const Modal = React.forwardRef(function Modal(props, ref) {
             onToggle();
           }
         }}
-        essentials={{ className: modalClasses }}
+        essentials={{ className: 'modal show' }}
       >
         <BaseView
           accessibilityRole="document"
-          essentials={{ className: modalDialogClasses }}
+          essentials={{ className: dialogClasses }}
         >
           <BaseView
             {...elementProps}
@@ -121,7 +107,7 @@ const Modal = React.forwardRef(function Modal(props, ref) {
       </BaseView>
       <BaseView
         key="modal-backdrop"
-        essentials={{ className: modalBackdropClasses }}
+        essentials={{ className: 'modal-backdrop show' }}
       />
     </>,
     document.body,
