@@ -16,6 +16,7 @@ export default function injectTooltip(Component) {
     const {
       tooltip: {
         title,
+        delay,
         trigger = 'hover focus',
         placement = 'top',
         fallbackPlacement,
@@ -28,6 +29,7 @@ export default function injectTooltip(Component) {
     const template = <Tooltip>{title}</Tooltip>;
 
     return useOverlay(target, template, {
+      delay,
       trigger,
       placement,
       fallbackPlacement,

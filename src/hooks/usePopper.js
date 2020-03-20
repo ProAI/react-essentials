@@ -12,11 +12,13 @@ export default function usePopper(config) {
   const {
     visible,
     refs: { target, wrapper, arrow },
+    delay,
     defaultPlacement,
     fallbackPlacement,
   } = config;
 
   const instance = useRef(null);
+  const timeout = useRef(null);
 
   const initialState = {
     loaded: false,
@@ -26,6 +28,15 @@ export default function usePopper(config) {
   };
 
   const [state, setState] = useState(initialState);
+
+  const updateState = data => {
+    setState({
+      loaded: true,
+      placement: data.placement,
+      arrowStyle: data.offsets.arrow,
+      wrapperStyle: formatStyle(data.styles),
+    });
+  };
 
   useEffect(() => {
     if (!visible) {
@@ -47,12 +58,15 @@ export default function usePopper(config) {
         applyReactStyle: {
           enabled: true,
           fn: data => {
-            setState({
-              loaded: true,
-              placement: data.placement,
-              arrowStyle: data.offsets.arrow,
-              wrapperStyle: formatStyle(data.styles),
-            });
+            clearTimeout(timeout.current);
+
+            if (delay.show) {
+              timeout.current = setTimeout(() => {
+                updateState(data);
+              }, delay.show);
+            } else {
+              updateState(data);
+            }
 
             return data;
           },
@@ -65,7 +79,15 @@ export default function usePopper(config) {
       instance.current.destroy();
       instance.current = null;
 
-      setState(initialState);
+      clearTimeout(timeout.current);
+
+      if (delay.hide) {
+        timeout.current = setTimeout(() => {
+          setState(initialState);
+        }, delay.hide);
+      } else {
+        setState(initialState);
+      }
     };
   }, [visible]);
 

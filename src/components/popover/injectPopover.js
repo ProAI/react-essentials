@@ -19,6 +19,7 @@ export default function injectPopover(Component) {
       popover: {
         title,
         content,
+        delay,
         trigger = 'click',
         placement = 'right',
         fallbackPlacement,
@@ -38,6 +39,7 @@ export default function injectPopover(Component) {
     );
 
     return useOverlay(target, template, {
+      delay,
       trigger,
       placement,
       fallbackPlacement,

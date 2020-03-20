@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import findNodeHandle from 'react-native-web/dist/cjs/exports/findNodeHandle';
 import BaseView from '../utils/rnw-compat/BaseView';
@@ -8,15 +8,19 @@ import setRef from '../utils/setRef';
 
 function useOverlay(target, template, config) {
   const {
+    delay: rawDelay = 0,
     trigger: rawTrigger,
     placement: defaultPlacement,
     fallbackPlacement = 'flip',
   } = config;
 
+  const delay =
+    typeof rawDelay === 'number'
+      ? { show: rawDelay, hide: rawDelay }
+      : rawDelay;
   const trigger = rawTrigger.split(' ');
 
   const identifier = useIdentifier('template');
-  const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [focused, setFocused] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -25,10 +29,6 @@ function useOverlay(target, template, config) {
   const wrapperRef = useRef();
   const arrowRef = useRef();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const { loaded, placement, arrowStyle, wrapperStyle } = usePopper({
     visible,
     refs: {
@@ -36,6 +36,7 @@ function useOverlay(target, template, config) {
       wrapper: wrapperRef,
       arrow: arrowRef,
     },
+    delay,
     defaultPlacement,
     fallbackPlacement,
   });
@@ -112,7 +113,7 @@ function useOverlay(target, template, config) {
     },
   });
 
-  if (!mounted || !visible) {
+  if (!visible && !loaded) {
     return targetElement;
   }
 
@@ -139,10 +140,7 @@ function useOverlay(target, template, config) {
     style: wrapperStyle,
   });
 
-  return [
-    targetElement,
-    mounted && visible && ReactDOM.createPortal(templateElement, document.body),
-  ];
+  return [targetElement, ReactDOM.createPortal(templateElement, document.body)];
 }
 
 export default useOverlay;
