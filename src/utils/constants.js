@@ -1,3 +1,6 @@
+// PLACEMENTS
+export const PLACEMENTS = ['top', 'bottom', 'left', 'right', 'auto'];
+
 // TRIGGERS
 export const TRIGGERS = [
   'click',

@@ -33,7 +33,7 @@ const Modal = React.forwardRef(function Modal(props, ref) {
   } = props;
 
   const identifier = useIdentifier('modal');
-  const [isMounted, setMounted] = useState();
+  const [mounted, setMounted] = useState(false);
 
   const modal = useRef();
 
@@ -47,7 +47,7 @@ const Modal = React.forwardRef(function Modal(props, ref) {
   });
 
   // Return null if not mounted or not open.
-  if (!isMounted || !isModalOpen) {
+  if (!mounted || !isModalOpen) {
     return null;
   }
 
@@ -66,52 +66,54 @@ const Modal = React.forwardRef(function Modal(props, ref) {
     titleId: identifier,
   });
 
-  return ReactDOM.createPortal(
-    <>
-      <BaseView
-        key="modal"
-        ref={element => {
-          modal.current = findNodeHandle(element);
-        }}
-        accessible
-        accessibilityRole="dialog"
-        aria-labelledby={identifier}
-        aria-modal="true"
-        onClick={event => {
-          if (event.target === modal.current) {
-            onToggle();
-          }
-        }}
-        onKeyUp={event => {
-          if (event.key === 'Escape') {
-            event.preventDefault();
+  const modalElement = (
+    <BaseView
+      key="modal"
+      ref={element => {
+        modal.current = findNodeHandle(element);
+      }}
+      accessible
+      accessibilityRole="dialog"
+      aria-labelledby={identifier}
+      aria-modal="true"
+      onClick={event => {
+        if (event.target === modal.current) {
+          onToggle();
+        }
+      }}
+      onKeyUp={event => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
 
-            onToggle();
-          }
-        }}
-        essentials={{ className: 'modal show' }}
+          onToggle();
+        }
+      }}
+      essentials={{ className: 'modal show' }}
+    >
+      <BaseView
+        accessibilityRole="document"
+        essentials={{ className: dialogClasses }}
       >
         <BaseView
-          accessibilityRole="document"
-          essentials={{ className: dialogClasses }}
+          {...elementProps}
+          ref={ref}
+          essentials={{ className: 'modal-content' }}
         >
-          <BaseView
-            {...elementProps}
-            ref={ref}
-            essentials={{ className: 'modal-content' }}
-          >
-            {headElement}
-            {bodyChildren}
-          </BaseView>
+          {headElement}
+          {bodyChildren}
         </BaseView>
       </BaseView>
-      <BaseView
-        key="modal-backdrop"
-        essentials={{ className: 'modal-backdrop show' }}
-      />
-    </>,
-    document.body,
+    </BaseView>
   );
+
+  const backdropElement = (
+    <BaseView
+      key="modal-backdrop"
+      essentials={{ className: 'modal-backdrop show' }}
+    />
+  );
+
+  return ReactDOM.createPortal([modalElement, backdropElement], document.body);
 });
 
 Modal.propTypes = propTypes;

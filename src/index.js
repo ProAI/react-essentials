@@ -57,7 +57,7 @@ import TabsContent from './components/nav/TabsContent';
 
 /* popover components */
 import injectPopover from './components/popover/injectPopover';
-import PopoverButton from './components/popover/PopoverButton';
+import Popover from './components/popover/Popover';
 
 /* spinners components */
 import Spinner from './components/spinners/Spinner';
@@ -73,7 +73,7 @@ import Toast from './components/toasts/Toast';
 
 /* tooltip components */
 import injectTooltip from './components/tooltip/injectTooltip';
-import TooltipButton from './components/tooltip/TooltipButton';
+import Tooltip from './components/tooltip/Tooltip';
 
 /* type components */
 import Blockquote from './components/type/Blockquote';
@@ -120,11 +120,11 @@ export {
   TabsNav,
   TabsContent,
   injectPopover,
-  PopoverButton,
+  Popover,
   Spinner,
   Toast,
   injectTooltip,
-  TooltipButton,
+  Tooltip,
   // content
   Code,
   Image,
