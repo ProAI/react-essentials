@@ -9,14 +9,15 @@ import useFormField from './useFormField';
 import setRef from '../../utils/setRef';
 import useOutsidePress from '../../hooks/useOutsidePress';
 import useDatePickerEffects from './useDatePickerEffects';
+import useDatePickerLocale from './useDatePickerLocale';
 import FieldPropTypes from './FieldPropTypes';
 
 const propTypes = {
   ...FieldPropTypes,
   placeholder: PropTypes.string,
   size: PropTypes.oneOf(SIZES),
+  locale: PropTypes.string,
   autoFocus: PropTypes.bool,
-  formatValue: PropTypes.func,
 };
 
 const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
@@ -25,10 +26,10 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
     title,
     placeholder = '',
     size,
+    locale = 'en',
     info,
     autoFocus = false,
     onValueChange,
-    formatValue = value => (value ? value.toLocaleDateString('en') : ''),
     formatError = error => error,
   } = props;
 
@@ -52,6 +53,8 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
     ref: menu,
     active: isMenuOpen,
   });
+
+  const localeUtils = useDatePickerLocale(locale);
 
   const classes = cx(
     // constant classes
@@ -87,7 +90,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
           type="text"
           id={`${identifier}-${name}`}
           name={name}
-          value={formatValue(field.value)}
+          value={field.value ? field.value.toLocaleDateString(locale) : ''}
           onFocus={() => {
             setMenuOpen(true);
           }}
@@ -112,6 +115,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
               firstDayOfWeek={1}
               selectedDays={field.value}
               initialMonth={field.value || undefined}
+              localeUtils={localeUtils}
               onDayKeyDown={(nextValue, modifiers, event) => {
                 // close dropdown on tab press
                 if (event.keyCode === 9) {
