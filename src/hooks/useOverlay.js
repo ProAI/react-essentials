@@ -47,7 +47,7 @@ function useOverlay(target, template, config) {
       targetRef.current = findNodeHandle(element);
       setRef(target.ref, element);
     },
-    'aria-describedby': visible ? identifier : null,
+    'aria-describedby': visible ? identifier : undefined,
     onPress: event => {
       if (trigger.indexOf('click') !== -1) {
         setVisible(value => !value);
