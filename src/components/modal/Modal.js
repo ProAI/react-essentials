@@ -13,7 +13,7 @@ import useIdentifier from '../../hooks/useIdentifier';
 import useModalEffects from './useModalEffects';
 
 const propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element.isRequired),
+  children: PropTypes.node.isRequired,
   visible: PropTypes.bool.isRequired,
   size: PropTypes.oneOf(MODAL_SIZES),
   scrollable: PropTypes.bool,
@@ -23,7 +23,7 @@ const propTypes = {
 
 const Modal = React.forwardRef(function Modal(props, ref) {
   const {
-    children: [headChild, ...bodyChildren],
+    children,
     visible: isModalOpen,
     size,
     scrollable = false,
@@ -62,8 +62,12 @@ const Modal = React.forwardRef(function Modal(props, ref) {
     centered && 'modal-dialog-centered',
   );
 
-  const headElement = React.cloneElement(headChild, {
-    titleId: identifier,
+  const clonedChildren = React.Children.map(children, (child, i) => {
+    if (i > 0) {
+      return child;
+    }
+
+    return React.cloneElement(child, { titleId: identifier });
   });
 
   const modalElement = (
@@ -99,8 +103,7 @@ const Modal = React.forwardRef(function Modal(props, ref) {
           ref={ref}
           essentials={{ className: 'modal-content' }}
         >
-          {headElement}
-          {bodyChildren}
+          {clonedChildren}
         </BaseView>
       </BaseView>
     </BaseView>

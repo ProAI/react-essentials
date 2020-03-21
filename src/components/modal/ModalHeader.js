@@ -12,13 +12,11 @@ const ModalHeader = React.forwardRef(function ModalHeader(props, ref) {
 
   // inject titleId props for aria support
   const clonedChildren = React.Children.map(children, (child, i) => {
-    if (i === 0) {
-      return React.cloneElement(child, {
-        titleId,
-      });
+    if (i > 0) {
+      return child;
     }
 
-    return child;
+    return React.cloneElement(child, { titleId });
   });
 
   return (
