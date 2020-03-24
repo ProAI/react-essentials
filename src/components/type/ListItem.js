@@ -6,7 +6,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const ListItem = React.forwardRef(function List(props, ref) {
+const ListItem = React.forwardRef(function ListItem(props, ref) {
   // TODO: Remove pseudo view and add react-native compatible component
   return (
     <BaseView
