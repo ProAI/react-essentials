@@ -43,7 +43,7 @@ const Modal = React.forwardRef(function Modal(props, ref) {
 
   useModalEffects({
     ref: modal,
-    active: isModalOpen,
+    active: mounted && isModalOpen,
   });
 
   // Return null if not mounted or not open.
