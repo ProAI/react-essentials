@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Popover from './Popover';
-import BaseText from '../../utils/rnw-compat/BaseText';
 import OverlayPropTypes from '../../utils/OverlayPropTypes';
 import useOverlay from '../../hooks/useOverlay';
 
@@ -32,9 +31,7 @@ export default function injectPopover(Component) {
     const template = (
       <Popover>
         {title && <Popover.Header>{title}</Popover.Header>}
-        <Popover.Body>
-          <BaseText essentials={{}}>{content}</BaseText>
-        </Popover.Body>
+        <Popover.Body>{content}</Popover.Body>
       </Popover>
     );
 
