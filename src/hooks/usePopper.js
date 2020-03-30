@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useReducer, useEffect } from 'react';
 import PopperJS from 'popper.js';
 
 const formatStyle = styles => {
@@ -8,43 +8,76 @@ const formatStyle = styles => {
   return { transform: [{ translateX: x }, { translateY: y }], ...otherStyles };
 };
 
+const init = initialPlacement => ({
+  status: 'INITIAL',
+  placement: initialPlacement,
+  arrowStyle: null,
+  // In comparison to the bootstrap.js implementation we need to set a default
+  // style here, because we need to mount the overlay in React first to get the
+  // reference, which we use to create the popper instance.
+  wrapperStyle: {
+    top: 0,
+    left: 0,
+    opacity: 0,
+  },
+});
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'load':
+      return {
+        ...init(action.initialPlacement),
+        status: 'LOADING',
+      };
+    case 'reset':
+      return init(action.initialPlacement);
+    case 'set':
+      if (state.status === 'INITIAL') {
+        return state;
+      }
+
+      return {
+        status: 'LOADED',
+        placement: action.data.placement,
+        arrowStyle: action.data.offsets.arrow,
+        wrapperStyle: formatStyle(action.data.styles),
+      };
+    default:
+      throw new Error();
+  }
+};
+
 export default function usePopper(config) {
   const {
     visible,
     refs: { target, wrapper, arrow },
     delay,
-    defaultPlacement,
+    defaultPlacement: initialPlacement,
     fallbackPlacement,
   } = config;
 
   const instance = useRef(null);
   const timeout = useRef(null);
+  const mounted = useRef(false);
+  const [state, dispatch] = useReducer(reducer, initialPlacement, init);
 
-  const initialState = {
-    loaded: false,
-    placement: defaultPlacement,
-    arrowStyle: null,
-    wrapperStyle: null,
-  };
+  useEffect(() => {
+    mounted.current = true;
 
-  const [state, setState] = useState(initialState);
-
-  const updateState = data => {
-    setState({
-      loaded: true,
-      placement: data.placement,
-      arrowStyle: data.offsets.arrow,
-      wrapperStyle: formatStyle(data.styles),
-    });
-  };
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (!visible) {
       return undefined;
     }
 
+    dispatch({ type: 'load', initialPlacement });
+
     instance.current = new PopperJS(target.current, wrapper.current, {
-      placement: defaultPlacement,
+      placement: initialPlacement,
       modifiers: {
         arrow: {
           element: arrow.current,
@@ -60,12 +93,20 @@ export default function usePopper(config) {
           fn: data => {
             clearTimeout(timeout.current);
 
+            if (!mounted.current) {
+              return data;
+            }
+
             if (delay.show) {
               timeout.current = setTimeout(() => {
-                updateState(data);
+                if (!mounted.current) {
+                  return;
+                }
+
+                dispatch({ type: 'set', data });
               }, delay.show);
             } else {
-              updateState(data);
+              dispatch({ type: 'set', data });
             }
 
             return data;
@@ -81,12 +122,20 @@ export default function usePopper(config) {
 
       clearTimeout(timeout.current);
 
+      if (!mounted.current) {
+        return;
+      }
+
       if (delay.hide) {
         timeout.current = setTimeout(() => {
-          setState(initialState);
+          if (!mounted.current) {
+            return;
+          }
+
+          dispatch({ type: 'reset', initialPlacement });
         }, delay.hide);
       } else {
-        setState(initialState);
+        dispatch({ type: 'reset', initialPlacement });
       }
     };
   }, [visible]);

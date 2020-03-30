@@ -29,7 +29,7 @@ function useOverlay(target, template, config) {
   const wrapperRef = useRef();
   const arrowRef = useRef();
 
-  const { loaded, placement, arrowStyle, wrapperStyle } = usePopper({
+  const { status, placement, arrowStyle, wrapperStyle } = usePopper({
     visible,
     refs: {
       target: targetRef,
@@ -113,7 +113,7 @@ function useOverlay(target, template, config) {
     },
   });
 
-  if (!visible && !loaded) {
+  if (!visible && status !== 'LOADED') {
     return targetElement;
   }
 
@@ -135,7 +135,7 @@ function useOverlay(target, template, config) {
       setRef(template.ref, element);
     },
     placement,
-    visible: loaded,
+    visible: status === 'LOADED',
     arrow: arrowElement,
     style: wrapperStyle,
   });
