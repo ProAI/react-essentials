@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import BaseView from '../../utils/rnw-compat/BaseView';
 import FormButton from './FormButton';
+import FormCheckbox from './FormCheckbox';
+import FormChoice from './FormChoice';
+import FormDatePicker from './FormDatePicker';
+import FormFileInput from './FormFileInput';
 import FormInput from './FormInput';
 import FormPicker from './FormPicker';
-import FormDatePicker from './FormDatePicker';
-import FormChoice from './FormChoice';
-import FormCheckbox from './FormCheckbox';
 
 const propTypes = {
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
@@ -52,10 +53,11 @@ Form.displayName = 'Form';
 Form.propTypes = propTypes;
 
 Form.Button = FormButton;
+Form.Checkbox = FormCheckbox;
+Form.Choice = FormChoice;
+Form.DatePicker = FormDatePicker;
+Form.FileInput = FormFileInput;
 Form.Input = FormInput;
 Form.Picker = FormPicker;
-Form.DatePicker = FormDatePicker;
-Form.Choice = FormChoice;
-Form.Checkbox = FormCheckbox;
 
 export default Form;
