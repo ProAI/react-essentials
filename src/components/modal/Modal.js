@@ -80,7 +80,7 @@ const Modal = React.forwardRef(function Modal(props, ref) {
       accessibilityRole="dialog"
       aria-labelledby={identifier}
       aria-modal="true"
-      onClick={event => {
+      onMouseDown={event => {
         if (event.target === modal.current) {
           onToggle();
         }
