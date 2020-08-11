@@ -22,7 +22,7 @@ const propTypes = {
   ]),
   size: PropTypes.oneOf(SIZES),
   multiline: PropTypes.bool,
-  autoComplete: PropTypes.oneOf(['on', 'off']),
+  autoComplete: PropTypes.string,
   autoFocus: PropTypes.bool,
   trimValue: PropTypes.bool,
   convertEmptyValueToNull: PropTypes.bool,
