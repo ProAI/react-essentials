@@ -8,13 +8,15 @@ const propTypes = {
   error: PropTypes.node,
   touched: PropTypes.bool.isRequired,
   info: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  elementProps: PropTypes.object.isRequired,
 };
 
 function Field(props) {
-  const { children, error, touched = false, info } = props;
+  const { children, error, touched = false, info, elementProps } = props;
 
   return (
-    <BaseView essentials={{ className: 'form-group' }}>
+    <BaseView {...elementProps} essentials={{ className: 'form-group' }}>
       {children}
       {touched && error && (
         <BaseText essentials={{ className: 'form-text text-danger' }}>

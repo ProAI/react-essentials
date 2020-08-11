@@ -31,6 +31,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
     autoFocus = false,
     onValueChange,
     formatError = error => error,
+    ...elementProps
   } = props;
 
   const identifier = useIdentifier('form');
@@ -75,7 +76,12 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
 
   /* eslint-disable jsx-a11y/label-has-for, jsx-a11y/no-autofocus */
   return (
-    <Field error={formatError(field.error)} touched={field.touched} info={info}>
+    <Field
+      error={formatError(field.error)}
+      touched={field.touched}
+      info={info}
+      elementProps={elementProps}
+    >
       {title && (
         <label htmlFor={`${identifier}-${name}`} className="form-control-label">
           {title}

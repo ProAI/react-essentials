@@ -26,6 +26,7 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
     multiple = false,
     onValueChange,
     formatError = error => error,
+    ...elementProps
   } = props;
 
   const identifier = useIdentifier('form');
@@ -46,7 +47,12 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
 
   /* eslint-disable jsx-a11y/label-has-for */
   return (
-    <Field error={formatError(field.error)} touched={field.touched} info={info}>
+    <Field
+      error={formatError(field.error)}
+      touched={field.touched}
+      info={info}
+      elementProps={elementProps}
+    >
       {title && <legend className="form-group-legend">{title}</legend>}
       <div className="custom-controls-stacked">
         {options.map((option, key) => (

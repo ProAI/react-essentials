@@ -21,6 +21,7 @@ const FormFileInput = React.forwardRef(function FormFileInput(props, ref) {
     info,
     onValueChange,
     formatError = error => error,
+    ...elementProps
   } = props;
 
   const identifier = useIdentifier('form');
@@ -35,7 +36,12 @@ const FormFileInput = React.forwardRef(function FormFileInput(props, ref) {
 
   /* eslint-disable jsx-a11y/label-has-for */
   return (
-    <Field error={formatError(field.error)} touched={field.touched} info={info}>
+    <Field
+      error={formatError(field.error)}
+      touched={field.touched}
+      info={info}
+      elementProps={elementProps}
+    >
       {title && <legend className="form-group-legend">{title}</legend>}
       <div className="custom-file">
         <input

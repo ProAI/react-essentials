@@ -43,6 +43,7 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
     convertEmptyValueToNull = false,
     onValueChange,
     formatError = error => error,
+    ...elementProps
   } = props;
 
   const identifier = useIdentifier('form');
@@ -68,7 +69,12 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
 
   /* eslint-disable jsx-a11y/label-has-for, jsx-a11y/no-autofocus */
   return (
-    <Field error={formatError(field.error)} touched={field.touched} info={info}>
+    <Field
+      error={formatError(field.error)}
+      touched={field.touched}
+      info={info}
+      elementProps={elementProps}
+    >
       {title && (
         <label htmlFor={`${identifier}-${name}`} className="form-control-label">
           {title}

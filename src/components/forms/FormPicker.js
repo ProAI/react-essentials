@@ -27,6 +27,7 @@ const FormPicker = React.forwardRef(function FormPicker(props, ref) {
     info,
     onValueChange,
     formatError = error => error,
+    ...elementProps
   } = props;
 
   const identifier = useIdentifier('form');
@@ -44,7 +45,12 @@ const FormPicker = React.forwardRef(function FormPicker(props, ref) {
 
   /* eslint-disable jsx-a11y/label-has-for */
   return (
-    <Field error={formatError(field.error)} touched={field.touched} info={info}>
+    <Field
+      error={formatError(field.error)}
+      touched={field.touched}
+      info={info}
+      elementProps={elementProps}
+    >
       {title && (
         <label htmlFor={`${identifier}-${name}`} className="form-control-label">
           {title}
