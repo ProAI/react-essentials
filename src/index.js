@@ -23,9 +23,6 @@ import Button from './components/buttons/Button';
 /* card components */
 import Card from './components/cards/Card';
 
-/* code components */
-import Code from './components/code/Code';
-
 /* dropdown components */
 import Dropdown from './components/dropdowns/Dropdown';
 
@@ -78,6 +75,8 @@ import Tooltip from './components/tooltip/Tooltip';
 /* type components */
 import Blockquote from './components/type/Blockquote';
 import Cite from './components/type/Cite';
+import Code from './components/type/Code';
+import CodeBlock from './components/type/CodeBlock';
 import DisplayHeading from './components/type/DisplayHeading';
 import Heading from './components/type/Heading';
 import List from './components/type/List';
@@ -126,7 +125,6 @@ export {
   injectTooltip,
   Tooltip,
   // content
-  Code,
   Image,
   BlockLink,
   Link,
@@ -136,6 +134,8 @@ export {
   TR,
   Blockquote,
   Cite,
+  Code,
+  CodeBlock,
   DisplayHeading,
   Heading,
   List,

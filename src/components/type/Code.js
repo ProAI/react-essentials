@@ -7,13 +7,7 @@ const propTypes = {
 };
 
 const Code = React.forwardRef(function Code(props, ref) {
-  return (
-    <BaseText
-      {...props}
-      ref={ref}
-      essentials={{ tag: 'code', inlineOnly: true }}
-    />
-  );
+  return <BaseText {...props} ref={ref} essentials={{ tag: 'code' }} />;
 });
 
 Code.displayName = 'Code';

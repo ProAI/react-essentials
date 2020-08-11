@@ -2,7 +2,7 @@
  * Forked from: https://github.com/necolas/react-native-web/blob/master/packages/react-native-web/src/exports/Text/index.js
  *
  * We had to fork this file from react-native-web because of the following reasons:
- * - Check for blockOnly and inlineOnly
+ * - Check for blockOnly
  * - Usage of custom tags
  * - Internally usage of deprecated className prop for bootstrap styles
  * - Usage of styleName shorthand styles
@@ -32,7 +32,6 @@ const propTypes = {
     tag: PropTypes.string,
     className: PropTypes.string,
     blockOnly: PropTypes.bool,
-    inlineOnly: PropTypes.bool,
   }).isRequired,
 };
 
@@ -74,12 +73,6 @@ class BaseText extends Component {
         invariant(
           !context.isInAParentText,
           "Unexpected use of text block component: This component can't be used inside of a text component.",
-        );
-      }
-      if (props.essentials.inlineOnly) {
-        invariant(
-          context.isInAParentText,
-          'Unexpected use of text inline component: This component can only be used inside of a text component.',
         );
       }
     }

@@ -7,13 +7,7 @@ const propTypes = {
 };
 
 const Cite = React.forwardRef(function Cite(props, ref) {
-  return (
-    <BaseText
-      {...props}
-      ref={ref}
-      essentials={{ tag: 'cite', inlineOnly: true }}
-    />
-  );
+  return <BaseText {...props} ref={ref} essentials={{ tag: 'cite' }} />;
 });
 
 Cite.displayName = 'Cite';
