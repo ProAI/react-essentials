@@ -17,39 +17,33 @@ const propTypes = {
 };
 
 const FormButton = React.forwardRef(function FormButton(props, ref) {
+  const { type, onPress: handlePress, ...elementProps } = props;
+
+  const form = useFormikContext();
+
   const {
-    type,
     color = 'primary',
     size,
     active,
     block = false,
+    disabled,
     onPress,
-    ...elementProps
-  } = props;
-
-  const form = useFormikContext();
-
-  const disabled = form.isSubmitting;
-
-  const handlePress = event => {
-    if (onPress) {
-      onPress(event);
-    }
-
-    if (type === 'submit') {
-      form.submitForm();
-    }
-
-    if (type === 'reset') {
-      form.resetForm();
-    }
-  };
-
-  const actionProps = useAction(
+    ...actionProps
+  } = useAction(
     {
       ...elementProps,
-      disabled,
-      onPress: handlePress,
+      disabled: form.isSubmitting,
+      onPress: event => {
+        if (handlePress) handlePress(event);
+
+        if (type === 'submit') {
+          form.submitForm();
+        }
+
+        if (type === 'reset') {
+          form.resetForm();
+        }
+      },
     },
     ref,
   );

@@ -13,7 +13,6 @@ const propTypes = {
   size: PropTypes.oneOf(SIZES),
   outline: PropTypes.bool,
   active: PropTypes.bool,
-  disabled: PropTypes.bool,
   block: PropTypes.bool,
   caret: PropTypes.bool,
 };
@@ -27,10 +26,8 @@ const Button = React.forwardRef(function Button(props, ref) {
     disabled = false,
     block = false,
     caret = false,
-    ...elementProps
-  } = props;
-
-  const actionProps = useAction({ ...elementProps, disabled }, ref);
+    ...actionProps
+  } = useAction(props, ref);
 
   const classes = cx(
     // constant classes

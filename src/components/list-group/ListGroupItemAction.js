@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { COLORS } from '../../utils/constants';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import useTabbable from '../../hooks/useTabbable';
 import TabPropTypes from '../../utils/TabPropTypes';
@@ -8,28 +9,32 @@ import TabPropTypes from '../../utils/TabPropTypes';
 const propTypes = {
   ...TabPropTypes,
   children: PropTypes.node.isRequired,
+  color: PropTypes.oneOf(COLORS),
 };
 
-const NavLink = React.forwardRef(function NavLink(props, ref) {
-  const { active, disabled = false, ...tabProps } = useTabbable(props, ref);
+const ListGroupItemAction = React.forwardRef(function ListGroupItemAction(
+  props,
+  ref,
+) {
+  const { color = null, active, disabled = false, ...tabProps } = useTabbable(
+    props,
+    ref,
+  );
 
   const classes = cx(
     // constant classes
-    'nav-link',
+    'list-group-item',
+    'list-group-item-action',
     // variable classes
+    color && `list-group-item-${color}`,
     active && 'active',
     disabled && 'disabled',
   );
 
-  if (disabled) {
-    tabProps['aria-disabled'] = true;
-    tabProps.tabIndex = -1;
-  }
-
   return <BaseTouchable {...tabProps} essentials={{ className: classes }} />;
 });
 
-NavLink.displayName = 'NavLink';
-NavLink.propTypes = propTypes;
+ListGroupItemAction.displayName = 'ListGroupItemAction';
+ListGroupItemAction.propTypes = propTypes;
 
-export default NavLink;
+export default ListGroupItemAction;

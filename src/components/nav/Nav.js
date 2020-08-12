@@ -1,33 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseView from '../../utils/rnw-compat/BaseView';
+import { TabContext } from './TabContainer';
 import NavLink from './NavLink';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  pills: PropTypes.bool,
-  stacked: PropTypes.bool,
+  variant: PropTypes.oneOf(['tabs', 'pills']),
 };
 
 const Nav = React.forwardRef(function Nav(props, ref) {
-  const { pills = false, stacked = false, ...elementProps } = props;
+  const { variant = null, ...elementProps } = props;
+
+  const context = useContext(TabContext);
 
   const classes = cx(
     // constant classes
     'nav',
     // variable classes
-    !pills && 'nav-tabs',
-    pills && 'nav-pills',
-    stacked && 'flex-column',
+    variant === 'tabs' && 'nav-tabs',
+    variant === 'pills' && 'nav-pills',
   );
 
   return (
     <BaseView
       {...elementProps}
       ref={ref}
-      accessibilityRole="navigation"
-      essentials={{ className: classes }}
+      accessibilityRole={context === undefined ? 'navigation' : 'tablist'}
+      essentials={{ tag: 'nav', className: classes }}
     />
   );
 });

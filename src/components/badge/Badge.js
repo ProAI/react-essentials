@@ -7,15 +7,18 @@ import { COLORS } from '../../utils/constants';
 const propTypes = {
   children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(COLORS),
+  pill: PropTypes.bool,
 };
 
 const Badge = React.forwardRef(function Badge(props, ref) {
-  const { color = 'primary', ...elementProps } = props;
+  const { color = 'primary', pill = false, ...elementProps } = props;
 
   const classes = cx(
     // constant classes
     'badge',
     `badge-${color}`,
+    // variable classes
+    pill && 'badge-pill',
   );
 
   return (

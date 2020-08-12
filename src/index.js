@@ -10,7 +10,6 @@ import css from './styling/css';
 import Alert from './components/alert/Alert';
 
 /* badge components */
-import TouchableBadge from './components/badge/TouchableBadge';
 import Badge from './components/badge/Badge';
 
 /* button group components */
@@ -40,17 +39,14 @@ import InputGroup from './components/input-group/InputGroup';
 import Jumbotron from './components/jumbotron/Jumbotron';
 
 /* list group components */
-import TouchableListGroup from './components/list-group/TouchableListGroup';
 import ListGroup from './components/list-group/ListGroup';
-import TabsListGroup from './components/list-group/TabsListGroup';
 
 /* modal components */
 import Modal from './components/modal/Modal';
 
 /* nav components */
 import Nav from './components/nav/Nav';
-import TabsNav from './components/nav/TabsNav';
-import TabsContent from './components/nav/TabsContent';
+import Tab from './components/nav/Tab';
 
 /* popover components */
 import injectPopover from './components/popover/injectPopover';
@@ -101,7 +97,6 @@ export {
   css,
   // components
   Alert,
-  TouchableBadge,
   Badge,
   ButtonGroup,
   ButtonToolbar,
@@ -111,13 +106,10 @@ export {
   Form,
   InputGroup,
   Jumbotron,
-  TouchableListGroup,
   ListGroup,
-  TabsListGroup,
   Modal,
   Nav,
-  TabsNav,
-  TabsContent,
+  Tab,
   injectPopover,
   Popover,
   Spinner,

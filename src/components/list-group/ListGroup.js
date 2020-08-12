@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseView from '../../utils/rnw-compat/BaseView';
+import { TabContext } from '../nav/TabContainer';
 import ListGroupItem from './ListGroupItem';
+import ListGroupItemAction from './ListGroupItemAction';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -26,6 +28,8 @@ const ListGroup = React.forwardRef(function ListGroup(props, ref) {
     ...elementProps
   } = props;
 
+  const context = useContext(TabContext);
+
   const classes = cx(
     // constant classes
     'list-group',
@@ -42,7 +46,7 @@ const ListGroup = React.forwardRef(function ListGroup(props, ref) {
     <BaseView
       {...elementProps}
       ref={ref}
-      accessibilityRole="list"
+      accessibilityRole={context === undefined ? 'list' : 'tablist'}
       essentials={{ className: classes }}
     >
       {children}
@@ -54,5 +58,6 @@ ListGroup.displayName = 'ListGroup';
 ListGroup.propTypes = propTypes;
 
 ListGroup.Item = ListGroupItem;
+ListGroup.ItemAction = ListGroupItemAction;
 
 export default ListGroup;

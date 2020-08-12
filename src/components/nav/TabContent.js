@@ -6,20 +6,19 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const TabsContentPane = React.forwardRef(function TabsContentPane(props, ref) {
+const TabContent = React.forwardRef(function TabContent(props, ref) {
   const { ...elementProps } = props;
 
   return (
     <BaseView
       {...elementProps}
       ref={ref}
-      accessibilityRole="tabpanel"
-      essentials={{ className: 'tab-pane' }}
+      essentials={{ className: 'tab-content' }}
     />
   );
 });
 
-TabsContentPane.displayName = 'TabsContentPane';
-TabsContentPane.propTypes = propTypes;
+TabContent.displayName = 'TabContent';
+TabContent.propTypes = propTypes;
 
-export default TabsContentPane;
+export default TabContent;
