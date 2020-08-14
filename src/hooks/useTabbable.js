@@ -3,9 +3,25 @@ import { __RouterContext as RouterContext, matchPath } from 'react-router';
 import invariant from 'fbjs/lib/invariant';
 import { TabContext } from '../components/nav/TabContainer';
 import useAction, { applyDisabled } from './useAction';
+import useActiveTab from './useActiveTab';
+
+const determineActive = (location, to, exact, strict) => {
+  const path = typeof to === 'object' ? to.pathname : to;
+
+  // Regex taken from: https://github.com/pillarjs/path-to-regexp/blob/master/index.js#L202
+  const escapedPath = path && path.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1');
+
+  const pathToMatch = location.pathname;
+
+  const match = escapedPath
+    ? matchPath(pathToMatch, { path: escapedPath, exact, strict })
+    : null;
+
+  return !!match;
+};
 
 export default function useTabbable(props, ref) {
-  const { tabKey, location, isActive, exact, strict, ...elementProps } = props;
+  const { tabKey, active = null, exact, strict, ...elementProps } = props;
   const { to, external = false } = elementProps;
 
   const tabbable = useContext(TabContext);
@@ -14,17 +30,25 @@ export default function useTabbable(props, ref) {
   if (tabbable && tabKey) {
     invariant(!to, "Prop 'to' is not allowed inside a tab context.");
 
-    const { onPress: handlePress } = elementProps;
+    const { onPress: handlePress, onClick: handleClick } = elementProps;
 
-    const active = tabKey === tabbable.activeKey;
+    const activeTabKey = useActiveTab(tabbable);
 
     return applyDisabled({
       ...elementProps,
+      href: `#${tabKey}`,
       id: `${tabKey}-tab`,
       accessibiltyRole: 'tab',
       'aria-controls': tabKey,
       'aria-selected': active,
-      active,
+      active: active === null ? tabKey === activeTabKey : active,
+      onClick: event => {
+        // Workaround, because preventDefault in onPress does not prevent from
+        // adding the hash to the url.
+        event.preventDefault();
+
+        if (handleClick) handleClick(event);
+      },
       onPress: event => {
         if (handlePress) handlePress(event);
 
@@ -39,28 +63,19 @@ export default function useTabbable(props, ref) {
   if (!tabbable && to && !external) {
     invariant(!tabKey, "Prop 'tabKey' is not allowed outside a tab context.");
 
-    const router = useContext(RouterContext);
+    const { location } = useContext(RouterContext);
 
-    const path = typeof to === 'object' ? to.pathname : to;
+    const activeProp =
+      active === null ? determineActive(location, to, exact, strict) : active;
 
-    // Regex taken from: https://github.com/pillarjs/path-to-regexp/blob/master/index.js#L202
-    const escapedPath =
-      path && path.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1');
-
-    const pathToMatch = location ? location.pathname : router.location.pathname;
-
-    const match = escapedPath
-      ? matchPath(pathToMatch, { path: escapedPath, exact, strict })
-      : null;
-
-    const active = !!(isActive ? isActive(match, router.location) : match);
+    console.log(activeProp);
 
     const tabProps = {
       ...actionProps,
-      active,
+      active: activeProp,
     };
 
-    if (active) {
+    if (activeProp) {
       tabProps['aria-current'] = 'page';
     }
 

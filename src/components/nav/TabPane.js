@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
+import invariant from 'fbjs/lib/invariant';
 import { TabContext } from './TabContainer';
 import BaseView from '../../utils/rnw-compat/BaseView';
+import useActiveTab from '../../hooks/useActiveTab';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -14,14 +15,17 @@ const TabPane = React.forwardRef(function TabPane(props, ref) {
 
   const tabbable = useContext(TabContext);
 
-  const active = tabbable.activeKey === tabKey;
-
-  const classes = cx(
-    // constant classes
-    'tab-pane',
-    // variable classes
-    active && 'active',
+  invariant(
+    tabbable,
+    'TabPane can only be used inside a TabContainer component.',
   );
+
+  const activeTabKey = useActiveTab(tabbable);
+
+  // Do not render the content if tab pane is not active.
+  if (activeTabKey !== tabKey) {
+    return null;
+  }
 
   return (
     <BaseView
@@ -30,7 +34,7 @@ const TabPane = React.forwardRef(function TabPane(props, ref) {
       id={tabKey}
       accessibilityRole="tabpanel"
       aria-labelledby={`${tabKey}-tab`}
-      essentials={{ className: classes }}
+      essentials={{ className: 'tab-pane' }}
     />
   );
 });

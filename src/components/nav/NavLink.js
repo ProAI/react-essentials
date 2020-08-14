@@ -21,12 +21,12 @@ const NavLink = React.forwardRef(function NavLink(props, ref) {
     disabled && 'disabled',
   );
 
-  if (disabled) {
-    tabProps['aria-disabled'] = true;
-    tabProps.tabIndex = -1;
-  }
-
-  return <BaseTouchable {...tabProps} essentials={{ className: classes }} />;
+  return (
+    <BaseTouchable
+      {...tabProps}
+      essentials={{ tag: 'a', className: classes }}
+    />
+  );
 });
 
 NavLink.displayName = 'NavLink';
