@@ -68,8 +68,6 @@ export default function useTabbable(props, ref) {
     const activeProp =
       active === null ? determineActive(location, to, exact, strict) : active;
 
-    console.log(activeProp);
-
     const tabProps = {
       ...actionProps,
       active: activeProp,

@@ -52,6 +52,9 @@ import Tab from './components/nav/Tab';
 import injectPopover from './components/popover/injectPopover';
 import Popover from './components/popover/Popover';
 
+/* progress components */
+import Progress from './components/progress/Progress';
+
 /* spinners components */
 import Spinner from './components/spinners/Spinner';
 
@@ -112,6 +115,7 @@ export {
   Tab,
   injectPopover,
   Popover,
+  Progress,
   Spinner,
   Toast,
   injectTooltip,
