@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { __RouterContext as RouterContext, matchPath } from 'react-router';
 import invariant from 'fbjs/lib/invariant';
 import { TabContext } from '../components/nav/TabContainer';
-import useAction, { applyDisabled } from './useAction';
+import useAction from './useAction';
 import useActiveTab from './useActiveTab';
 
 const determineActive = (location, to, exact, strict) => {
@@ -34,14 +34,16 @@ export default function useTabbable(props, ref) {
 
     const activeTabKey = useActiveTab(tabbable);
 
-    return applyDisabled({
+    const activeProp = active === null ? tabKey === activeTabKey : active;
+
+    return {
       ...elementProps,
       href: `#${tabKey}`,
       id: `${tabKey}-tab`,
       accessibiltyRole: 'tab',
       'aria-controls': tabKey,
-      'aria-selected': active,
-      active: active === null ? tabKey === activeTabKey : active,
+      'aria-selected': activeProp,
+      active: activeProp,
       onClick: event => {
         // Workaround, because preventDefault in onPress does not prevent from
         // adding the hash to the url.
@@ -54,7 +56,7 @@ export default function useTabbable(props, ref) {
 
         tabbable.setActiveKey(tabKey);
       },
-    });
+    };
   }
 
   const actionProps = useAction(elementProps, ref);

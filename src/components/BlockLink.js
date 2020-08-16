@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BaseTouchable from '../utils/rnw-compat/BaseTouchable';
+import { applyDisabled } from '../utils/states';
 import useAction from '../hooks/useAction';
 import ActionPropTypes from '../utils/ActionPropTypes';
 
@@ -10,11 +11,16 @@ const propTypes = {
 };
 
 const BlockLink = React.forwardRef(function BlockLink(props, ref) {
-  const { ...elementProps } = props;
+  const { disabled = false, active, ...elementProps } = props;
 
   const actionProps = useAction(elementProps, ref);
 
-  return <BaseTouchable {...actionProps} essentials={{ tag: 'a' }} />;
+  return (
+    <BaseTouchable
+      {...applyDisabled(actionProps, disabled)}
+      essentials={{ tag: 'a' }}
+    />
+  );
 });
 
 BlockLink.displayName = 'BlockLink';

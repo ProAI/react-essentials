@@ -25,20 +25,6 @@ const handleRouting = (event, { replace, to }, history) => {
   }
 };
 
-export const applyDisabled = props => {
-  const { disabled = false } = props;
-
-  if (!disabled) {
-    return props;
-  }
-
-  return {
-    ...props,
-    tabIndex: -1,
-    'aria-disabled': true,
-  };
-};
-
 export default function useAction(props, ref) {
   const {
     to,
@@ -76,7 +62,7 @@ export default function useAction(props, ref) {
   // Element has onPress.
   if (!to) {
     // TODO onKeyPress: () => {},
-    return applyDisabled({
+    return {
       ...elementProps,
       ref: handleRef,
       accessibilityRole: 'button',
@@ -89,12 +75,12 @@ export default function useAction(props, ref) {
         if (onClick) onClick(event);
       },
       tabIndex: 0,
-    });
+    };
   }
 
   // Element is external link.
   if (external) {
-    return applyDisabled({
+    return {
       ...elementProps,
       ref: handleRef,
       accessibilityRole: 'link',
@@ -105,7 +91,7 @@ export default function useAction(props, ref) {
       onClick,
       target: '_blank',
       rel: 'noopener noreferrer',
-    });
+    };
   }
 
   // Element is link.
@@ -113,7 +99,7 @@ export default function useAction(props, ref) {
     typeof to === 'string' ? createLocation(to, null, null, location) : to;
   const href = linkLocation ? history.createHref(linkLocation) : '';
 
-  return applyDisabled({
+  return {
     ...elementProps,
     ref: handleRef,
     accessibilityRole: 'link',
@@ -123,5 +109,5 @@ export default function useAction(props, ref) {
       handleRouting(event, props, history);
     },
     onClick,
-  });
+  };
 }

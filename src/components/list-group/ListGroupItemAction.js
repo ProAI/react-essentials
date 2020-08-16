@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { COLORS } from '../../utils/constants';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
+import { applyDisabled } from '../../utils/states';
 import useTabbable from '../../hooks/useTabbable';
 import TabPropTypes from '../../utils/TabPropTypes';
 
@@ -31,7 +32,18 @@ const ListGroupItemAction = React.forwardRef(function ListGroupItemAction(
     disabled && 'disabled',
   );
 
-  return <BaseTouchable {...tabProps} essentials={{ className: classes }} />;
+  const { accessibilityRole } = tabProps;
+
+  if (accessibilityRole === 'button' && disabled) {
+    tabProps.disabled = disabled;
+  }
+
+  return (
+    <BaseTouchable
+      {...applyDisabled(tabProps, disabled)}
+      essentials={{ className: classes }}
+    />
+  );
 });
 
 ListGroupItemAction.displayName = 'ListGroupItemAction';

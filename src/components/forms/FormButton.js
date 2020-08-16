@@ -4,6 +4,7 @@ import { useFormikContext } from 'formik';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
+import { applyDisabled, applyActive } from '../../utils/states';
 import useAction from '../../hooks/useAction';
 import ActionPropTypes from '../../utils/ActionPropTypes';
 
@@ -60,7 +61,13 @@ const FormButton = React.forwardRef(function FormButton(props, ref) {
     block && 'btn-block',
   );
 
-  return <BaseTouchable {...actionProps} essentials={{ className: classes }} />;
+  return (
+    <BaseTouchable
+      {...applyDisabled(applyActive(actionProps, active), disabled)}
+      disabled={disabled}
+      essentials={{ className: classes }}
+    />
+  );
 });
 
 FormButton.displayName = 'FormButton';

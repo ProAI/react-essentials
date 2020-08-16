@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
+import { applyDisabled, applyActive } from '../../utils/states';
 import useAction from '../../hooks/useAction';
 import ActionPropTypes from '../../utils/ActionPropTypes';
 
@@ -42,7 +43,12 @@ const Button = React.forwardRef(function Button(props, ref) {
     caret && 'dropdown-toggle',
   );
 
-  return <BaseTouchable {...actionProps} essentials={{ className: classes }} />;
+  return (
+    <BaseTouchable
+      {...applyDisabled(applyActive(actionProps, active), disabled)}
+      essentials={{ className: classes }}
+    />
+  );
 });
 
 Button.displayName = 'Button';
