@@ -10,7 +10,7 @@ const propTypes = {
   ...FieldPropTypes,
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.string,
+      value: PropTypes.any,
       label: PropTypes.node,
     }),
   ).isRequired,
@@ -63,7 +63,7 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
                 type="radio"
                 id={`${identifier}-${name}-${key}`}
                 name={name}
-                value={option.value}
+                value={option.value || ''}
                 checked={field.value === option.value}
                 onChange={event => {
                   const nextValue = event.target.checked
