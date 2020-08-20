@@ -30,30 +30,30 @@
   },
   "dist\\react-essentials.cjs.js": {
     "bundled": 158234,
-    "minified": 88407,
-    "gzipped": 21521
+    "minified": 88405,
+    "gzipped": 21523
   },
   "dist\\react-essentials.umd.min.js": {
     "bundled": 440443,
-    "minified": 165356,
-    "gzipped": 46388
+    "minified": 165354,
+    "gzipped": 46392
   },
   "dist\\react-essentials.umd.js": {
     "bundled": 489618,
-    "minified": 181082,
-    "gzipped": 50948
+    "minified": 181080,
+    "gzipped": 50954
   },
   "dist\\react-essentials.esm.js": {
     "bundled": 154265,
-    "minified": 84744,
-    "gzipped": 21247,
+    "minified": 84742,
+    "gzipped": 21248,
     "treeshaked": {
       "rollup": {
-        "code": 59143,
+        "code": 59141,
         "import_statements": 2362
       },
       "webpack": {
-        "code": 63248
+        "code": 63246
       }
     }
   }
