@@ -8,18 +8,33 @@ const webRuleNames = ['box-shadow'];
 
 const pattern = /\$[a-zA-Z0-9]*/g;
 
-function getTextContent(fragments, ...values) {
+function getValue(theme, value) {
+  if (!value) {
+    return '';
+  }
+
+  if (typeof value === 'function') {
+    return value(theme);
+  }
+
+  return value;
+}
+
+function getTextContent(theme, fragments, ...values) {
   return (
     fragments
-      .reduce(
-        (result, current, i) => `${result}${current}${values[i] || ''}`,
-        '',
-      )
+      .reduce((result, current, i) => {
+        return `${result}${current}${getValue(theme, values[i])}`;
+      }, '')
       // Remove line breaks.
       .replace(/\r?\n|\r/g, '')
       // Remove comments.
       .replace(/\/\*.*\*\//g, '')
   );
+}
+
+function hasFunctions(fragments, ...values) {
+  return values.some(value => typeof value === 'function');
 }
 
 function hasVariables(textContent) {
@@ -65,11 +80,17 @@ function transformRules(textContent) {
 }
 
 export default function css(...input) {
-  const textContent = getTextContent(...input);
+  if (!hasFunctions(...input)) {
+    const textContent = getTextContent(null, ...input);
 
-  if (!hasVariables(textContent)) {
-    return transformRules(textContent);
+    if (!hasVariables(textContent)) {
+      return transformRules(textContent);
+    }
   }
 
-  return theme => transformRules(applyVariables(textContent, theme));
+  return theme => {
+    const textContent = getTextContent(theme, ...input);
+
+    return transformRules(applyVariables(textContent, theme));
+  };
 }
