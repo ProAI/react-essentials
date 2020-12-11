@@ -80,7 +80,8 @@ const Modal = React.forwardRef(function Modal(props, ref) {
       accessibilityRole="dialog"
       aria-labelledby={identifier}
       aria-modal="true"
-      onMouseDown={event => {
+      // For now we need onClick here, because onMouseDown would also toggle the modal when the user clicks on a scrollbar.
+      onClick={event => {
         if (event.target === modal.current) {
           onToggle();
         }
