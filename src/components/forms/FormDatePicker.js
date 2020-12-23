@@ -29,6 +29,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
     locale = 'en',
     info,
     autoFocus = false,
+    disabled = false,
     onValueChange,
     formatError = error => error,
     ...elementProps
@@ -110,6 +111,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
           className={inputClasses}
           autoFocus={autoFocus}
           readOnly
+          disabled={disabled}
         />
         {isMenuOpen && (
           <div

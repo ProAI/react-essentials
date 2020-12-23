@@ -41,6 +41,7 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
     autoFocus = false,
     trimValue = false,
     convertEmptyValueToNull = false,
+    disabled = false,
     onValueChange,
     formatError = error => error,
     ...elementProps
@@ -100,6 +101,7 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
           className={inputClasses}
           autoComplete={autoComplete === 'on' ? null : autoComplete}
           autoFocus={autoFocus}
+          disabled={disabled}
         />
       )}
       {multiline && (
@@ -120,6 +122,7 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
           rows="7"
           className={inputClasses}
           autoFocus={autoFocus}
+          disabled={disabled}
         />
       )}
     </Field>

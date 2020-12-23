@@ -25,6 +25,7 @@ const FormPicker = React.forwardRef(function FormPicker(props, ref) {
     placeholder = '',
     options,
     info,
+    disabled = false,
     onValueChange,
     formatError = error => error,
     ...elementProps
@@ -71,6 +72,7 @@ const FormPicker = React.forwardRef(function FormPicker(props, ref) {
           field.setTouched();
         }}
         className={classes}
+        disabled={disabled}
       >
         <option value="" disabled hidden>
           {placeholder}

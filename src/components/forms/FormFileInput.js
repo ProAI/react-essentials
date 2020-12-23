@@ -19,6 +19,7 @@ const FormFileInput = React.forwardRef(function FormFileInput(props, ref) {
     label,
     multiple = false,
     info,
+    disabled = false,
     onValueChange,
     formatError = error => error,
     ...elementProps
@@ -57,6 +58,7 @@ const FormFileInput = React.forwardRef(function FormFileInput(props, ref) {
             field.setTouched();
           }}
           className={inputClasses}
+          disabled={disabled}
         />
         <label className="custom-file-label" htmlFor={`${identifier}-${name}`}>
           {(field.value && field.value[0] && field.value[0].name) || label}

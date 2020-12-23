@@ -17,6 +17,7 @@ const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
     title,
     label,
     info,
+    disabled = false,
     onValueChange,
     formatError = error => error,
     ...elementProps
@@ -57,6 +58,7 @@ const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
           }}
           onKeyDown={field.handleSubmitOnEnter}
           className={inputClasses}
+          disabled={disabled}
         />
         <label
           className="custom-control-label"

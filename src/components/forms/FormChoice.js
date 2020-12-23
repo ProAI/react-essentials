@@ -24,6 +24,7 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
     options,
     info,
     multiple = false,
+    disabled = false,
     onValueChange,
     formatError = error => error,
     ...elementProps
@@ -77,6 +78,7 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
                 }}
                 onKeyDown={field.handleSubmitOnEnter}
                 className={inputClasses}
+                disabled={disabled}
               />
             )}
             {multiple && (
@@ -103,6 +105,7 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
                 }}
                 onKeyDown={field.handleSubmitOnEnter}
                 className={inputClasses}
+                disabled={disabled}
               />
             )}
             <label
