@@ -8,7 +8,7 @@ import FieldPropTypes from './FieldPropTypes';
 
 const propTypes = {
   ...FieldPropTypes,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.node.isRequired,
 };
 
 const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
