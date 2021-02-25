@@ -8,11 +8,9 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const InputGroup = React.forwardRef(function InputGroup(props, ref) {
-  return (
-    <BaseView {...props} ref={ref} essentials={{ className: 'input-group' }} />
-  );
-});
+const InputGroup = React.forwardRef((props, ref) => (
+  <BaseView {...props} ref={ref} essentials={{ className: 'input-group' }} />
+));
 
 InputGroup.displayName = 'InputGroup';
 InputGroup.propTypes = propTypes;

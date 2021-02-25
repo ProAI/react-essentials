@@ -8,7 +8,7 @@ const propTypes = {
   size: PropTypes.oneOf(HEADING_SIZES).isRequired,
 };
 
-const Heading = React.forwardRef(function Heading(props, ref) {
+const Heading = React.forwardRef((props, ref) => {
   const { size, ...elementProps } = props;
 
   return (

@@ -10,7 +10,7 @@ const propTypes = {
   tabKey: PropTypes.string,
 };
 
-const TabPane = React.forwardRef(function TabPane(props, ref) {
+const TabPane = React.forwardRef((props, ref) => {
   const { tabKey, ...elementProps } = props;
 
   const tabbable = useContext(TabContext);

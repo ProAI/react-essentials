@@ -6,11 +6,9 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const ToastHeader = React.forwardRef(function ToastHeader(props, ref) {
-  return (
-    <BaseView {...props} ref={ref} essentials={{ className: 'toast-header' }} />
-  );
-});
+const ToastHeader = React.forwardRef((props, ref) => (
+  <BaseView {...props} ref={ref} essentials={{ className: 'toast-header' }} />
+));
 
 ToastHeader.displayName = 'ToastHeader';
 ToastHeader.propTypes = propTypes;

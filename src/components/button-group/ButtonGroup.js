@@ -6,16 +6,14 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const ButtonGroup = React.forwardRef(function ButtonGroup(props, ref) {
-  return (
-    <BaseView
-      {...props}
-      ref={ref}
-      accessibilityRole="group"
-      essentials={{ className: 'btn-group' }}
-    />
-  );
-});
+const ButtonGroup = React.forwardRef((props, ref) => (
+  <BaseView
+    {...props}
+    ref={ref}
+    accessibilityRole="group"
+    essentials={{ className: 'btn-group' }}
+  />
+));
 
 ButtonGroup.displayName = 'ButtonGroup';
 ButtonGroup.propTypes = propTypes;

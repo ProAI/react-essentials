@@ -18,7 +18,7 @@ const propTypes = {
   caret: PropTypes.bool,
 };
 
-const Button = React.forwardRef(function Button(props, ref) {
+const Button = React.forwardRef((props, ref) => {
   const {
     color = 'primary',
     size,

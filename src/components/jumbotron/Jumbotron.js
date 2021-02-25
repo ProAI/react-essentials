@@ -8,7 +8,7 @@ const propTypes = {
   fluid: PropTypes.bool,
 };
 
-const Jumbotron = React.forwardRef(function Jumbotron(props, ref) {
+const Jumbotron = React.forwardRef((props, ref) => {
   const { fluid = false, ...elementProps } = props;
 
   const classes = cx(

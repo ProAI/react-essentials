@@ -8,7 +8,7 @@ const propTypes = {
   thumbnail: PropTypes.bool,
 };
 
-const Image = React.forwardRef(function Image(props, ref) {
+const Image = React.forwardRef((props, ref) => {
   const { fluid = false, thumbnail = false, ...elementProps } = props;
 
   const classes = cx(

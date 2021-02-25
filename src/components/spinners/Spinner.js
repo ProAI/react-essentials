@@ -10,7 +10,7 @@ const propTypes = {
   size: PropTypes.oneOf(['sm']),
 };
 
-const Spinner = React.forwardRef(function Spinner(props, ref) {
+const Spinner = React.forwardRef((props, ref) => {
   const { variant = 'border', color, size, ...elementProps } = props;
 
   const classes = cx(

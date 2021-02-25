@@ -12,7 +12,7 @@ const propTypes = {
   multiple: PropTypes.bool,
 };
 
-const FormFileInput = React.forwardRef(function FormFileInput(props, ref) {
+const FormFileInput = React.forwardRef((props, ref) => {
   const {
     name,
     title,
@@ -21,7 +21,7 @@ const FormFileInput = React.forwardRef(function FormFileInput(props, ref) {
     info,
     disabled = false,
     onValueChange,
-    formatError = error => error,
+    formatError = (error) => error,
     ...elementProps
   } = props;
 
@@ -51,7 +51,7 @@ const FormFileInput = React.forwardRef(function FormFileInput(props, ref) {
           id={`${identifier}-${name}`}
           name={name}
           multiple={multiple}
-          onChange={event => {
+          onChange={(event) => {
             field.setValue(event.target.files, onValueChange);
           }}
           onBlur={() => {

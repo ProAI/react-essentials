@@ -10,7 +10,7 @@ const propTypes = {
   dismissible: PropTypes.bool,
 };
 
-const Alert = React.forwardRef(function Alert(props, ref) {
+const Alert = React.forwardRef((props, ref) => {
   const { color = 'primary', dismissible = false, ...elementProps } = props;
 
   const classes = cx(

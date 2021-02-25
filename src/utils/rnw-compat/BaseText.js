@@ -48,19 +48,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const createEnterHandler = fn => {
-  return e => {
-    if (e.keyCode === 13 && fn) {
-      fn(e);
-    }
-  };
+const createEnterHandler = (fn) => (e) => {
+  if (e.keyCode === 13 && fn) {
+    fn(e);
+  }
 };
 
-const createPressHandler = fn => {
-  return e => {
-    e.stopPropagation();
-    if (fn) fn(e);
-  };
+const createPressHandler = (fn) => (e) => {
+  e.stopPropagation();
+  if (fn) fn(e);
 };
 
 class BaseText extends Component {

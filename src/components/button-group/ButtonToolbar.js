@@ -6,16 +6,14 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const ButtonToolbar = React.forwardRef(function ButtonToolbar(props, ref) {
-  return (
-    <BaseView
-      {...props}
-      ref={ref}
-      accessibilityRole="toolbar"
-      essentials={{ className: 'btn-toolbar' }}
-    />
-  );
-});
+const ButtonToolbar = React.forwardRef((props, ref) => (
+  <BaseView
+    {...props}
+    ref={ref}
+    accessibilityRole="toolbar"
+    essentials={{ className: 'btn-toolbar' }}
+  />
+));
 
 ButtonToolbar.displayName = 'ButtonToolbar';
 ButtonToolbar.propTypes = propTypes;

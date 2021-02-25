@@ -9,7 +9,7 @@ const propTypes = {
   noGutters: PropTypes.bool,
 };
 
-const Grid = React.forwardRef(function Grid(props, ref) {
+const Grid = React.forwardRef((props, ref) => {
   const { noGutters = false, ...elementProps } = props;
 
   const classes = cx(

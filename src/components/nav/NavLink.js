@@ -11,7 +11,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const NavLink = React.forwardRef(function NavLink(props, ref) {
+const NavLink = React.forwardRef((props, ref) => {
   const { active, disabled = false, ...tabProps } = useTabbable(props, ref);
 
   const classes = cx(

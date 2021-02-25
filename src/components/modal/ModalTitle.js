@@ -8,7 +8,7 @@ const propTypes = {
   titleId: PropTypes.string,
 };
 
-const ModalTitle = React.forwardRef(function ModalTitle(props, ref) {
+const ModalTitle = React.forwardRef((props, ref) => {
   const { titleId, ...elementProps } = props;
 
   const title = useRef();
@@ -20,7 +20,7 @@ const ModalTitle = React.forwardRef(function ModalTitle(props, ref) {
   return (
     <BaseView
       {...elementProps}
-      ref={element => {
+      ref={(element) => {
         title.current = element;
         setRef(ref, element);
       }}

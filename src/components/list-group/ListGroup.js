@@ -16,7 +16,7 @@ const propTypes = {
   horizontalXl: PropTypes.bool,
 };
 
-const ListGroup = React.forwardRef(function ListGroup(props, ref) {
+const ListGroup = React.forwardRef((props, ref) => {
   const {
     children,
     flush = false,

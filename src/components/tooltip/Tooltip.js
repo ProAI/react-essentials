@@ -12,7 +12,7 @@ const propTypes = {
   visible: PropTypes.bool,
 };
 
-const Tooltip = React.forwardRef(function Tooltip(props, ref) {
+const Tooltip = React.forwardRef((props, ref) => {
   const {
     children,
     arrow,

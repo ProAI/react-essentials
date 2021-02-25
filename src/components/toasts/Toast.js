@@ -9,7 +9,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Toast = React.forwardRef(function Toast(props, ref) {
+const Toast = React.forwardRef((props, ref) => {
   const classes = cx(
     // constant classes
     'toast',

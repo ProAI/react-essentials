@@ -6,11 +6,9 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const ModalFooter = React.forwardRef(function ModalFooter(props, ref) {
-  return (
-    <BaseView {...props} ref={ref} essentials={{ className: 'modal-footer' }} />
-  );
-});
+const ModalFooter = React.forwardRef((props, ref) => (
+  <BaseView {...props} ref={ref} essentials={{ className: 'modal-footer' }} />
+));
 
 ModalFooter.displayName = 'ModalFooter';
 ModalFooter.propTypes = propTypes;

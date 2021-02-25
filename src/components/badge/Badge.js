@@ -10,7 +10,7 @@ const propTypes = {
   pill: PropTypes.bool,
 };
 
-const Badge = React.forwardRef(function Badge(props, ref) {
+const Badge = React.forwardRef((props, ref) => {
   const { color = 'primary', pill = false, ...elementProps } = props;
 
   const classes = cx(

@@ -6,21 +6,16 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const DropdownTextItem = React.forwardRef(function DropdownTextItem(
-  props,
-  ref,
-) {
-  return (
-    <BaseView
-      {...props}
-      ref={ref}
-      essentials={{
-        tag: 'span',
-        className: 'dropdown-item-text',
-      }}
-    />
-  );
-});
+const DropdownTextItem = React.forwardRef((props, ref) => (
+  <BaseView
+    {...props}
+    ref={ref}
+    essentials={{
+      tag: 'span',
+      className: 'dropdown-item-text',
+    }}
+  />
+));
 
 DropdownTextItem.displayName = 'DropdownTextItem';
 DropdownTextItem.propTypes = propTypes;

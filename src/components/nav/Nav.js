@@ -10,7 +10,7 @@ const propTypes = {
   variant: PropTypes.oneOf(['tabs', 'pills']),
 };
 
-const Nav = React.forwardRef(function Nav(props, ref) {
+const Nav = React.forwardRef((props, ref) => {
   const { variant = null, ...elementProps } = props;
 
   const context = useContext(TabContext);

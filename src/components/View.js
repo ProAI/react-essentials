@@ -6,9 +6,9 @@ const propTypes = {
   children: PropTypes.node,
 };
 
-const View = React.forwardRef(function View(elementProps, ref) {
-  return <BaseView {...elementProps} ref={ref} essentials={{}} />;
-});
+const View = React.forwardRef((elementProps, ref) => (
+  <BaseView {...elementProps} ref={ref} essentials={{}} />
+));
 
 View.displayName = 'View';
 View.propTypes = propTypes;

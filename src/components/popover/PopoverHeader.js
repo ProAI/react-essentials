@@ -6,20 +6,18 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const PopoverHeader = React.forwardRef(function PopoverHeader(props, ref) {
-  return (
-    <BaseText
-      {...props}
-      ref={ref}
-      accessibilityRole="heading"
-      aria-level={3}
-      essentials={{
-        className: 'popover-header',
-        blockOnly: true,
-      }}
-    />
-  );
-});
+const PopoverHeader = React.forwardRef((props, ref) => (
+  <BaseText
+    {...props}
+    ref={ref}
+    accessibilityRole="heading"
+    aria-level={3}
+    essentials={{
+      className: 'popover-header',
+      blockOnly: true,
+    }}
+  />
+));
 
 PopoverHeader.displayName = 'PopoverHeader';
 PopoverHeader.propTypes = propTypes;

@@ -6,7 +6,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const TabContent = React.forwardRef(function TabContent(props, ref) {
+const TabContent = React.forwardRef((props, ref) => {
   const { ...elementProps } = props;
 
   return (

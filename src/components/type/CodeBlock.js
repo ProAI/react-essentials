@@ -6,7 +6,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const CodeBlock = React.forwardRef(function CodeBlock(props, ref) {
+const CodeBlock = React.forwardRef((props, ref) => {
   const { children, ...elementProps } = props;
 
   return (

@@ -8,7 +8,7 @@ const propTypes = {
   fluid: PropTypes.bool,
 };
 
-const Container = React.forwardRef(function Container(props, ref) {
+const Container = React.forwardRef((props, ref) => {
   const { fluid = false, ...elementProps } = props;
 
   const classes = cx(

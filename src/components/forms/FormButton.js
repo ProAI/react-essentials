@@ -17,7 +17,7 @@ const propTypes = {
   block: PropTypes.bool,
 };
 
-const FormButton = React.forwardRef(function FormButton(props, ref) {
+const FormButton = React.forwardRef((props, ref) => {
   const { type, onPress: handlePress, ...elementProps } = props;
 
   const form = useFormikContext();
@@ -34,7 +34,7 @@ const FormButton = React.forwardRef(function FormButton(props, ref) {
     {
       ...elementProps,
       disabled: form.isSubmitting,
-      onPress: event => {
+      onPress: (event) => {
         if (handlePress) handlePress(event);
 
         if (type === 'submit') {

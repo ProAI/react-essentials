@@ -10,7 +10,7 @@ const propTypes = {
   disabled: PropTypes.bool,
 };
 
-const ListGroupItem = React.forwardRef(function ListGroupItem(props, ref) {
+const ListGroupItem = React.forwardRef((props, ref) => {
   const { color = null, disabled = false, ...elementProps } = props;
 
   const classes = cx(

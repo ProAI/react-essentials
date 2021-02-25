@@ -11,12 +11,12 @@ const propTypes = {
   style: PropTypes.any,
 };
 
-const Progress = React.forwardRef(function Progress(props, ref) {
+const Progress = React.forwardRef((props, ref) => {
   const { children, min = 0, max = 100, style, ...elementProps } = props;
 
-  const clonedChildren = React.Children.map(children, child => {
-    return React.cloneElement(child, { min, max });
-  });
+  const clonedChildren = React.Children.map(children, (child) =>
+    React.cloneElement(child, { min, max }),
+  );
 
   return (
     <BaseView

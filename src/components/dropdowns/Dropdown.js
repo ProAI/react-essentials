@@ -21,7 +21,7 @@ const propTypes = {
   onToggle: PropTypes.func,
 };
 
-const Dropdown = React.forwardRef(function Dropdown(props, ref) {
+const Dropdown = React.forwardRef((props, ref) => {
   const { children, visible, onToggle = () => {}, ...elementProps } = props;
 
   // check if dropdown has a dropdown trigger and menu
@@ -62,16 +62,16 @@ const Dropdown = React.forwardRef(function Dropdown(props, ref) {
 
   const controlElement = React.cloneElement(children[0], {
     id: identifier,
-    ref: element => {
+    ref: (element) => {
       control.current = findNodeHandle(element);
       setRef(children[0].ref, element);
     },
-    onPress: event => {
+    onPress: (event) => {
       if (children[0].props.onPress) {
         children[0].props.onPress(event);
       }
 
-      setMenuOpen(currentIsMenuOpen => !currentIsMenuOpen);
+      setMenuOpen((currentIsMenuOpen) => !currentIsMenuOpen);
     },
     'aria-haspopup': true,
     'aria-expanded': isMenuOpen,
@@ -79,7 +79,7 @@ const Dropdown = React.forwardRef(function Dropdown(props, ref) {
 
   const menuElement = React.cloneElement(children[1], {
     triggerId: identifier,
-    ref: element => {
+    ref: (element) => {
       menu.current = findNodeHandle(element);
       setRef(children[1].ref, element);
     },

@@ -12,13 +12,14 @@ const propTypes = {
   placeholder: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
+      // eslint-disable-next-line react/forbid-prop-types
       value: PropTypes.any,
       label: PropTypes.node,
     }),
   ).isRequired,
 };
 
-const FormPicker = React.forwardRef(function FormPicker(props, ref) {
+const FormPicker = React.forwardRef((props, ref) => {
   const {
     name,
     title,
@@ -27,7 +28,7 @@ const FormPicker = React.forwardRef(function FormPicker(props, ref) {
     info,
     disabled = false,
     onValueChange,
-    formatError = error => error,
+    formatError = (error) => error,
     ...elementProps
   } = props;
 
@@ -58,14 +59,14 @@ const FormPicker = React.forwardRef(function FormPicker(props, ref) {
         </label>
       )}
       <select
-        ref={element => {
+        ref={(element) => {
           control.current = element;
           setRef(ref, element);
         }}
         id={`${identifier}-${name}`}
         name={name}
         value={field.value || ''}
-        onChange={event => {
+        onChange={(event) => {
           field.setValue(event.target.value, onValueChange);
         }}
         onBlur={() => {
@@ -77,7 +78,7 @@ const FormPicker = React.forwardRef(function FormPicker(props, ref) {
         <option value="" disabled hidden>
           {placeholder}
         </option>
-        {options.map(option => (
+        {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

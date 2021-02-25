@@ -6,11 +6,9 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const CardHeader = React.forwardRef(function CardHeader(props, ref) {
-  return (
-    <BaseView {...props} ref={ref} essentials={{ className: 'card-header' }} />
-  );
-});
+const CardHeader = React.forwardRef((props, ref) => (
+  <BaseView {...props} ref={ref} essentials={{ className: 'card-header' }} />
+));
 
 CardHeader.displayName = 'CardHeader';
 CardHeader.propTypes = propTypes;

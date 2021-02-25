@@ -10,7 +10,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Link = React.forwardRef(function Link(props, ref) {
+const Link = React.forwardRef((props, ref) => {
   const { disabled = false, active, ...elementProps } = props;
 
   const actionProps = useAction(elementProps, ref);

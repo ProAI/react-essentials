@@ -13,7 +13,7 @@ const propTypes = {
   sizeXl: PropTypes.oneOf(GRID_SIZES),
 };
 
-const GridBox = React.forwardRef(function GridBox(props, ref) {
+const GridBox = React.forwardRef((props, ref) => {
   const {
     children,
     size,

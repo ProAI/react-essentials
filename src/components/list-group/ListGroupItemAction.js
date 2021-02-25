@@ -13,10 +13,7 @@ const propTypes = {
   color: PropTypes.oneOf(COLORS),
 };
 
-const ListGroupItemAction = React.forwardRef(function ListGroupItemAction(
-  props,
-  ref,
-) {
+const ListGroupItemAction = React.forwardRef((props, ref) => {
   const { color = null, active, disabled = false, ...tabProps } = useTabbable(
     props,
     ref,

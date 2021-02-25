@@ -20,7 +20,7 @@ const propTypes = {
   autoFocus: PropTypes.bool,
 };
 
-const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
+const FormDatePicker = React.forwardRef((props, ref) => {
   const {
     name,
     title,
@@ -31,7 +31,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
     autoFocus = false,
     disabled = false,
     onValueChange,
-    formatError = error => error,
+    formatError = (error) => error,
     ...elementProps
   } = props;
 
@@ -90,7 +90,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
       )}
       <div className={classes}>
         <input
-          ref={element => {
+          ref={(element) => {
             control.current = element;
             setRef(ref, element);
           }}
@@ -101,7 +101,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
           onFocus={() => {
             setMenuOpen(true);
           }}
-          onKeyDown={event => {
+          onKeyDown={(event) => {
             // prevent native submitting on enter
             if (event.keyCode === 13) {
               event.preventDefault();
@@ -130,7 +130,7 @@ const FormDatePicker = React.forwardRef(function FormDatePicker(props, ref) {
                   setMenuOpen(false);
                 }
               }}
-              onDayClick={nextValue => {
+              onDayClick={(nextValue) => {
                 // set value
                 field.setValue(nextValue, onValueChange);
 

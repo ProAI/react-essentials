@@ -13,7 +13,7 @@ const propTypes = {
   visible: PropTypes.bool,
 };
 
-const Popover = React.forwardRef(function Popover(props, ref) {
+const Popover = React.forwardRef((props, ref) => {
   const {
     children,
     arrow,

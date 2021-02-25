@@ -22,7 +22,7 @@ const propTypes = {
   onToggle: PropTypes.func.isRequired,
 };
 
-const Modal = React.forwardRef(function Modal(props, ref) {
+const Modal = React.forwardRef((props, ref) => {
   const {
     children,
     visible: isModalOpen,
@@ -75,7 +75,7 @@ const Modal = React.forwardRef(function Modal(props, ref) {
   const modalElement = (
     <BaseView
       key="modal"
-      ref={element => {
+      ref={(element) => {
         modal.current = findNodeHandle(element);
       }}
       accessible
@@ -83,7 +83,7 @@ const Modal = React.forwardRef(function Modal(props, ref) {
       aria-labelledby={identifier}
       aria-modal="true"
       // For now we need onClick here, because onMouseDown would also toggle the modal when the user clicks on a scrollbar.
-      onClick={event => {
+      onClick={(event) => {
         if (backdrop === 'static') {
           return;
         }
@@ -92,7 +92,7 @@ const Modal = React.forwardRef(function Modal(props, ref) {
           onToggle();
         }
       }}
-      onKeyUp={event => {
+      onKeyUp={(event) => {
         if (event.key === 'Escape') {
           event.preventDefault();
 

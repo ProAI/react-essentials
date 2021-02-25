@@ -9,22 +9,22 @@ const propTypes = {
 
 export const TabContext = createContext();
 
-const TabContainer = React.forwardRef(function TabContent(props, ref) {
+const TabContainer = React.forwardRef((props, ref) => {
   const { defaultActiveTabKey, ...elementProps } = props;
 
   const context = useMemo(() => {
     const listeners = [];
     let activeKey = defaultActiveTabKey;
 
-    const setActiveKey = key => {
+    const setActiveKey = (key) => {
       activeKey = key;
 
-      listeners.forEach(listener => {
+      listeners.forEach((listener) => {
         listener(activeKey);
       });
     };
 
-    const subscribe = listener => {
+    const subscribe = (listener) => {
       listeners.push(listener);
 
       const unsubscribe = () => {

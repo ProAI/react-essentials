@@ -6,11 +6,9 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const PopoverBody = React.forwardRef(function PopoverBody(props, ref) {
-  return (
-    <BaseView {...props} ref={ref} essentials={{ className: 'popover-body' }} />
-  );
-});
+const PopoverBody = React.forwardRef((props, ref) => (
+  <BaseView {...props} ref={ref} essentials={{ className: 'popover-body' }} />
+));
 
 PopoverBody.displayName = 'PopoverBody';
 PopoverBody.propTypes = propTypes;

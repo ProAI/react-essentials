@@ -11,7 +11,7 @@ const propTypes = {
   inline: PropTypes.bool,
 };
 
-const List = React.forwardRef(function List(props, ref) {
+const List = React.forwardRef((props, ref) => {
   const {
     variant = 'unordered',
     unstyled = false,

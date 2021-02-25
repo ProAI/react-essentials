@@ -18,7 +18,7 @@ const propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const Form = React.forwardRef(function Form(props, ref) {
+const Form = React.forwardRef((props, ref) => {
   const {
     children,
     initialValues,
@@ -35,7 +35,7 @@ const Form = React.forwardRef(function Form(props, ref) {
       validate={validate}
       onSubmit={onSubmit}
     >
-      {form => (
+      {(form) => (
         <BaseView
           {...elementProps}
           ref={ref}

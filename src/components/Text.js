@@ -14,7 +14,7 @@ const propTypes = {
   italic: PropTypes.bool,
 };
 
-const Text = React.forwardRef(function Text(props, ref) {
+const Text = React.forwardRef((props, ref) => {
   const {
     align,
     color,

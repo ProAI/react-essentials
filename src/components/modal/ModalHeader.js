@@ -7,7 +7,7 @@ const propTypes = {
   titleId: PropTypes.string,
 };
 
-const ModalHeader = React.forwardRef(function ModalHeader(props, ref) {
+const ModalHeader = React.forwardRef((props, ref) => {
   const { children, titleId, ...elementProps } = props;
 
   // inject titleId props for aria support

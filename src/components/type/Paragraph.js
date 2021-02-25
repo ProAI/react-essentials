@@ -9,7 +9,7 @@ const propTypes = {
   last: PropTypes.bool,
 };
 
-const Paragraph = React.forwardRef(function Paragraph(props, ref) {
+const Paragraph = React.forwardRef((props, ref) => {
   const { lead = false, last = false, ...elementProps } = props;
 
   const classes = cx(

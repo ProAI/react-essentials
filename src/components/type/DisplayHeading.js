@@ -8,7 +8,7 @@ const propTypes = {
   size: PropTypes.oneOf(DISPLAY_HEADING_SIZES).isRequired,
 };
 
-const DisplayHeading = React.forwardRef(function DisplayHeading(props, ref) {
+const DisplayHeading = React.forwardRef((props, ref) => {
   const { size, ...elementProps } = props;
 
   return (

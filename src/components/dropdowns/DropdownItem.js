@@ -11,7 +11,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const DropdownItem = React.forwardRef(function DropdownItem(props, ref) {
+const DropdownItem = React.forwardRef((props, ref) => {
   const { disabled = false, active = false, ...actionProps } = useAction(
     props,
     ref,

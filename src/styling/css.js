@@ -23,9 +23,11 @@ function getValue(theme, value) {
 function getTextContent(theme, fragments, ...values) {
   return (
     fragments
-      .reduce((result, current, i) => {
-        return `${result}${current}${getValue(theme, values[i])}`;
-      }, '')
+      .reduce(
+        (result, current, i) =>
+          `${result}${current}${getValue(theme, values[i])}`,
+        '',
+      )
       // Remove line breaks.
       .replace(/\r?\n|\r/g, '')
       // Remove comments.
@@ -34,7 +36,7 @@ function getTextContent(theme, fragments, ...values) {
 }
 
 function hasFunctions(fragments, ...values) {
-  return values.some(value => typeof value === 'function');
+  return values.some((value) => typeof value === 'function');
 }
 
 function hasVariables(textContent) {
@@ -42,9 +44,7 @@ function hasVariables(textContent) {
 }
 
 function applyVariables(textContent, theme) {
-  return textContent.replace(pattern, match => {
-    return theme[match.substr(1)];
-  });
+  return textContent.replace(pattern, (match) => theme[match.substr(1)]);
 }
 
 function transformRules(textContent) {
@@ -54,13 +54,13 @@ function transformRules(textContent) {
     .split(';')
     .slice(0, -1)
     // Split text content into rules.
-    .map(string => {
+    .map((string) => {
       const rule = string.split(':', 2);
 
-      return rule.map(item => item.trim());
+      return rule.map((item) => item.trim());
     })
     // Filter web rules.
-    .filter(rule => {
+    .filter((rule) => {
       const isWebRule = webRuleNames.indexOf(rule[0]) !== -1;
 
       if (isWebRule) {
@@ -88,7 +88,7 @@ export default function css(...input) {
     }
   }
 
-  return theme => {
+  return (theme) => {
     const textContent = getTextContent(theme, ...input);
 
     return transformRules(applyVariables(textContent, theme));

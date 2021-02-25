@@ -15,7 +15,7 @@ const propTypes = {
   style: PropTypes.any,
 };
 
-const ProgressBar = React.forwardRef(function ProgressBar(props, ref) {
+const ProgressBar = React.forwardRef((props, ref) => {
   const {
     value,
     min,

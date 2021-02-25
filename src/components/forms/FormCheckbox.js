@@ -11,7 +11,7 @@ const propTypes = {
   label: PropTypes.node.isRequired,
 };
 
-const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
+const FormCheckbox = React.forwardRef((props, ref) => {
   const {
     name,
     title,
@@ -19,7 +19,7 @@ const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
     info,
     disabled = false,
     onValueChange,
-    formatError = error => error,
+    formatError = (error) => error,
     ...elementProps
   } = props;
 
@@ -50,7 +50,7 @@ const FormCheckbox = React.forwardRef(function FormCheckbox(props, ref) {
           name={name}
           checked={field.value}
           value={field.value}
-          onChange={event => {
+          onChange={(event) => {
             field.setValue(event.target.checked, onValueChange);
           }}
           onBlur={() => {

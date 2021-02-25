@@ -9,7 +9,7 @@ const propTypes = {
   triggerId: PropTypes.string,
 };
 
-const DropdownMenu = React.forwardRef(function DropdownMenu(props, ref) {
+const DropdownMenu = React.forwardRef((props, ref) => {
   const { right = false, triggerId, ...elementProps } = props;
 
   const classes = cx(

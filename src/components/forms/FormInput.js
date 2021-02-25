@@ -28,7 +28,7 @@ const propTypes = {
   convertEmptyValueToNull: PropTypes.bool,
 };
 
-const FormInput = React.forwardRef(function FormInput(props, ref) {
+const FormInput = React.forwardRef((props, ref) => {
   const {
     name,
     title,
@@ -43,14 +43,14 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
     convertEmptyValueToNull = false,
     disabled = false,
     onValueChange,
-    formatError = error => error,
+    formatError = (error) => error,
     ...elementProps
   } = props;
 
   const identifier = useIdentifier('form');
   const field = useFormField(name);
 
-  const sanitizeValue = rawValue => {
+  const sanitizeValue = (rawValue) => {
     // Trim value if type is not password
     const trimmedValue =
       trimValue && type !== 'password' ? rawValue.trim() : rawValue;
@@ -88,7 +88,7 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
           id={`${identifier}-${name}`}
           name={name}
           value={field.value || ''}
-          onChange={event => {
+          onChange={(event) => {
             const nextValue = sanitizeValue(event.target.value);
 
             field.setValue(nextValue, onValueChange);
@@ -110,7 +110,7 @@ const FormInput = React.forwardRef(function FormInput(props, ref) {
           id={`${identifier}-${name}`}
           name={name}
           value={field.value || ''}
-          onChange={event => {
+          onChange={(event) => {
             const nextValue = sanitizeValue(event.target.value);
 
             field.setValue(nextValue, onValueChange);

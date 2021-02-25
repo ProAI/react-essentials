@@ -9,9 +9,9 @@ const propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const Card = React.forwardRef(function Card(props, ref) {
-  return <BaseView {...props} ref={ref} essentials={{ className: 'card' }} />;
-});
+const Card = React.forwardRef((props, ref) => (
+  <BaseView {...props} ref={ref} essentials={{ className: 'card' }} />
+));
 
 Card.displayName = 'Card';
 Card.propTypes = propTypes;

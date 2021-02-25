@@ -10,6 +10,7 @@ const propTypes = {
   ...FieldPropTypes,
   options: PropTypes.arrayOf(
     PropTypes.shape({
+      // eslint-disable-next-line react/forbid-prop-types
       value: PropTypes.any,
       label: PropTypes.node,
     }),
@@ -17,7 +18,7 @@ const propTypes = {
   multiple: PropTypes.bool,
 };
 
-const FormChoice = React.forwardRef(function FormChoice(props, ref) {
+const FormChoice = React.forwardRef((props, ref) => {
   const {
     name,
     title,
@@ -26,7 +27,7 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
     multiple = false,
     disabled = false,
     onValueChange,
-    formatError = error => error,
+    formatError = (error) => error,
     ...elementProps
   } = props;
 
@@ -66,7 +67,7 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
                 name={name}
                 value={option.value || ''}
                 checked={field.value === option.value}
-                onChange={event => {
+                onChange={(event) => {
                   const nextValue = event.target.checked
                     ? option.value
                     : field.value;
@@ -89,7 +90,7 @@ const FormChoice = React.forwardRef(function FormChoice(props, ref) {
                 name={`${name}[${key}]`}
                 value={option.value}
                 checked={field.value.indexOf(option.value) !== -1}
-                onChange={event => {
+                onChange={(event) => {
                   const nextValue = [...field.value];
 
                   if (event.target.checked) {

@@ -21,7 +21,7 @@ const propTypes = {
   responsiveXl: PropTypes.bool,
 };
 
-const Table = React.forwardRef(function Table(props, ref) {
+const Table = React.forwardRef((props, ref) => {
   const {
     bordered = false,
     striped = false,
