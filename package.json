@@ -19,7 +19,8 @@
   "scripts": {
     "build": "packsy build",
     "dev": "packsy dev",
-    "prepublishOnly": "packsy validate && packsy build"
+    "prepublishOnly": "packsy validate && packsy build",
+    "postpublish": "git fetch --tags -f"
   },
   "files": [
     "dist"
