@@ -29,6 +29,7 @@ const FormPicker = React.forwardRef((props, ref) => {
     disabled = false,
     onValueChange,
     formatError = (error) => error,
+    component: Select = 'select',
     ...elementProps
   } = props;
 
@@ -58,7 +59,7 @@ const FormPicker = React.forwardRef((props, ref) => {
           {title}
         </label>
       )}
-      <select
+      <Select
         ref={(element) => {
           control.current = element;
           setRef(ref, element);
@@ -83,7 +84,7 @@ const FormPicker = React.forwardRef((props, ref) => {
             {option.label}
           </option>
         ))}
-      </select>
+      </Select>
     </Field>
   );
   /* eslint-enable */

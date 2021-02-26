@@ -22,6 +22,7 @@ const FormFileInput = React.forwardRef((props, ref) => {
     disabled = false,
     onValueChange,
     formatError = (error) => error,
+    component: Input = 'input',
     ...elementProps
   } = props;
 
@@ -45,7 +46,7 @@ const FormFileInput = React.forwardRef((props, ref) => {
     >
       {title && <legend className="form-group-legend">{title}</legend>}
       <div className="custom-file">
-        <input
+        <Input
           ref={ref}
           type="file"
           id={`${identifier}-${name}`}

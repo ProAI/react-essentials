@@ -44,6 +44,7 @@ const FormInput = React.forwardRef((props, ref) => {
     disabled = false,
     onValueChange,
     formatError = (error) => error,
+    component: Input = multiline ? 'textarea' : 'input',
     ...elementProps
   } = props;
 
@@ -82,7 +83,7 @@ const FormInput = React.forwardRef((props, ref) => {
         </label>
       )}
       {!multiline && (
-        <input
+        <Input
           ref={ref}
           type={type}
           id={`${identifier}-${name}`}
@@ -105,7 +106,7 @@ const FormInput = React.forwardRef((props, ref) => {
         />
       )}
       {multiline && (
-        <textarea
+        <Input
           ref={ref}
           id={`${identifier}-${name}`}
           name={name}

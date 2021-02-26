@@ -7,6 +7,7 @@ const FieldPropTypes = {
   disabled: PropTypes.bool,
   onValueChange: PropTypes.func,
   formatError: PropTypes.func,
+  component: PropTypes.elementType,
 };
 
 export default FieldPropTypes;

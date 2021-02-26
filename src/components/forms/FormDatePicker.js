@@ -32,6 +32,7 @@ const FormDatePicker = React.forwardRef((props, ref) => {
     disabled = false,
     onValueChange,
     formatError = (error) => error,
+    component: Input = 'input',
     ...elementProps
   } = props;
 
@@ -89,7 +90,7 @@ const FormDatePicker = React.forwardRef((props, ref) => {
         </label>
       )}
       <div className={classes}>
-        <input
+        <Input
           ref={(element) => {
             control.current = element;
             setRef(ref, element);

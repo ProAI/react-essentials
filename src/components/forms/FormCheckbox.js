@@ -20,6 +20,7 @@ const FormCheckbox = React.forwardRef((props, ref) => {
     disabled = false,
     onValueChange,
     formatError = (error) => error,
+    component: Input = 'input',
     ...elementProps
   } = props;
 
@@ -43,7 +44,7 @@ const FormCheckbox = React.forwardRef((props, ref) => {
     >
       {title && <legend className="form-group-legend">{title}</legend>}
       <div className="custom-control custom-checkbox">
-        <input
+        <Input
           ref={ref}
           type="checkbox"
           id={`${identifier}-${name}`}

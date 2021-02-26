@@ -28,6 +28,7 @@ const FormChoice = React.forwardRef((props, ref) => {
     disabled = false,
     onValueChange,
     formatError = (error) => error,
+    component: Input = 'input',
     ...elementProps
   } = props;
 
@@ -60,7 +61,7 @@ const FormChoice = React.forwardRef((props, ref) => {
         {options.map((option, key) => (
           <div key={option.value} className={classes}>
             {!multiple && (
-              <input
+              <Input
                 ref={ref}
                 type="radio"
                 id={`${identifier}-${name}-${key}`}
@@ -83,7 +84,7 @@ const FormChoice = React.forwardRef((props, ref) => {
               />
             )}
             {multiple && (
-              <input
+              <Input
                 ref={ref}
                 type="checkbox"
                 id={`${identifier}-${name}-${key}`}
