@@ -23,6 +23,7 @@ const DropdownItem = React.forwardRef((props, ref) => {
     'dropdown-item',
     // variable classes
     active && 'active',
+    disabled && 'disabled',
   );
 
   return (

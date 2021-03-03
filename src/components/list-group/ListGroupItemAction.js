@@ -29,12 +29,6 @@ const ListGroupItemAction = React.forwardRef((props, ref) => {
     disabled && 'disabled',
   );
 
-  const { accessibilityRole } = tabProps;
-
-  if (accessibilityRole === 'button' && disabled) {
-    tabProps.disabled = disabled;
-  }
-
   return (
     <BaseTouchable
       {...applyDisabled(tabProps, disabled)}
