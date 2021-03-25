@@ -48,6 +48,9 @@ import Modal from './components/modal/Modal';
 import Nav from './components/nav/Nav';
 import Tab from './components/nav/Tab';
 
+/* navbar components */
+import Navbar from './components/navbar/Navbar';
+
 /* popover components */
 import injectPopover from './components/popover/injectPopover';
 import Popover from './components/popover/Popover';
@@ -113,6 +116,7 @@ export {
   Modal,
   Nav,
   Tab,
+  Navbar,
   injectPopover,
   Popover,
   Progress,

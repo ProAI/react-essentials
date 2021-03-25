@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import { TabContext } from '../nav/TabContainer';
+import TabContext from '../nav/TabContext';
 import ListGroupItem from './ListGroupItem';
 import ListGroupItemAction from './ListGroupItemAction';
 

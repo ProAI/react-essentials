@@ -1,13 +1,12 @@
-import React, { createContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import BaseView from '../../utils/rnw-compat/BaseView';
+import TabContext from './TabContext';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   defaultActiveTabKey: PropTypes.string.isRequired,
 };
-
-export const TabContext = createContext();
 
 const TabContainer = React.forwardRef((props, ref) => {
   const { defaultActiveTabKey, ...elementProps } = props;

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import invariant from 'fbjs/lib/invariant';
-import { TabContext } from './TabContainer';
+import TabContext from './TabContext';
 import BaseView from '../../utils/rnw-compat/BaseView';
 import useActiveTab from '../../hooks/useActiveTab';
 

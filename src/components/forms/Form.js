@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import { Formik } from 'formik';
 import BaseView from '../../utils/rnw-compat/BaseView';
 import FormButton from './FormButton';
@@ -16,6 +17,7 @@ const propTypes = {
   initialValues: PropTypes.object.isRequired,
   validate: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
+  inline: PropTypes.bool,
 };
 
 const Form = React.forwardRef((props, ref) => {
@@ -24,8 +26,14 @@ const Form = React.forwardRef((props, ref) => {
     initialValues,
     validate,
     onSubmit,
+    inline = false,
     ...elementProps
   } = props;
+
+  const classes = cx(
+    // variable classes
+    inline && 'form-inline',
+  );
 
   return (
     <Formik
@@ -40,7 +48,7 @@ const Form = React.forwardRef((props, ref) => {
           {...elementProps}
           ref={ref}
           accessibilityRole="form"
-          essentials={{ className: 'form' }}
+          essentials={{ className: classes }}
         >
           {typeof children === 'function' ? children(form) : children}
         </BaseView>

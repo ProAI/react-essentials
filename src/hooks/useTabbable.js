@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { __RouterContext as RouterContext, matchPath } from 'react-router';
 import invariant from 'fbjs/lib/invariant';
-import { TabContext } from '../components/nav/TabContainer';
+import TabContext from '../components/nav/TabContext';
 import useAction from './useAction';
 import useActiveTab from './useActiveTab';
 
@@ -44,14 +44,14 @@ export default function useTabbable(props, ref) {
       'aria-controls': tabKey,
       'aria-selected': activeProp,
       active: activeProp,
-      onClick: event => {
+      onClick: (event) => {
         // Workaround, because preventDefault in onPress does not prevent from
         // adding the hash to the url.
         event.preventDefault();
 
         if (handleClick) handleClick(event);
       },
-      onPress: event => {
+      onPress: (event) => {
         if (handlePress) handlePress(event);
 
         tabbable.setActiveKey(tabKey);
