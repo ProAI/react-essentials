@@ -11,12 +11,12 @@ const propTypes = {
   variant: PropTypes.oneOf(['tabs', 'pills']),
 };
 
-const getRole = (context, navbarContext) => {
-  if (navbarContext !== undefined) {
+const getRole = (tabbable, navbar) => {
+  if (navbar) {
     return null;
   }
 
-  if (context !== undefined) {
+  if (tabbable) {
     return 'tablist';
   }
 
@@ -26,21 +26,21 @@ const getRole = (context, navbarContext) => {
 const Nav = React.forwardRef((props, ref) => {
   const { variant = null, ...elementProps } = props;
 
-  const context = useContext(TabContext);
-  const navbarContext = useContext(NavbarContext);
+  const tabbable = useContext(TabContext);
+  const navbar = useContext(NavbarContext);
 
   const classes = cx(
     // variable classes
-    navbarContext === undefined && 'nav',
-    navbarContext === undefined && variant && `nav-${variant}`,
-    navbarContext !== undefined && 'navbar-nav',
+    !navbar && 'nav',
+    !navbar && variant && `nav-${variant}`,
+    navbar && 'navbar-nav',
   );
 
   return (
     <BaseView
       {...elementProps}
       ref={ref}
-      accessibilityRole={getRole(context, navbarContext)}
+      accessibilityRole={getRole(tabbable, navbar)}
       essentials={{ tag: 'nav', className: classes }}
     />
   );

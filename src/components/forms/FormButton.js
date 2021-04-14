@@ -4,9 +4,8 @@ import { useFormikContext } from 'formik';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
-import { applyDisabled, applyActive } from '../../utils/states';
-import useAction from '../../hooks/useAction';
-import ActionPropTypes from '../../utils/ActionPropTypes';
+import useAction, { ActionPropTypes } from '../../hooks/useAction';
+import concatProps from '../../utils/concatProps';
 
 const propTypes = {
   ...ActionPropTypes,
@@ -15,39 +14,32 @@ const propTypes = {
   color: PropTypes.oneOf(BUTTON_COLORS),
   size: PropTypes.oneOf(SIZES),
   block: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 const FormButton = React.forwardRef((props, ref) => {
-  const { type, onPress: handlePress, ...elementProps } = props;
-
-  const form = useFormikContext();
-
   const {
+    type,
     color = 'primary',
     size,
-    active,
     block = false,
-    disabled,
-    onPress,
-    ...actionProps
-  } = useAction(
-    {
-      ...elementProps,
-      disabled: form.isSubmitting,
-      onPress: (event) => {
-        if (handlePress) handlePress(event);
+    keepFocus = false,
+    disabled = false,
+    ...elementProps
+  } = props;
 
-        if (type === 'submit') {
-          form.submitForm();
-        }
+  const form = useFormikContext();
+  const action = useAction(keepFocus, () => {
+    if (type === 'submit') {
+      form.submitForm();
+    }
 
-        if (type === 'reset') {
-          form.resetForm();
-        }
-      },
-    },
-    ref,
-  );
+    if (type === 'reset') {
+      form.resetForm();
+    }
+  });
+
+  const buttonDisabled = disabled || form.isSubmitting;
 
   const classes = cx(
     // constant classes
@@ -56,15 +48,14 @@ const FormButton = React.forwardRef((props, ref) => {
     // variable classes
     size === 'sm' && 'btn-sm',
     size === 'lg' && 'btn-lg',
-    active && 'active',
-    disabled && 'disabled',
+    buttonDisabled && 'disabled',
     block && 'btn-block',
   );
 
   return (
     <BaseTouchable
-      {...applyDisabled(applyActive(actionProps, active), disabled)}
-      disabled={disabled}
+      {...concatProps({ ...elementProps, ref }, action)}
+      disabled={buttonDisabled}
       essentials={{ className: classes }}
     />
   );

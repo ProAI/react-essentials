@@ -28,7 +28,7 @@ const ListGroup = React.forwardRef((props, ref) => {
     ...elementProps
   } = props;
 
-  const context = useContext(TabContext);
+  const tabbable = useContext(TabContext);
 
   const classes = cx(
     // constant classes
@@ -46,7 +46,7 @@ const ListGroup = React.forwardRef((props, ref) => {
     <BaseView
       {...elementProps}
       ref={ref}
-      accessibilityRole={context === undefined ? 'list' : 'tablist'}
+      accessibilityRole={tabbable ? 'tablist' : 'list'}
       essentials={{ className: classes }}
     >
       {children}

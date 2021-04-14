@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import useMedia from '../../hooks/useMedia';
+import useTarget from '../../hooks/useTarget';
+import concatClasses from '../../utils/concatClasses';
+import concatProps from '../../utils/concatProps';
 import NavbarContext from './NavbarContext';
 
 const propTypes = {
@@ -12,28 +14,19 @@ const propTypes = {
 const NavbarCollapse = React.forwardRef((props, ref) => {
   const { ...elementProps } = props;
 
-  const media = useMedia();
-  const context = useContext(NavbarContext);
-
-  if (
-    !context.expanded &&
-    context.expand !== true &&
-    !(context.expand && media.up(context.expand))
-  ) {
-    return null;
-  }
+  const target = useTarget(NavbarContext);
 
   const classes = cx(
     // constant classes
     'collapse',
     'navbar-collapse',
+    // variable classes
+    ...concatClasses(target),
   );
 
   return (
     <BaseView
-      {...elementProps}
-      id={context.identifier}
-      ref={ref}
+      {...concatProps({ ...elementProps, ref }, target)}
       essentials={{ className: classes }}
     />
   );

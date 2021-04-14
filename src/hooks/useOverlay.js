@@ -1,10 +1,26 @@
 import React, { useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import findNodeHandle from 'react-native-web/dist/cjs/exports/findNodeHandle';
+import { TRIGGERS, PLACEMENTS } from '../utils/constants';
 import BaseView from '../utils/rnw-compat/BaseView';
 import useIdentifier from './useIdentifier';
 import usePopper from './usePopper';
 import setRef from '../utils/setRef';
+import optional from '../utils/optional';
+
+export const OverlayPropTypes = {
+  delay: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({
+      show: PropTypes.number,
+      hide: PropTypes.number,
+    }),
+  ]),
+  trigger: PropTypes.oneOf(TRIGGERS),
+  placement: PropTypes.oneOf(PLACEMENTS),
+  fallbackPlacement: PropTypes.oneOf(['flip', 'clockwise', 'counterwise']),
+};
 
 function useOverlay(target, template, config) {
   const {
@@ -43,21 +59,21 @@ function useOverlay(target, template, config) {
 
   const targetElement = React.cloneElement(target, {
     key: 'target',
-    ref: element => {
+    ref: (element) => {
       targetRef.current = findNodeHandle(element);
       setRef(target.ref, element);
     },
-    'aria-describedby': visible ? identifier : undefined,
-    onPress: event => {
+    ...optional(visible, { 'aria-describedby': identifier }),
+    onPress: (event) => {
       if (trigger.indexOf('click') !== -1) {
-        setVisible(value => !value);
+        setVisible((value) => !value);
       }
 
       if (target.props.onPress) {
         target.props.onPress(event);
       }
     },
-    onFocus: event => {
+    onFocus: (event) => {
       if (trigger.indexOf('focus') !== -1) {
         setFocused(true);
 
@@ -70,7 +86,7 @@ function useOverlay(target, template, config) {
         target.props.onFocus(event);
       }
     },
-    onBlur: event => {
+    onBlur: (event) => {
       if (trigger.indexOf('focus') !== -1) {
         setFocused(false);
 
@@ -84,7 +100,7 @@ function useOverlay(target, template, config) {
         target.props.onBlur(event);
       }
     },
-    onMouseOver: event => {
+    onMouseOver: (event) => {
       if (trigger.indexOf('hover') !== -1) {
         setHovered(true);
 
@@ -97,7 +113,7 @@ function useOverlay(target, template, config) {
         target.props.onMouseOver(event);
       }
     },
-    onMouseLeave: event => {
+    onMouseLeave: (event) => {
       if (trigger.indexOf('hover') !== -1) {
         setHovered(false);
 
@@ -119,7 +135,7 @@ function useOverlay(target, template, config) {
 
   const arrowElement = (
     <BaseView
-      ref={element => {
+      ref={(element) => {
         arrowRef.current = findNodeHandle(element);
       }}
       style={arrowStyle}
@@ -130,7 +146,7 @@ function useOverlay(target, template, config) {
   const templateElement = React.cloneElement(template, {
     key: 'template',
     id: identifier,
-    ref: element => {
+    ref: (element) => {
       wrapperRef.current = findNodeHandle(element);
       setRef(template.ref, element);
     },

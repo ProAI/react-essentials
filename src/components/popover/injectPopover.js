@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Popover from './Popover';
-import OverlayPropTypes from '../../utils/OverlayPropTypes';
-import useOverlay from '../../hooks/useOverlay';
+import useOverlay, { OverlayPropTypes } from '../../hooks/useOverlay';
+
+const propTypes = {
+  popover: PropTypes.shape({
+    title: PropTypes.string,
+    content: PropTypes.node.isRequired,
+    ...OverlayPropTypes,
+  }),
+};
 
 export default function injectPopover(Component) {
-  const propTypes = {
-    tooltip: PropTypes.shape({
-      title: PropTypes.string,
-      content: PropTypes.string.isRequired,
-      ...OverlayPropTypes,
-    }),
-  };
-
   function OverlayPopover(props) {
     const {
       popover: {

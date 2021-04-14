@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from './Tooltip';
-import OverlayPropTypes from '../../utils/OverlayPropTypes';
-import useOverlay from '../../hooks/useOverlay';
+import useOverlay, { OverlayPropTypes } from '../../hooks/useOverlay';
+
+const propTypes = {
+  tooltip: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    ...OverlayPropTypes,
+  }),
+};
 
 export default function injectTooltip(Component) {
-  const propTypes = {
-    tooltip: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      ...OverlayPropTypes,
-    }),
-  };
-
   function OverlayTooltip(props) {
     const {
       tooltip: {

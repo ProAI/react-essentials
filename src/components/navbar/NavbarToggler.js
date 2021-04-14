@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import invariant from 'fbjs/lib/invariant';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
-import useAction from '../../hooks/useAction';
-import ActionPropTypes from '../../utils/ActionPropTypes';
-import useMedia from '../../hooks/useMedia';
+import useAction, { ActionPropTypes } from '../../hooks/useAction';
+import useTrigger from '../../hooks/useTrigger';
+import concatProps from '../../utils/concatProps';
 import NavbarContext from './NavbarContext';
 
 const propTypes = {
@@ -10,33 +11,22 @@ const propTypes = {
 };
 
 const NavbarToggler = React.forwardRef((props, ref) => {
-  const { onPress: handlePress, ...elementProps } = props;
+  const { keepFocus, ...elementProps } = props;
 
-  const media = useMedia();
-  const context = useContext(NavbarContext);
+  const trigger = useTrigger(NavbarContext);
 
-  const { ...actionProps } = useAction(
-    {
-      ...elementProps,
-      onPress: (event) => {
-        if (handlePress) handlePress(event);
-
-        context.toggle();
-      },
-    },
-    ref,
-  );
-
-  if (context.expand === true || (context.expand && media.up(context.expand))) {
-    return null;
+  if (!trigger) {
+    invariant(
+      trigger,
+      'NavbarToggler can only be used inside a Navbar component.',
+    );
   }
+
+  const action = useAction(keepFocus);
 
   return (
     <BaseTouchable
-      {...actionProps}
-      aria-controls={context.identifier}
-      aria-expanded={context.expanded}
-      aria-label="Toggle navigation"
+      {...concatProps({ ...elementProps, ref }, action, trigger)}
       essentials={{ className: 'navbar-toggler' }}
     >
       <span className="navbar-toggler-icon" />

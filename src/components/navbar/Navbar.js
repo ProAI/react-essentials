@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import NavbarBrand from './NavbarBrand';
@@ -6,48 +6,31 @@ import NavbarCollapse from './NavbarCollapse';
 import NavbarContext from './NavbarContext';
 import NavbarText from './NavbarText';
 import NavbarToggler from './NavbarToggler';
+import useNavbarState from './useNavbarState';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import useIdentifier from '../../hooks/useIdentifier';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  expanded: PropTypes.bool,
   variant: PropTypes.oneOf(['light', 'dark']),
   expand: PropTypes.oneOf([true, 'sm', 'md', 'lg', 'xl']),
   fixed: PropTypes.oneOf(['top', 'bottom']),
   sticky: PropTypes.oneOf(['top']),
+  defaultExpanded: PropTypes.bool,
+  expanded: PropTypes.bool,
   onToggle: PropTypes.func,
 };
 
 const Navbar = React.forwardRef((props, ref) => {
   const {
-    expanded: controlledExpanded = false,
     variant = 'light',
     expand,
     fixed,
     sticky,
+    defaultExpanded = false,
+    expanded,
     onToggle = () => {},
     ...elementProps
   } = props;
-
-  const identifier = useIdentifier('navbar');
-  const [expanded, setExpanded] = useState(controlledExpanded);
-
-  const context = useMemo(
-    () => ({
-      identifier,
-      toggle: () => {
-        setExpanded((value) => {
-          onToggle(!value);
-
-          return !value;
-        });
-      },
-      expanded,
-      expand,
-    }),
-    [expanded],
-  );
 
   const classes = cx(
     // constant classes
@@ -59,8 +42,10 @@ const Navbar = React.forwardRef((props, ref) => {
     sticky && `sticky-${sticky}`,
   );
 
+  const state = useNavbarState(defaultExpanded, expanded, onToggle, expand);
+
   return (
-    <NavbarContext.Provider value={context}>
+    <NavbarContext.Provider value={state}>
       <BaseView
         {...elementProps}
         ref={ref}
@@ -74,6 +59,7 @@ const Navbar = React.forwardRef((props, ref) => {
 Navbar.displayName = 'Navbar';
 Navbar.propTypes = propTypes;
 
+Navbar.Context = NavbarContext;
 Navbar.Brand = NavbarBrand;
 Navbar.Collapse = NavbarCollapse;
 Navbar.Text = NavbarText;

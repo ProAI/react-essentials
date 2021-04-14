@@ -1,40 +1,36 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import invariant from 'fbjs/lib/invariant';
 import TabContext from './TabContext';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import useActiveTab from '../../hooks/useActiveTab';
+import useTarget from '../../hooks/useTarget';
+import concatClasses from '../../utils/concatClasses';
+import concatProps from '../../utils/concatProps';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  tabKey: PropTypes.string,
+  id: PropTypes.string,
 };
 
 const TabPane = React.forwardRef((props, ref) => {
-  const { tabKey, ...elementProps } = props;
+  const { id, ...elementProps } = props;
 
-  const tabbable = useContext(TabContext);
+  const target = useTarget(TabContext, id);
 
-  invariant(
-    tabbable,
-    'TabPane can only be used inside a TabContainer component.',
+  invariant(target, 'TabPane can only be used inside a TabProvider component.');
+
+  const classes = cx(
+    // constant classes
+    'tab-pane',
+    // variable classes
+    concatClasses(target),
   );
-
-  const activeTabKey = useActiveTab(tabbable);
-
-  // Do not render the content if tab pane is not active.
-  if (activeTabKey !== tabKey) {
-    return null;
-  }
 
   return (
     <BaseView
-      {...elementProps}
-      ref={ref}
-      id={tabKey}
-      accessibilityRole="tabpanel"
-      aria-labelledby={`${tabKey}-tab`}
-      essentials={{ className: 'tab-pane' }}
+      {...concatProps({ ...elementProps, ref }, target)}
+      essentials={{ className: classes }}
     />
   );
 });

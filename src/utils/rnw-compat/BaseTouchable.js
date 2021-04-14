@@ -60,29 +60,29 @@ const BaseTouchable = createReactClass({
     focusedOpacity: PropTypes.number,
   },
 
-  getDefaultProps: function() {
+  getDefaultProps: function () {
     return {
       activeOpacity: 1,
       focusedOpacity: 1,
     };
   },
 
-  getInitialState: function() {
+  getInitialState: function () {
     return this.touchableGetInitialState();
   },
 
-  componentDidMount: function() {
+  componentDidMount: function () {
     ensurePositiveDelayProps(this.props);
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps: function (nextProps) {
     ensurePositiveDelayProps(nextProps);
   },
 
   /**
    * Animate the touchable to a new opacity.
    */
-  setOpacityTo: function(value, duration) {
+  setOpacityTo: function (value, duration) {
     this.setNativeProps({
       style: {
         opacity: value,
@@ -95,7 +95,7 @@ const BaseTouchable = createReactClass({
    * `Touchable.Mixin` self callbacks. The mixin will invoke these if they are
    * defined on your component.
    */
-  touchableHandleActivePressIn: function(e) {
+  touchableHandleActivePressIn: function (e) {
     if (e.dispatchConfig.registrationName === 'onResponderGrant') {
       this._opacityActive(0);
     } else {
@@ -104,65 +104,66 @@ const BaseTouchable = createReactClass({
     this.props.onPressIn && this.props.onPressIn(e);
   },
 
-  touchableHandleActivePressOut: function(e) {
+  touchableHandleActivePressOut: function (e) {
     this._opacityInactive(250);
     this.props.onPressOut && this.props.onPressOut(e);
   },
 
-  touchableHandlePress: function(e) {
-    this.props.onPress && this.props.onPress(e);
+  touchableHandlePress: function (e) {
+    // this.props.onPress && this.props.onPress(e);
   },
 
-  touchableHandleLongPress: function(e) {
+  touchableHandleLongPress: function (e) {
     this.props.onLongPress && this.props.onLongPress(e);
   },
 
-  touchableGetPressRectOffset: function() {
+  touchableGetPressRectOffset: function () {
     return this.props.pressRetentionOffset || PRESS_RETENTION_OFFSET;
   },
 
-  touchableGetHitSlop: function() {
+  touchableGetHitSlop: function () {
     return this.props.hitSlop;
   },
 
-  touchableGetHighlightDelayMS: function() {
+  touchableGetHighlightDelayMS: function () {
     return this.props.delayPressIn || 0;
   },
 
-  touchableGetLongPressDelayMS: function() {
+  touchableGetLongPressDelayMS: function () {
     return this.props.delayLongPress === 0
       ? 0
       : this.props.delayLongPress || 500;
   },
 
-  touchableGetPressOutDelayMS: function() {
+  touchableGetPressOutDelayMS: function () {
     return this.props.delayPressOut;
   },
 
-  _opacityActive: function(duration) {
+  _opacityActive: function (duration) {
     this.setOpacityTo(this.props.activeOpacity, duration);
   },
 
-  _opacityInactive: function(duration) {
+  _opacityInactive: function (duration) {
     this.setOpacityTo(this._getChildStyleOpacityWithDefault(), duration);
   },
 
-  _opacityFocused: function() {
+  _opacityFocused: function () {
     this.setOpacityTo(this.props.focusedOpacity);
   },
 
-  _getChildStyleOpacityWithDefault: function() {
+  _getChildStyleOpacityWithDefault: function () {
     const childStyle = flattenStyle(this.props.style) || {};
     return childStyle.opacity === undefined ? 1 : childStyle.opacity;
   },
 
-  render: function() {
+  render: function () {
     const {
       activeOpacity,
       focusedOpacity,
       delayLongPress,
       delayPressIn,
       delayPressOut,
+      onClick,
       onLongPress,
       onPress,
       onPressIn,
@@ -175,6 +176,13 @@ const BaseTouchable = createReactClass({
       <View
         {...other}
         accessible={this.props.accessible !== false}
+        onClick={(event) => {
+          // We use the onClick event for buttons instead of onPress, because
+          // if the mouse moves while clicking the click is not detected.
+          // See https://github.com/necolas/react-native-web/issues/1219
+          onClick && onClick(event);
+          onPress && onPress(event);
+        }}
         onKeyDown={this.touchableHandleKeyEvent}
         onKeyUp={this.touchableHandleKeyEvent}
         onResponderGrant={this.touchableHandleResponderGrant}

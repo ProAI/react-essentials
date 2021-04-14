@@ -8,7 +8,7 @@ export default function useOutsidePress({ insideRefs, active, onPress }) {
 
     const onDocumentMouseDown = ({ target }) => {
       const isOutsidePress = !insideRefs.some(
-        ref => target === ref.current || ref.current.contains(target),
+        (ref) => target === ref.current || ref.current.contains(target),
       );
 
       if (isOutsidePress) {

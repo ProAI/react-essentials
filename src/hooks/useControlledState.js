@@ -1,17 +1,17 @@
 import { useState } from 'react';
 
-export default function useControlledState({
+export default function useControlledState(
   defaultValue,
-  value: propValue,
+  controlledValue,
   onChange = () => {},
-}) {
+) {
   const [stateValue, setStateValue] = useState(defaultValue);
 
-  const isControlled = typeof propValue === 'boolean';
+  const isControlled = typeof controlledValue === 'boolean';
 
-  const value = isControlled ? propValue : stateValue;
+  const value = isControlled ? controlledValue : stateValue;
 
-  const setValue = nextValue => {
+  const setValue = (nextValue) => {
     if (value === nextValue) {
       return;
     }

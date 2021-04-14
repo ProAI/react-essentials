@@ -1,23 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
-import { applyDisabled } from '../../utils/states';
-import useAction from '../../hooks/useAction';
-import ActionPropTypes from '../../utils/ActionPropTypes';
+import useAction, { ActionPropTypes } from '../../hooks/useAction';
+import useLink, { LinkPropTypes } from '../../hooks/useLink';
+import concatProps from '../../utils/concatProps';
 
 const propTypes = {
+  ...LinkPropTypes,
   ...ActionPropTypes,
   children: PropTypes.node.isRequired,
 };
 
 const NavbarBrand = React.forwardRef((props, ref) => {
-  const { disabled = false, active, ...elementProps } = props;
+  const { to, replace, external, keepFocus, ...elementProps } = props;
 
-  const actionProps = useAction(elementProps, ref);
+  const link = useLink(to, replace, external);
+  const action = useAction(keepFocus);
 
   return (
     <BaseTouchable
-      {...applyDisabled(actionProps, disabled)}
+      {...concatProps({ ...elementProps, ref }, action, link)}
       essentials={{ className: 'navbar-brand', tag: 'a' }}
     />
   );

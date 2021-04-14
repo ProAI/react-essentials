@@ -1,24 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import BaseText from '../utils/rnw-compat/BaseText';
-import { applyDisabled } from '../utils/states';
-import useAction from '../hooks/useAction';
-import ActionPropTypes from '../utils/ActionPropTypes';
+import useAction, { ActionPropTypes } from '../hooks/useAction';
+import useTrigger, { TriggerPropTypes } from '../hooks/useTrigger';
+import useLink, { LinkPropTypes } from '../hooks/useLink';
+import concatClasses from '../utils/concatClasses';
+import concatProps from '../utils/concatProps';
 
 const propTypes = {
+  ...TriggerPropTypes,
+  ...LinkPropTypes,
   ...ActionPropTypes,
   children: PropTypes.node.isRequired,
 };
 
 const Link = React.forwardRef((props, ref) => {
-  const { disabled = false, active, ...elementProps } = props;
+  const {
+    toggle,
+    target,
+    to,
+    replace = false,
+    external = false,
+    keepFocus = false,
+    ...elementProps
+  } = props;
 
-  const actionProps = useAction(elementProps, ref);
+  const trigger = useTrigger(toggle, target);
+  const link = useLink(to, replace, external);
+  const action = useAction(keepFocus);
+
+  const classes = cx(
+    // variable classes
+    ...concatClasses(trigger),
+  );
 
   return (
     <BaseText
-      {...applyDisabled(actionProps, disabled)}
-      essentials={{ tag: 'a' }}
+      {...concatProps({ ...elementProps, ref }, action, link, trigger)}
+      essentials={{ tag: 'a', className: classes }}
     />
   );
 });
