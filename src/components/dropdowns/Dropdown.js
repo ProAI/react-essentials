@@ -11,7 +11,7 @@ import DropdownTextItem from './DropdownTextItem';
 import useDropdownState from './useDropdownState';
 
 const propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element.isRequired),
+  children: PropTypes.node,
   defaultVisible: PropTypes.bool,
   visible: PropTypes.bool,
   onToggle: PropTypes.func,
@@ -22,7 +22,7 @@ const Dropdown = React.forwardRef((props, ref) => {
     children,
     defaultVisible = false,
     visible,
-    onToggle = () => {},
+    onToggle,
     ...elementProps
   } = props;
 
@@ -45,6 +45,7 @@ const Dropdown = React.forwardRef((props, ref) => {
   );
 });
 
+Dropdown.displayName = 'Dropdown';
 Dropdown.propTypes = propTypes;
 
 Dropdown.Context = DropdownContext;

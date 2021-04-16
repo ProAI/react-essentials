@@ -22,6 +22,9 @@ import Button from './components/buttons/Button';
 /* card components */
 import Card from './components/cards/Card';
 
+/* collapse components */
+import Collapse from './components/collapse/Collapse';
+
 /* dropdown components */
 import Dropdown from './components/dropdowns/Dropdown';
 
@@ -108,6 +111,7 @@ export {
   ButtonToolbar,
   Button,
   Card,
+  Collapse,
   Dropdown,
   Form,
   InputGroup,
