@@ -7,6 +7,7 @@ import useTrigger, { TriggerPropTypes } from '../hooks/useTrigger';
 import useLink, { LinkPropTypes } from '../hooks/useLink';
 import concatClasses from '../utils/concatClasses';
 import concatTouchableProps from '../utils/concatTouchableProps';
+import optional from '../utils/optional';
 
 const propTypes = {
   ...TriggerPropTypes,
@@ -38,6 +39,11 @@ const BlockLink = React.forwardRef((props, ref) => {
   return (
     <BaseTouchable
       {...concatTouchableProps({ ...elementProps, ref }, action, link, trigger)}
+      {...optional(!to, {
+        // tabIndex is not working with this react-native-web version, we need
+        // to re-check with the latest version.
+        tabIndex: 0,
+      })}
       essentials={{ tag: 'a', className: classes }}
     />
   );

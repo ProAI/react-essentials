@@ -7,6 +7,7 @@ import useTrigger, { TriggerPropTypes } from '../hooks/useTrigger';
 import useLink, { LinkPropTypes } from '../hooks/useLink';
 import concatClasses from '../utils/concatClasses';
 import concatTouchableProps from '../utils/concatTouchableProps';
+import optional from '../utils/optional';
 
 const propTypes = {
   ...TriggerPropTypes,
@@ -38,6 +39,7 @@ const Link = React.forwardRef((props, ref) => {
   return (
     <BaseText
       {...concatTouchableProps({ ...elementProps, ref }, action, link, trigger)}
+      {...optional(!to, { tabIndex: 0 })}
       essentials={{ tag: 'a', className: classes }}
     />
   );

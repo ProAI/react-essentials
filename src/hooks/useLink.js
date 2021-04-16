@@ -7,7 +7,14 @@ import { createLocation } from 'history';
 export const LinkPropTypes = {
   to: PropTypes.string,
   replace: PropTypes.bool,
-  external: PropTypes.bool,
+  external: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.exact({
+      download: PropTypes.bool,
+      target: PropTypes.oneOf(['self', 'blank']),
+      rel: PropTypes.string,
+    }),
+  ]),
 };
 
 export default function useLink(to, replace, external) {
@@ -26,12 +33,24 @@ export default function useLink(to, replace, external) {
   const { history, location } = useContext(RouterContext);
 
   if (external) {
+    const hrefAttrs = {
+      download: false,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    };
+
+    if (typeof external === 'object') {
+      Object.assign(hrefAttrs, {
+        ...external,
+        target: external.target ? `_${external.target}` : '_blank',
+      });
+    }
+
     return {
       props: {
         accessibilityRole: 'link',
         href: to,
-        target: '_blank',
-        rel: 'noopener noreferrer',
+        ...hrefAttrs,
       },
     };
   }
