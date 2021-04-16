@@ -5,7 +5,7 @@ import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import { BUTTON_COLORS, SIZES } from '../../utils/constants';
 import useAction, { ActionPropTypes } from '../../hooks/useAction';
-import concatProps from '../../utils/concatProps';
+import concatTouchableProps from '../../utils/concatTouchableProps';
 
 const propTypes = {
   ...ActionPropTypes,
@@ -54,7 +54,7 @@ const FormButton = React.forwardRef((props, ref) => {
 
   return (
     <BaseTouchable
-      {...concatProps({ ...elementProps, ref }, action)}
+      {...concatTouchableProps({ ...elementProps, ref }, action)}
       disabled={buttonDisabled}
       essentials={{ className: classes }}
     />

@@ -32,7 +32,7 @@ export default function useDropdownState(
 
   return useMemo(
     () => (name) => {
-      const target = getElementId(identifier, name);
+      const id = getElementId(identifier, name);
       const toggle = () => {
         setVisible((value) => !value);
       };
@@ -42,7 +42,7 @@ export default function useDropdownState(
         toggle,
         trigger: {
           props: {
-            id: target,
+            nativeID: id,
             ref: (element) => {
               control.current = findNodeHandle(element);
             },
@@ -58,7 +58,7 @@ export default function useDropdownState(
             ref: (element) => {
               menu.current = findNodeHandle(element);
             },
-            'aria-labelledby': target,
+            'aria-labelledby': id,
           },
           classes: cx(visible && 'show'),
         },

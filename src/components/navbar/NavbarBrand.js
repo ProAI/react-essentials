@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import useAction, { ActionPropTypes } from '../../hooks/useAction';
 import useLink, { LinkPropTypes } from '../../hooks/useLink';
-import concatProps from '../../utils/concatProps';
+import concatTouchableProps from '../../utils/concatTouchableProps';
 
 const propTypes = {
   ...LinkPropTypes,
@@ -19,7 +19,7 @@ const NavbarBrand = React.forwardRef((props, ref) => {
 
   return (
     <BaseTouchable
-      {...concatProps({ ...elementProps, ref }, action, link)}
+      {...concatTouchableProps({ ...elementProps, ref }, action, link)}
       essentials={{ className: 'navbar-brand', tag: 'a' }}
     />
   );

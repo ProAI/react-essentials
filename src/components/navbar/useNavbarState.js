@@ -20,7 +20,7 @@ export default function useNavbarState(
 
   return useMemo(
     () => (name) => {
-      const target = getElementId(identifier, name);
+      const id = getElementId(identifier, name);
       const toggle = () => {
         setExpanded((value) => !value);
       };
@@ -30,18 +30,18 @@ export default function useNavbarState(
         toggle,
         trigger: {
           props: {
-            id: target,
+            nativeID: id,
             onPress: () => {
               toggle();
             },
-            'aria-controls': target,
+            'aria-controls': id,
             'aria-expanded': expanded,
             'aria-label': 'Toggle navigation',
           },
         },
         target: {
           props: {
-            'aria-labelledby': target,
+            'aria-labelledby': id,
           },
           classes: cx(expanded && 'show'),
         },

@@ -18,8 +18,8 @@ export default function useTabbableState(
   );
 
   return useMemo(
-    () => (name) => {
-      const target = getElementId(identifier, name);
+    () => (target) => {
+      const id = getElementId(identifier, target);
       const active = activeTarget === target;
       const toggle = () => {
         setActiveTarget(target);
@@ -30,23 +30,23 @@ export default function useTabbableState(
         toggle,
         trigger: {
           props: {
-            id: `${target}-tab`,
+            id: `${id}-tab`,
             onPress: () => {
               toggle();
             },
             accessibiltyRole: 'tab',
-            'aria-controls': target,
+            'aria-controls': id,
             'aria-selected': active,
           },
           classes: cx(active && 'active'),
         },
         target: {
           props: {
-            id: target,
+            nativeID: id,
             accessibiltyRole: 'tabpanel',
-            'aria-labelledby': `${target}-tab`,
+            'aria-labelledby': `${id}-tab`,
           },
-          classes: cx(active && 'active'),
+          classes: cx(active && 'show active'),
         },
       };
     },

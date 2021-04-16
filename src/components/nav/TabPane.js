@@ -10,7 +10,7 @@ import concatProps from '../../utils/concatProps';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  id: PropTypes.string,
+  id: PropTypes.string.isRequired,
 };
 
 const TabPane = React.forwardRef((props, ref) => {

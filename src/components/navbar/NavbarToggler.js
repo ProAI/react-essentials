@@ -3,7 +3,7 @@ import invariant from 'fbjs/lib/invariant';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import useAction, { ActionPropTypes } from '../../hooks/useAction';
 import useTrigger from '../../hooks/useTrigger';
-import concatProps from '../../utils/concatProps';
+import concatTouchableProps from '../../utils/concatTouchableProps';
 import NavbarContext from './NavbarContext';
 
 const propTypes = {
@@ -26,7 +26,7 @@ const NavbarToggler = React.forwardRef((props, ref) => {
 
   return (
     <BaseTouchable
-      {...concatProps({ ...elementProps, ref }, action, trigger)}
+      {...concatTouchableProps({ ...elementProps, ref }, action, trigger)}
       essentials={{ className: 'navbar-toggler' }}
     >
       <span className="navbar-toggler-icon" />

@@ -110,7 +110,7 @@ const BaseTouchable = createReactClass({
   },
 
   touchableHandlePress: function (e) {
-    // this.props.onPress && this.props.onPress(e);
+    this.props.onPress && this.props.onPress(e);
   },
 
   touchableHandleLongPress: function (e) {
@@ -163,7 +163,6 @@ const BaseTouchable = createReactClass({
       delayLongPress,
       delayPressIn,
       delayPressOut,
-      onClick,
       onLongPress,
       onPress,
       onPressIn,
@@ -176,13 +175,6 @@ const BaseTouchable = createReactClass({
       <View
         {...other}
         accessible={this.props.accessible !== false}
-        onClick={(event) => {
-          // We use the onClick event for buttons instead of onPress, because
-          // if the mouse moves while clicking the click is not detected.
-          // See https://github.com/necolas/react-native-web/issues/1219
-          onClick && onClick(event);
-          onPress && onPress(event);
-        }}
         onKeyDown={this.touchableHandleKeyEvent}
         onKeyUp={this.touchableHandleKeyEvent}
         onResponderGrant={this.touchableHandleResponderGrant}

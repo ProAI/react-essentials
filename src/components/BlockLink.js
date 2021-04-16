@@ -6,7 +6,7 @@ import useAction, { ActionPropTypes } from '../hooks/useAction';
 import useTrigger, { TriggerPropTypes } from '../hooks/useTrigger';
 import useLink, { LinkPropTypes } from '../hooks/useLink';
 import concatClasses from '../utils/concatClasses';
-import concatProps from '../utils/concatProps';
+import concatTouchableProps from '../utils/concatTouchableProps';
 
 const propTypes = {
   ...TriggerPropTypes,
@@ -37,7 +37,7 @@ const BlockLink = React.forwardRef((props, ref) => {
 
   return (
     <BaseTouchable
-      {...concatProps({ ...elementProps, ref }, action, link, trigger)}
+      {...concatTouchableProps({ ...elementProps, ref }, action, link, trigger)}
       essentials={{ tag: 'a', className: classes }}
     />
   );

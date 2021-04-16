@@ -6,7 +6,7 @@ import { TRIGGERS, PLACEMENTS } from '../utils/constants';
 import BaseView from '../utils/rnw-compat/BaseView';
 import useIdentifier from './useIdentifier';
 import usePopper from './usePopper';
-import setRef from '../utils/setRef';
+import concatRefs from '../utils/concatRefs';
 import optional from '../utils/optional';
 
 export const OverlayPropTypes = {
@@ -59,10 +59,9 @@ function useOverlay(target, template, config) {
 
   const targetElement = React.cloneElement(target, {
     key: 'target',
-    ref: (element) => {
+    ref: concatRefs((element) => {
       targetRef.current = findNodeHandle(element);
-      setRef(target.ref, element);
-    },
+    }, target.ref),
     ...optional(visible, { 'aria-describedby': identifier }),
     onPress: (event) => {
       if (trigger.indexOf('click') !== -1) {
@@ -146,10 +145,9 @@ function useOverlay(target, template, config) {
   const templateElement = React.cloneElement(template, {
     key: 'template',
     id: identifier,
-    ref: (element) => {
+    ref: concatRefs((element) => {
       wrapperRef.current = findNodeHandle(element);
-      setRef(template.ref, element);
-    },
+    }, template.ref),
     placement,
     visible: status === 'LOADED',
     arrow: arrowElement,

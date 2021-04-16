@@ -6,7 +6,7 @@ import Field from './Field';
 import { SIZES } from '../../utils/constants';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
-import setRef from '../../utils/setRef';
+import concatRefs from '../../utils/concatRefs';
 import useOutsidePress from '../../hooks/useOutsidePress';
 import useDatePickerEffects from './useDatePickerEffects';
 import useDatePickerLocale from './useDatePickerLocale';
@@ -91,10 +91,7 @@ const FormDatePicker = React.forwardRef((props, ref) => {
       )}
       <div className={classes}>
         <Input
-          ref={(element) => {
-            control.current = element;
-            setRef(ref, element);
-          }}
+          ref={concatRefs(control, ref)}
           type="text"
           id={`${identifier}-${name}`}
           name={name}

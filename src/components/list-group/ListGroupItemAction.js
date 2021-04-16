@@ -7,7 +7,7 @@ import useAction, { ActionPropTypes } from '../../hooks/useAction';
 import useTrigger, { TriggerPropTypes } from '../../hooks/useTrigger';
 import useNavLink, { NavLinkPropTypes } from '../nav/useNavLink';
 import concatClasses from '../../utils/concatClasses';
-import concatProps from '../../utils/concatProps';
+import concatTouchableProps from '../../utils/concatTouchableProps';
 import optional from '../../utils/optional';
 
 const propTypes = {
@@ -53,7 +53,7 @@ const ListGroupItemAction = React.forwardRef((props, ref) => {
 
   return (
     <BaseTouchable
-      {...concatProps({ ...elementProps, ref }, action, link, trigger)}
+      {...concatTouchableProps({ ...elementProps, ref }, action, link, trigger)}
       {...optional(active, { 'aria-current': true })}
       disabled={disabled}
       essentials={{ className: classes }}

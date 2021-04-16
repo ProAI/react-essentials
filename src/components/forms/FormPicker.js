@@ -4,7 +4,7 @@ import cx from 'classnames';
 import Field from './Field';
 import useIdentifier from '../../hooks/useIdentifier';
 import useFormField from './useFormField';
-import setRef from '../../utils/setRef';
+import concatRefs from '../../utils/concatRefs';
 import FieldPropTypes from './FieldPropTypes';
 
 const propTypes = {
@@ -60,10 +60,7 @@ const FormPicker = React.forwardRef((props, ref) => {
         </label>
       )}
       <Select
-        ref={(element) => {
-          control.current = element;
-          setRef(ref, element);
-        }}
+        ref={concatRefs(control, ref)}
         id={`${identifier}-${name}`}
         name={name}
         value={field.value || ''}

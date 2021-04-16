@@ -7,7 +7,7 @@ import useAction, { ActionPropTypes } from '../../hooks/useAction';
 import useTrigger, { TriggerPropTypes } from '../../hooks/useTrigger';
 import useLink, { LinkPropTypes } from '../../hooks/useLink';
 import concatClasses from '../../utils/concatClasses';
-import concatProps from '../../utils/concatProps';
+import concatTouchableProps from '../../utils/concatTouchableProps';
 import optional from '../../utils/optional';
 
 const propTypes = {
@@ -62,7 +62,7 @@ const Button = React.forwardRef((props, ref) => {
 
   return (
     <BaseTouchable
-      {...concatProps({ ...elementProps, ref }, action, link, trigger)}
+      {...concatTouchableProps({ ...elementProps, ref }, action, link, trigger)}
       {...optional(active, { 'aria-pressed': true })}
       disabled={disabled}
       essentials={{ className: classes }}
