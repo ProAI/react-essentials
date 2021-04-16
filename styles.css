@@ -3,7 +3,6 @@
   align-items: stretch;
   border: 0 solid black;
   box-sizing: border-box;
-  display: flex !important;
   flex-basis: auto;
   flex-direction: column;
   flex-shrink: 0;
@@ -14,6 +13,19 @@
   position: relative;
   /* default z-index, because =0 causes some problems with dropdowns */
   /* z-index: 0; */
+}
+
+/* Set display to flex except the classes that are set to display none or can be toggled to display none. */
+.yv:not(.navbar, .navbar-toggler, .navbar-collapse, .tab-content
+    > .tab-pane, .dropdown-menu, .collapse:not(.show)),
+.yv.show {
+  display: flex !important;
+}
+
+.navbar,
+.navbar-toggler,
+.navbar-toggler {
+  display: flex;
 }
 
 .yv-hit-slop {

@@ -22,7 +22,8 @@
     "prepublishOnly": "packsy validate && packsy build"
   },
   "files": [
-    "dist"
+    "dist",
+    "styles.css"
   ],
   "dependencies": {
     "camelize": "^1.0.0",
