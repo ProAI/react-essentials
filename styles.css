@@ -17,7 +17,7 @@
 
 /* Set display to flex except the classes that are set to display none or can be toggled to display none. */
 .yv:not(.navbar, .navbar-toggler, .navbar-collapse, .tab-content
-    > .tab-pane, .dropdown-menu, .collapse:not(.show)),
+    > .tab-pane, .dropdown-menu, .collapse:not(.show), .modal),
 .yv.show {
   display: flex !important;
 }
