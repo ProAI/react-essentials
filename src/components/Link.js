@@ -19,6 +19,7 @@ const propTypes = {
 const Link = React.forwardRef((props, ref) => {
   const {
     toggle,
+    dismiss,
     target,
     to,
     replace = false,
@@ -27,7 +28,7 @@ const Link = React.forwardRef((props, ref) => {
     ...elementProps
   } = props;
 
-  const trigger = useTrigger(toggle, target);
+  const trigger = useTrigger(toggle, dismiss, target);
   const link = useLink(to, replace, external);
   const action = useAction(keepFocus);
 

@@ -36,7 +36,7 @@ const FormPicker = React.forwardRef((props, ref) => {
   const identifier = useIdentifier('form');
   const field = useFormField(name);
 
-  const control = useRef();
+  const controlRef = useRef();
 
   const classes = cx(
     // constant classes
@@ -60,7 +60,7 @@ const FormPicker = React.forwardRef((props, ref) => {
         </label>
       )}
       <Select
-        ref={concatRefs(control, ref)}
+        ref={concatRefs(controlRef, ref)}
         id={`${identifier}-${name}`}
         name={name}
         value={field.value || ''}

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BaseView from '../../utils/rnw-compat/BaseView';
 import ProgressBar from './ProgressBar';
+import ProgressContext from './ProgressContext';
+import useProgress from './useProgress';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -12,21 +14,19 @@ const propTypes = {
 };
 
 const Progress = React.forwardRef((props, ref) => {
-  const { children, min = 0, max = 100, style, ...elementProps } = props;
+  const { min = 0, max = 100, style, ...elementProps } = props;
 
-  const clonedChildren = React.Children.map(children, (child) =>
-    React.cloneElement(child, { min, max }),
-  );
+  const progress = useProgress(min, max);
 
   return (
-    <BaseView
-      {...elementProps}
-      ref={ref}
-      style={[style, { flexDirection: 'row' }]}
-      essentials={{ className: 'progress' }}
-    >
-      {clonedChildren}
-    </BaseView>
+    <ProgressContext.Provider value={progress}>
+      <BaseView
+        {...elementProps}
+        ref={ref}
+        style={[style, { flexDirection: 'row' }]}
+        essentials={{ className: 'progress' }}
+      />
+    </ProgressContext.Provider>
   );
 });
 

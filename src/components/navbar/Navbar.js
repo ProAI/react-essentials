@@ -6,7 +6,7 @@ import NavbarCollapse from './NavbarCollapse';
 import NavbarContext from './NavbarContext';
 import NavbarText from './NavbarText';
 import NavbarToggler from './NavbarToggler';
-import useNavbarState from './useNavbarState';
+import useNavbar from './useNavbar';
 import BaseView from '../../utils/rnw-compat/BaseView';
 
 const propTypes = {
@@ -32,6 +32,8 @@ const Navbar = React.forwardRef((props, ref) => {
     ...elementProps
   } = props;
 
+  const navbar = useNavbar(defaultExpanded, expanded, onToggle, expand);
+
   const classes = cx(
     // constant classes
     'navbar',
@@ -42,10 +44,8 @@ const Navbar = React.forwardRef((props, ref) => {
     sticky && `sticky-${sticky}`,
   );
 
-  const state = useNavbarState(defaultExpanded, expanded, onToggle, expand);
-
   return (
-    <NavbarContext.Provider value={state}>
+    <NavbarContext.Provider value={navbar}>
       <BaseView
         {...elementProps}
         ref={ref}

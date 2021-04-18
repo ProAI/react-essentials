@@ -14,7 +14,7 @@ const computeScrollbarWidth = () => {
   return scrollbarWidth;
 };
 
-export default function useScrollbarAdjustment({ ref: modal, active }) {
+export default function useModalEffects({ modalRef, active }) {
   const scrollbarWidth = useRef();
 
   useEffect(() => {
@@ -27,11 +27,11 @@ export default function useScrollbarAdjustment({ ref: modal, active }) {
     }
 
     // Auto-focus on open.
-    modal.current.focus();
+    modalRef.current.focus();
 
     // Set tab index from 0 to -1.
     // eslint-disable-next-line no-param-reassign
-    modal.current.tabIndex = '-1';
+    modalRef.current.tabIndex = '-1';
 
     const rect = document.body.getBoundingClientRect();
     const isBodyOverflowing = rect.left + rect.right < window.innerWidth;
@@ -57,17 +57,17 @@ export default function useScrollbarAdjustment({ ref: modal, active }) {
     }
 
     const isModalOverflowing =
-      modal.current.scrollHeight > document.documentElement.clientHeight;
+      modalRef.current.scrollHeight > document.documentElement.clientHeight;
 
     // Set dialog padding adjustments.
     if (!isBodyOverflowing && isModalOverflowing) {
       // eslint-disable-next-line no-param-reassign
-      modal.current.style.paddingLeft = `${scrollbarWidth.current}px`;
+      modalRef.current.style.paddingLeft = `${scrollbarWidth.current}px`;
     }
 
     if (isBodyOverflowing && !isModalOverflowing) {
       // eslint-disable-next-line no-param-reassign
-      modal.current.style.paddingRight = `${scrollbarWidth.current}px`;
+      modalRef.current.style.paddingRight = `${scrollbarWidth.current}px`;
     }
 
     // Add class .modal-open to body element.

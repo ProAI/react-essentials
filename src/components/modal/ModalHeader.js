@@ -7,28 +7,9 @@ const propTypes = {
   titleId: PropTypes.string,
 };
 
-const ModalHeader = React.forwardRef((props, ref) => {
-  const { children, titleId, ...elementProps } = props;
-
-  // inject titleId props for aria support
-  const clonedChildren = React.Children.map(children, (child, i) => {
-    if (i > 0) {
-      return child;
-    }
-
-    return React.cloneElement(child, { titleId });
-  });
-
-  return (
-    <BaseView
-      {...elementProps}
-      ref={ref}
-      essentials={{ className: 'modal-header' }}
-    >
-      {clonedChildren}
-    </BaseView>
-  );
-});
+const ModalHeader = React.forwardRef((props, ref) => (
+  <BaseView {...props} ref={ref} essentials={{ className: 'modal-header' }} />
+));
 
 ModalHeader.displayName = 'ModalHeader';
 ModalHeader.propTypes = propTypes;

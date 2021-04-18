@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CollapseContext from './CollapseContext';
-import useCollapseState from './useCollapseState';
+import useCollapse from './useCollapse';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -13,10 +13,10 @@ const propTypes = {
 const CollapseProvider = (props) => {
   const { children, defaultVisible = false, visible, onToggle } = props;
 
-  const state = useCollapseState(defaultVisible, visible, onToggle);
+  const collapse = useCollapse(defaultVisible, visible, onToggle);
 
   return (
-    <CollapseContext.Provider value={state}>
+    <CollapseContext.Provider value={collapse}>
       {children}
     </CollapseContext.Provider>
   );

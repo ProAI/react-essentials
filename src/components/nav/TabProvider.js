@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TabContext from './TabContext';
-import useTabbableState from './useTabbableState';
+import useTabbable from './useTabbable';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -13,9 +13,9 @@ const propTypes = {
 const TabProvider = (props) => {
   const { children, defaultActiveTarget, activeTarget, onChange } = props;
 
-  const state = useTabbableState(defaultActiveTarget, activeTarget, onChange);
+  const tabbable = useTabbable(defaultActiveTarget, activeTarget, onChange);
 
-  return <TabContext.Provider value={state}>{children}</TabContext.Provider>;
+  return <TabContext.Provider value={tabbable}>{children}</TabContext.Provider>;
 };
 
 TabProvider.displayName = 'TabProvider';

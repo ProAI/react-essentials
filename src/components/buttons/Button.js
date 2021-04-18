@@ -32,6 +32,7 @@ const Button = React.forwardRef((props, ref) => {
     block = false,
     caret = false,
     toggle,
+    dismiss,
     target,
     to,
     replace = false,
@@ -42,7 +43,7 @@ const Button = React.forwardRef((props, ref) => {
     ...elementProps
   } = props;
 
-  const trigger = useTrigger(toggle, target);
+  const trigger = useTrigger(toggle, dismiss, target);
   const link = useLink(to, replace, external);
   const action = useAction(keepFocus);
 

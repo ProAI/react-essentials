@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import invariant from 'fbjs/lib/invariant';
 import BaseView from '../../utils/rnw-compat/BaseView';
+import ModalContext from './ModalContext';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  titleId: PropTypes.string,
 };
 
 const ModalTitle = React.forwardRef((props, ref) => {
-  const { titleId, ...elementProps } = props;
+  const modal = useContext(ModalContext);
+
+  invariant(modal, 'ModalTitle can only be used inside a Modal component.');
 
   return (
     <BaseView
-      {...elementProps}
-      nativeID={titleId}
+      {...props}
       ref={ref}
+      nativeID={modal.identifier}
       accessibilityRole="heading"
       aria-level={5}
       essentials={{ className: 'modal-title' }}

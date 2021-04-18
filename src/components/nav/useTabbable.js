@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import cx from 'classnames';
+import invariant from 'fbjs/lib/invariant';
 import getElementId from '../../utils/getElementId';
 import useIdentifier from '../../hooks/useIdentifier';
 import useControlledState from '../../hooks/useControlledState';
 
-export default function useTabbableState(
+export default function useTabbable(
   defaultActiveTarget,
   controlledActiveTarget,
   onChange,
@@ -18,38 +19,35 @@ export default function useTabbableState(
   );
 
   return useMemo(
-    () => (target) => {
-      const id = getElementId(identifier, target);
-      const active = activeTarget === target;
-      const toggle = () => {
-        setActiveTarget(target);
-      };
+    () => ({
+      identifier,
+      activeTarget,
+      setActiveTarget,
+      trigger: ({ target, dismiss }) => {
+        invariant(
+          !dismiss,
+          "Tab/TabContext cannot be used with prop 'dismiss'. Please use prop 'toggle' instead.",
+        );
 
-      return {
-        active,
-        toggle,
-        trigger: {
+        const id = getElementId(identifier, target);
+        const active = activeTarget === target;
+
+        return {
           props: {
-            id: `${id}-tab`,
-            onPress: () => {
-              toggle();
+            nativeID: `${id}-tab`,
+            onPress: (event) => {
+              event.preventDefault();
+
+              setActiveTarget(target);
             },
             accessibiltyRole: 'tab',
             'aria-controls': id,
             'aria-selected': active,
           },
           classes: cx(active && 'active'),
-        },
-        target: {
-          props: {
-            nativeID: id,
-            accessibiltyRole: 'tabpanel',
-            'aria-labelledby': `${id}-tab`,
-          },
-          classes: cx(active && 'show active'),
-        },
-      };
-    },
+        };
+      },
+    }),
     [activeTarget],
   );
 }

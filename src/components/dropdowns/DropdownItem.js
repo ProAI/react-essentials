@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import invariant from 'fbjs/lib/invariant';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import DropdownContext from './DropdownContext';
-import useTarget from '../../hooks/useTarget';
 import useAction, { ActionPropTypes } from '../../hooks/useAction';
 import useTrigger, { TriggerPropTypes } from '../../hooks/useTrigger';
 import useLink, { LinkPropTypes } from '../../hooks/useLink';
@@ -24,6 +24,7 @@ const propTypes = {
 const DropdownItem = React.forwardRef((props, ref) => {
   const {
     toggle,
+    dismiss,
     target,
     to,
     replace = false,
@@ -35,12 +36,17 @@ const DropdownItem = React.forwardRef((props, ref) => {
     ...elementProps
   } = props;
 
-  const dropdown = useTarget(DropdownContext);
+  const dropdown = useContext(DropdownContext);
 
-  const trigger = useTrigger(toggle, target);
+  invariant(
+    dropdown,
+    'DropdownItem can only be used inside a Dropdown component.',
+  );
+
+  const trigger = useTrigger(toggle, dismiss, target);
   const link = useLink(to, replace, external);
   const action = useAction(keepFocus, () => {
-    if (dropdown && !keepVisible) dropdown.toggle();
+    if (!keepVisible) dropdown.setVisible(false);
   });
 
   // create component classes

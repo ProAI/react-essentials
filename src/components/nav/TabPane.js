@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import invariant from 'fbjs/lib/invariant';
 import TabContext from './TabContext';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import useTarget from '../../hooks/useTarget';
-import concatClasses from '../../utils/concatClasses';
-import concatProps from '../../utils/concatProps';
+import getElementId from '../../utils/getElementId';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -14,22 +12,31 @@ const propTypes = {
 };
 
 const TabPane = React.forwardRef((props, ref) => {
-  const { id, ...elementProps } = props;
+  const { id: target, ...elementProps } = props;
 
-  const target = useTarget(TabContext, id);
+  const tabbable = useContext(TabContext);
 
-  invariant(target, 'TabPane can only be used inside a TabProvider component.');
+  invariant(
+    tabbable,
+    'TabPane can only be used inside a TabProvider component.',
+  );
 
   const classes = cx(
     // constant classes
     'tab-pane',
     // variable classes
-    concatClasses(target),
+    tabbable.activeTarget === target && 'active show',
   );
+
+  const id = getElementId(tabbable.identifier, target);
 
   return (
     <BaseView
-      {...concatProps({ ...elementProps, ref }, target)}
+      {...elementProps}
+      ref={ref}
+      nativeID={id}
+      accessibiltyRole="tabpanel"
+      aria-labelledby={`${id}-tab`}
       essentials={{ className: classes }}
     />
   );

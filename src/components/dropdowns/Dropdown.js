@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseView from '../../utils/rnw-compat/BaseView';
@@ -8,7 +8,8 @@ import DropdownHeader from './DropdownHeader';
 import DropdownDivider from './DropdownDivider';
 import DropdownItem from './DropdownItem';
 import DropdownTextItem from './DropdownTextItem';
-import useDropdownState from './useDropdownState';
+import NavContext from '../nav/NavContext';
+import useDropdown from './useDropdown';
 
 const propTypes = {
   children: PropTypes.node,
@@ -26,18 +27,21 @@ const Dropdown = React.forwardRef((props, ref) => {
     ...elementProps
   } = props;
 
-  const state = useDropdownState(defaultVisible, visible, onToggle);
+  const nav = useContext(NavContext);
+
+  const dropdown = useDropdown(defaultVisible, visible, onToggle);
 
   // create component classes
   const classes = cx(
     // constant classes
-    'dropdown',
+    !nav && 'dropdown',
+    nav && 'nav-dropdown',
     // variable classes
-    visible && 'show',
+    dropdown.visible && 'show',
   );
 
   return (
-    <DropdownContext.Provider value={state}>
+    <DropdownContext.Provider value={dropdown}>
       <BaseView {...elementProps} ref={ref} essentials={{ className: classes }}>
         {children}
       </BaseView>

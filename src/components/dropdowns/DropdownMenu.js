@@ -1,26 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import invariant from 'fbjs/lib/invariant';
 import BaseView from '../../utils/rnw-compat/BaseView';
 import DropdownContext from './DropdownContext';
-import useTarget from '../../hooks/useTarget';
-import concatClasses from '../../utils/concatClasses';
-import concatProps from '../../utils/concatProps';
+import concatRefs from '../../utils/concatRefs';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  id: PropTypes.string,
   right: PropTypes.bool,
 };
 
 const DropdownMenu = React.forwardRef((props, ref) => {
-  const { right = false, id, ...elementProps } = props;
+  const { right = false, ...elementProps } = props;
 
-  const target = useTarget(DropdownContext, id);
+  const dropdown = useContext(DropdownContext);
 
   invariant(
-    target,
+    dropdown,
     'DropdownMenu can only be used inside a Dropdown component.',
   );
 
@@ -29,12 +26,14 @@ const DropdownMenu = React.forwardRef((props, ref) => {
     'dropdown-menu',
     // variable classes
     right && 'dropdown-menu-right',
-    ...concatClasses(target),
+    dropdown.visible && 'show',
   );
 
   return (
     <BaseView
-      {...concatProps({ ...elementProps, ref }, target)}
+      {...elementProps}
+      ref={concatRefs(dropdown.menuRef, ref)}
+      aria-labelledby={dropdown.identifier}
       essentials={{ className: classes }}
     />
   );

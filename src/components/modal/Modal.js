@@ -1,16 +1,16 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import findNodeHandle from 'react-native-web/dist/cjs/exports/findNodeHandle';
+import ModalContext from './ModalContext';
 import ModalBody from './ModalBody';
 import ModalFooter from './ModalFooter';
 import ModalHeader from './ModalHeader';
 import ModalTitle from './ModalTitle';
 import { MODAL_SIZES } from '../../utils/constants';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import useIdentifier from '../../hooks/useIdentifier';
-import useModalEffects from './useModalEffects';
+import useModal from './useModal';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -24,32 +24,19 @@ const propTypes = {
 
 const Modal = React.forwardRef((props, ref) => {
   const {
-    children,
-    visible: isModalOpen,
+    visible,
     size,
     backdrop = true,
     scrollable = false,
     centered = false,
-    onToggle = () => {},
+    onToggle,
     ...elementProps
   } = props;
 
-  const identifier = useIdentifier('modal');
-  const [mounted, setMounted] = useState(false);
+  const modal = useModal(visible, onToggle);
 
-  const modal = useRef();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useModalEffects({
-    ref: modal,
-    active: mounted && isModalOpen,
-  });
-
-  // Return null if not mounted or not open.
-  if (!mounted || !isModalOpen) {
+  // Return null if not mounted.
+  if (!modal.mounted || !modal.visible) {
     return null;
   }
 
@@ -64,23 +51,15 @@ const Modal = React.forwardRef((props, ref) => {
     centered && 'modal-dialog-centered',
   );
 
-  const clonedChildren = React.Children.map(children, (child, i) => {
-    if (i > 0) {
-      return child;
-    }
-
-    return React.cloneElement(child, { titleId: identifier });
-  });
-
   const modalElement = (
     <BaseView
       key="modal"
       ref={(element) => {
-        modal.current = findNodeHandle(element);
+        modal.ref.current = findNodeHandle(element);
       }}
       accessible
       accessibilityRole="dialog"
-      aria-labelledby={identifier}
+      aria-labelledby={modal.identifier}
       aria-modal="true"
       // For now we need onClick here, because onMouseDown would also toggle the modal when the user clicks on a scrollbar.
       onClick={(event) => {
@@ -88,8 +67,8 @@ const Modal = React.forwardRef((props, ref) => {
           return;
         }
 
-        if (event.target === modal.current) {
-          onToggle();
+        if (event.target === modal.ref.current) {
+          modal.setVisible(false);
         }
       }}
       onKeyUp={(event) => {
@@ -100,7 +79,7 @@ const Modal = React.forwardRef((props, ref) => {
             return;
           }
 
-          onToggle();
+          modal.setVisible(false);
         }
       }}
       essentials={{ className: 'modal show' }}
@@ -109,13 +88,13 @@ const Modal = React.forwardRef((props, ref) => {
         accessibilityRole="document"
         essentials={{ className: dialogClasses }}
       >
-        <BaseView
-          {...elementProps}
-          ref={ref}
-          essentials={{ className: 'modal-content' }}
-        >
-          {clonedChildren}
-        </BaseView>
+        <ModalContext.Provider value={modal}>
+          <BaseView
+            {...elementProps}
+            ref={ref}
+            essentials={{ className: 'modal-content' }}
+          />
+        </ModalContext.Provider>
       </BaseView>
     </BaseView>
   );
@@ -134,8 +113,10 @@ const Modal = React.forwardRef((props, ref) => {
   return ReactDOM.createPortal([modalElement, backdropElement], document.body);
 });
 
+Modal.displayName = 'Modal';
 Modal.propTypes = propTypes;
 
+Modal.Context = ModalContext;
 Modal.Body = ModalBody;
 Modal.Footer = ModalFooter;
 Modal.Header = ModalHeader;

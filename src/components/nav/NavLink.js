@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import BaseTouchable from '../../utils/rnw-compat/BaseTouchable';
 import NavbarContext from '../navbar/NavbarContext';
-import useTarget from '../../hooks/useTarget';
 import useAction, { ActionPropTypes } from '../../hooks/useAction';
 import useTrigger, { TriggerPropTypes } from '../../hooks/useTrigger';
 import useNavLink, { NavLinkPropTypes } from './useNavLink';
@@ -24,6 +23,7 @@ const propTypes = {
 const NavLink = React.forwardRef((props, ref) => {
   const {
     toggle,
+    dismiss,
     target,
     to,
     replace = false,
@@ -37,12 +37,12 @@ const NavLink = React.forwardRef((props, ref) => {
     ...elementProps
   } = props;
 
-  const navbar = useTarget(NavbarContext);
+  const navbar = useContext(NavbarContext);
 
-  const trigger = useTrigger(toggle, target);
+  const trigger = useTrigger(toggle, dismiss, target);
   const link = useNavLink(to, replace, external, exact, strict);
   const action = useAction(keepFocus, () => {
-    if (navbar && !keepExpanded) navbar.toggle();
+    if (navbar && !keepExpanded) navbar.setExpanded(false);
   });
 
   const classes = cx(

@@ -23,6 +23,7 @@ const propTypes = {
 const ListGroupItemAction = React.forwardRef((props, ref) => {
   const {
     toggle,
+    dismiss,
     target,
     to,
     replace = false,
@@ -36,7 +37,7 @@ const ListGroupItemAction = React.forwardRef((props, ref) => {
     ...elementProps
   } = props;
 
-  const trigger = useTrigger(toggle, target);
+  const trigger = useTrigger(toggle, dismiss, target);
   const link = useNavLink(to, replace, external, exact, strict);
   const action = useAction(keepFocus);
 

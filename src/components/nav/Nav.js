@@ -5,6 +5,7 @@ import BaseView from '../../utils/rnw-compat/BaseView';
 import NavbarContext from '../navbar/NavbarContext';
 import TabContext from './TabContext';
 import NavLink from './NavLink';
+import NavContext from './NavContext';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -30,25 +31,29 @@ const Nav = React.forwardRef((props, ref) => {
   const navbar = useContext(NavbarContext);
 
   const classes = cx(
-    // variable classes
+    // constant classes
     !navbar && 'nav',
-    !navbar && variant && `nav-${variant}`,
     navbar && 'navbar-nav',
+    // variable classes
+    !navbar && variant && `nav-${variant}`,
   );
 
   return (
-    <BaseView
-      {...elementProps}
-      ref={ref}
-      accessibilityRole={getRole(tabbable, navbar)}
-      essentials={{ tag: 'nav', className: classes }}
-    />
+    <NavContext.Provider value={{}}>
+      <BaseView
+        {...elementProps}
+        ref={ref}
+        accessibilityRole={getRole(tabbable, navbar)}
+        essentials={{ className: classes }}
+      />
+    </NavContext.Provider>
   );
 });
 
 Nav.displayName = 'Nav';
 Nav.propTypes = propTypes;
 
+Nav.Context = NavContext;
 Nav.Link = NavLink;
 
 export default Nav;

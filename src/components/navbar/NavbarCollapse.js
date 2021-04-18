@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import invariant from 'fbjs/lib/invariant';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import useTarget from '../../hooks/useTarget';
-import concatClasses from '../../utils/concatClasses';
-import concatProps from '../../utils/concatProps';
 import NavbarContext from './NavbarContext';
 
 const propTypes = {
@@ -12,21 +10,26 @@ const propTypes = {
 };
 
 const NavbarCollapse = React.forwardRef((props, ref) => {
-  const { ...elementProps } = props;
+  const navbar = useContext(NavbarContext);
 
-  const target = useTarget(NavbarContext);
+  invariant(
+    navbar,
+    'NavbarCollapse can only be used inside a Navbar component.',
+  );
 
   const classes = cx(
     // constant classes
     'collapse',
     'navbar-collapse',
     // variable classes
-    ...concatClasses(target),
+    navbar.expanded && 'show',
   );
 
   return (
     <BaseView
-      {...concatProps({ ...elementProps, ref }, target)}
+      {...props}
+      ref={ref}
+      aria-labelledby={navbar.identifier}
       essentials={{ className: classes }}
     />
   );

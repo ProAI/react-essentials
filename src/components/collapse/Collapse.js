@@ -1,26 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import invariant from 'fbjs/lib/invariant';
 import BaseView from '../../utils/rnw-compat/BaseView';
 import CollapseContext from './CollapseContext';
 import CollapseProvider from './CollapseProvider';
-import useTarget from '../../hooks/useTarget';
-import concatClasses from '../../utils/concatClasses';
-import concatProps from '../../utils/concatProps';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
-  id: PropTypes.string,
 };
 
 const Collapse = React.forwardRef((props, ref) => {
-  const { id, ...elementProps } = props;
-
-  const target = useTarget(CollapseContext, id);
+  const collapse = useContext(CollapseContext);
 
   invariant(
-    target,
+    collapse,
     'Collapse can only be used inside a CollapseProvider component.',
   );
 
@@ -28,12 +22,14 @@ const Collapse = React.forwardRef((props, ref) => {
     // constant classes
     'collapse',
     // variable classes
-    ...concatClasses(target),
+    collapse.visible && 'show',
   );
 
   return (
     <BaseView
-      {...concatProps({ ...elementProps, ref }, target)}
+      {...props}
+      ref={ref}
+      nativeID={collapse.identifier}
       essentials={{ className: classes }}
     />
   );

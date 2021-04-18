@@ -39,13 +39,13 @@ const FormDatePicker = React.forwardRef((props, ref) => {
   const identifier = useIdentifier('form');
   const field = useFormField(name);
 
-  const control = useRef();
-  const menu = useRef();
+  const controlRef = useRef();
+  const menuRef = useRef();
 
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   useOutsidePress({
-    insideRefs: [control, menu],
+    insideRefs: [controlRef, menuRef],
     active: isMenuOpen,
     onPress: () => {
       setMenuOpen(false);
@@ -53,7 +53,7 @@ const FormDatePicker = React.forwardRef((props, ref) => {
   });
 
   useDatePickerEffects({
-    ref: menu,
+    ref: menuRef,
     active: isMenuOpen,
   });
 
@@ -91,7 +91,7 @@ const FormDatePicker = React.forwardRef((props, ref) => {
       )}
       <div className={classes}>
         <Input
-          ref={concatRefs(control, ref)}
+          ref={concatRefs(controlRef, ref)}
           type="text"
           id={`${identifier}-${name}`}
           name={name}
@@ -113,7 +113,7 @@ const FormDatePicker = React.forwardRef((props, ref) => {
         />
         {isMenuOpen && (
           <div
-            ref={menu}
+            ref={menuRef}
             className="form-datepicker-menu"
             aria-labelledby={`${identifier}-${name}`}
           >

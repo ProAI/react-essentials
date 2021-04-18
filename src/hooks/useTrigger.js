@@ -5,19 +5,22 @@ import warning from 'fbjs/lib/warning';
 
 export const TriggerPropTypes = {
   toggle: PropTypes.object,
+  dismiss: PropTypes.object,
   target: PropTypes.string,
 };
 
-export default function useTrigger(toggle, target) {
+export default function useTrigger(toggle, dismiss, target) {
   if (target) {
     invariant(toggle, 'Target needs a toggle context.');
   }
 
-  if (!toggle) {
+  const trigger = toggle || dismiss;
+
+  if (!trigger) {
     return undefined;
   }
 
-  const Context = toggle.Context || toggle;
+  const Context = trigger.Context || toggle;
 
   const toggleable = useContext(Context);
 
@@ -27,13 +30,5 @@ export default function useTrigger(toggle, target) {
     return undefined;
   }
 
-  const element = toggleable(target);
-
-  return {
-    active: element.active,
-    toggle: element.toggle,
-    props: element.trigger.props,
-    classes: element.trigger.classes,
-    extra: element.extra,
-  };
+  return toggleable.trigger({ target, dismiss: !!dismiss });
 }

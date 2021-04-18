@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import BaseTouchable from '../utils/rnw-compat/BaseTouchable';
+import BaseView from '../utils/rnw-compat/BaseView';
 import useAction, { ActionPropTypes } from '../hooks/useAction';
 import useTrigger, { TriggerPropTypes } from '../hooks/useTrigger';
 import useLink, { LinkPropTypes } from '../hooks/useLink';
 import concatClasses from '../utils/concatClasses';
 import concatTouchableProps from '../utils/concatTouchableProps';
-import optional from '../utils/optional';
+import concatRefs from '../utils/concatRefs';
 
 const propTypes = {
   ...TriggerPropTypes,
@@ -19,6 +19,7 @@ const propTypes = {
 const BlockLink = React.forwardRef((props, ref) => {
   const {
     toggle,
+    dismiss,
     target,
     to,
     replace = false,
@@ -27,7 +28,7 @@ const BlockLink = React.forwardRef((props, ref) => {
     ...elementProps
   } = props;
 
-  const trigger = useTrigger(toggle, target);
+  const trigger = useTrigger(toggle, dismiss, target);
   const link = useLink(to, replace, external);
   const action = useAction(keepFocus);
 
@@ -36,14 +37,26 @@ const BlockLink = React.forwardRef((props, ref) => {
     ...concatClasses(trigger),
   );
 
+  // tabIndex is not working with this react-native-web version, we need to
+  // re-check with the latest version.
+  const tabIndexRef = useRef();
+
+  useEffect(() => {
+    if (to) {
+      return;
+    }
+
+    tabIndexRef.current.setNativeProps({ tabIndex: 0 });
+  }, []);
+
   return (
-    <BaseTouchable
-      {...concatTouchableProps({ ...elementProps, ref }, action, link, trigger)}
-      {...optional(!to, {
-        // tabIndex is not working with this react-native-web version, we need
-        // to re-check with the latest version.
-        tabIndex: 0,
-      })}
+    <BaseView
+      {...concatTouchableProps(
+        { ...elementProps, ref: concatRefs(ref, tabIndexRef) },
+        action,
+        link,
+        trigger,
+      )}
       essentials={{ tag: 'a', className: classes }}
     />
   );
