@@ -33,23 +33,31 @@ export default function useDropdown(
       identifier,
       visible,
       setVisible,
-      trigger: ({ dismiss }) => ({
-        props: {
-          nativeID: identifier,
-          ref: (element) => {
-            controlRef.current = findNodeHandle(element);
-          },
-          onPress: () => {
-            if (dismiss) {
-              setVisible(false);
-            } else {
+      trigger: ({ dismiss }) => {
+        if (dismiss) {
+          return {
+            props: {
+              onPress: () => {
+                setVisible(false);
+              },
+            },
+          };
+        }
+
+        return {
+          props: {
+            nativeID: identifier,
+            ref: (element) => {
+              controlRef.current = findNodeHandle(element);
+            },
+            onPress: () => {
               setVisible((value) => !value);
-            }
+            },
+            'aria-haspopup': true,
+            'aria-expanded': visible,
           },
-          'aria-haspopup': true,
-          'aria-expanded': visible,
-        },
-      }),
+        };
+      },
       menuRef: (element) => {
         menuRef.current = findNodeHandle(element);
       },

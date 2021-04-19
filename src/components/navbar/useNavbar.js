@@ -22,21 +22,29 @@ export default function useNavbar(
       expanded,
       setExpanded,
       expand,
-      trigger: ({ dismiss }) => ({
-        props: {
-          nativeID: identifier,
-          onPress: () => {
-            if (dismiss) {
-              setExpanded(false);
-            } else {
+      trigger: ({ dismiss }) => {
+        if (dismiss) {
+          return {
+            props: {
+              onPress: () => {
+                setExpanded(false);
+              },
+            },
+          };
+        }
+
+        return {
+          props: {
+            nativeID: identifier,
+            onPress: () => {
               setExpanded((value) => !value);
-            }
+            },
+            'aria-controls': identifier,
+            'aria-expanded': expanded,
+            'aria-label': 'Toggle navigation',
           },
-          'aria-controls': identifier,
-          'aria-expanded': expanded,
-          'aria-label': 'Toggle navigation',
-        },
-      }),
+        };
+      },
     }),
     [expanded],
   );

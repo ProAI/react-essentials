@@ -21,20 +21,28 @@ export default function useCollapse(
       identifier,
       visible,
       setVisible,
-      trigger: ({ dismiss }) => ({
-        props: {
-          onPress: () => {
-            if (dismiss) {
-              setVisible(false);
-            } else {
+      trigger: ({ dismiss }) => {
+        if (dismiss) {
+          return {
+            props: {
+              onPress: () => {
+                setVisible(false);
+              },
+            },
+          };
+        }
+
+        return {
+          props: {
+            onPress: () => {
               setVisible((value) => !value);
-            }
+            },
+            'aria-expanded': visible,
+            'aria-controls': identifier,
           },
-          'aria-expanded': visible,
-          'aria-controls': identifier,
-        },
-        classes: cx(!visible && 'collapsed'),
-      }),
+          classes: cx(!visible && 'collapsed'),
+        };
+      },
     }),
     [visible],
   );
