@@ -20,7 +20,7 @@ export default function useTrigger(toggle, dismiss, target) {
     return undefined;
   }
 
-  const Context = trigger.Context || toggle;
+  const Context = trigger.Context || trigger;
 
   const toggleable = useContext(Context);
 
