@@ -41,6 +41,6 @@ export default function useModal(visible, setVisible) {
         };
       },
     }),
-    [visible],
+    [visible, mounted],
   );
 }
