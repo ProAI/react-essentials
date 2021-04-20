@@ -58,31 +58,31 @@
     }
   },
   "react-essentials.cjs.js": {
-    "bundled": 194740,
-    "minified": 111612,
-    "gzipped": 24402
+    "bundled": 194749,
+    "minified": 111614,
+    "gzipped": 24405
   },
   "react-essentials.umd.min.js": {
-    "bundled": 461863,
-    "minified": 173142,
-    "gzipped": 49352
+    "bundled": 461872,
+    "minified": 173144,
+    "gzipped": 49355
   },
   "react-essentials.umd.js": {
-    "bundled": 506487,
-    "minified": 185821,
-    "gzipped": 53221
+    "bundled": 506496,
+    "minified": 185823,
+    "gzipped": 53224
   },
   "react-essentials.esm.js": {
-    "bundled": 177095,
-    "minified": 96965,
-    "gzipped": 23426,
+    "bundled": 177104,
+    "minified": 96967,
+    "gzipped": 23428,
     "treeshaked": {
       "rollup": {
-        "code": 67650,
+        "code": 67652,
         "import_statements": 2369
       },
       "webpack": {
-        "code": 72910
+        "code": 72912
       }
     }
   }
