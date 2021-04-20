@@ -15,16 +15,15 @@
   /* z-index: 0; */
 }
 
-/* Set display to flex except the classes that are set to display none or can be toggled to display none. */
-.yv:not(.navbar, .navbar-toggler, .navbar-collapse, .tab-content
-    > .tab-pane, .dropdown-menu, .collapse:not(.show), .modal),
+/* Force display flex for all elements (except the hidden ones). */
+.yv:not(.collapse):not(.carousel-item):not(.dropdown-menu):not(.modal):not(.navbar):not(.navbar-toggler):not(.navbar-collapse):not(.tab-pane),
 .yv.show {
   display: flex !important;
 }
 
-.navbar,
-.navbar-toggler,
-.navbar-toggler {
+.yv.navbar,
+.yv.navbar-toggler,
+.yv.navbar-collapse {
   display: flex;
 }
 
