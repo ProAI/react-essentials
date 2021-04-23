@@ -7,17 +7,24 @@ import BaseView from '../../utils/rnw-compat/BaseView';
 const propTypes = {
   children: PropTypes.node.isRequired,
   color: PropTypes.oneOf(COLORS),
+  active: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
 const ListGroupItem = React.forwardRef((props, ref) => {
-  const { color = null, disabled = false, ...elementProps } = props;
+  const {
+    color = null,
+    active = false,
+    disabled = false,
+    ...elementProps
+  } = props;
 
   const classes = cx(
     // constant classes
     'list-group-item',
     // variable classes
     color && `list-group-item-${color}`,
+    active && 'active',
     disabled && 'disabled',
   );
 
