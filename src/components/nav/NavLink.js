@@ -59,7 +59,7 @@ const NavLink = React.forwardRef((props, ref) => {
       {...concatTouchableProps({ ...elementProps, ref }, action, link, trigger)}
       {...optional(active, { 'aria-current': true })}
       disabled={disabled}
-      essentials={{ tag: 'a', className: classes }}
+      essentials={{ className: classes }}
     />
   );
 });
