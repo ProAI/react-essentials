@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import cx from 'classnames';
@@ -34,6 +34,8 @@ const Modal = React.forwardRef((props, ref) => {
   } = props;
 
   const modal = useModal(visible, onToggle);
+  const waitingForMouseUp = useRef(false);
+  const ignoreBackdropClick = useRef(false);
 
   // Return null if not mounted.
   if (!modal.mounted || !modal.visible) {
@@ -67,25 +69,43 @@ const Modal = React.forwardRef((props, ref) => {
           return;
         }
 
-        if (event.target === modal.ref.current) {
-          modal.setVisible(false);
+        if (
+          ignoreBackdropClick.current ||
+          event.target !== event.currentTarget
+        ) {
+          ignoreBackdropClick.current = false;
+          return;
         }
+
+        modal.setVisible(false);
+      }}
+      onMouseUp={(event) => {
+        if (waitingForMouseUp.current && event.target === modal.ref.current) {
+          ignoreBackdropClick.current = true;
+        }
+
+        waitingForMouseUp.current = false;
       }}
       onKeyUp={(event) => {
-        if (event.key === 'Escape') {
-          event.preventDefault();
-
-          if (backdrop === 'static') {
-            return;
-          }
-
-          modal.setVisible(false);
+        if (event.key !== 'Escape') {
+          return;
         }
+
+        event.preventDefault();
+
+        if (backdrop === 'static') {
+          return;
+        }
+
+        modal.setVisible(false);
       }}
       essentials={{ className: 'modal show' }}
     >
       <BaseView
         accessibilityRole="document"
+        onMouseDown={() => {
+          waitingForMouseUp.current = true;
+        }}
         essentials={{ className: dialogClasses }}
       >
         <ModalContext.Provider value={modal}>
