@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import invariant from 'fbjs/lib/invariant';
 import useIdentifier from '../../hooks/useIdentifier';
-import useModalEffects from './useModalEffects';
+import useScrollbarEffects from './useScrollbarEffects';
 
 export default function useModal(visible, setVisible) {
   const identifier = useIdentifier('modal');
@@ -14,7 +14,7 @@ export default function useModal(visible, setVisible) {
     setMounted(true);
   }, []);
 
-  useModalEffects({
+  useScrollbarEffects({
     modalRef: ref,
     active: mounted && visible,
   });

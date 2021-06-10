@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import Platform from 'react-native-web/dist/cjs/exports/Platform';
 
 const computeScrollbarWidth = () => {
   const scrollDiv = document.createElement('div');
@@ -14,7 +15,11 @@ const computeScrollbarWidth = () => {
   return scrollbarWidth;
 };
 
-export default function useModalEffects({ modalRef, active }) {
+export default function useScrollbarEffects({ modalRef, active }) {
+  if (Platform.OS !== 'web') {
+    return;
+  }
+
   const scrollbarWidth = useRef();
 
   useEffect(() => {
@@ -36,24 +41,21 @@ export default function useModalEffects({ modalRef, active }) {
     const rect = document.body.getBoundingClientRect();
     const isBodyOverflowing = rect.left + rect.right < window.innerWidth;
 
-    // Set body padding adjustments.
-    const contentElement = document.getElementById('content');
-    const navbarElement = document.getElementsByClassName('navbar')[0];
+    // Set body and fixed elements padding adjustments.
+    const elements = [
+      document.body,
+      ...document.querySelectorAll('[data-fixed="true"]'),
+    ];
 
-    const originalContentPadding = contentElement
-      ? contentElement.style.paddingRight
-      : '';
-    const originalNavbarPadding = navbarElement
-      ? navbarElement.style.paddingRight
-      : '';
+    const originalBodyPadding = elements.map(
+      (element) => element.style.paddingRight || '',
+    );
 
     if (isBodyOverflowing) {
-      if (contentElement) {
-        contentElement.style.paddingRight = `${scrollbarWidth.current}px`;
-      }
-      if (navbarElement) {
-        navbarElement.style.paddingRight = `${scrollbarWidth.current}px`;
-      }
+      elements.forEach((element) => {
+        // eslint-disable-next-line no-param-reassign
+        element.style.paddingRight = `${scrollbarWidth.current}px`;
+      });
     }
 
     const isModalOverflowing =
@@ -75,12 +77,10 @@ export default function useModalEffects({ modalRef, active }) {
 
     return () => {
       // Reset body padding adjustments.
-      if (contentElement) {
-        contentElement.style.paddingRight = originalContentPadding;
-      }
-      if (navbarElement) {
-        navbarElement.style.paddingRight = originalNavbarPadding;
-      }
+      elements.forEach((element, key) => {
+        // eslint-disable-next-line no-param-reassign
+        element.style.paddingRight = originalBodyPadding[key] || '';
+      });
 
       // Remove class .modal-open from body element.
       document.body.classList.remove('modal-open');

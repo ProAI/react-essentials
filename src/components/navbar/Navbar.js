@@ -13,8 +13,6 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   variant: PropTypes.oneOf(['light', 'dark']),
   expand: PropTypes.oneOf([true, 'sm', 'md', 'lg', 'xl']),
-  fixed: PropTypes.oneOf(['top', 'bottom']),
-  sticky: PropTypes.oneOf(['top']),
   defaultExpanded: PropTypes.bool,
   expanded: PropTypes.bool,
   onToggle: PropTypes.func,
@@ -24,8 +22,6 @@ const Navbar = React.forwardRef((props, ref) => {
   const {
     variant = 'light',
     expand,
-    fixed,
-    sticky,
     defaultExpanded = false,
     expanded,
     onToggle = () => {},
@@ -40,8 +36,6 @@ const Navbar = React.forwardRef((props, ref) => {
     `navbar-${variant}`,
     // variable classes
     expand && expand === true ? 'navbar-expand' : `navbar-expand-${expand}`,
-    fixed && `fixed-${fixed}`,
-    sticky && `sticky-${sticky}`,
   );
 
   return (
