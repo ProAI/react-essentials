@@ -16,7 +16,7 @@
 }
 
 /* Force display flex for all elements (except the hidden ones). */
-.yv:not(.collapse):not(.carousel-item):not(.dropdown-menu):not(.modal):not(.navbar):not(.navbar-toggler):not(.navbar-collapse):not(.tab-pane),
+.yv:not(.collapse):not(.carousel-item):not(.dropdown-menu):not(.modal):not(.navbar):not(.navbar-toggler):not(.navbar-collapse):not(.offcanvas):not(.tab-pane),
 .yv.show {
   display: flex !important;
 }

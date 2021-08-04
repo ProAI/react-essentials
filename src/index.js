@@ -54,6 +54,9 @@ import Tab from './components/nav/Tab';
 /* navbar components */
 import Navbar from './components/navbar/Navbar';
 
+/* navbar offcanvas */
+import Offcanvas from './components/offcanvas/Offcanvas';
+
 /* popover components */
 import injectPopover from './components/popover/injectPopover';
 import Popover from './components/popover/Popover';
@@ -121,6 +124,7 @@ export {
   Nav,
   Tab,
   Navbar,
+  Offcanvas,
   injectPopover,
   Popover,
   Progress,

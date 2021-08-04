@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import Platform from 'react-native-web/dist/cjs/exports/Platform';
 
 const computeScrollbarWidth = () => {
@@ -15,14 +15,20 @@ const computeScrollbarWidth = () => {
   return scrollbarWidth;
 };
 
-export default function useScrollbarEffects({ modalRef, active }) {
-  if (Platform.OS !== 'web') {
+export default function useScrollbarEffects({
+  modalRef,
+  active,
+  keepBodyScroll,
+  bodyClass,
+  centered,
+}) {
+  if (Platform.OS !== 'web' || keepBodyScroll) {
     return;
   }
 
   const scrollbarWidth = useRef();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!scrollbarWidth.current) {
       scrollbarWidth.current = computeScrollbarWidth();
     }
@@ -47,9 +53,11 @@ export default function useScrollbarEffects({ modalRef, active }) {
       ...document.querySelectorAll('[data-fixed="true"]'),
     ];
 
-    const originalBodyPadding = elements.map(
+    const originalPaddings = elements.map(
       (element) => element.style.paddingRight || '',
     );
+
+    const originalBodyOverflow = document.body.style.overflow || '';
 
     if (isBodyOverflowing) {
       elements.forEach((element) => {
@@ -61,29 +69,39 @@ export default function useScrollbarEffects({ modalRef, active }) {
     const isModalOverflowing =
       modalRef.current.scrollHeight > document.documentElement.clientHeight;
 
-    // Set dialog padding adjustments.
-    if (!isBodyOverflowing && isModalOverflowing) {
-      // eslint-disable-next-line no-param-reassign
-      modalRef.current.style.paddingLeft = `${scrollbarWidth.current}px`;
-    }
+    if (centered) {
+      // Set dialog padding adjustments.
+      if (!isBodyOverflowing && isModalOverflowing) {
+        // eslint-disable-next-line no-param-reassign
+        modalRef.current.style.paddingLeft = `${scrollbarWidth.current}px`;
+      }
 
-    if (isBodyOverflowing && !isModalOverflowing) {
-      // eslint-disable-next-line no-param-reassign
-      modalRef.current.style.paddingRight = `${scrollbarWidth.current}px`;
+      if (isBodyOverflowing && !isModalOverflowing) {
+        // eslint-disable-next-line no-param-reassign
+        modalRef.current.style.paddingRight = `${scrollbarWidth.current}px`;
+      }
     }
 
     // Add class .modal-open to body element.
-    document.body.classList.add('modal-open');
+    if (bodyClass) {
+      document.body.classList.add(bodyClass);
+    }
+    // Add "overflow: hidden" to body element.
+    document.body.style.overflow = 'hidden';
 
     return () => {
       // Reset body padding adjustments.
       elements.forEach((element, key) => {
         // eslint-disable-next-line no-param-reassign
-        element.style.paddingRight = originalBodyPadding[key] || '';
+        element.style.paddingRight = originalPaddings[key] || '';
       });
 
       // Remove class .modal-open from body element.
-      document.body.classList.remove('modal-open');
+      if (bodyClass) {
+        document.body.classList.remove(bodyClass);
+      }
+      // Remove "overflow: hidden" to body element.
+      document.body.style.overflow = originalBodyOverflow;
     };
   }, [active]);
 }

@@ -10,7 +10,7 @@ import ModalHeader from './ModalHeader';
 import ModalTitle from './ModalTitle';
 import { MODAL_SIZES } from '../../utils/constants';
 import BaseView from '../../utils/rnw-compat/BaseView';
-import useModal from './useModal';
+import useModal from '../../hooks/useModal';
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -33,7 +33,11 @@ const Modal = React.forwardRef((props, ref) => {
     ...elementProps
   } = props;
 
-  const modal = useModal(visible, onToggle);
+  const modal = useModal(visible, onToggle, {
+    keepBodyScroll: false,
+    bodyClass: 'modal-open',
+    centered: true,
+  });
   const waitingForMouseUp = useRef(false);
   const ignoreBackdropClick = useRef(false);
 
@@ -54,69 +58,67 @@ const Modal = React.forwardRef((props, ref) => {
   );
 
   const modalElement = (
-    <BaseView
-      key="modal"
-      ref={(element) => {
-        modal.ref.current = findNodeHandle(element);
-      }}
-      accessible
-      accessibilityRole="dialog"
-      aria-labelledby={modal.identifier}
-      aria-modal="true"
-      // For now we need onClick here, because onMouseDown would also toggle the modal when the user clicks on a scrollbar.
-      onClick={(event) => {
-        if (backdrop === 'static') {
-          return;
-        }
-
-        if (
-          ignoreBackdropClick.current ||
-          event.target !== event.currentTarget
-        ) {
-          ignoreBackdropClick.current = false;
-          return;
-        }
-
-        modal.setVisible(false);
-      }}
-      onMouseUp={(event) => {
-        if (waitingForMouseUp.current && event.target === modal.ref.current) {
-          ignoreBackdropClick.current = true;
-        }
-
-        waitingForMouseUp.current = false;
-      }}
-      onKeyUp={(event) => {
-        if (event.key !== 'Escape') {
-          return;
-        }
-
-        event.preventDefault();
-
-        if (backdrop === 'static') {
-          return;
-        }
-
-        modal.setVisible(false);
-      }}
-      essentials={{ className: 'modal show' }}
-    >
+    <ModalContext.Provider value={modal} key="modal">
       <BaseView
-        accessibilityRole="document"
-        onMouseDown={() => {
-          waitingForMouseUp.current = true;
+        ref={(element) => {
+          modal.ref.current = findNodeHandle(element);
         }}
-        essentials={{ className: dialogClasses }}
+        accessible
+        accessibilityRole="dialog"
+        aria-labelledby={modal.identifier}
+        aria-modal="true"
+        // For now we need onClick here, because onMouseDown would also toggle the modal when the user clicks on a scrollbar.
+        onClick={(event) => {
+          if (backdrop === 'static') {
+            return;
+          }
+
+          if (
+            ignoreBackdropClick.current ||
+            event.target !== event.currentTarget
+          ) {
+            ignoreBackdropClick.current = false;
+            return;
+          }
+
+          modal.setVisible(false);
+        }}
+        onMouseUp={(event) => {
+          if (waitingForMouseUp.current && event.target === modal.ref.current) {
+            ignoreBackdropClick.current = true;
+          }
+
+          waitingForMouseUp.current = false;
+        }}
+        onKeyUp={(event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+
+          event.preventDefault();
+
+          if (backdrop === 'static') {
+            return;
+          }
+
+          modal.setVisible(false);
+        }}
+        essentials={{ className: 'modal show' }}
       >
-        <ModalContext.Provider value={modal}>
+        <BaseView
+          onMouseDown={() => {
+            waitingForMouseUp.current = true;
+          }}
+          essentials={{ className: dialogClasses }}
+        >
           <BaseView
             {...elementProps}
             ref={ref}
             essentials={{ className: 'modal-content' }}
           />
-        </ModalContext.Provider>
+        </BaseView>
       </BaseView>
-    </BaseView>
+    </ModalContext.Provider>
   );
 
   if (!backdrop) {

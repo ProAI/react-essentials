@@ -1,9 +1,13 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import invariant from 'fbjs/lib/invariant';
-import useIdentifier from '../../hooks/useIdentifier';
+import useIdentifier from './useIdentifier';
 import useScrollbarEffects from './useScrollbarEffects';
 
-export default function useModal(visible, setVisible) {
+export default function useModal(
+  visible,
+  setVisible,
+  { keepBodyScroll, bodyClass, centered },
+) {
   const identifier = useIdentifier('modal');
 
   const [mounted, setMounted] = useState(false);
@@ -17,6 +21,9 @@ export default function useModal(visible, setVisible) {
   useScrollbarEffects({
     modalRef: ref,
     active: mounted && visible,
+    keepBodyScroll,
+    bodyClass,
+    centered,
   });
 
   return useMemo(
@@ -29,7 +36,7 @@ export default function useModal(visible, setVisible) {
       trigger: ({ dismiss }) => {
         invariant(
           dismiss,
-          "Modal/ModalContext cannot be used with prop 'toggle'. Please use prop 'dismiss' instead.",
+          "Overlay cannot be used with prop 'toggle'. Please use prop 'dismiss' instead.",
         );
 
         return {
