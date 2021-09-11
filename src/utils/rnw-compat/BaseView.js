@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const calculateHitSlopStyle = hitSlop => {
+const calculateHitSlopStyle = (hitSlop) => {
   const hitStyle = {};
 
   // eslint-disable-next-line no-restricted-syntax
@@ -82,16 +82,11 @@ class BaseView extends Component {
       }
 
       warning(
-        !isInAParentText,
-        'A view should not be used inside of a text component.',
-      );
-
-      warning(
         customClassName == null,
         'Using the "className" prop on <View> is deprecated.',
       );
 
-      React.Children.toArray(children).forEach(item => {
+      React.Children.toArray(children).forEach((item) => {
         invariant(
           typeof item !== 'string',
           `Unexpected text node: ${item}. A text node cannot be a child of a <View>.`,

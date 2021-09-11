@@ -92,7 +92,6 @@ import Paragraph from './components/type/Paragraph';
 
 /* primitive components */
 import Image from './components/Image';
-import BlockLink from './components/BlockLink';
 import Link from './components/Link';
 import Text from './components/Text';
 import View from './components/View';
@@ -134,7 +133,6 @@ export {
   Tooltip,
   // content
   Image,
-  BlockLink,
   Link,
   Table,
   TD,
