@@ -8,6 +8,7 @@ import useIdentifier from './useIdentifier';
 import usePopper from './usePopper';
 import concatRefs from '../utils/concatRefs';
 import optional from '../utils/optional';
+import useControlledState from './useControlledState';
 
 export const OverlayPropTypes = {
   delay: PropTypes.oneOfType([
@@ -20,6 +21,9 @@ export const OverlayPropTypes = {
   trigger: PropTypes.oneOf(TRIGGERS),
   placement: PropTypes.oneOf(PLACEMENTS),
   fallbackPlacement: PropTypes.oneOf(['flip', 'clockwise', 'counterwise']),
+  defaultVisible: PropTypes.bool,
+  visible: PropTypes.bool,
+  onToggle: PropTypes.func,
 };
 
 function useOverlay(target, template, config) {
@@ -28,6 +32,9 @@ function useOverlay(target, template, config) {
     trigger: rawTrigger,
     placement: defaultPlacement,
     fallbackPlacement = 'flip',
+    defaultVisible = false,
+    visible: controlledVisible,
+    onToggle,
   } = config;
 
   const delay =
@@ -37,7 +44,11 @@ function useOverlay(target, template, config) {
   const trigger = rawTrigger.split(' ');
 
   const identifier = useIdentifier('template');
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useControlledState(
+    defaultVisible,
+    controlledVisible,
+    onToggle,
+  );
   const [focused, setFocused] = useState(false);
   const [hovered, setHovered] = useState(false);
 
@@ -64,7 +75,7 @@ function useOverlay(target, template, config) {
     }, target.ref),
     ...optional(visible, { 'aria-describedby': identifier }),
     onPress: (event) => {
-      if (trigger.indexOf('click') !== -1) {
+      if (trigger.includes('click')) {
         setVisible((value) => !value);
       }
 
@@ -73,10 +84,10 @@ function useOverlay(target, template, config) {
       }
     },
     onFocus: (event) => {
-      if (trigger.indexOf('focus') !== -1) {
+      if (trigger.includes('focus')) {
         setFocused(true);
 
-        if (trigger.indexOf('focus') !== -1 && !visible) {
+        if (!visible) {
           setVisible(true);
         }
       }
@@ -86,10 +97,10 @@ function useOverlay(target, template, config) {
       }
     },
     onBlur: (event) => {
-      if (trigger.indexOf('focus') !== -1) {
+      if (trigger.includes('focus')) {
         setFocused(false);
 
-        const activeHoverTrigger = trigger.indexOf('hover') !== -1 && hovered;
+        const activeHoverTrigger = trigger.includes('hover') && hovered;
         if (visible && !activeHoverTrigger) {
           setVisible(false);
         }
@@ -100,7 +111,7 @@ function useOverlay(target, template, config) {
       }
     },
     onMouseOver: (event) => {
-      if (trigger.indexOf('hover') !== -1) {
+      if (trigger.includes('hover')) {
         setHovered(true);
 
         if (!visible && !focused) {
@@ -113,10 +124,10 @@ function useOverlay(target, template, config) {
       }
     },
     onMouseLeave: (event) => {
-      if (trigger.indexOf('hover') !== -1) {
+      if (trigger.includes('hover')) {
         setHovered(false);
 
-        const activeFocusTrigger = trigger.indexOf('focus') !== -1 && focused;
+        const activeFocusTrigger = trigger.includes('focus') && focused;
         if (visible && !activeFocusTrigger) {
           setVisible(false);
         }

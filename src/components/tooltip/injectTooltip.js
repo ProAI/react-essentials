@@ -11,7 +11,8 @@ const propTypes = {
 };
 
 export default function injectTooltip(Component) {
-  function OverlayTooltip(props) {
+  const OverlayTooltip = React.forwardRef((props, ref) => {
+    /* eslint-disable react/prop-types */
     const {
       tooltip: {
         title,
@@ -19,11 +20,15 @@ export default function injectTooltip(Component) {
         trigger = 'hover focus',
         placement = 'top',
         fallbackPlacement,
+        defaultVisible,
+        visible,
+        onToggle,
       },
       ...elementProps
     } = props;
+    /* eslint-enable */
 
-    const target = <Component {...elementProps} />;
+    const target = <Component {...elementProps} ref={ref} />;
 
     const template = <Tooltip>{title}</Tooltip>;
 
@@ -32,8 +37,11 @@ export default function injectTooltip(Component) {
       trigger,
       placement,
       fallbackPlacement,
+      defaultVisible,
+      visible,
+      onToggle,
     });
-  }
+  });
 
   OverlayTooltip.displayName = 'Overlay(Tooltip)';
   OverlayTooltip.propTypes = propTypes;

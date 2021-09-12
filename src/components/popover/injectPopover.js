@@ -12,7 +12,8 @@ const propTypes = {
 };
 
 export default function injectPopover(Component) {
-  function OverlayPopover(props) {
+  const OverlayPopover = React.forwardRef((props, ref) => {
+    /* eslint-disable react/prop-types */
     const {
       popover: {
         title,
@@ -21,11 +22,15 @@ export default function injectPopover(Component) {
         trigger = 'click',
         placement = 'right',
         fallbackPlacement,
+        defaultVisible,
+        visible,
+        onToggle,
       },
       ...elementProps
     } = props;
+    /* eslint-enable */
 
-    const target = <Component {...elementProps} />;
+    const target = <Component {...elementProps} ref={ref} />;
 
     const template = (
       <Popover>
@@ -39,8 +44,11 @@ export default function injectPopover(Component) {
       trigger,
       placement,
       fallbackPlacement,
+      defaultVisible,
+      visible,
+      onToggle,
     });
-  }
+  });
 
   OverlayPopover.displayName = 'Overlay(Popover)';
   OverlayPopover.propTypes = propTypes;
