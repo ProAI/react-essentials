@@ -40,12 +40,6 @@ const defaultProps = {
   styleName: null,
 };
 
-const styles = StyleSheet.create({
-  inline: {
-    display: 'inline-flex',
-  },
-});
-
 const calculateHitSlopStyle = (hitSlop) => {
   const hitStyle = {};
 
@@ -97,6 +91,8 @@ class BaseView extends Component {
     supportedProps.className = cx(
       // add yoga layout styles
       !pseudo && 'yv',
+      // add flex-inline if inside text
+      isInAParentText && 'yv-inline',
       // add (mostly) bootstrap styles
       className,
       // add custom styles
@@ -104,10 +100,7 @@ class BaseView extends Component {
       // add utils styles
       createUtilityClasses(styleName),
     );
-    supportedProps.style = StyleSheet.compose(
-      isInAParentText && styles.inline,
-      style,
-    );
+    supportedProps.style = StyleSheet.compose(style);
 
     if (hitSlop) {
       const hitSlopStyle = calculateHitSlopStyle(hitSlop);

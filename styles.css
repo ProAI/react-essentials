@@ -27,6 +27,17 @@
   display: flex;
 }
 
+.yv-inline:not(.collapse):not(.carousel-item):not(.dropdown-menu):not(.modal):not(.navbar):not(.navbar-toggler):not(.navbar-collapse):not(.offcanvas):not(.tab-pane),
+.yv-inline.show {
+  display: inline-flex !important;
+}
+
+.yv-inline.navbar,
+.yv-inline.navbar-toggler,
+.yv-inline.navbar-collapse {
+  display: inline-flex;
+}
+
 .yv-hit-slop {
   position: absolute;
   top: 0;
