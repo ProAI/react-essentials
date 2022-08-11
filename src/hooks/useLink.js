@@ -5,7 +5,7 @@ import { __RouterContext as RouterContext } from 'react-router';
 import { createLocation } from 'history';
 
 export const LinkPropTypes = {
-  to: PropTypes.string,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   replace: PropTypes.bool,
   external: PropTypes.oneOfType([
     PropTypes.bool,
